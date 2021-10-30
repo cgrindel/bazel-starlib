@@ -1,0 +1,15 @@
+# vi: ft=sh
+
+#!/usr/bin/env bash
+
+set -uo pipefail
+
+assert_same() {
+  local src="${1}"
+  local out="${2}"
+  diff  "${src}" "${out}" || \
+    (echo >&2 "Expected files to be same. src: ${src}, out: ${out}" \
+    && return -1)
+}
+
+assert_same %EXPECTED% %ACTUAL%
