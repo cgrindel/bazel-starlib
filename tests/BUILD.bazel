@@ -1,0 +1,3 @@
+load(":filter_srcs_tests.bzl", "filter_srcs_test_suite")
+
+filter_srcs_test_suite()
