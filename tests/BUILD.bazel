@@ -1,9 +1,6 @@
 load(":filter_srcs_tests.bzl", "filter_srcs_test_suite")
 load(":src_utils_tests.bzl", "src_utils_test_suite")
-load(":content_test_tests.bzl", "content_test_test_suite")
 
 filter_srcs_test_suite()
 
 src_utils_test_suite()
-
-content_test_test_suite()

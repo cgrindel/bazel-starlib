@@ -6,8 +6,3 @@ bzl_library(
     name = "filter_srcs",
     srcs = ["filter_srcs.bzl"],
 )
-
-bzl_library(
-    name = "content_test",
-    srcs = ["content_test.bzl"],
-)

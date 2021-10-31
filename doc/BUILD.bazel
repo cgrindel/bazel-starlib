@@ -10,14 +10,6 @@ load(
 
 _RULE_DOC_PROVIDERS = [
     doc_providers.create(
-        name = "content_test",
-        stardoc_input = "//rules:content_test.bzl",
-        symbols = [
-            "content_test",
-        ],
-        deps = ["//rules:content_test"],
-    ),
-    doc_providers.create(
         name = "filter_srcs",
         stardoc_input = "//rules:filter_srcs.bzl",
         symbols = [
