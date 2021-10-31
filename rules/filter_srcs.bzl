@@ -4,9 +4,10 @@ def _do_filename_ends_with(ctx, files):
 
 def _filter_srcs_impl(ctx):
     files = ctx.files.srcs
-
     if ctx.attr.filename_ends_with != "":
         files = _do_filename_ends_with(ctx, files)
+    else:
+        fail("No filter criteria were provided.")
 
     expected_count = ctx.attr.expected_count
     if expected_count > -1 and len(files) != expected_count:
