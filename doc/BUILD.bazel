@@ -115,7 +115,7 @@ write_file_list(
     header_content = [
         "# Build API",
         "",
-        "The APIs list below are used by rules_swiftformat.",
+        "The APIs listed below are used by rules_swiftformat.",
         "",
     ],
 )
