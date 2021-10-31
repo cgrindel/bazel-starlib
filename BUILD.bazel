@@ -1,0 +1,4 @@
+alias(
+    name = "update_all",
+    actual = "//doc:update",
+)
