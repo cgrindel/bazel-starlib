@@ -107,6 +107,37 @@ def _test_expected_count_success():
         target_under_test = ":expected_count_success_subject",
     )
 
+# MARK: - Expected Count Failure Test
+
+def _expected_count_failure_test_impl(ctx):
+    env = analysistest.begin(ctx)
+
+    asserts.expect_failure(env, "Expected 1 items, but found 2.")
+
+    return analysistest.end(env)
+
+expected_count_failure_test = analysistest.make(
+    _expected_count_failure_test_impl,
+    expect_failure = True,
+)
+
+def _test_expected_count_failure():
+    filter_srcs(
+        name = "expected_count_failure_subject",
+        srcs = [
+            ":foo_a",
+            ":foo_b",
+            ":bar_a",
+        ],
+        filename_ends_with = ".a",
+        expected_count = 1,
+        tags = ["manual"],
+    )
+    expected_count_failure_test(
+        name = "expected_count_failure_test",
+        target_under_test = ":expected_count_failure_subject",
+    )
+
 # MARK: - Test Suite
 
 def filter_srcs_test_suite():
@@ -114,6 +145,7 @@ def filter_srcs_test_suite():
     _test_filename_ends_with()
     _test_fail_if_no_criteria()
     _test_expected_count_success()
+    _test_expected_count_failure()
 
     native.test_suite(
         name = "filter_srcs_tests",
@@ -121,5 +153,6 @@ def filter_srcs_test_suite():
             ":filename_ends_with_test",
             ":fail_if_no_criteria_test",
             ":expected_count_success_test",
+            ":expected_count_failure_test",
         ],
     )
