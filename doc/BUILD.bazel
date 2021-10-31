@@ -1,0 +1,125 @@
+load(
+    "@cgrindel_bazel_doc//bazeldoc:bazeldoc.bzl",
+    "doc_for_provs",
+    "write_file_list",
+    "write_header",
+    doc_providers = "providers",
+)
+
+# MARK: - Documentation Providers
+
+# _SRC_UTILS_PROVIDER = doc_providers.create(
+#     name = "src_utils",
+#     stardoc_input = "//lib:src_utils.bzl",
+#     symbols = [
+#         "src_utils",
+#     ],
+#     deps = ["//lib"],
+# )
+
+# _CONTENT_TEST_PROVIDER = doc_providers.create(
+#     name = "content_test",
+#     stardoc_input = "//rules:content_test.bzl",
+#     symbols = [
+#         "content_test",
+#     ],
+#     deps = ["//rules"],
+# )
+
+# _FILTER_SRCS_PROVIDER = doc_providers.create(
+#     name = "filter_srcs",
+#     stardoc_input = "//rules:filter_srcs.bzl",
+#     symbols = [
+#         "filter_srcs",
+#     ],
+#     deps = ["//rules"],
+# )
+
+_RULE_DOC_PROVIDERS = [
+    doc_providers.create(
+        name = "content_test",
+        stardoc_input = "//rules:content_test.bzl",
+        symbols = [
+            "content_test",
+        ],
+        deps = ["//rules:content_test"],
+    ),
+    doc_providers.create(
+        name = "filter_srcs",
+        stardoc_input = "//rules:filter_srcs.bzl",
+        symbols = [
+            "filter_srcs",
+        ],
+        deps = ["//rules:filter_srcs"],
+    ),
+]
+
+_API_SRCS = [
+    "src_utils",
+]
+
+_API_DOC_PROVIDERS = [
+    doc_providers.create(
+        name = name,
+        stardoc_input = "//lib:{name}.bzl".format(name = name),
+        symbols = [name],
+        deps = ["//lib:{name}".format(name = name)],
+    )
+    for name in _API_SRCS
+]
+
+_ALL_DOC_PROVIDERS = [
+    doc_providers.create(
+        name = "api",
+        is_stardoc = False,
+        stardoc_input = "",
+        deps = [],
+    ),
+] + _RULE_DOC_PROVIDERS + _API_DOC_PROVIDERS
+
+# MARK: - Headers
+
+# Write rule headers
+[
+    write_header(
+        name = doc_prov.header_label,
+        out = doc_prov.header_basename,
+        header_content = [
+            "# `{name}` Rule".format(name = doc_prov.name),
+        ],
+    )
+    for doc_prov in _RULE_DOC_PROVIDERS
+    if doc_prov.is_stardoc
+]
+
+# Write the API headers
+[
+    write_header(
+        name = doc_prov.header_label,
+        out = doc_prov.header_basename,
+        header_content = [
+            "# `{name}` API".format(name = doc_prov.name),
+        ],
+    )
+    for doc_prov in _API_DOC_PROVIDERS
+    if doc_prov.is_stardoc
+]
+
+# MARK: - Special Case api.md
+
+# Write the api.md_ file as a special case.
+write_file_list(
+    name = "api_doc",
+    out = "api.md_",
+    doc_provs = _API_DOC_PROVIDERS,
+    header_content = [
+        "# Build API",
+        "",
+        "The APIs list below are used by rules_swiftformat.",
+        "",
+    ],
+)
+
+# MARK: - Generate Documentation from Providers
+
+doc_for_provs(doc_provs = _ALL_DOC_PROVIDERS)
