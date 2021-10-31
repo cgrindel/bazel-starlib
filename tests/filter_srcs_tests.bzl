@@ -2,6 +2,8 @@ load("//rules:filter_srcs.bzl", "filter_srcs")
 load("@bazel_skylib//lib:unittest.bzl", "analysistest", "asserts")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
 
+# MARK: - Set up inputs to the analysis tests.
+
 def _setup_src_file_targets():
     write_file(
         name = "foo_a",
@@ -19,6 +21,8 @@ def _setup_src_file_targets():
         content = ["This is bar.a"],
     )
 
+# MARK: - Filename ends with test
+
 def _filename_ends_with_test_impl(ctx):
     env = analysistest.begin(ctx)
 
@@ -31,21 +35,6 @@ def _filename_ends_with_test_impl(ctx):
 filename_ends_with_test = analysistest.make(_filename_ends_with_test_impl)
 
 def _test_filename_ends_with():
-    # write_file(
-    #     name = "foo_a",
-    #     out = "foo.a",
-    #     content = ["This is foo.a"],
-    # )
-    # write_file(
-    #     name = "foo_b",
-    #     out = "foo.b",
-    #     content = ["This is foo.b"],
-    # )
-    # write_file(
-    #     name = "bar_a",
-    #     out = "bar.a",
-    #     content = ["This is bar.a"],
-    # )
     filter_srcs(
         name = "filename_ends_with_subject",
         srcs = [
@@ -61,6 +50,8 @@ def _test_filename_ends_with():
         target_under_test = ":filename_ends_with_subject",
     )
 
+# MARK: - Fail if no criteria test
+
 def _fail_if_no_criteria_test_impl(ctx):
     env = analysistest.begin(ctx)
 
@@ -74,11 +65,6 @@ fail_if_no_criteria_test = analysistest.make(
 )
 
 def _test_fail_if_no_criteria():
-    # write_file(
-    #     name = "foo_a",
-    #     out = "foo.a",
-    #     content = ["This is foo.a"],
-    # )
     filter_srcs(
         name = "fail_if_no_criteria_subject",
         srcs = [
@@ -90,6 +76,8 @@ def _test_fail_if_no_criteria():
         name = "fail_if_no_criteria_test",
         target_under_test = ":fail_if_no_criteria_subject",
     )
+
+# MARK: - Test Suite
 
 def filter_srcs_test_suite():
     _setup_src_file_targets()
