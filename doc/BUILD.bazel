@@ -48,6 +48,12 @@ _ALL_DOC_PROVIDERS = [
         stardoc_input = "",
         deps = [],
     ),
+    doc_providers.create(
+        name = "rules",
+        is_stardoc = False,
+        stardoc_input = "",
+        deps = [],
+    ),
 ] + _RULE_DOC_PROVIDERS + _API_DOC_PROVIDERS
 
 # MARK: - Headers
@@ -89,6 +95,19 @@ write_file_list(
         "# Build API",
         "",
         "The APIs listed below are available in this repository.",
+        "",
+    ],
+)
+
+# Write the rules.md_ file as a special case.
+write_file_list(
+    name = "rules_doc",
+    out = "rules.md_",
+    doc_provs = _RULE_DOC_PROVIDERS,
+    header_content = [
+        "# Rules",
+        "",
+        "The rules listed below are available in this repository.",
         "",
     ],
 )
