@@ -11,16 +11,11 @@ def bazel_starlib_dependencies():
             "https://github.com/bazelbuild/bazel-skylib/releases/download/1.0.3/bazel-skylib-1.0.3.tar.gz",
         ],
     )
-    # maybe(
-    #     http_archive,
-    #     name = "cgrindel_bazel_doc",
-    #     sha256 = "bae4a0f41cc5cf89f26c779fc04379f09bb290b4910b2cf206c0372ad0c8aac7",
-    #     strip_prefix = "bazel-doc-0.1.0",
-    #     urls = ["https://github.com/cgrindel/bazel-doc/archive/v0.1.0.tar.gz"],
-    # )
 
     maybe(
-        native.local_repository,
+        http_archive,
         name = "cgrindel_bazel_doc",
-        path = "/Users/chuck/code/cgrindel/bazel-doc",
+        sha256 = "26b269eec6dda36f3f24a4ffef1b997f057c78a53300e6c83a110cd79cd0918e",
+        strip_prefix = "bazel-doc-0.1.1",
+        urls = ["https://github.com/cgrindel/bazel-doc/archive/v0.1.1.tar.gz"],
     )
