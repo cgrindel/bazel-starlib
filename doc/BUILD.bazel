@@ -8,33 +8,6 @@ load(
 
 # MARK: - Documentation Providers
 
-# _SRC_UTILS_PROVIDER = doc_providers.create(
-#     name = "src_utils",
-#     stardoc_input = "//lib:src_utils.bzl",
-#     symbols = [
-#         "src_utils",
-#     ],
-#     deps = ["//lib"],
-# )
-
-# _CONTENT_TEST_PROVIDER = doc_providers.create(
-#     name = "content_test",
-#     stardoc_input = "//rules:content_test.bzl",
-#     symbols = [
-#         "content_test",
-#     ],
-#     deps = ["//rules"],
-# )
-
-# _FILTER_SRCS_PROVIDER = doc_providers.create(
-#     name = "filter_srcs",
-#     stardoc_input = "//rules:filter_srcs.bzl",
-#     symbols = [
-#         "filter_srcs",
-#     ],
-#     deps = ["//rules"],
-# )
-
 _RULE_DOC_PROVIDERS = [
     doc_providers.create(
         name = "content_test",
@@ -115,7 +88,7 @@ write_file_list(
     header_content = [
         "# Build API",
         "",
-        "The APIs listed below are used by rules_swiftformat.",
+        "The APIs listed below are available in this repository.",
         "",
     ],
 )
