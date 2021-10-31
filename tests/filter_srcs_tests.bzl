@@ -77,17 +77,49 @@ def _test_fail_if_no_criteria():
         target_under_test = ":fail_if_no_criteria_subject",
     )
 
+# MARK: - Expected Count Success Test
+
+def _expected_count_success_test_impl(ctx):
+    env = analysistest.begin(ctx)
+
+    target_under_test = analysistest.target_under_test(env)
+    results = [f.basename for f in target_under_test[DefaultInfo].files.to_list()]
+    asserts.equals(env, ["foo.a", "bar.a"], results)
+
+    return analysistest.end(env)
+
+expected_count_success_test = analysistest.make(_expected_count_success_test_impl)
+
+def _test_expected_count_success():
+    filter_srcs(
+        name = "expected_count_success_subject",
+        srcs = [
+            ":foo_a",
+            ":foo_b",
+            ":bar_a",
+        ],
+        filename_ends_with = ".a",
+        expected_count = 2,
+        tags = ["manual"],
+    )
+    expected_count_success_test(
+        name = "expected_count_success_test",
+        target_under_test = ":expected_count_success_subject",
+    )
+
 # MARK: - Test Suite
 
 def filter_srcs_test_suite():
     _setup_src_file_targets()
     _test_filename_ends_with()
     _test_fail_if_no_criteria()
+    _test_expected_count_success()
 
     native.test_suite(
         name = "filter_srcs_tests",
         tests = [
             ":filename_ends_with_test",
             ":fail_if_no_criteria_test",
+            ":expected_count_success_test",
         ],
     )
