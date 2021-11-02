@@ -19,3 +19,9 @@ def bazel_starlib_dependencies():
         strip_prefix = "bazel-doc-0.1.1",
         urls = ["https://github.com/cgrindel/bazel-doc/archive/v0.1.1.tar.gz"],
     )
+
+    maybe(
+        native.local_repository,
+        name = "cgrindel_rules_bzlformat",
+        path = "/Users/chuck/code/cgrindel/rules_bzlformat",
+    )

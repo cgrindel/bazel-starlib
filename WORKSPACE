@@ -15,3 +15,14 @@ bazeldoc_dependencies()
 load("@io_bazel_stardoc//:setup.bzl", "stardoc_repositories")
 
 stardoc_repositories()
+
+load("@cgrindel_rules_bzlformat//bzlformat:deps.bzl", "bzlformat_rules_dependencies")
+
+bzlformat_rules_dependencies()
+
+load(
+    "@cgrindel_rules_updatesrc//updatesrc:deps.bzl",
+    "updatesrc_rules_dependencies",
+)
+
+updatesrc_rules_dependencies()
