@@ -15,9 +15,9 @@ def bazel_starlib_dependencies():
     maybe(
         http_archive,
         name = "cgrindel_bazel_doc",
-        sha256 = "26b269eec6dda36f3f24a4ffef1b997f057c78a53300e6c83a110cd79cd0918e",
-        strip_prefix = "bazel-doc-0.1.1",
-        urls = ["https://github.com/cgrindel/bazel-doc/archive/v0.1.1.tar.gz"],
+        sha256 = "3ccc6d205a7f834c5e89adcb4bc5091a9a07a69376107807eb9aea731ce92854",
+        strip_prefix = "bazel-doc-0.1.2",
+        urls = ["https://github.com/cgrindel/bazel-doc/archive/v0.1.2.tar.gz"],
     )
 
     maybe(
