@@ -10,7 +10,7 @@
 hash_sha256(<a href="#hash_sha256-name">name</a>, <a href="#hash_sha256-src">src</a>)
 </pre>
 
-Generates a SHA256 hash for the specified file.
+Generates a SHA256 hash for the specified file and writes it to a file with the same name as the label.
 
 **ATTRIBUTES**
 

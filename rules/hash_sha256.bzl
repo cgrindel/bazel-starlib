@@ -1,6 +1,7 @@
 def _hash_sha256_impl(ctx):
+    # out = ctx.actions.declare_file(ctx.file.src.basename + ".sha256")
     # out = ctx.actions.declare_file(ctx.label.name + ".sha256")
-    out = ctx.actions.declare_file(ctx.file.src.basename + ".sha256")
+    out = ctx.actions.declare_file(ctx.label.name)
     ctx.actions.run_shell(
         outputs = [out],
         inputs = [ctx.file.src],
@@ -29,5 +30,8 @@ hash_sha256 = rule(
             doc = "The file whose contents should be hashed.",
         ),
     },
-    doc = "Generates a SHA256 hash for the specified file.",
+    doc = """\
+Generates a SHA256 hash for the specified file and writes it to a file with the \
+same name as the label.\
+""",
 )
