@@ -33,7 +33,10 @@ filegroup(
         "LICENSE",
         "README.md",
         ".bazelrc",
-    ] + glob(["*.bazelrc"]),
+    ] + glob([
+        "*.bzl",
+        "*.bazelrc",
+    ]),
 )
 
 # pkg_files(
@@ -60,5 +63,4 @@ pkg_tar(
         "//rules:package_content",
     ],
     extension = "tar.gz",
-    strip_prefix = ".",
 )
