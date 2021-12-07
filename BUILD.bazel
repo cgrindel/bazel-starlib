@@ -52,9 +52,8 @@ pkg_tar(
 )
 
 workspace_snippet(
-    name = "bazel_starlib_snippet",
+    name = "bazel_starlib_workspace",
     pkg = ":bazel_starlib",
-    url = "http://cool-url/",
 )
 
 # hash_sha256(
