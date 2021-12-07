@@ -4,18 +4,17 @@ load("@rules_pkg//:mappings.bzl", "pkg_filegroup", "pkg_files")
 
 package(default_visibility = ["//visibility:public"])
 
+bzlformat_pkg(name = "bzlformat")
+
 bzl_library(
     name = "filter_srcs",
     srcs = ["filter_srcs.bzl"],
 )
 
-bzlformat_pkg(name = "bzlformat")
-
-# filegroup(
-#     name = "release_files",
-#     srcs = glob(["*"]),
-#     visibility = ["//:__subpackages__"],
-# )
+bzl_library(
+    name = "hash_sha256",
+    srcs = ["hash_sha256.bzl"],
+)
 
 pkg_files(
     name = "package_files",

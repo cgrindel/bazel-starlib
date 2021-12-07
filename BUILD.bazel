@@ -39,21 +39,6 @@ filegroup(
     ]),
 )
 
-# pkg_files(
-#     name = "root_files",
-#     srcs = [
-#         "BUILD.bazel",
-#         "WORKSPACE",
-#         "LICENSE",
-#         "README.md",
-#         ".bazelrc",
-#     ] + glob(["*.bazelrc"]),
-# )
-
-# pkg_filegroup(
-#     name = ""
-# )
-
 pkg_tar(
     name = "bazel_starlib",
     srcs = [

@@ -10,15 +10,19 @@ load("@rules_pkg//:mappings.bzl", "pkg_filegroup", "pkg_files")
 
 # MARK: - Documentation Providers
 
+_RULE_NAMES = [
+    "filter_srcs",
+    "hash_sha256",
+]
+
 _RULE_DOC_PROVIDERS = [
     doc_providers.create(
-        name = "filter_srcs",
-        stardoc_input = "//rules:filter_srcs.bzl",
-        symbols = [
-            "filter_srcs",
-        ],
-        deps = ["//rules:filter_srcs"],
-    ),
+        name = rule,
+        stardoc_input = "//rules:{rule}.bzl".format(rule = rule),
+        symbols = [rule],
+        deps = ["//rules:{rule}".format(rule = rule)],
+    )
+    for rule in _RULE_NAMES
 ]
 
 _API_SRCS = [
