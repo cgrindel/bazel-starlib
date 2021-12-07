@@ -1,5 +1,6 @@
 load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@rules_pkg//:mappings.bzl", "pkg_filegroup", "pkg_files")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -9,3 +10,24 @@ bzl_library(
 )
 
 bzlformat_pkg(name = "bzlformat")
+
+# filegroup(
+#     name = "release_files",
+#     srcs = glob(["*"]),
+#     visibility = ["//:__subpackages__"],
+# )
+
+pkg_files(
+    name = "package_files",
+    srcs = glob([
+        "*.bazel",
+        "*.bzl",
+    ]),
+)
+
+pkg_filegroup(
+    name = "package_content",
+    srcs = [":package_files"],
+    prefix = "rules",
+    visibility = ["//:__pkg__"],
+)
