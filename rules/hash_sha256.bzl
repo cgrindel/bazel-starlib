@@ -11,7 +11,14 @@ sha256sum {src} | sed -E -n 's/^([^[:space:]]+).*/\\1/gp' > {out}
             out = out.path,
         ),
     )
-    return DefaultInfo(files = depset([out]))
+    return DefaultInfo(
+        files = depset([out]),
+        # To ensure that passing the outputs of this rule to a sh_binary or
+        # sh_test data attribute works, we need to put the output in the
+        # runfiles.
+        # Bazel issue: https://github.com/bazelbuild/bazel/issues/4519
+        runfiles = ctx.runfiles(files = [out]),
+    )
 
 hash_sha256 = rule(
     implementation = _hash_sha256_impl,
