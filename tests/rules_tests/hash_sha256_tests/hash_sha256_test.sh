@@ -17,8 +17,18 @@ fail() {
   exit 1
 }
 
-# hash_output_path=""
+# hash_output_path="data.txt.sha256"
+# [[ -f "${hash_output_path}" ]] || fail "Expected hash output file to exist. ${hash_output_path}"
 
-# actual_hash="$(< )"
+data_txt_sha256_location=cgrindel_bazel_starlib/tests/rules_tests/hash_sha256_tests/data.txt.sha256
+data_txt_sha256="$(rlocation "${data_txt_sha256_location}")" || \
+  (echo >&2 "Failed to locate ${data_txt_sha256_location}" && exit 1)
+
+
+actual_hash="$(< "${data_txt_sha256}")"
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK  actual_hash: ${actual_hash}" 
+# DEBUG END
 
 fail "STOP"

@@ -5,7 +5,7 @@ def _hash_sha256_impl(ctx):
         outputs = [out],
         inputs = [ctx.file.src],
         command = """
-sha256sum {src} | sed -E -n 's/^([^[:space:]]+).*/\1/gp' > {out}
+sha256sum {src} | sed -E -n 's/^([^[:space:]]+).*/\\1/gp' > {out}
 """.format(
             src = ctx.file.src.path,
             out = out.path,
