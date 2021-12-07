@@ -8,6 +8,7 @@ load(
     "updatesrc_update_all",
 )
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("//rules:hash_sha256.bzl", "hash_sha256")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -48,4 +49,9 @@ pkg_tar(
         "//rules:package_content",
     ],
     extension = "tar.gz",
+)
+
+hash_sha256(
+    name = "bazel_starlib_sha256",
+    src = ":bazel_starlib",
 )

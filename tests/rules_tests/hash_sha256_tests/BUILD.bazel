@@ -9,13 +9,35 @@ hash_sha256(
     src = "data.txt",
 )
 
-sh_test(
-    name = "hash_sha256_test",
-    srcs = ["hash_sha256_test.sh"],
-    data = [
-        ":data_txt_sha256",
-    ],
-    deps = [
-        "@bazel_tools//tools/bash/runfiles",
-    ],
-)
+# sh_test(
+#     name = "hash_sha256_test",
+#     srcs = ["hash_sha256_test.sh"],
+#     data = [
+#         ":data_txt_sha256",
+#     ],
+#     deps = [
+#         "@bazel_tools//tools/bash/runfiles",
+#     ],
+# )
+
+_HASH_DATA_ENTRIES = [
+    ("data_txt_sha256", "cdd9b67e8d3cf613666aff6d88b42c98bbc2a073235fa5ec0cd810035c0b08c6"),
+]
+
+[
+    sh_test(
+        name = hash_label + "_test",
+        srcs = ["hash_sha256_test.sh"],
+        args = [
+            "$(location :%s)" % hash_label,
+            expected_hash,
+        ],
+        data = [
+            hash_label,
+        ],
+        deps = [
+            "@bazel_tools//tools/bash/runfiles",
+        ],
+    )
+    for (hash_label, expected_hash) in _HASH_DATA_ENTRIES
+]

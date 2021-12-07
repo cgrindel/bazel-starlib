@@ -17,12 +17,9 @@ fail() {
   exit 1
 }
 
-data_txt_sha256_location=cgrindel_bazel_starlib/tests/rules_tests/hash_sha256_tests/data_txt_sha256
-data_txt_sha256="$(rlocation "${data_txt_sha256_location}")" || \
-  (echo >&2 "Failed to locate ${data_txt_sha256_location}" && exit 1)
+hash_file="${1}"
+expected_hash="${2}"
 
-actual_hash="$(< "${data_txt_sha256}")"
-expected_hash="cdd9b67e8d3cf613666aff6d88b42c98bbc2a073235fa5ec0cd810035c0b08c6"
-
+actual_hash="$(< "${hash_file}")"
 [[ "${actual_hash}" == "${expected_hash}" ]] || \
-  fail "Expected actual has to equal expected. actual: ${actual}, expected: ${expected_hash}"
+  fail "Expected actual hash to equal expected. actual: ${actual_hash}, expected: ${expected_hash}"
