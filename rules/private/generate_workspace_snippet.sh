@@ -18,8 +18,10 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
-# MARK - Functions
-
+source_bazel_status_vars_sh_location=cgrindel_bazel_starlib/lib/private/source_bazel_status_vars.sh
+source_bazel_status_vars_sh="$(rlocation "${source_bazel_status_vars_sh_location}")" || \
+  (echo >&2 "Failed to locate ${source_bazel_status_vars_sh_location}" && exit 1)
+source "${source_bazel_status_vars_sh}"
 
 # MARK - Process Args
 

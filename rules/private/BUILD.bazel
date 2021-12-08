@@ -7,5 +7,6 @@ sh_binary(
     srcs = ["generate_workspace_snippet.sh"],
     deps = [
         "//lib/private:fail",
+        "//lib/private:source_bazel_status_vars",
     ],
 )
