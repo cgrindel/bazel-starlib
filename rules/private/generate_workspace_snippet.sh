@@ -25,13 +25,6 @@ source "${source_bazel_status_vars_sh}"
 
 # MARK - Process Args
 
-# status_path="${script_dir}/../bazel-out"
-# stable_status_path="${status_path}/stable-status.txt"
-# volatile_status_path="${status_path}/volatile-status.txt"
-
-# source_bazel_status_vars "${stable_status_path}"
-# source_bazel_status_vars "${volatile_status_path}"
-
 status_file_paths=()
 while (("$#")); do
   case "${1}" in
@@ -41,6 +34,14 @@ while (("$#")); do
       ;;
     "--output")
       output_path="${2}"
+      shift 2
+      ;;
+    "--workspace_name")
+      workspace_name="${2}"
+      shift 2
+      ;;
+    "--url")
+      url_template="${2}"
       shift 2
       ;;
     *)
@@ -57,4 +58,14 @@ for status_file_path in "${status_file_paths[@]:-}" ; do
   source_bazel_status_vars "${status_file_path}"
 done
 
+# Create the URL
+url="$(eval "${url_template}")"
 
+# Generate the workspace snippet
+cat > "${output_path}" <<-EOF
+http_archive(
+    name = "${workspace_name}",
+    sha256 = "${sha256}",
+    url = "${url}",
+)
+EOF
