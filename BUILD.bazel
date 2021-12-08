@@ -51,7 +51,9 @@ pkg_tar(
     extension = "tar.gz",
 )
 
-workspace_snippet(
-    name = "bazel_starlib_workspace",
-    pkg = ":bazel_starlib",
-)
+# TODO: FIX ME
+
+# workspace_snippet(
+#     name = "bazel_starlib_workspace",
+#     pkg = ":bazel_starlib",
+# )
