@@ -32,7 +32,7 @@ _workspace_snippet = rule(
             doc = "A file that contains the SHA256 for the package file.",
         ),
         "_snippet_tool": attr.label(
-            default = "@cgrindel_bazel_starlib//rules/private:generate_workspace_snippet",
+            default = "@cgrindel_bazel_starlib//tools:generate_workspace_snippet",
             executable = True,
             cfg = "host",
             doc = "The utility used to generate the workspace snippet.",

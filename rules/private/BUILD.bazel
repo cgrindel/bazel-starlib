@@ -1,13 +1,3 @@
 load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
 
 bzlformat_pkg(name = "bzlformat")
-
-sh_binary(
-    name = "generate_workspace_snippet",
-    srcs = ["generate_workspace_snippet.sh"],
-    visibility = ["//tests/rules_tests/workspace_snippet_tests:__pkg__"],
-    deps = [
-        "//lib/private:fail",
-        "//lib/private:source_bazel_status_vars",
-    ],
-)
