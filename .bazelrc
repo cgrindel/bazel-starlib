@@ -1,3 +1,6 @@
+# Workspace Status
+build --workspace_status_command="bash ./tools/workspace_status.sh"
+
 # Import Shared settings
 import %workspace%/shared.bazelrc
 
@@ -6,7 +9,4 @@ import %workspace%/ci.bazelrc
 
 # Try to import a local.rc file; typically, written by CI
 try-import %workspace%/local.bazelrc
-
-# Workspace Status
-build --workspace_status_command="bash ./workspace_status.sh"
 
