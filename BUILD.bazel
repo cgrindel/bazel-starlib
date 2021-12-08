@@ -55,13 +55,3 @@ workspace_snippet(
     name = "bazel_starlib_workspace",
     pkg = ":bazel_starlib",
 )
-
-# hash_sha256(
-#     name = "bazel_starlib_sha256",
-#     src = ":bazel_starlib",
-# )
-
-# expand_make_vars(
-#     name = "bazel_starlib_workspace_snippet",
-#     template =
-# )

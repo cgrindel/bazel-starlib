@@ -1,6 +1,16 @@
 load("//rules:hash_sha256.bzl", "hash_sha256")
 
 def _workspace_snippet_impl(ctx):
+    # DEBUG BEGIN
+    # ctx.info_file = stable-status.txt
+    print("*** CHUCK ctx.info_file: ", ctx.info_file)
+
+    # ctx.version_file = volatile-status.txt
+    print("*** CHUCK ctx.version_file: ", ctx.version_file)
+
+    fail("STOP")
+
+    # DEBUG END
     pass
 
 _workspace_snippet = rule(
