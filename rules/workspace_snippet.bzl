@@ -8,8 +8,6 @@ def _workspace_snippet_impl(ctx):
     # ctx.version_file = volatile-status.txt
     print("*** CHUCK ctx.version_file: ", ctx.version_file)
 
-    fail("STOP")
-
     # DEBUG END
     pass
 
