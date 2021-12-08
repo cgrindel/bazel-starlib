@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# This script is executed by Bazel using the --workspace_status_command flag.
+# It provides variables that can be accessed from certain rule attributes.
+# https://docs.bazel.build/versions/main/user-manual.html#workspace_status
+
 set -euo pipefail
 
 # Get the current commit 
