@@ -1,4 +1,8 @@
 load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("//rules:workspace_snippet.bzl", "workspace_snippet")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -12,4 +16,41 @@ sh_test(
         "//lib/private:fail",
         "@bazel_tools//tools/bash/runfiles",
     ],
+)
+
+write_file(
+    name = "foo_license",
+    out = "LICENSE",
+    content = ["Super important text."],
+)
+
+pkg_tar(
+    name = "foo",
+    srcs = [
+        ":foo_license",
+    ],
+    extension = "tar.gz",
+)
+
+workspace_snippet(
+    name = "foo_workspace_snippet",
+    pkg = ":foo",
+)
+
+write_file(
+    name = "expected_foo_workspace_snippet",
+    out = "expected_foo_workspace_snippet.bzl",
+    content = ["""\
+http_archive(
+    name = "cgrindel_bazel_starlib",
+    sha256 = "FILL_ME_IN",
+    url = "",
+)
+"""],
+)
+
+diff_test(
+    name = "workspace_snippet_test",
+    file1 = ":foo_workspace",
+    file2 = ":expected_workspace_snippet",
 )
