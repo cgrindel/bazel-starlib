@@ -26,11 +26,5 @@ source_bazel_status_vars() {
     fi
     export_key="WKSP__${key}"
     printf "%s=%q\n" "${export_key}" "${value}"
-    # echo "${export_key}=\"${value}\""
-    # printf -v "${export_key}" %s "${value}"
-    # export "${export_key}"
-    # if [[ "${export_vars}" == TRUE ]]; then
-    #   export "${export_key}"
-    # fi
   done < "${status_path}"
 }

@@ -55,7 +55,7 @@ done
 
 # Source the stable-status.txt and volatile-status.txt values as Bash variables
 for status_file_path in "${status_file_paths[@]:-}" ; do
-  source_bazel_status_vars "${status_file_path}"
+  eval "$( source_bazel_status_vars "${status_file_path}" )"
 done
 
 # Create the URL
