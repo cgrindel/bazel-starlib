@@ -4,9 +4,6 @@ set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" > /dev/null && pwd)"
 
-# printf -v "WKSP__${key}" %s "$value"
-
-
 source_bazel_status_vars() {
   local status_path="${1}"
   local export_vars="${2:-FALSE}"
