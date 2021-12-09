@@ -50,7 +50,7 @@ sha256=5b80d60e00a7ea2d9d540c594e5ec41c946c163e272056c626026fcbb7918de2
 
 [[ -f "${output}" ]] || fail "Expected output file to exist. ${output}"
 actual_snippet="$(< "${output}")"
-expected_snippet=$(cat <<-'EOF'
+expected_snippet=$(cat <<-EOF
 http_archive(
     name = "acme_rules_fun",
     sha256 = "5b80d60e00a7ea2d9d540c594e5ec41c946c163e272056c626026fcbb7918de2",
