@@ -22,6 +22,8 @@ write_bazel_status_vars = rule(
     implementation = _write_bazel_status_vars_impl,
     attrs = {
         "_write_tool": attr.label(
+            executable = True,
+            cfg = "host",
             default = "@cgrindel_bazel_starlib//tools:write_bazel_status_vars",
             doc = "The tool that performs the write.",
         ),
