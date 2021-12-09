@@ -61,13 +61,6 @@ used if one is not provided.\
             cfg = "host",
             doc = "The utility used to generate the workspace snippet.",
         ),
-        # The snippet tool deps are not brought in properly. So, we will get them manually.
-        # https://github.com/bazelbuild/bazel/issues/8697
-        # "_snippet_tools_deps": attr.label_list(
-        #     default = [
-
-        #     ]
-        # )
     },
     doc = "Generates a workspace snippet.",
 )
