@@ -70,4 +70,53 @@ EOF
 [[ "${actual_snippet}" == "${expected_snippet}" ]] || \
   fail $'Snippet did not match expected.  actual:\n'"${actual_snippet}"$'\nexpected:\n'"${expected_snippet}"
 
-# MARK - Test Missing Output
+# MARK - Test Arg Checks
+
+err_output="$(
+"${generate_workspace_snippet_sh}" \
+  --status_file "${stable_status_path}" \
+  --status_file "${volatile_status_path}" \
+  --workspace_name "${workspace_name}" \
+  --url "${url1}" \
+  --url "${url2}" \
+  --sha256 "${sha256}" \
+  2>&1 || true
+)"
+[[ "${err_output}" =~ "Expected an output path." ]] || fail "Missing output path failure."
+
+err_output="$(
+"${generate_workspace_snippet_sh}" \
+  --status_file "${stable_status_path}" \
+  --status_file "${volatile_status_path}" \
+  --output "${output_path}" \
+  --url "${url1}" \
+  --url "${url2}" \
+  --sha256 "${sha256}" \
+  2>&1 || true
+)"
+[[ "${err_output}" =~ "Expected workspace name." ]] || fail "Missing workspace name failure."
+
+
+err_output="$(
+"${generate_workspace_snippet_sh}" \
+  --status_file "${stable_status_path}" \
+  --status_file "${volatile_status_path}" \
+  --output "${output_path}" \
+  --workspace_name "${workspace_name}" \
+  --sha256 "${sha256}" \
+  2>&1 || true
+)"
+[[ "${err_output}" =~ "Expected one ore more url templates." ]] || fail "Missing url template failure."
+
+
+err_output="$(
+"${generate_workspace_snippet_sh}" \
+  --status_file "${stable_status_path}" \
+  --status_file "${volatile_status_path}" \
+  --output "${output_path}" \
+  --workspace_name "${workspace_name}" \
+  --url "${url1}" \
+  --url "${url2}" \
+  2>&1 || true
+)"
+[[ "${err_output}" =~ "Expected a SHA256 value." ]] || fail "Missing SHA256 failure."
