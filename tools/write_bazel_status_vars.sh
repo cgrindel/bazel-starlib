@@ -54,4 +54,4 @@ output="$(
   done
 )"
 
-sort > "${output_path}" << "${output}"
+echo "${output}" | sort > "${output_path}"
