@@ -75,10 +75,6 @@ EOF
 
 # MARK - Test Arg Checks
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK START" 
-# DEBUG END
-
 err_output="$(
 "${generate_workspace_snippet_sh}" \
   --status_file "${stable_status_path}" \
@@ -89,9 +85,6 @@ err_output="$(
   --sha256_file "${sha256_file}" \
   2>&1 || true
 )"
-# DEBUG BEGIN
-echo >&2 "*** CHUCK  err_output: ${err_output}" 
-# DEBUG END
 [[ "${err_output}" =~ "Expected an output path." ]] || fail "Missing output path failure."
 
 err_output="$(
