@@ -33,14 +33,14 @@ EOF
 output=$( source_bazel_status_vars "${status_file}" )
 eval "${output}"
 
-[[ "${WKSP__STABLE_CHICKEN_SMIDGEN:-}" == "hello" ]] || \
-  fail "Invalid WKSP_STABLE_CHICKEN_SMIDGEN value. actual: ${WKSP__STABLE_CHICKEN_SMIDGEN:-}"
+[[ "${STABLE_CHICKEN_SMIDGEN:-}" == "hello" ]] || \
+  fail "Invalid WKSP_STABLE_CHICKEN_SMIDGEN value. actual: ${STABLE_CHICKEN_SMIDGEN:-}"
 
-[[ "${WKSP__CHICKEN_SMIDGEN:-}" == "goodbye" ]] || \
-  fail "Invalid WKSP_CHICKEN_SMIDGEN value. actual: ${WKSP__CHICKEN_SMIDGEN:-}"
+[[ "${CHICKEN_SMIDGEN:-}" == "goodbye" ]] || \
+  fail "Invalid WKSP_CHICKEN_SMIDGEN value. actual: ${CHICKEN_SMIDGEN:-}"
 
-[[ -z "${WKSP__NO_VALUE:-}" ]] || \
-  fail "Invalid WKSP_NO_VALUE value. actual: ${WKSP__NO_VALUE}"
+[[ -z "${NO_VALUE:-}" ]] || \
+  fail "Invalid WKSP_NO_VALUE value. actual: ${NO_VALUE}"
 
-[[ "${WKSP__SPACES_AND_QUOTES:-}" == "this value has \"quotes\" and spaces" ]] || \
-  fail "Invalid WKSP_SPACES_AND_QUOTES value. actual: ${WKSP__SPACES_AND_QUOTES:-}"
+[[ "${SPACES_AND_QUOTES:-}" == "this value has \"quotes\" and spaces" ]] || \
+  fail "Invalid WKSP_SPACES_AND_QUOTES value. actual: ${SPACES_AND_QUOTES:-}"

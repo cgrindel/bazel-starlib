@@ -2,7 +2,6 @@
 
 # Parses the specified status file (e.g. stable-status.txt, volatile-status.txt)
 # and returns a script that creates Bash variables from the key-value pairs. 
-# The Bash variable name is of the format "WKSP__<key>".
 source_bazel_status_vars() {
   local status_path="${1}"
   # local export_vars="${2:-FALSE}"
@@ -24,7 +23,7 @@ source_bazel_status_vars() {
       # Trim trailing whitespace
       value="${value%"${value##*[![:space:]]}"}"
     fi
-    export_key="WKSP__${key}"
+    export_key="${key}"
     printf "%s=%q\n" "${export_key}" "${value}"
   done < "${status_path}"
 }

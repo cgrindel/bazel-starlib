@@ -16,5 +16,40 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
+generate_workspace_snippet_sh_location=cgrindel_bazel_starlib/tools/generate_workspace_snippet.sh
+generate_workspace_snippet_sh="$(rlocation "${generate_workspace_snippet_sh_location}")" || \
+  (echo >&2 "Failed to locate ${generate_workspace_snippet_sh_location}" && exit 1)
+
+stable_status_path="stable-status.txt"
+cat > "${stable_status_path}" <<-EOF
+STABLE_VALUE chicken
+STABLE_NOT_USED howdy
+STABLE_CURRENT_RELEASE_TAG v1.2.3
+STABLE_CURRENT_RELEASE 1.2.3
+EOF
+
+volatile_status_path="volatile-status.txt"
+cat > "${volatile_status_path}" <<-EOF
+VOLATILE_VALUE smidgen
+EOF
+
+output="actual_snippet.bzl"
+workspace_name="acme_rules_fun"
+url='http://github.com/acme/rules_fun/releases/download/${STABLE_CURRENT_RELEASE_TAG}/rules_fun-${STABLE_CURRENT_RELEASE}.tar.gz'
+sha256=5b80d60e00a7ea2d9d540c594e5ec41c946c163e272056c626026fcbb7918de2
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK  url: ${url}" 
+# DEBUG END
+
+"${generate_workspace_snippet_sh}" \
+  --status_file "${stable_status_path}" \
+  --status_file "${volatile_status_path}" \
+  --output "${output}" \
+  --workspace_name "${workspace_name}" \
+  --url "${url}" \
+  --sha256 "${sha256}"
+
+[[ -f "${output}" ]] || fail "Expected output file to exist. ${output}"
 
 fail "IMPLEMENT ME!"

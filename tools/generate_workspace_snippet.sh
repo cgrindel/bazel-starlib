@@ -44,6 +44,10 @@ while (("$#")); do
       url_template="${2}"
       shift 2
       ;;
+    "--sha256")
+      sha256="${2}"
+      shift 2
+      ;;
     *)
       shift 1
       ;;
@@ -51,7 +55,10 @@ while (("$#")); do
 done
 
 
-[[ -z "${output_path}" ]] && fail "Expected an output path."
+[[ -z "${output_path:-}" ]] && fail "Expected an output path."
+[[ -z "${workspace_name:-}" ]] && fail "Expected workspace name."
+[[ -z "${url_template:-}" ]] && fail "Expected a url template."
+[[ -z "${sha256:-}" ]] && fail "Expected a SHA256 value."
 
 # Source the stable-status.txt and volatile-status.txt values as Bash variables
 for status_file_path in "${status_file_paths[@]:-}" ; do
@@ -59,7 +66,11 @@ for status_file_path in "${status_file_paths[@]:-}" ; do
 done
 
 # Create the URL
-url="$(eval "${url_template}")"
+url="$(eval echo "${url_template}")"
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK  url: ${url}" 
+# DEBUG END
 
 # Generate the workspace snippet
 cat > "${output_path}" <<-EOF
