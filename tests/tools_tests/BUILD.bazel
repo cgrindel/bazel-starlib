@@ -1,0 +1,27 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_test(
+    name = "generate_workspace_snippet_test",
+    srcs = ["generate_workspace_snippet_test.sh"],
+    data = [
+        "//tools:generate_workspace_snippet",
+    ],
+    deps = [
+        "//lib/private:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_test(
+    name = "write_bazel_status_vars_test",
+    srcs = ["write_bazel_status_vars_test.sh"],
+    data = [
+        "//tools:write_bazel_status_vars",
+    ],
+    deps = [
+        "//lib/private:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)

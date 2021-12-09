@@ -12,3 +12,14 @@ sh_binary(
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
+
+sh_binary(
+    name = "write_bazel_status_vars",
+    srcs = ["write_bazel_status_vars.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:fail",
+        "//lib/private:source_bazel_status_vars",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)

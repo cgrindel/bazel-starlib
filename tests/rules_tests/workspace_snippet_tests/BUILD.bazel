@@ -6,18 +6,6 @@ load("//rules:workspace_snippet.bzl", "workspace_snippet")
 
 bzlformat_pkg(name = "bzlformat")
 
-sh_test(
-    name = "generate_workspace_snippet_test",
-    srcs = ["generate_workspace_snippet_test.sh"],
-    data = [
-        "//tools:generate_workspace_snippet",
-    ],
-    deps = [
-        "//lib/private:fail",
-        "@bazel_tools//tools/bash/runfiles",
-    ],
-)
-
 write_file(
     name = "foo_license",
     out = "LICENSE",
@@ -39,6 +27,20 @@ workspace_snippet(
         "http://github.com/acme/rules_fun/releases/download/${STABLE_CURRENT_RELEASE_TAG}/rules_fun-${STABLE_CURRENT_RELEASE}.tar.gz",
     ],
     workspace_name = "acme_rules_fun",
+)
+
+# TODO: FINISH ME
+
+sh_test(
+    name = "foo_workspace_snippet_test",
+    srcs = ["foo_workspace_snippet_test.sh"],
+    data = [
+        ":foo_workspace_snippet",
+    ],
+    deps = [
+        "//lib/private:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
 )
 
 # write_file(
