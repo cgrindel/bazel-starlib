@@ -35,21 +35,24 @@ EOF
 
 output="actual_snippet.bzl"
 workspace_name="acme_rules_fun"
-url='http://github.com/acme/rules_fun/releases/download/${STABLE_CURRENT_RELEASE_TAG}/rules_fun-${STABLE_CURRENT_RELEASE}.tar.gz'
+url1='http://github.com/acme/rules_fun/releases/download/${STABLE_CURRENT_RELEASE_TAG}/rules_fun-${STABLE_CURRENT_RELEASE}.tar.gz'
+url2='http://mirror.bazel.build/github.com/acme/rules_fun/releases/download/${STABLE_CURRENT_RELEASE_TAG}/rules_fun-${STABLE_CURRENT_RELEASE}.tar.gz'
 sha256=5b80d60e00a7ea2d9d540c594e5ec41c946c163e272056c626026fcbb7918de2
-
-# DEBUG BEGIN
-echo >&2 "*** CHUCK  url: ${url}" 
-# DEBUG END
 
 "${generate_workspace_snippet_sh}" \
   --status_file "${stable_status_path}" \
   --status_file "${volatile_status_path}" \
   --output "${output}" \
   --workspace_name "${workspace_name}" \
-  --url "${url}" \
+  --url "${url1}" \
+  --url "${url2}" \
   --sha256 "${sha256}"
 
 [[ -f "${output}" ]] || fail "Expected output file to exist. ${output}"
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK OUTPUT" 
+cat "${output}"
+# DEBUG END
 
 fail "IMPLEMENT ME!"

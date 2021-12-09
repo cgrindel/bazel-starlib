@@ -25,6 +25,7 @@ source "${source_bazel_status_vars_sh}"
 
 # MARK - Process Args
 
+url_templates=()
 status_file_paths=()
 while (("$#")); do
   case "${1}" in
@@ -41,7 +42,7 @@ while (("$#")); do
       shift 2
       ;;
     "--url")
-      url_template="${2}"
+      url_templates+=( "${2}" )
       shift 2
       ;;
     "--sha256")
@@ -57,29 +58,24 @@ done
 
 [[ -z "${output_path:-}" ]] && fail "Expected an output path."
 [[ -z "${workspace_name:-}" ]] && fail "Expected workspace name."
-[[ -z "${url_template:-}" ]] && fail "Expected a url template."
+[[ ${#url_templates[@]} > 0 ]] || fail "Expected one ore more url templates."
 [[ -z "${sha256:-}" ]] && fail "Expected a SHA256 value."
 
-# # Source the stable-status.txt and volatile-status.txt values as Bash variables
-# for status_file_path in "${status_file_paths[@]:-}" ; do
-#   eval "$( source_bazel_status_vars "${status_file_path}" )"
-# done
-
-# # Create the URL
-# url="$(eval echo "${url_template}")"
-
 # Evaluate the URL template
-url="$(
+urls="$(
   # Source the stable-status.txt and volatile-status.txt values as Bash variables
   for status_file_path in "${status_file_paths[@]:-}" ; do
     eval "$( source_bazel_status_vars "${status_file_path}" )"
   done
 
-  eval echo "${url_template}"
+  for url_template in "${url_templates[@]}" ; do
+    url="$(eval echo "${url_template}")"
+    echo "        \"${url}\","
+  done
 )"
 
 # DEBUG BEGIN
-echo >&2 "*** CHUCK  url: ${url}" 
+echo >&2 "*** CHUCK  urls: ${urls}" 
 # DEBUG END
 
 # Generate the workspace snippet
@@ -87,6 +83,8 @@ cat > "${output_path}" <<-EOF
 http_archive(
     name = "${workspace_name}",
     sha256 = "${sha256}",
-    url = "${url}",
+    urls = [
+${urls}
+    ],
 )
 EOF
