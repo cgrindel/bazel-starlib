@@ -74,10 +74,6 @@ urls="$(
   done
 )"
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK  urls: ${urls}" 
-# DEBUG END
-
 # Generate the workspace snippet
 cat > "${output_path}" <<-EOF
 http_archive(

@@ -49,10 +49,21 @@ sha256=5b80d60e00a7ea2d9d540c594e5ec41c946c163e272056c626026fcbb7918de2
   --sha256 "${sha256}"
 
 [[ -f "${output}" ]] || fail "Expected output file to exist. ${output}"
-
+actual_snippet="$(< "${output}")"
 # DEBUG BEGIN
-echo >&2 "*** CHUCK OUTPUT" 
-cat "${output}"
+echo >&2 "*** CHUCK MADE IT" 
 # DEBUG END
+expected_snippet=$(cat <<-'EOF'
+http_archive(
+    name = "acme_rules_fun",
+    sha256 = "5b80d60e00a7ea2d9d540c594e5ec41c946c163e272056c626026fcbb7918de2",
+    urls = [
+        "http://github.com/acme/rules_fun/releases/download/v1.2.3/rules_fun-1.2.3.tar.gz",
+        "http://mirror.bazel.build/github.com/acme/rules_fun/releases/download/v1.2.3/rules_fun-1.2.3.tar.gz",
+    ],
+)
+EOF
+)
+[[ "${actual_snippet}" == "${expected_snippet}" ]] || \
+  fail $'Snippet did not match expected.  actual:\n'"${actual_snippet}"$'\nexpected:\n'"${expected_snippet}"
 
-fail "IMPLEMENT ME!"
