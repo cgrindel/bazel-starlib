@@ -16,6 +16,22 @@ bzl_library(
     srcs = ["hash_sha256.bzl"],
 )
 
+bzl_library(
+    name = "workspace_snippet",
+    srcs = ["workspace_snippet.bzl"],
+    deps = [
+        "//rules/private:workspace_snippet",
+    ],
+)
+
+bzl_library(
+    name = "write_bazel_status_vars",
+    srcs = ["write_bazel_status_vars.bzl"],
+    deps = [
+        "//rules/private:write_bazel_status_vars",
+    ],
+)
+
 pkg_files(
     name = "package_files",
     srcs = glob([
