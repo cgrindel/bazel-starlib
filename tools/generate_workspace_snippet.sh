@@ -45,8 +45,8 @@ while (("$#")); do
       url_templates+=( "${2}" )
       shift 2
       ;;
-    "--sha256")
-      sha256="${2}"
+    "--sha256_file")
+      sha256_file="${2}"
       shift 2
       ;;
     *)
@@ -59,7 +59,10 @@ done
 [[ -z "${output_path:-}" ]] && fail "Expected an output path."
 [[ -z "${workspace_name:-}" ]] && fail "Expected workspace name."
 [[ ${#url_templates[@]} > 0 ]] || fail "Expected one ore more url templates."
-[[ -z "${sha256:-}" ]] && fail "Expected a SHA256 value."
+[[ -z "${sha256_file:-}" ]] && fail "Expected a SHA256 file."
+[[ -f "${sha256_file}" ]] || fail "The SHA256 file does not exist. ${sha256_file}"
+
+sha256="$(< "${sha256_file}")"
 
 # Evaluate the URL template
 urls="$(

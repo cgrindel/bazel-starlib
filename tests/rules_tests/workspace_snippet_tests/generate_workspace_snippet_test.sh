@@ -44,6 +44,9 @@ workspace_name="acme_rules_fun"
 url1='http://github.com/acme/rules_fun/releases/download/${STABLE_CURRENT_RELEASE_TAG}/rules_fun-${STABLE_CURRENT_RELEASE}.tar.gz'
 url2='http://mirror.bazel.build/github.com/acme/rules_fun/releases/download/${STABLE_CURRENT_RELEASE_TAG}/rules_fun-${STABLE_CURRENT_RELEASE}.tar.gz'
 sha256=5b80d60e00a7ea2d9d540c594e5ec41c946c163e272056c626026fcbb7918de2
+sha256_file="sha256.txt"
+
+echo "${sha256}" > "${sha256_file}"
 
 "${generate_workspace_snippet_sh}" \
   --status_file "${stable_status_path}" \
@@ -52,7 +55,7 @@ sha256=5b80d60e00a7ea2d9d540c594e5ec41c946c163e272056c626026fcbb7918de2
   --workspace_name "${workspace_name}" \
   --url "${url1}" \
   --url "${url2}" \
-  --sha256 "${sha256}"
+  --sha256_file "${sha256_file}"
 
 [[ -f "${output_path}" ]] || fail "Expected output file to exist. ${output_path}"
 actual_snippet="$(< "${output_path}")"
@@ -72,6 +75,10 @@ EOF
 
 # MARK - Test Arg Checks
 
+# DEBUG BEGIN
+echo >&2 "*** CHUCK START" 
+# DEBUG END
+
 err_output="$(
 "${generate_workspace_snippet_sh}" \
   --status_file "${stable_status_path}" \
@@ -79,9 +86,12 @@ err_output="$(
   --workspace_name "${workspace_name}" \
   --url "${url1}" \
   --url "${url2}" \
-  --sha256 "${sha256}" \
+  --sha256_file "${sha256_file}" \
   2>&1 || true
 )"
+# DEBUG BEGIN
+echo >&2 "*** CHUCK  err_output: ${err_output}" 
+# DEBUG END
 [[ "${err_output}" =~ "Expected an output path." ]] || fail "Missing output path failure."
 
 err_output="$(
@@ -91,7 +101,7 @@ err_output="$(
   --output "${output_path}" \
   --url "${url1}" \
   --url "${url2}" \
-  --sha256 "${sha256}" \
+  --sha256_file "${sha256_file}" \
   2>&1 || true
 )"
 [[ "${err_output}" =~ "Expected workspace name." ]] || fail "Missing workspace name failure."
@@ -103,7 +113,7 @@ err_output="$(
   --status_file "${volatile_status_path}" \
   --output "${output_path}" \
   --workspace_name "${workspace_name}" \
-  --sha256 "${sha256}" \
+  --sha256_file "${sha256_file}" \
   2>&1 || true
 )"
 [[ "${err_output}" =~ "Expected one ore more url templates." ]] || fail "Missing url template failure."
@@ -119,4 +129,4 @@ err_output="$(
   --url "${url2}" \
   2>&1 || true
 )"
-[[ "${err_output}" =~ "Expected a SHA256 value." ]] || fail "Missing SHA256 failure."
+[[ "${err_output}" =~ "Expected a SHA256 file." ]] || fail "Missing SHA256 file failure."

@@ -32,12 +32,14 @@ pkg_tar(
     extension = "tar.gz",
 )
 
-# TODO: FIX ME
-
-# workspace_snippet(
-#     name = "foo_workspace_snippet",
-#     pkg = ":foo",
-# )
+workspace_snippet(
+    name = "foo_workspace_snippet",
+    pkg = ":foo",
+    url_templates = [
+        "http://github.com/acme/rules_fun/releases/download/${STABLE_CURRENT_RELEASE_TAG}/rules_fun-${STABLE_CURRENT_RELEASE}.tar.gz",
+    ],
+    workspace_name = "acme_rules_fun",
+)
 
 # write_file(
 #     name = "expected_foo_workspace_snippet",
