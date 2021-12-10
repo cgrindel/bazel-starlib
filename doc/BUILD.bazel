@@ -13,6 +13,8 @@ load("@rules_pkg//:mappings.bzl", "pkg_filegroup", "pkg_files")
 _RULE_NAMES = [
     "filter_srcs",
     "hash_sha256",
+    "workspace_snippet",
+    "write_bazel_status_vars",
 ]
 
 _RULE_DOC_PROVIDERS = [
