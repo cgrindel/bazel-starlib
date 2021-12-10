@@ -39,7 +39,7 @@ source_path="source"
 echo "This file will be hashed." > "${source_path}"
 expected_hash="d85406eb129904c21b9b7c286a0efb775cf6681815035bd82f8ad19285deb250"
 
-# MARK - Test the default behavior
+# MARK - Tests
 
 err_msg_prefix="Positional args test"
 output_path=output_positional_args
@@ -49,5 +49,20 @@ actual_hash="$(< "${output_path}")"
 [[ "${actual_hash}" == "${expected_hash}" ]] || \
   fail "${err_msg_prefix} - Expected actual hash to equal expected. actual: ${actual_hash}, expected: ${expected_hash}"
 
+err_msg_prefix="Flags test"
+output_path=output_flags
+"${generate_sha256_sh}" --source "${source_path}" --output "${output_path}" || \
+  fail "${err_msg_prefix} - Execution failed."
+actual_hash="$(< "${output_path}")"
+[[ "${actual_hash}" == "${expected_hash}" ]] || \
+  fail "${err_msg_prefix} - Expected actual hash to equal expected. actual: ${actual_hash}, expected: ${expected_hash}"
 
-fail "IMPLEMENT ME!"
+for utility in "${utilities_to_test[@]}" ; do
+  err_msg_prefix="Utility test for ${utility}"
+  output_path="output_${utility}"
+  "${generate_sha256_sh}" --source "${source_path}" --output "${output_path}" --utility "${utility}" || \
+    fail "${err_msg_prefix} - Execution failed."
+  actual_hash="$(< "${output_path}")"
+  [[ "${actual_hash}" == "${expected_hash}" ]] || \
+    fail "${err_msg_prefix} - Expected actual hash to equal expected. actual: ${actual_hash}, expected: ${expected_hash}"
+done

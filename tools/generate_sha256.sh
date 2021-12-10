@@ -88,11 +88,3 @@ esac
   
 # Write the hash
 echo "${output}" > "${output_path}"
-
-# if is_installed openssl; then
-  # openssl dgst -sha256 "${source_path}" | sed -E -n 's/^SHA256[^=]+= ([^[:space:]]+).*/\1/gp' > "${output_path}"
-# elif is_installed sha256sum; then
-  # sha256sum "${source_path}" | sed -E -n 's/^([^[:space:]]+).*/\1/gp' > "${output_path}"
-# else
-  # fail "Could not find a supported utility to generate a SHA256 hash."
-# fi
