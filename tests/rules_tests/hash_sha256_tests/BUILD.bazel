@@ -1,0 +1,44 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("//rules:hash_sha256.bzl", "hash_sha256")
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+
+bzlformat_pkg(name = "bzlformat")
+
+write_file(
+    name = "generated_data",
+    out = "generated_data.txt",
+    content = ["# This is a generated data file."],
+)
+
+hash_sha256(
+    name = "generated_data_sha256",
+    src = ":generated_data",
+)
+
+hash_sha256(
+    name = "data_txt_sha256",
+    src = "data.txt",
+)
+
+_HASH_DATA_ENTRIES = [
+    ("data_txt_sha256", "cdd9b67e8d3cf613666aff6d88b42c98bbc2a073235fa5ec0cd810035c0b08c6"),
+    ("generated_data_sha256", "a4453dfd04419430066b7c5721defd07b686ae493d8e53544f6c091c36487f3a"),
+]
+
+[
+    sh_test(
+        name = hash_label + "_test",
+        srcs = ["hash_sha256_test.sh"],
+        args = [
+            "$(location :%s)" % hash_label,
+            expected_hash,
+        ],
+        data = [
+            hash_label,
+        ],
+        deps = [
+            "@bazel_tools//tools/bash/runfiles",
+        ],
+    )
+    for (hash_label, expected_hash) in _HASH_DATA_ENTRIES
+]

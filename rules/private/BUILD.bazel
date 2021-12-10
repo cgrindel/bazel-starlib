@@ -1,0 +1,29 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
+package(default_visibility = ["//rules:__pkg__"])
+
+bzlformat_pkg(name = "bzlformat")
+
+bzl_library(
+    name = "filter_srcs",
+    srcs = ["filter_srcs.bzl"],
+)
+
+bzl_library(
+    name = "hash_sha256",
+    srcs = ["hash_sha256.bzl"],
+)
+
+bzl_library(
+    name = "workspace_snippet",
+    srcs = ["workspace_snippet.bzl"],
+    deps = [
+        "//rules:hash_sha256",
+    ],
+)
+
+bzl_library(
+    name = "write_bazel_status_vars",
+    srcs = ["write_bazel_status_vars.bzl"],
+)

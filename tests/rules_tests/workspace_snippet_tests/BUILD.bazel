@@ -1,0 +1,49 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("//rules:workspace_snippet.bzl", "workspace_snippet")
+load("//rules:write_bazel_status_vars.bzl", "write_bazel_status_vars")
+
+bzlformat_pkg(name = "bzlformat")
+
+write_file(
+    name = "foo_license",
+    out = "LICENSE",
+    content = ["Super important text."],
+)
+
+pkg_tar(
+    name = "foo",
+    srcs = [
+        ":foo_license",
+    ],
+    extension = "tar.gz",
+)
+
+workspace_snippet(
+    name = "foo_workspace_snippet",
+    pkg = ":foo",
+    url_templates = [
+        "http://github.com/acme/rules_fun/releases/download/${STABLE_CURRENT_RELEASE_TAG}/rules_fun-${STABLE_CURRENT_RELEASE}.tar.gz",
+    ],
+    workspace_name = "acme_rules_fun",
+)
+
+write_bazel_status_vars(
+    name = "bazel_workspace_vars",
+)
+
+sh_test(
+    name = "foo_workspace_snippet_test",
+    srcs = ["foo_workspace_snippet_test.sh"],
+    data = [
+        ":bazel_workspace_vars",
+        ":foo_workspace_snippet",
+        ":foo_workspace_snippet_pkg_sha256",
+    ],
+    deps = [
+        "//lib/private:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)

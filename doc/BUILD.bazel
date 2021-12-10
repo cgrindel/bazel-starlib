@@ -6,18 +6,27 @@ load(
     "write_header",
     doc_providers = "providers",
 )
+load("@rules_pkg//:mappings.bzl", "pkg_filegroup", "pkg_files")
+
+bzlformat_pkg(name = "bzlformat")
 
 # MARK: - Documentation Providers
 
+_RULE_NAMES = [
+    "filter_srcs",
+    "hash_sha256",
+    "workspace_snippet",
+    "write_bazel_status_vars",
+]
+
 _RULE_DOC_PROVIDERS = [
     doc_providers.create(
-        name = "filter_srcs",
-        stardoc_input = "//rules:filter_srcs.bzl",
-        symbols = [
-            "filter_srcs",
-        ],
-        deps = ["//rules:filter_srcs"],
-    ),
+        name = rule,
+        stardoc_input = "//rules:{rule}.bzl".format(rule = rule),
+        symbols = [rule],
+        deps = ["//rules:{rule}".format(rule = rule)],
+    )
+    for rule in _RULE_NAMES
 ]
 
 _API_SRCS = [
@@ -109,4 +118,19 @@ write_file_list(
 
 doc_for_provs(doc_provs = _ALL_DOC_PROVIDERS)
 
-bzlformat_pkg(name = "bzlformat")
+pkg_files(
+    name = "package_files",
+    srcs = glob(
+        [
+            "*.bazel",
+            "*.md",
+        ],
+    ),
+)
+
+pkg_filegroup(
+    name = "package_content",
+    srcs = [":package_files"],
+    prefix = "doc",
+    visibility = ["//:__pkg__"],
+)

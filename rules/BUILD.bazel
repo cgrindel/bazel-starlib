@@ -1,11 +1,54 @@
 load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@rules_pkg//:mappings.bzl", "pkg_filegroup", "pkg_files")
 
 package(default_visibility = ["//visibility:public"])
+
+bzlformat_pkg(name = "bzlformat")
 
 bzl_library(
     name = "filter_srcs",
     srcs = ["filter_srcs.bzl"],
+    deps = [
+        "//rules/private:filter_srcs",
+    ],
 )
 
-bzlformat_pkg(name = "bzlformat")
+bzl_library(
+    name = "hash_sha256",
+    srcs = ["hash_sha256.bzl"],
+    deps = [
+        "//rules/private:hash_sha256",
+    ],
+)
+
+bzl_library(
+    name = "workspace_snippet",
+    srcs = ["workspace_snippet.bzl"],
+    deps = [
+        "//rules/private:workspace_snippet",
+    ],
+)
+
+bzl_library(
+    name = "write_bazel_status_vars",
+    srcs = ["write_bazel_status_vars.bzl"],
+    deps = [
+        "//rules/private:write_bazel_status_vars",
+    ],
+)
+
+pkg_files(
+    name = "package_files",
+    srcs = glob([
+        "*.bazel",
+        "*.bzl",
+    ]),
+)
+
+pkg_filegroup(
+    name = "package_content",
+    srcs = [":package_files"],
+    prefix = "rules",
+    visibility = ["//:__pkg__"],
+)
