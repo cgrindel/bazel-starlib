@@ -1,14 +1,15 @@
 def _hash_sha256_impl(ctx):
     out = ctx.actions.declare_file(ctx.label.name)
-    ctx.actions.run_shell(
+    args = ctx.actions.args()
+    args.add("--source", ctx.file.src)
+    args.add("--output", out)
+    ctx.actions.run(
         outputs = [out],
         inputs = [ctx.file.src],
-        command = """
-sha256sum {src} | sed -E -n 's/^([^[:space:]]+).*/\\1/gp' > {out}
-""".format(
-            src = ctx.file.src.path,
-            out = out.path,
-        ),
+        executable = ctx.executable._hash_tool,
+        arguments = [args],
+        # The tool needs to be able to look for a utility to generate the SHA256
+        use_default_shell_env = True,
     )
     return DefaultInfo(
         files = depset([out]),
@@ -26,6 +27,11 @@ hash_sha256 = rule(
             mandatory = True,
             allow_single_file = True,
             doc = "The file whose contents should be hashed.",
+        ),
+        "_hash_tool": attr.label(
+            executable = True,
+            cfg = "host",
+            default = "@cgrindel_bazel_starlib//tools:generate_sha256",
         ),
     },
     doc = """\
