@@ -51,9 +51,10 @@ pkg_tar(
     extension = "tar.gz",
 )
 
-# TODO: FIX ME
-
-# workspace_snippet(
-#     name = "bazel_starlib_workspace",
-#     pkg = ":bazel_starlib",
-# )
+workspace_snippet(
+    name = "bazel_starlib_workspace",
+    pkg = ":bazel_starlib",
+    url_templates = [
+        "http://github.com/cgrindel/bazel-starlib/releases/download/${STABLE_CURRENT_RELEASE_TAG}/bazel-starlib-${STABLE_CURRENT_RELEASE}.tar.gz",
+    ],
+)
