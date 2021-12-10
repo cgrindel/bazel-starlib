@@ -27,7 +27,14 @@ def _workspace_snippet_impl(ctx):
         arguments = [args],
     )
 
-    return DefaultInfo(files = depset([out]))
+    return DefaultInfo(
+        files = depset([out]),
+        # To ensure that passing the outputs of this rule to a sh_binary or
+        # sh_test data attribute works, we need to put the output in the
+        # runfiles.
+        # Bazel issue: https://github.com/bazelbuild/bazel/issues/4519
+        runfiles = ctx.runfiles(files = [out]),
+    )
 
 _workspace_snippet = rule(
     implementation = _workspace_snippet_impl,

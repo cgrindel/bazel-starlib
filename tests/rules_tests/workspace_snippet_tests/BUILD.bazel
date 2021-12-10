@@ -3,6 +3,7 @@ load("@bazel_skylib//rules:write_file.bzl", "write_file")
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//rules:workspace_snippet.bzl", "workspace_snippet")
+load("//rules:write_bazel_status_vars.bzl", "write_bazel_status_vars")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -29,12 +30,15 @@ workspace_snippet(
     workspace_name = "acme_rules_fun",
 )
 
-# TODO: FINISH ME
+write_bazel_status_vars(
+    name = "bazel_workspace_vars",
+)
 
 sh_test(
     name = "foo_workspace_snippet_test",
     srcs = ["foo_workspace_snippet_test.sh"],
     data = [
+        ":bazel_workspace_vars",
         ":foo_workspace_snippet",
     ],
     deps = [

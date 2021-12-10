@@ -62,6 +62,7 @@ done
 [[ -z "${sha256_file:-}" ]] && fail "Expected a SHA256 file."
 [[ -f "${sha256_file}" ]] || fail "The SHA256 file does not exist. ${sha256_file}"
 
+
 sha256="$(< "${sha256_file}")"
 
 # Evaluate the URL template
@@ -76,6 +77,7 @@ urls="$(
     echo "        \"${url}\","
   done
 )"
+
 
 # Generate the workspace snippet
 cat > "${output_path}" <<-EOF
