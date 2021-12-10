@@ -16,14 +16,14 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
-                                                  # /tests/rules_tests/write_bazel_status_vars_tests
 bazel_status_vars_sh_location=cgrindel_bazel_starlib/tests/rules_tests/write_bazel_status_vars_tests/bazel_status_vars.sh
 bazel_status_vars_sh="$(rlocation "${bazel_status_vars_sh_location}")" || \
   (echo >&2 "Failed to locate ${bazel_status_vars_sh_location}" && exit 1)
 
 env_output="$(
   source "${bazel_status_vars_sh}"
-  printenv
+  # Print all defined variables
+  set -o posix ; set
 )"
 
 # We are checking to see that variables that are created by /tools/workspace_status.sh are present
