@@ -25,3 +25,15 @@ sh_test(
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
+
+sh_test(
+    name = "generate_sha256_test",
+    srcs = ["generate_sha256_test.sh"],
+    data = [
+        "//tools:generate_sha256",
+    ],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_shlib//lib:assertions",
+    ],
+)
