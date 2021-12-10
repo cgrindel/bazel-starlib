@@ -18,5 +18,16 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
+utilities=(openssl sha256sum)
+utilities_to_test=()
+for utility in "${utilities[@]}" ; do
+  which "${utility}" > /dev/null && utilities_to_test+=( "${utility}" )
+done
+
+[[ ${#utilities_to_test[@]} == 0 ]] && \
+  fail "This platform does not support any of the SHA256 utilities."
+
+
+
 
 fail "IMPLEMENT ME!"

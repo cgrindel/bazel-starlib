@@ -38,6 +38,10 @@ while (("$#")); do
       output_path="${2}"
       shift 2
       ;;
+    "--utility")
+      utility="${2}"
+      shift 2
+      ;;
     *)
       args+=("${1}")
       shift 1
@@ -45,19 +49,46 @@ while (("$#")); do
   esac
 done
 
-if [[ -z "${source_path}" && -z "${output_path}" && ${#args[@]} == 2 ]]; then
+if [[ -z "${source_path:-}" && -z "${output_path:-}" && ${#args[@]} == 2 ]]; then
   source_path="${1}"
   output_path="${2}"
 fi
 
-[[ -z "${source_path}" ]] && fail "Expected a source path."
-[[ -z "${output_path}" ]] && fail "Expected an output path."
+[[ -z "${source_path:-}" ]] && fail "Expected a source path."
+[[ -z "${output_path:-}" ]] && fail "Expected an output path."
 
-  
-if is_installed openssl; then
-  openssl dgst -sha256 "${source_path}" | sed -E -n 's/^SHA256[^=]+= ([^[:space:]]+).*/\1/gp' > "${output_path}"
-elif is_installed sha256sum; then
-  sha256sum "${source_path}" | sed -E -n 's/^([^[:space:]]+).*/\1/gp' > "${output_path}"
-else
-  fail "Could not find a supported utility to generate a SHA256 hash."
+if [[ -z "${utility:-}" ]]; then
+  if is_installed openssl; then
+    utility=openssl
+  elif is_installed sha256sum; then
+    utility=sha256sum
+  else
+    fail "Could not find a supported utility to generate a SHA256 hash."
+  fi
 fi
+
+case "${utility}" in
+  "openssl")
+    output="$(
+    openssl dgst -sha256 "${source_path}" | \
+      sed -E -n 's/^SHA256[^=]+= ([^[:space:]]+).*/\1/gp' 
+    )"
+    ;;
+  "sha256sum")
+    sha256sum "${source_path}" |  sed -E -n 's/^([^[:space:]]+).*/\1/gp'
+    ;;
+  *)
+    fail "Unrecognized utility. ${utility}"
+    ;;
+esac
+  
+# Write the hash
+echo "${output}" > "${output_path}"
+
+# if is_installed openssl; then
+  # openssl dgst -sha256 "${source_path}" | sed -E -n 's/^SHA256[^=]+= ([^[:space:]]+).*/\1/gp' > "${output_path}"
+# elif is_installed sha256sum; then
+  # sha256sum "${source_path}" | sed -E -n 's/^([^[:space:]]+).*/\1/gp' > "${output_path}"
+# else
+  # fail "Could not find a supported utility to generate a SHA256 hash."
+# fi
