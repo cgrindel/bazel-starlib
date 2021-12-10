@@ -6,6 +6,11 @@ package(default_visibility = ["//rules:__pkg__"])
 bzlformat_pkg(name = "bzlformat")
 
 bzl_library(
+    name = "hash_sha256",
+    srcs = ["hash_sha256.bzl"],
+)
+
+bzl_library(
     name = "workspace_snippet",
     srcs = ["workspace_snippet.bzl"],
     deps = [

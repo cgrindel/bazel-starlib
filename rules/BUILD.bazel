@@ -14,6 +14,9 @@ bzl_library(
 bzl_library(
     name = "hash_sha256",
     srcs = ["hash_sha256.bzl"],
+    deps = [
+        "//rules/private:hash_sha256",
+    ],
 )
 
 bzl_library(
