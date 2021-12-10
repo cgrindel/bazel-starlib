@@ -37,10 +37,3 @@ def bazel_starlib_dependencies():
             "https://github.com/bazelbuild/rules_pkg/releases/download/0.5.1/rules_pkg-0.5.1.tar.gz",
         ],
     )
-
-    maybe(
-        http_archive,
-        name = "aspect_bazel_lib",
-        sha256 = "5b80d60e00a7ea2d9d540c594e5ec41c946c163e272056c626026fcbb7918de2",
-        url = "https://github.com/aspect-build/bazel-lib/releases/download/v0.2.7/bazel_lib-0.2.7.tar.gz",
-    )
