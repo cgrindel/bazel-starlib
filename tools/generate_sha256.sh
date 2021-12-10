@@ -50,13 +50,14 @@ while (("$#")); do
 done
 
 if [[ -z "${source_path:-}" && -z "${output_path:-}" && ${#args[@]} == 2 ]]; then
-  source_path="${1}"
-  output_path="${2}"
+  source_path="${args[0]}"
+  output_path="${args[1]}"
 fi
 
 [[ -z "${source_path:-}" ]] && fail "Expected a source path."
 [[ -z "${output_path:-}" ]] && fail "Expected an output path."
 
+# Select the utility to use
 if [[ -z "${utility:-}" ]]; then
   if is_installed openssl; then
     utility=openssl
@@ -67,18 +68,21 @@ if [[ -z "${utility:-}" ]]; then
   fi
 fi
 
+# Generate the hash
 case "${utility}" in
-  "openssl")
+  openssl)
     output="$(
     openssl dgst -sha256 "${source_path}" | \
       sed -E -n 's/^SHA256[^=]+= ([^[:space:]]+).*/\1/gp' 
     )"
     ;;
-  "sha256sum")
+  sha256sum)
+    output="$(
     sha256sum "${source_path}" |  sed -E -n 's/^([^[:space:]]+).*/\1/gp'
+    )"
     ;;
   *)
-    fail "Unrecognized utility. ${utility}"
+    fail "Unrecognized utility. ${utility:-}"
     ;;
 esac
   
