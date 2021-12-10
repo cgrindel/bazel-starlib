@@ -11,12 +11,6 @@ bzl_library(
 
 bzlformat_pkg(name = "bzlformat")
 
-# filegroup(
-#     name = "release_files",
-#     srcs = glob(["*"]),
-#     visibility = ["//:__subpackages__"],
-# )
-
 pkg_files(
     name = "package_files",
     srcs = glob([
