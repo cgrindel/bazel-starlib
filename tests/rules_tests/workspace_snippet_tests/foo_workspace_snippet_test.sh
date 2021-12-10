@@ -26,22 +26,26 @@ foo_workspace_snippet_bzl_location=cgrindel_bazel_starlib/tests/rules_tests/work
 foo_workspace_snippet_bzl="$(rlocation "${foo_workspace_snippet_bzl_location}")" || \
   (echo >&2 "Failed to locate ${foo_workspace_snippet_bzl_location}" && exit 1)
 
+foo_workspace_snippet_pkg_sha256_location=cgrindel_bazel_starlib/tests/rules_tests/workspace_snippet_tests/foo_workspace_snippet_pkg_sha256
+foo_workspace_snippet_pkg_sha256="$(rlocation "${foo_workspace_snippet_pkg_sha256_location}")" || \
+  (echo >&2 "Failed to locate ${foo_workspace_snippet_pkg_sha256_location}" && exit 1)
+
 # MARK - Test the Snippet
 
 # NOTE: This test is focused on testing the plumbing of the rule. The workspace snippet generation
 # is tested in the generate_workspace_snippet_test.sh.
 
+sha256="$(< "${foo_workspace_snippet_pkg_sha256}")"
 actual_snippet="$(< "${foo_workspace_snippet_bzl}")"
 
 $(
 # Load the Bazel status variables
 source "${bazel_workspace_vars_sh}"
 
-# NOTE: The SHA256 value is from evaluating the output of the package defined in the BUILD file. 
 expected_snippet=$(cat <<-EOF
 http_archive(
     name = "acme_rules_fun",
-    sha256 = "2e2f0a03043aedd9bd9a1f742c821ff36c778cb1d439ad31fa4c7ba06af2abdf",
+    sha256 = "${sha256}",
     urls = [
         "http://github.com/acme/rules_fun/releases/download/${STABLE_CURRENT_RELEASE_TAG}/rules_fun-${STABLE_CURRENT_RELEASE}.tar.gz",
     ],

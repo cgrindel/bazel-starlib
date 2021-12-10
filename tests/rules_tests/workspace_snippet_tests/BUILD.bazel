@@ -40,27 +40,10 @@ sh_test(
     data = [
         ":bazel_workspace_vars",
         ":foo_workspace_snippet",
+        ":foo_workspace_snippet_pkg_sha256",
     ],
     deps = [
         "//lib/private:fail",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
-
-# write_file(
-#     name = "expected_foo_workspace_snippet",
-#     out = "expected_foo_workspace_snippet.bzl",
-#     content = ["""\
-# http_archive(
-#     name = "cgrindel_bazel_starlib",
-#     sha256 = "FILL_ME_IN",
-#     url = "",
-# )
-# """],
-# )
-
-# diff_test(
-#     name = "workspace_snippet_test",
-#     file1 = ":foo_workspace",
-#     file2 = ":expected_workspace_snippet",
-# )
