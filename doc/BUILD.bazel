@@ -8,6 +8,8 @@ load(
 )
 load("@rules_pkg//:mappings.bzl", "pkg_filegroup", "pkg_files")
 
+bzlformat_pkg(name = "bzlformat")
+
 # MARK: - Documentation Providers
 
 _RULE_NAMES = [
@@ -115,14 +117,6 @@ write_file_list(
 # MARK: - Generate Documentation from Providers
 
 doc_for_provs(doc_provs = _ALL_DOC_PROVIDERS)
-
-bzlformat_pkg(name = "bzlformat")
-
-# filegroup(
-#     name = "release_files",
-#     srcs = glob(["*"]),
-#     visibility = ["//:__subpackages__"],
-# )
 
 pkg_files(
     name = "package_files",
