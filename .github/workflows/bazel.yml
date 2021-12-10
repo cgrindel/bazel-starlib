@@ -12,15 +12,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: DEBUG
-      shell: bash
-      run: |
-        which sha256sum || echo "sha256sum not found"
-        which openssl || echo "openssl not found"
-        which gh || true
-        echo >&2 STOP
-        exit 1
-
     - name: Write local.bazelrc File
       shell: bash
       run: |
