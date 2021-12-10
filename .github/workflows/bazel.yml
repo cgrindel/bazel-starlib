@@ -15,7 +15,8 @@ jobs:
     - name: DEBUG
       shell: bash
       run: |
-        which sha256sum || true
+        which sha256sum || echo "sha256sum not found"
+        which openssl || echo "openssl not found"
         which gh || true
         echo >&2 STOP
         exit 1
