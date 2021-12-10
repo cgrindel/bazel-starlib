@@ -22,7 +22,11 @@ current_release_tag="${last_release_tag}"
 [[ "${current_commit}" != "${last_release_commit}" ]] && \
   current_release_tag="${current_release_tag}-dirty"
 
+current_release="${current_release_tag}"
+[[ "${current_release}" =~ "^v" ]] && current_release="${current_release:1}"
+
 echo "STABLE_LAST_RELEASE_TAG ${last_release_tag}"
 echo "STABLE_LAST_RELEASE_COMMIT ${last_release_commit}"
 echo "STABLE_CURRENT_COMMIT ${current_commit}"
 echo "STABLE_CURRENT_RELEASE_TAG  ${current_release_tag}"
+echo "STABLE_CURRENT_RELEASE  ${current_release}"
