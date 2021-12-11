@@ -33,3 +33,13 @@ sh_binary(
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
+
+sh_binary(
+    name = "generate_git_changelog",
+    srcs = ["generate_git_changelog.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
