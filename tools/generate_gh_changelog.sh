@@ -39,6 +39,7 @@ source "${github_sh}"
 is_installed gh || fail "Could not find Github CLI (gh)."
 is_installed git || fail "Could not find git."
 is_installed jq || fail "Could not find jq for JSON manipulation."
+is_installed curl || fail "Could not find curl for Github API execution."
 
 
 # MARK - Process Arguments
@@ -65,17 +66,15 @@ tag_name="${args[0]}"
 starting_dir="${PWD}"
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
-auth_status="$( get_gh_auth_status )"
-username="$( get_gh_username "${auth_status}" )"
-auth_token="$( get_gh_auth_token "${auth_status}")"
-
 repo_url="$( get_git_remote_url )"
 is_git_repo_url "${repo_url}" || \
   fail "The git repository's remote URL does not appear to be a Github URL. ${repo_url}"
 
-owner="$( get_gh_repo_owner "${repo_url}" )"
-repo="$( get_gh_repo_name "${repo_url}" )"
-api_base_url="https://api.github.com/repos/${owner}/${repo}"
+auth_status="$( get_gh_auth_status )"
+username="$( get_gh_username "${auth_status}" )"
+auth_token="$( get_gh_auth_token "${auth_status}")"
+
+api_base_url="$( get_gh_api_base_url "${repo_url}" )"
 
 api_url="${api_base_url}/releases/generate-notes"
 
