@@ -37,7 +37,7 @@ get_gh_auth_token() {
 _github_url_patterns=(git@github.com https://github.com)
 
 # Succeeds if the URL is a Github repo URL. Otherwise, it fails.
-is_git_repo_url() {
+is_github_repo_url() {
   local repo_url="${1}"
   for pattern in "${_github_url_patterns[@]}" ; do
     [[ "${repo_url}" =~ "${pattern}" ]] && return

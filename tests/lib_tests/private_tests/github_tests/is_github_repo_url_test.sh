@@ -26,16 +26,23 @@ source "${github_sh}"
 
 # MARK - Test
 
-auth_status="
-github.com
-  ✓ Logged in to github.com as cgrindel (/Users/chuck/.config/gh/hosts.yml)
-  ✓ Git operations for github.com configured to use ssh protocol.
-  ✓ Token: 1234567899b95cd24c3e91d210388a28bf560b73
-"
+good_urls=()
+good_urls+=(git@github.com:cgrindel/bazel-starlib.git)
+good_urls+=(https://github.com/cgrindel/bazel-starlib.git)
+good_urls+=(https://github.com/cgrindel/bazel-starlib)
 
-expected="cgrindel"
-actual="$( get_gh_username "${auth_status}" )"
-[[ "${actual}" == "${expected}" ]] || \
-  fail "Expected username not found. actual: ${actual}, expected: ${expected}"
-# [[ "${actual}" == "${expected}" ]] || \
-#   fail "Expected token not found. actual: ${actual}, expected: ${expected}"
+for url in "${good_urls[@]}" ; do
+  is_github_repo_url "${url}" || fail "Expected '${url}' to be a Github URL."
+done
+
+bad_urls=()
+bad_urls+=(git@example.org:cgrindel/bazel-starlib.git)
+bad_urls+=(https://example.org/cgrindel/bazel-starlib.git)
+
+for url in "${bad_urls[@]}" ; do
+  is_github_repo_url "${url}" && fail "Expected '${url}' to not be a Github URL."
+done
+
+# Because the negative tests have failures when the test is working, we need to
+# end on a positive note.
+echo "ALL IS WELL"
