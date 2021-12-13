@@ -11,3 +11,13 @@ sh_test(
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
+
+sh_test(
+    name = "get_gh_auth_token_test",
+    srcs = ["get_gh_auth_token_test.sh"],
+    deps = [
+        "//lib/private:fail",
+        "//lib/private:github",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
