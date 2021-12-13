@@ -24,7 +24,7 @@ generate_sha256_sh="$(rlocation "${generate_sha256_sh_location}")" || \
 
 # MARK - Utilities Check
 
-utilities=(openssl sha256sum)
+utilities=(openssl shasum)
 utilities_to_test=()
 for utility in "${utilities[@]}" ; do
   which "${utility}" > /dev/null && utilities_to_test+=( "${utility}" )
