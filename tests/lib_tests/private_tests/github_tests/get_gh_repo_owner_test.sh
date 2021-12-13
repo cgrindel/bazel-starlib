@@ -40,7 +40,6 @@ for (( i = 0; i < ${#urls[@]}; i++ )); do
   url="${urls[$i]}"
   expected="${expected_owners[$i]}"
   actual="$( get_gh_repo_owner "${url}" )"
-  [[ "${actual}" == "${expected}" ]] || fail "Expected owner not found. url: ${url}, expected: ${expected}, actual: ${actual}"
+  [[ "${actual}" == "${expected}" ]] || \
+    fail "Expected owner not found. url: ${url}, expected: ${expected}, actual: ${actual}"
 done
-
-fail "IMPLEMENT ME!"
