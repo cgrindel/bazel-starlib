@@ -30,10 +30,12 @@ urls=()
 urls+=(git@github.com:cgrindel/bazel-starlib.git)
 urls+=(https://github.com/foo_bar/bazel-starlib.git)
 urls+=(https://github.com/chicken-smidgen/bazel-starlib)
+urls+=(https://api.github.com/repos/chicken-smidgen/bazel-starlib)
 
 expected_owners=()
 expected_owners+=(cgrindel)
 expected_owners+=(foo_bar)
+expected_owners+=(chicken-smidgen)
 expected_owners+=(chicken-smidgen)
 
 for (( i = 0; i < ${#urls[@]}; i++ )); do

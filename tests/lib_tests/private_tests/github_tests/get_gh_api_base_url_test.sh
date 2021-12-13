@@ -29,14 +29,14 @@ source "${github_sh}"
 urls=()
 urls+=(git@github.com:cgrindel/bazel-starlib.git)
 urls+=(git@github.com:cgrindel/bazel-starlib)
-urls+=(https://github.com/foo_bar/bazel-starlib.git)
-urls+=(https://github.com/chicken-smidgen/bazel-starlib)
-urls+=(https://api.github.com/repos/chicken-smidgen/bazel-starlib)
+urls+=(https://github.com/cgrindel/bazel-starlib.git)
+urls+=(https://github.com/cgrindel/bazel-starlib)
+urls+=(https://api.github.com/repos/cgrindel/bazel-starlib)
 
-expected=bazel-starlib
-for (( i = 0; i < ${#urls[@]}; i++ )); do
-  url="${urls[$i]}"
-  actual="$( get_gh_repo_name "${url}" )"
+expected="https://api.github.com/repos/cgrindel/bazel-starlib"
+for url in "${urls[@]}" ; do
+  actual="$( get_gh_api_base_url "${url}" )"
   [[ "${actual}" == "${expected}" ]] || \
-    fail "Expected name not found. url: ${url}, expected: ${expected}, actual: ${actual}"
+    fail "Expected base API URL not found. url: ${url}, expected: ${expected}, actual: ${actual}"
 done
+

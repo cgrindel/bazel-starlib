@@ -46,9 +46,12 @@ _github_url_patterns+=(git@github.com:)
 _github_url_owner_sed_cmds+=('s|git@[^:]+:([^/]+).*|\1|gp')
 
 # Example: https://github.com/cgrindel/bazel-starlib.git
-_github_url_patterns+=(https://github.com)
+_github_url_patterns+=(https://github.com/)
 _github_url_owner_sed_cmds+=('s|https://github.com/([^/]+)/.*|\1|gp')
 
+# Example: https://api.github.com/repos/cgrindel/bazel-starlib
+_github_url_patterns+=(https://api.github.com/repos/)
+_github_url_owner_sed_cmds+=('s|https://api.github.com/repos/([^/]+)/.*|\1|gp')
 
 # Returns the index for the Github URL pattern. This index can be used look up
 # owner and repo name.
@@ -79,4 +82,13 @@ get_gh_repo_owner() {
 get_gh_repo_name() {
   local repo_url="${1}"
   basename -s .git "${repo_url}"
+}
+
+# MARK - Github API Functions
+
+get_gh_api_base_url() {
+  local repo_url="${1}"
+  local owner="$( get_gh_repo_owner "${repo_url}" )"
+  local name="$( get_gh_repo_name "${repo_url}" )"
+  echo "https://api.github.com/repos/${owner}/${name}"
 }

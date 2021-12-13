@@ -51,3 +51,13 @@ sh_test(
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
+
+sh_test(
+    name = "get_gh_api_base_url_test",
+    srcs = ["get_gh_api_base_url_test.sh"],
+    deps = [
+        "//lib/private:fail",
+        "//lib/private:github",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)

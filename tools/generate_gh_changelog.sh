@@ -73,8 +73,8 @@ repo_url="$( get_git_remote_url )"
 is_git_repo_url "${repo_url}" || \
   fail "The git repository's remote URL does not appear to be a Github URL. ${repo_url}"
 
-owner="cgrindel"
-repo="bazel-starlib"
+owner="$( get_gh_repo_owner "${repo_url}" )"
+repo="$( get_gh_repo_name "${repo_url}" )"
 api_base_url="https://api.github.com/repos/${owner}/${repo}"
 
 api_url="${api_base_url}/releases/generate-notes"
