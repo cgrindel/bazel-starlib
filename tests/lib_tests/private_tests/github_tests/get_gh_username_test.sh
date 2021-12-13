@@ -16,5 +16,24 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
+github_sh_location=cgrindel_bazel_starlib/lib/private/github.sh
+github_sh="$(rlocation "${github_sh_location}")" || \
+  (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)
+source "${github_sh}"
 
-fail "IMPLEMENT ME!"
+
+# MARK - Test
+
+auth_status="
+github.com
+  ✓ Logged in to github.com as cgrindel (/Users/chuck/.config/gh/hosts.yml)
+  ✓ Git operations for github.com configured to use ssh protocol.
+  ✓ Token: 1234567899b95cd24c3e91d210388a28bf560b73
+"
+
+expected="cgrindel"
+actual="$( get_gh_username "${auth_status}" )"
+[[ "${actual}" == "${expected}" ]] || \
+  fail "Expected username not found. actual: ${actual}, expected: ${expected}"
+# [[ "${actual}" == "${expected}" ]] || \
+#   fail "Expected token not found. actual: ${actual}, expected: ${expected}"
