@@ -47,5 +47,5 @@ is_github_repo_url() {
 
 get_gh_repo_owner() {
   local repo_url="${1}"
-
+  echo ""
 }
