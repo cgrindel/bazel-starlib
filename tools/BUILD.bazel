@@ -43,3 +43,16 @@ sh_binary(
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
+
+sh_binary(
+    name = "generate_gh_changelog",
+    srcs = ["generate_gh_changelog.sh"],
+    data = [
+        ":get_gh_auth_token",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
