@@ -1,0 +1,13 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_test(
+    name = "get_gh_username_test",
+    srcs = ["get_gh_username_test.sh"],
+    deps = [
+        "//lib/private:fail",
+        "//lib/private:github",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)

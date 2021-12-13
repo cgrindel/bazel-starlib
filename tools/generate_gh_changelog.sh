@@ -18,28 +18,60 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
-get_gh_auth_token_sh_location=cgrindel_bazel_starlib/tools/get_gh_auth_token.sh
-get_gh_auth_token_sh="$(rlocation "${get_gh_auth_token_sh_location}")" || \
-  (echo >&2 "Failed to locate ${get_gh_auth_token_sh_location}" && exit 1)
+env_sh_location=cgrindel_bazel_starlib/lib/private/env.sh
+env_sh="$(rlocation "${env_sh_location}")" || \
+  (echo >&2 "Failed to locate ${env_sh_location}" && exit 1)
+source "${env_sh}"
 
-# MARK - Functions
+git_sh_location=cgrindel_bazel_starlib/lib/private/git.sh
+git_sh="$(rlocation "${git_sh_location}")" || \
+  (echo >&2 "Failed to locate ${git_sh_location}" && exit 1)
+source "${git_sh}"
 
-is_installed() {
-  local name="${1}"
-  which "${name}" > /dev/null
-}
+github_sh_location=cgrindel_bazel_starlib/lib/private/github.sh
+github_sh="$(rlocation "${github_sh_location}")" || \
+  (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)
+source "${github_sh}"
 
 
 # MARK - Check for Required Software
 
+is_installed gh || fail "Could not find Github CLI (gh)."
+is_installed git || fail "Could not find git."
 is_installed jq || fail "Could not find jq for JSON manipulation."
+
+
+# MARK - Process Arguments
+
+args=()
+while (("$#")); do
+  case "${1}" in
+    "--prev_tag")
+      prev_tag_name="${2}"
+      shift 2
+      ;;
+    *)
+      args+=("${1}")
+      shift 1
+      ;;
+  esac
+done
+
+[[ ${#args[@]} == 0 ]] && fail "A tag name for the release must be specified."
+tag_name="${args[0]}"
 
 # MARK - Generate the changelog.
 
 starting_dir="${PWD}"
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
-auth_token="$( "${get_gh_auth_token_sh}" )"
+auth_status="$( get_gh_auth_status )"
+username="$( get_gh_username "${auth_status}" )"
+auth_token="$( get_gh_auth_token "${auth_status}")"
+
+repo_url="$( get_git_remote_url )"
+is_git_repo_url "${repo_url}" || \
+  fail "The git repository's remote URL does not appear to be a Github URL. ${repo_url}"
 
 owner="cgrindel"
 repo="bazel-starlib"
@@ -47,8 +79,7 @@ api_base_url="https://api.github.com/repos/${owner}/${repo}"
 
 api_url="${api_base_url}/releases/generate-notes"
 
-tag_name="v0.1.1"
-prev_tag_name="v0.1.0"
+# tag_name="v0.1.1"
 
 # If tag_name does not exist, get the last commit on main at orgin
 
@@ -59,13 +90,22 @@ target_commit="$(git rev-list -n 1 "tags/${tag_name}")"
 # # Get the current commit
 # target_commit="$(git log --pretty=format:'%H' -n 1)"
 
+# The changelog from the last release.
 request_data="$(
   jq -n \
     --arg tag_name "${tag_name}" \
-    --arg prev_tag_name "${prev_tag_name}" \
     --arg target_commitish "${target_commit}" \
-    '{tag_name: $tag_name, previous_tag_name: $prev_tag_name, target_commitish: $target_commitish}'
+    '{tag_name: $tag_name, target_commitish: $target_commitish}'
 )"
+
+# prev_tag_name="v0.1.0"
+# request_data="$(
+#   jq -n \
+#     --arg tag_name "${tag_name}" \
+#     --arg prev_tag_name "${prev_tag_name}" \
+#     --arg target_commitish "${target_commit}" \
+#     '{tag_name: $tag_name, previous_tag_name: $prev_tag_name, target_commitish: $target_commitish}'
+# )"
 
 # DEBUG BEGIN
 echo >&2 "*** CHUCK  api_url: ${api_url}" 
