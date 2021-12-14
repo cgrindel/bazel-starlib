@@ -54,7 +54,7 @@ done
 #   output_path="${args[1]}"
 # fi
 
-[[ -z "${source_path:-}" ]] && fail "Expected a source path."
+# [[ -z "${source_path:-}" ]] && fail "Expected a source path."
 # [[ -z "${output_path:-}" ]] && fail "Expected an output path."
 
 # Select the utility to use
@@ -68,16 +68,26 @@ if [[ -z "${utility:-}" ]]; then
   fi
 fi
 
-# Generate the hash
+# Define the hash function
 case "${utility}" in
   shasum)
-    output="$(
-    cat "${source_path}" | shasum -a 256 | sed -E -n 's/^([^[:space:]]+).*/\1/gp'
-    )"
+    function sumsha256() {
+      shasum -a 256 | sed -E -n 's/^([^[:space:]]+).*/\1/gp'
+    }
     ;;
   openssl)
-    output="$( cat "${source_path}" | openssl dgst -sha256 )"
+    function sumsha256() {
+      openssl dgst -sha256
+    }
     ;;
+  # shasum)
+  #   output="$(
+  #   cat "${source_path}" | shasum -a 256 | sed -E -n 's/^([^[:space:]]+).*/\1/gp'
+  #   )"
+  #   ;;
+  # openssl)
+  #   output="$( cat "${source_path}" | openssl dgst -sha256 )"
+  #   ;;
   # shasum)
   #   output="$(
   #   shasum -a 256 "${source_path}" |  sed -E -n 's/^([^[:space:]]+).*/\1/gp'
@@ -93,10 +103,16 @@ case "${utility}" in
     fail "Unrecognized utility. ${utility:-}"
     ;;
 esac
+
+# function do_sumsha256() {
+#   sumsha256 < "${source_path:-/dev/stdin}"
+# }
   
 # Write the hash
-if [[ -z "${output_path:-}" ]]; then
-  echo "${output}"
-else
-  echo "${output}" > "${output_path}"
-fi
+sumsha256 < "${source_path:-/dev/stdin}" > "${output_path:-/dev/stdout}"
+
+# if [[ -z "${output_path:-}" ]]; then
+#   echo "${output}"
+# else
+#   echo "${output}" > "${output_path}"
+# fi
