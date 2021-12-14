@@ -1,4 +1,5 @@
 load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -60,4 +61,27 @@ sh_test(
         "//lib/private:github",
         "@bazel_tools//tools/bash/runfiles",
     ],
+)
+
+# MARK: - Integration Tests
+
+sh_test(
+    name = "get_gh_auth_status_test",
+    srcs = ["get_gh_auth_status_test.sh"],
+    env_inherit = GH_ENV_INHERIT,
+    tags = INTEGRATION_TEST_TAGS,
+    deps = [
+        "//lib/private:fail",
+        "//lib/private:github",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+test_suite(
+    name = "integration_tests",
+    tags = INTEGRATION_TEST_TAGS,
+    tests = [
+        ":get_gh_auth_status_test",
+    ],
+    visibility = ["//:__subpackages__"],
 )

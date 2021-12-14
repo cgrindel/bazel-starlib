@@ -1,4 +1,5 @@
 load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -46,17 +47,8 @@ sh_test(
     data = [
         "//tools:generate_gh_changelog",
     ],
-    env_inherit = [
-        # The HOME, GH_TOKEN, and GITHUB_TOKEN environment variables help the gh utility find
-        # its auth info.
-        "GITHUB_TOKEN",
-        "GH_TOKEN",
-        "HOME",
-    ],
-    tags = [
-        "exclusive",
-        "manual",
-    ],
+    env_inherit = GH_ENV_INHERIT,
+    tags = INTEGRATION_TEST_TAGS,
     deps = [
         "//lib/private:env",
         "@bazel_tools//tools/bash/runfiles",
@@ -65,10 +57,7 @@ sh_test(
 
 test_suite(
     name = "integration_tests",
-    tags = [
-        "exclusive",
-        "manual",
-    ],
+    tags = INTEGRATION_TEST_TAGS,
     tests = [
         ":generate_gh_changelog_test",
     ],

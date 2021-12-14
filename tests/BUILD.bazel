@@ -1,3 +1,4 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
 load(":filter_srcs_tests.bzl", "filter_srcs_test_suite")
 load(":src_utils_tests.bzl", "src_utils_test_suite")
@@ -7,3 +8,8 @@ filter_srcs_test_suite()
 src_utils_test_suite()
 
 bzlformat_pkg(name = "bzlformat")
+
+bzl_library(
+    name = "integration_test_common",
+    srcs = ["integration_test_common.bzl"],
+)

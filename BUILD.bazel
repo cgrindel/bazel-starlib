@@ -33,6 +33,7 @@ test_suite(
         "manual",
     ],
     tests = [
+        "//tests/lib_tests/private_tests/github_tests:integration_tests",
         "//tests/tools_tests:integration_tests",
     ],
     visibility = ["//:__subpackages__"],
