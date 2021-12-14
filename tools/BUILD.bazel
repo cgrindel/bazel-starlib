@@ -33,3 +33,29 @@ sh_binary(
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
+
+sh_binary(
+    name = "get_gh_auth_token",
+    srcs = ["get_gh_auth_token.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_binary(
+    name = "generate_gh_changelog",
+    srcs = ["generate_gh_changelog.sh"],
+    # data = [
+    #     ":get_gh_auth_token",
+    # ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:env",
+        "//lib/private:fail",
+        "//lib/private:git",
+        "//lib/private:github",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)

@@ -21,3 +21,30 @@ sh_library(
         "//tools:__subpackages__",
     ],
 )
+
+sh_library(
+    name = "env",
+    srcs = ["env.sh"],
+    visibility = [
+        "//tests:__subpackages__",
+        "//tools:__subpackages__",
+    ],
+)
+
+sh_library(
+    name = "git",
+    srcs = ["git.sh"],
+    visibility = [
+        "//tests:__subpackages__",
+        "//tools:__subpackages__",
+    ],
+)
+
+sh_library(
+    name = "github",
+    srcs = ["github.sh"],
+    visibility = [
+        "//tests:__subpackages__",
+        "//tools:__subpackages__",
+    ],
+)

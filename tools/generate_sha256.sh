@@ -59,10 +59,10 @@ fi
 
 # Select the utility to use
 if [[ -z "${utility:-}" ]]; then
-  if is_installed openssl; then
+  if is_installed shasum; then
+    utility=shasum
+  elif is_installed openssl; then
     utility=openssl
-  elif is_installed sha256sum; then
-    utility=sha256sum
   else
     fail "Could not find a supported utility to generate a SHA256 hash."
   fi
@@ -70,15 +70,15 @@ fi
 
 # Generate the hash
 case "${utility}" in
+  shasum)
+    output="$(
+    shasum -a 256 "${source_path}" |  sed -E -n 's/^([^[:space:]]+).*/\1/gp'
+    )"
+    ;;
   openssl)
     output="$(
     openssl dgst -sha256 "${source_path}" | \
       sed -E -n 's/^SHA256[^=]+= ([^[:space:]]+).*/\1/gp' 
-    )"
-    ;;
-  sha256sum)
-    output="$(
-    sha256sum "${source_path}" |  sed -E -n 's/^([^[:space:]]+).*/\1/gp'
     )"
     ;;
   *)
