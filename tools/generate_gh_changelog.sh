@@ -38,8 +38,6 @@ source "${github_sh}"
 
 is_installed gh || fail "Could not find Github CLI (gh)."
 is_installed git || fail "Could not find git."
-# is_installed jq || fail "Could not find jq for JSON manipulation."
-# is_installed curl || fail "Could not find curl for Github API execution."
 
 
 # MARK - Process Arguments
@@ -79,13 +77,13 @@ is_github_repo_url "${repo_url}" || \
 auth_status="$( get_gh_auth_status )"
 username="$( get_gh_username "${auth_status}" )"
 auth_token="$( get_gh_auth_token "${auth_status}")"
-api_base_url="$( get_gh_api_base_url "${repo_url}" )"
+# api_base_url="$( get_gh_api_base_url "${repo_url}" )"
 
 # Fetch the latest from origin
 fetch_latest_from_git_remote
 
 # Construct the args for generating the changelog.
-changelog_args=( "${api_base_url}" )
+changelog_args=()
 changelog_args+=(--tag_name "${tag_name}")
 if ! git_tag_exists "${tag_name}"; then
   last_commit_on_main="$( get_latest_git_commit_hash "${remote_name}/${main_branch}" )"
@@ -94,13 +92,6 @@ fi
 [[ -z "${previous_tag_name:-}" ]] || changelog_args+=(--previous_tag_name "${previous_tag_name}")
 
 # Generate the changelog
-# response_json="$( get_gh_changelog "${changelog_args[@]}" )"
-# changelog_md="$( echo "${response_json}" | jq '.body' )"
-# # Evaluate the embedded newlines
-# changelog_md="$( printf "%b\n" "${changelog_md}" )"
-# # Remove the double quotes at beginning and end
-# changelog_md="${changelog_md%\"}"
-# changelog_md="${changelog_md#\"}"
 changelog_md="$( get_gh_changelog "${changelog_args[@]}" )"
 
 # Output the changelog

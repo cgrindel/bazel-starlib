@@ -47,8 +47,11 @@ sh_test(
         "//tools:generate_gh_changelog",
     ],
     env_inherit = [
+        # The HOME, GH_TOKEN, and GITHUB_TOKEN environment variables help the gh utility find
+        # its auth info.
         "GITHUB_TOKEN",
         "GH_TOKEN",
+        "HOME",
     ],
     tags = [
         "exclusive",

@@ -35,22 +35,26 @@ is_installed git || fail "Could not find git."
 repo_dir="${PWD}/repo"
 rm -rf "${repo_dir}"
 repo_url="https://github.com/cgrindel/bazel-starlib"
-git clone "${repo_url}" "${repo_dir}"
+git clone "${repo_url}" "${repo_dir}" 2>/dev/null
 cd "${repo_dir}"
+
+# The utility needs to know where the workspace directory is. In this case, we are faking it out
+# by setting it to our cloned repo directory.
 export "BUILD_WORKSPACE_DIRECTORY=${repo_dir}"
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK  BUILD_WORKSPACE_DIRECTORY: ${BUILD_WORKSPACE_DIRECTORY}" 
-# DEBUG END
 
 # MARK - Test changelog between two known tags 
 
 tag_name="v0.1.1"
 prev_tag_name="v0.1.0"
 result="$( "${generate_gh_changelog_sh}" --previous_tag_name "${prev_tag_name}" "${tag_name}" )"
+[[ "${result}" =~ "**Full Changelog**: https://github.com/cgrindel/bazel-starlib/compare/v0.1.0...v0.1.1" ]] || \
+  fail "Expected to find changelog URL for v0.1.0...v0.1.1. result: ${result}"
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK  result: ${result}" 
-# DEBUG END
 
-fail "IMPLEMENT ME!"
+# MARK - Test changelog to a new tag
+
+tag_name="v99999.0.0"
+result="$( "${generate_gh_changelog_sh}" "${tag_name}" )"
+match='[*][*]Full Changelog[*][*].*v9999'
+[[ "${result}" =~ $match ]] || fail "Expected to find changelog URL for ${tag_name}. result: ${result}"
