@@ -86,6 +86,7 @@ get_gh_repo_name() {
 
 # MARK - Github API Functions
 
+# Returns a base URL suitable for API calls.
 get_gh_api_base_url() {
   local repo_url="${1}"
   local owner="$( get_gh_repo_owner "${repo_url}" )"
@@ -93,6 +94,7 @@ get_gh_api_base_url() {
   echo "https://api.github.com/repos/${owner}/${name}"
 }
 
+# Generates a changelog markdown using the Github API
 get_gh_changelog() {
   local args=()
   local api_args=(--method POST)

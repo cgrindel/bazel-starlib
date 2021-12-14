@@ -23,6 +23,15 @@ github_sh="$(rlocation "${github_sh_location}")" || \
   (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)
 source "${github_sh}"
 
+setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
+setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" || \
+  (echo >&2 "Failed to locate ${setup_git_repo_sh_location}" && exit 1)
+
+# MARK - Setup
+
+source "${setup_git_repo_sh}"
+cd "${repo_dir}"
+
 
 # MARK - Test
 

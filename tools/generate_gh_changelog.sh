@@ -74,10 +74,6 @@ repo_url="$( get_git_remote_url )"
 is_github_repo_url "${repo_url}" || \
   fail "The git repository's remote URL does not appear to be a Github URL. ${repo_url}"
 
-auth_status="$( get_gh_auth_status )"
-username="$( get_gh_username "${auth_status}" )"
-auth_token="$( get_gh_auth_token "${auth_status}")"
-
 # Fetch the latest from origin
 fetch_latest_from_git_remote
 
