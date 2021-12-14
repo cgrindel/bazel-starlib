@@ -65,8 +65,6 @@ sh_test(
 
 # MARK: - Integration Tests
 
-# TODO: Add test for get_gh_changelog
-
 sh_test(
     name = "get_gh_auth_status_test",
     srcs = ["get_gh_auth_status_test.sh"],

@@ -41,4 +41,9 @@ cd "${repo_dir}"
 
 # MARK - Test
 
-fail "IMPLEMENT ME!"
+tag_name="v0.1.1"
+prev_tag_name="v0.1.0"
+result="$( get_gh_changelog --tag_name  "${tag_name}" --previous_tag_name "${prev_tag_name}" )"
+[[ "${result}" =~ "**Full Changelog**: https://github.com/cgrindel/bazel-starlib/compare/v0.1.0...v0.1.1" ]] || \
+  fail "Expected to find changelog URL for v0.1.0...v0.1.1. result: ${result}"
+
