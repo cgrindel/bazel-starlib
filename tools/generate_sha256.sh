@@ -18,14 +18,11 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
-# MARK - Functions
+env_sh_location=cgrindel_bazel_starlib/lib/private/env.sh
+env_sh="$(rlocation "${env_sh_location}")" || \
+  (echo >&2 "Failed to locate ${env_sh_location}" && exit 1)
+source "${env_sh}"
 
-# TODO: FIX ME!
-
-is_installed() {
-  local name="${1}"
-  which "${name}" > /dev/null
-}
 
 # MARK - Process Arguments
 
