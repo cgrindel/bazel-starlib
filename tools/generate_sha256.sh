@@ -20,6 +20,8 @@ source "${fail_sh}"
 
 # MARK - Functions
 
+# TODO: FIX ME!
+
 is_installed() {
   local name="${1}"
   which "${name}" > /dev/null

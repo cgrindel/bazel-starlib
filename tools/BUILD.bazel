@@ -45,6 +45,16 @@ sh_binary(
 )
 
 sh_binary(
+    name = "generate_git_archive",
+    srcs = ["generate_git_archive.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_binary(
     name = "generate_gh_changelog",
     srcs = ["generate_gh_changelog.sh"],
     # data = [
