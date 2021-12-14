@@ -34,6 +34,11 @@ jobs:
       run: |
         bazelisk build //... 
 
+    - name: Execute Integration Tests
+      shell: bash
+      run: |
+        bazelisk test //:all_integration_tests
+
     - name: Ensure Bazel packages covered by bzlformat_pkg
       shell: bash
       run: |
@@ -70,6 +75,11 @@ jobs:
       shell: bash
       run: |
         bazelisk build //... 
+
+    - name: Execute Integration Tests
+      shell: bash
+      run: |
+        bazelisk test //:all_integration_tests
 
     - name: Ensure Bazel packages covered by bzlformat_pkg
       shell: bash

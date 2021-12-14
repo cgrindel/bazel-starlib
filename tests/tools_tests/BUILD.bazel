@@ -37,3 +37,33 @@ sh_test(
         "@cgrindel_bazel_shlib//lib:assertions",
     ],
 )
+
+# MARK: - Integration Tests
+
+sh_test(
+    name = "generate_gh_changelog_test",
+    srcs = ["generate_gh_changelog_test.sh"],
+    data = [
+        "//tools:generate_gh_changelog",
+    ],
+    tags = [
+        "exclusive",
+        "manual",
+    ],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_shlib//lib:assertions",
+    ],
+)
+
+test_suite(
+    name = "integration_tests",
+    tags = [
+        "exclusive",
+        "manual",
+    ],
+    tests = [
+        ":generate_gh_changelog_test",
+    ],
+    visibility = ["//:__subpackages__"],
+)

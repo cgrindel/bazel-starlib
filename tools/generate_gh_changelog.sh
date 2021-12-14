@@ -70,7 +70,6 @@ tag_name="${args[0]}"
 
 # MARK - Generate the changelog.
 
-starting_dir="${PWD}"
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 repo_url="$( get_git_remote_url )"
@@ -82,10 +81,10 @@ username="$( get_gh_username "${auth_status}" )"
 auth_token="$( get_gh_auth_token "${auth_status}")"
 api_base_url="$( get_gh_api_base_url "${repo_url}" )"
 
-
 # Fetch the latest from origin
 fetch_latest_from_git_remote
 
+# Construct the args for generating the changelog.
 changelog_args=( "${api_base_url}" )
 changelog_args+=(--tag_name "${tag_name}")
 if ! git_tag_exists "${tag_name}"; then
@@ -94,60 +93,18 @@ if ! git_tag_exists "${tag_name}"; then
 fi
 [[ -z "${previous_tag_name:-}" ]] || changelog_args+=(--previous_tag_name "${previous_tag_name}")
 
+# Generate the changelog
 response_json="$( get_gh_changelog "${changelog_args[@]}" )"
 changelog_md="$( echo "${response_json}" | jq '.body' )"
-# Evaluate the newline stuff
+# Evaluate the embedded newlines
 changelog_md="$( printf "%b\n" "${changelog_md}" )"
 # Remove the double quotes at beginning and end
 changelog_md="${changelog_md%\"}"
 changelog_md="${changelog_md#\"}"
 
+# Output the changelog
 if [[ -z "${output_path:-}" ]]; then
   echo "${changelog_md}"
-  # printf "%b\n" "${changelog_md}"
 else
   echo "${changelog_md}" > "${output_path}"
-  # printf "%b\n" "${changelog_md}" > "${output_path}"
 fi
-
-# tag_name="v0.1.1"
-
-# If tag_name does not exist, get the last commit on main at orgin
-
-# If tag_name does exist, get the commit hash for the tag.
-# target_commit="$(git rev-list -n 1 "tags/${tag_name}")"
-
-
-# # Get the current commit
-# target_commit="$(git log --pretty=format:'%H' -n 1)"
-
-# api_url="${api_base_url}/releases/generate-notes"
-
-# # The changelog from the last release.
-# request_data="$(
-#   jq -n \
-#     --arg tag_name "${tag_name}" \
-#     --arg target_commitish "${target_commit}" \
-#     '{tag_name: $tag_name, target_commitish: $target_commitish}'
-# )"
-
-# # previous_tag_name="v0.1.0"
-# # request_data="$(
-# #   jq -n \
-# #     --arg tag_name "${tag_name}" \
-# #     --arg previous_tag_name "${previous_tag_name}" \
-# #     --arg target_commitish "${target_commit}" \
-# #     '{tag_name: $tag_name, previous_tag_name: $previous_tag_name, target_commitish: $target_commitish}'
-# # )"
-
-# # DEBUG BEGIN
-# echo >&2 "*** CHUCK  api_url: ${api_url}" 
-# echo >&2 "*** CHUCK  request_data: ${request_data}" 
-# # DEBUG END
-
-# curl \
-#   -u "cgrindel:${auth_token}" \
-#   -X POST \
-#   -H "Accept: application/vnd.github.v3+json" \
-#   "${api_url}" \
-#   -d "${request_data}"

@@ -24,37 +24,16 @@ updatesrc_update_all(
     ],
 )
 
-# MARK: - Release Artifact
+# MARK: - Integration Tests
 
-filegroup(
-    name = "package_content",
-    srcs = [
-        "BUILD.bazel",
-        "WORKSPACE",
-        "LICENSE",
-        "README.md",
-        ".bazelrc",
-    ] + glob([
-        "*.bzl",
-        "*.bazelrc",
-    ]),
-)
-
-pkg_tar(
-    name = "bazel_starlib",
-    srcs = [
-        "//:package_content",
-        "//doc:package_content",
-        "//lib:package_content",
-        "//rules:package_content",
+test_suite(
+    name = "all_integration_tests",
+    tags = [
+        "exclusive",
+        "manual",
     ],
-    extension = "tar.gz",
-)
-
-workspace_snippet(
-    name = "bazel_starlib_workspace",
-    pkg = ":bazel_starlib",
-    url_templates = [
-        "http://github.com/cgrindel/bazel-starlib/releases/download/${STABLE_CURRENT_RELEASE_TAG}/bazel-starlib-${STABLE_CURRENT_RELEASE}.tar.gz",
+    tests = [
+        "//tests/tools_tests:integration_tests",
     ],
+    visibility = ["//:__subpackages__"],
 )
