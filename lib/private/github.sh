@@ -98,18 +98,6 @@ get_gh_changelog() {
   local api_args=()
   while (("$#")); do
     case "${1}" in
-      # "--tag_name")
-      #   local tag_name="${2}"
-      #   shift 2
-      #   ;;
-      # "--target_commitish")
-      #   local target_commitish="${2}"
-      #   shift 2
-      #   ;;
-      # "--previous_tag_name")
-      #   local previous_tag_name="${2}"
-      #   shift 2
-      #   ;;
       --*)
         # Add the arg name and the value to the api args array
         api_args+=("${1:2}" "${2}")
@@ -126,16 +114,7 @@ get_gh_changelog() {
   local api_base_url="${args[0]}"
   [[ -z "${tag_name:-}" ]] && fail "Expected a tag_name."
 
-  local api_url="${api_base_url}/releases/generate-notes"
-
-  # local request_data="$(
-  #   jq -n \
-  #     --arg tag_name "${tag_name}" \
-  #     --arg target_commitish "${target_commit}" \
-  #     '{tag_name: $tag_name, target_commitish: $target_commitish}'
-  # )"
   local request_data='{}'
-  # local pairs_count=$(( ${#api_args[@]} / 2 ))
   for (( i = 0; i < ${#api_args[@]}; i = i + 2 )); do
     local arg_name="${api_args[$i]}"
     local arg_value="${api_args[$i + 1]}"
@@ -149,7 +128,9 @@ get_gh_changelog() {
   done
 
   # Execute the API
+  local api_url="${api_base_url}/releases/generate-notes"
   curl \
+    --silent \
     -u "cgrindel:${auth_token}" \
     -X POST \
     -H "Accept: application/vnd.github.v3+json" \

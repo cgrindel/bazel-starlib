@@ -50,8 +50,12 @@ main_branch=main
 args=()
 while (("$#")); do
   case "${1}" in
-    "--prev_tag")
+    "--previous_tag_name")
       previous_tag_name="${2}"
+      shift 2
+      ;;
+    "--output")
+      output_path="${2}"
       shift 2
       ;;
     *)
@@ -90,14 +94,21 @@ if ! git_tag_exists "${tag_name}"; then
 fi
 [[ -z "${previous_tag_name:-}" ]] || changelog_args+=(--previous_tag_name "${previous_tag_name}")
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK  changelog_args:"
-for (( i = 0; i < ${#changelog_args[@]}; i++ )); do
-  echo >&2 "*** CHUCK   ${i}: ${changelog_args[${i}]}"
-done
-# DEBUG END
+response_json="$( get_gh_changelog "${changelog_args[@]}" )"
+changelog_md="$( echo "${response_json}" | jq '.body' )"
+# Evaluate the newline stuff
+changelog_md="$( printf "%b\n" "${changelog_md}" )"
+# Remove the double quotes at beginning and end
+changelog_md="${changelog_md%\"}"
+changelog_md="${changelog_md#\"}"
 
-get_gh_changelog "${changelog_args[@]}"
+if [[ -z "${output_path:-}" ]]; then
+  echo "${changelog_md}"
+  # printf "%b\n" "${changelog_md}"
+else
+  echo "${changelog_md}" > "${output_path}"
+  # printf "%b\n" "${changelog_md}" > "${output_path}"
+fi
 
 # tag_name="v0.1.1"
 

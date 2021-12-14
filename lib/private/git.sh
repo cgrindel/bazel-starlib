@@ -14,7 +14,7 @@ get_git_remote_url() {
 }
 
 fetch_latest_from_git_remote() { 
-  git fetch
+  git fetch 2> /dev/null
 }
 
 get_latest_git_commit_hash() {
