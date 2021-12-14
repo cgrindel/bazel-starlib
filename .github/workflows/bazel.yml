@@ -36,8 +36,16 @@ jobs:
 
     - name: Execute Integration Tests
       shell: bash
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         bazelisk test //:all_integration_tests
+
+    - name: DEBUG STOP
+      shell: bash
+      run: |
+        exit 1
+
 
     - name: Ensure Bazel packages covered by bzlformat_pkg
       shell: bash
