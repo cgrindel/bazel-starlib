@@ -18,21 +18,28 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
+env_sh_location=cgrindel_bazel_starlib/lib/private/env.sh
+env_sh="$(rlocation "${env_sh_location}")" || \
+  (echo >&2 "Failed to locate ${env_sh_location}" && exit 1)
+source "${env_sh}"
+
 github_sh_location=cgrindel_bazel_starlib/lib/private/github.sh
 github_sh="$(rlocation "${github_sh_location}")" || \
   (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)
 source "${github_sh}"
 
-setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
-setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" || \
-  (echo >&2 "Failed to locate ${setup_git_repo_sh_location}" && exit 1)
+# setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
+# setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" || \
+#   (echo >&2 "Failed to locate ${setup_git_repo_sh_location}" && exit 1)
+
+is_installed gh || fail "Could not find Github CLI (gh)."
 
 # MARK - Setup
 
-source "${setup_git_repo_sh}"
-cd "${repo_dir}"
-
+# source "${setup_git_repo_sh}"
+# cd "${repo_dir}"
 
 # MARK - Test
 
-fail "IMPLEMENT ME!"
+result="$( get_gh_auth_status )"
+[[ "${result}" =~ "Logged in to " ]] || fail "Expected auth status to indicate a user is logged in."

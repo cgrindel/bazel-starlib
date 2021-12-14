@@ -8,6 +8,7 @@ cgrindel_bazel_starlib_lib_private_github_loaded() { return; }
 # MARK - Github Auth Status Functions
 
 # Returns the raw gh auth status displyaing the auth token.
+# Doc: https://cli.github.com/manual/gh_auth_status
 get_gh_auth_status() {
   gh auth status -t 2>&1
 }
@@ -94,7 +95,9 @@ get_gh_api_base_url() {
   echo "https://api.github.com/repos/${owner}/${name}"
 }
 
-# Generates a changelog markdown using the Github API
+# Generates a changelog markdown using the Github API.
+# Doc: https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes#configuring-automatically-generated-release-notes
+# API: https://docs.github.com/en/rest/reference/repos#generate-release-notes-content-for-a-release
 get_gh_changelog() {
   local args=()
   local api_args=(--method POST)

@@ -71,9 +71,9 @@ sh_test(
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
     deps = [
+        "//lib/private:env",
         "//lib/private:fail",
         "//lib/private:github",
-        "//tests:setup_git_repo",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
