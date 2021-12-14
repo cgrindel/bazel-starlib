@@ -13,3 +13,25 @@ get_git_remote_url() {
   git config --get remote.origin.url
 }
 
+fetch_latest_from_git_remote() { 
+  git fetch
+}
+
+get_latest_git_commit_hash() {
+  local branch="${1:-}"
+  git log -n 1 --pretty=format:'%H' "${branch:-}"
+}
+
+# Returns the list of release tags sorted by most recent to oldest.
+get_git_release_tags() {
+  git tag --sort=refname -l "v*"
+}
+
+git_tag_exists() {
+  local target_tag="${1}"
+  tags=( get_git_tags )
+  for tag in "${tags[@]}" ; do
+    [[ "${tag}" == "${target_tag}" ]] && return
+  done
+  return -1
+}

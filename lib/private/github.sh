@@ -9,7 +9,7 @@ cgrindel_bazel_starlib_lib_private_github_loaded() { return; }
 
 # Returns the raw gh auth status displyaing the auth token.
 get_gh_auth_status() {
-  gh auth status -t
+  gh auth status -t 2>&1
 }
 
 # Example gh auth status:
@@ -91,4 +91,68 @@ get_gh_api_base_url() {
   local owner="$( get_gh_repo_owner "${repo_url}" )"
   local name="$( get_gh_repo_name "${repo_url}" )"
   echo "https://api.github.com/repos/${owner}/${name}"
+}
+
+get_gh_changelog() {
+  local args=()
+  local api_args=()
+  while (("$#")); do
+    case "${1}" in
+      # "--tag_name")
+      #   local tag_name="${2}"
+      #   shift 2
+      #   ;;
+      # "--target_commitish")
+      #   local target_commitish="${2}"
+      #   shift 2
+      #   ;;
+      # "--previous_tag_name")
+      #   local previous_tag_name="${2}"
+      #   shift 2
+      #   ;;
+      --*)
+        # Add the arg name and the value to the api args array
+        api_args+=("${1:2}" "${2}")
+        shift 2
+        ;;
+      *)
+        args+=("${1}")
+        shift 1
+        ;;
+    esac
+  done
+
+  [[ ${#args[@]} == 0 ]] && fail "Expected an api_base_url."
+  local api_base_url="${args[0]}"
+  [[ -z "${tag_name:-}" ]] && fail "Expected a tag_name."
+
+  local api_url="${api_base_url}/releases/generate-notes"
+
+  # local request_data="$(
+  #   jq -n \
+  #     --arg tag_name "${tag_name}" \
+  #     --arg target_commitish "${target_commit}" \
+  #     '{tag_name: $tag_name, target_commitish: $target_commitish}'
+  # )"
+  local request_data='{}'
+  # local pairs_count=$(( ${#api_args[@]} / 2 ))
+  for (( i = 0; i < ${#api_args[@]}; i = i + 2 )); do
+    local arg_name="${api_args[$i]}"
+    local arg_value="${api_args[$i + 1]}"
+    request_data="$( 
+      echo "${request_data}" | \
+        jq \
+          --arg arg_name "${arg_name}" \
+          --arg arg_value "${arg_value}" \
+          '. + {($arg_name) : $arg_value}'
+    )"
+  done
+
+  # Execute the API
+  curl \
+    -u "cgrindel:${auth_token}" \
+    -X POST \
+    -H "Accept: application/vnd.github.v3+json" \
+    "${api_url}" \
+    -d "${request_data}"
 }

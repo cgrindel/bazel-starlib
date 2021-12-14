@@ -44,11 +44,14 @@ is_installed curl || fail "Could not find curl for Github API execution."
 
 # MARK - Process Arguments
 
+remote_name=origin
+main_branch=main
+
 args=()
 while (("$#")); do
   case "${1}" in
     "--prev_tag")
-      prev_tag_name="${2}"
+      previous_tag_name="${2}"
       shift 2
       ;;
     *)
@@ -67,53 +70,73 @@ starting_dir="${PWD}"
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 repo_url="$( get_git_remote_url )"
-is_git_repo_url "${repo_url}" || \
+is_github_repo_url "${repo_url}" || \
   fail "The git repository's remote URL does not appear to be a Github URL. ${repo_url}"
 
 auth_status="$( get_gh_auth_status )"
 username="$( get_gh_username "${auth_status}" )"
 auth_token="$( get_gh_auth_token "${auth_status}")"
-
 api_base_url="$( get_gh_api_base_url "${repo_url}" )"
 
-api_url="${api_base_url}/releases/generate-notes"
+
+# Fetch the latest from origin
+fetch_latest_from_git_remote
+
+changelog_args=( "${api_base_url}" )
+changelog_args+=(--tag_name "${tag_name}")
+if ! git_tag_exists "${tag_name}"; then
+  last_commit_on_main="$( get_latest_git_commit_hash "${remote_name}/${main_branch}" )"
+  changelog_args+=(--target_commitish "${last_commit_on_main}")
+fi
+[[ -z "${previous_tag_name:-}" ]] || changelog_args+=(--previous_tag_name "${previous_tag_name}")
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK  changelog_args:"
+for (( i = 0; i < ${#changelog_args[@]}; i++ )); do
+  echo >&2 "*** CHUCK   ${i}: ${changelog_args[${i}]}"
+done
+# DEBUG END
+
+get_gh_changelog "${changelog_args[@]}"
 
 # tag_name="v0.1.1"
 
 # If tag_name does not exist, get the last commit on main at orgin
 
 # If tag_name does exist, get the commit hash for the tag.
-target_commit="$(git rev-list -n 1 "tags/${tag_name}")"
+# target_commit="$(git rev-list -n 1 "tags/${tag_name}")"
 
 
 # # Get the current commit
 # target_commit="$(git log --pretty=format:'%H' -n 1)"
 
-# The changelog from the last release.
-request_data="$(
-  jq -n \
-    --arg tag_name "${tag_name}" \
-    --arg target_commitish "${target_commit}" \
-    '{tag_name: $tag_name, target_commitish: $target_commitish}'
-)"
+# api_url="${api_base_url}/releases/generate-notes"
 
-# prev_tag_name="v0.1.0"
+# # The changelog from the last release.
 # request_data="$(
 #   jq -n \
 #     --arg tag_name "${tag_name}" \
-#     --arg prev_tag_name "${prev_tag_name}" \
 #     --arg target_commitish "${target_commit}" \
-#     '{tag_name: $tag_name, previous_tag_name: $prev_tag_name, target_commitish: $target_commitish}'
+#     '{tag_name: $tag_name, target_commitish: $target_commitish}'
 # )"
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK  api_url: ${api_url}" 
-echo >&2 "*** CHUCK  request_data: ${request_data}" 
-# DEBUG END
+# # previous_tag_name="v0.1.0"
+# # request_data="$(
+# #   jq -n \
+# #     --arg tag_name "${tag_name}" \
+# #     --arg previous_tag_name "${previous_tag_name}" \
+# #     --arg target_commitish "${target_commit}" \
+# #     '{tag_name: $tag_name, previous_tag_name: $previous_tag_name, target_commitish: $target_commitish}'
+# # )"
 
-curl \
-  -u "cgrindel:${auth_token}" \
-  -X POST \
-  -H "Accept: application/vnd.github.v3+json" \
-  "${api_url}" \
-  -d "${request_data}"
+# # DEBUG BEGIN
+# echo >&2 "*** CHUCK  api_url: ${api_url}" 
+# echo >&2 "*** CHUCK  request_data: ${request_data}" 
+# # DEBUG END
+
+# curl \
+#   -u "cgrindel:${auth_token}" \
+#   -X POST \
+#   -H "Accept: application/vnd.github.v3+json" \
+#   "${api_url}" \
+#   -d "${request_data}"
