@@ -72,12 +72,17 @@ fi
 case "${utility}" in
   shasum)
     output="$(
-    shasum -a 256 "${source_path}" |  sed -E -n 's/^([^[:space:]]+).*/\1/gp'
+    cat "${source_path}" | shasum -a 256 | sed -E -n 's/^([^[:space:]]+).*/\1/gp'
     )"
     ;;
   openssl)
     output="$( cat "${source_path}" | openssl dgst -sha256 )"
     ;;
+  # shasum)
+  #   output="$(
+  #   shasum -a 256 "${source_path}" |  sed -E -n 's/^([^[:space:]]+).*/\1/gp'
+  #   )"
+  #   ;;
   # openssl)
   #   output="$(
   #   openssl dgst -sha256 "${source_path}" | \
