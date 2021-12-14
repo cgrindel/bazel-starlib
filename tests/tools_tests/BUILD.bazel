@@ -33,8 +33,8 @@ sh_test(
         "//tools:generate_sha256",
     ],
     deps = [
+        "//lib/private:fail",
         "@bazel_tools//tools/bash/runfiles",
-        "@cgrindel_bazel_shlib//lib:assertions",
     ],
 )
 
@@ -46,13 +46,17 @@ sh_test(
     data = [
         "//tools:generate_gh_changelog",
     ],
+    env_inherit = [
+        "GITHUB_TOKEN",
+        "GH_TOKEN",
+    ],
     tags = [
         "exclusive",
         "manual",
     ],
     deps = [
+        "//lib/private:env",
         "@bazel_tools//tools/bash/runfiles",
-        "@cgrindel_bazel_shlib//lib:assertions",
     ],
 )
 
