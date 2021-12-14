@@ -38,8 +38,8 @@ source "${github_sh}"
 
 is_installed gh || fail "Could not find Github CLI (gh)."
 is_installed git || fail "Could not find git."
-is_installed jq || fail "Could not find jq for JSON manipulation."
-is_installed curl || fail "Could not find curl for Github API execution."
+# is_installed jq || fail "Could not find jq for JSON manipulation."
+# is_installed curl || fail "Could not find curl for Github API execution."
 
 
 # MARK - Process Arguments
@@ -94,13 +94,14 @@ fi
 [[ -z "${previous_tag_name:-}" ]] || changelog_args+=(--previous_tag_name "${previous_tag_name}")
 
 # Generate the changelog
-response_json="$( get_gh_changelog "${changelog_args[@]}" )"
-changelog_md="$( echo "${response_json}" | jq '.body' )"
-# Evaluate the embedded newlines
-changelog_md="$( printf "%b\n" "${changelog_md}" )"
-# Remove the double quotes at beginning and end
-changelog_md="${changelog_md%\"}"
-changelog_md="${changelog_md#\"}"
+# response_json="$( get_gh_changelog "${changelog_args[@]}" )"
+# changelog_md="$( echo "${response_json}" | jq '.body' )"
+# # Evaluate the embedded newlines
+# changelog_md="$( printf "%b\n" "${changelog_md}" )"
+# # Remove the double quotes at beginning and end
+# changelog_md="${changelog_md%\"}"
+# changelog_md="${changelog_md#\"}"
+changelog_md="$( get_gh_changelog "${changelog_args[@]}" )"
 
 # Output the changelog
 if [[ -z "${output_path:-}" ]]; then

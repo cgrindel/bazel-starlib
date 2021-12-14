@@ -95,12 +95,12 @@ get_gh_api_base_url() {
 
 get_gh_changelog() {
   local args=()
-  local api_args=()
+  local api_args=(--method POST)
   while (("$#")); do
     case "${1}" in
       --*)
         # Add the arg name and the value to the api args array
-        api_args+=("${1:2}" "${2}")
+        api_args+=(-F "${1:2}=${2}")
         shift 2
         ;;
       *)
@@ -110,30 +110,38 @@ get_gh_changelog() {
     esac
   done
 
-  [[ ${#args[@]} == 0 ]] && fail "Expected an api_base_url."
-  local api_base_url="${args[0]}"
-  [[ -z "${tag_name:-}" ]] && fail "Expected a tag_name."
+  # [[ ${#args[@]} == 0 ]] && fail "Expected an api_base_url."
+  # local api_base_url="${args[0]}"
+  # [[ -z "${tag_name:-}" ]] && fail "Expected a tag_name."
 
-  local request_data='{}'
-  for (( i = 0; i < ${#api_args[@]}; i = i + 2 )); do
-    local arg_name="${api_args[$i]}"
-    local arg_value="${api_args[$i + 1]}"
-    request_data="$( 
-      echo "${request_data}" | \
-        jq \
-          --arg arg_name "${arg_name}" \
-          --arg arg_value "${arg_value}" \
-          '. + {($arg_name) : $arg_value}'
-    )"
-  done
+  [[ ${#api_args[@]} == 0 ]] && fail "Expected one or more API args."
 
-  # Execute the API
-  local api_url="${api_base_url}/releases/generate-notes"
-  curl \
-    --silent \
-    -u "cgrindel:${auth_token}" \
-    -X POST \
-    -H "Accept: application/vnd.github.v3+json" \
-    "${api_url}" \
-    -d "${request_data}"
+  # DEBUG BEGIN
+  set -x
+  # DEBUG END
+
+  gh api repos/{owner}/{repo}/releases/generate-notes "${api_args[@]}" --jq '.body'
+
+  # local request_data='{}'
+  # for (( i = 0; i < ${#api_args[@]}; i = i + 2 )); do
+  #   local arg_name="${api_args[$i]}"
+  #   local arg_value="${api_args[$i + 1]}"
+  #   request_data="$( 
+  #     echo "${request_data}" | \
+  #       jq \
+  #         --arg arg_name "${arg_name}" \
+  #         --arg arg_value "${arg_value}" \
+  #         '. + {($arg_name) : $arg_value}'
+  #   )"
+  # done
+
+  # # Execute the API
+  # local api_url="${api_base_url}/releases/generate-notes"
+  # curl \
+  #   --silent \
+  #   -u "cgrindel:${auth_token}" \
+  #   -X POST \
+  #   -H "Accept: application/vnd.github.v3+json" \
+  #   "${api_url}" \
+  #   -d "${request_data}"
 }
