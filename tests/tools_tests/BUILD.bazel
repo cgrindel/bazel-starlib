@@ -51,6 +51,7 @@ sh_test(
     tags = INTEGRATION_TEST_TAGS,
     deps = [
         "//lib/private:env",
+        "//tests:setup_git_repo",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )

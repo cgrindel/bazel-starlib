@@ -27,20 +27,16 @@ generate_gh_changelog_sh_location=cgrindel_bazel_starlib/tools/generate_gh_chang
 generate_gh_changelog_sh="$(rlocation "${generate_gh_changelog_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_gh_changelog_sh_location}" && exit 1)
 
+setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
+setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" || \
+  (echo >&2 "Failed to locate ${setup_git_repo_sh_location}" && exit 1)
+
 is_installed git || fail "Could not find git."
 
 # MARK - Setup
 
-# Clone this repo so that we have an actual git repository for the test
-repo_dir="${PWD}/repo"
-rm -rf "${repo_dir}"
-repo_url="https://github.com/cgrindel/bazel-starlib"
-git clone "${repo_url}" "${repo_dir}" 2>/dev/null
+source "${setup_git_repo_sh}"
 cd "${repo_dir}"
-
-# The utility needs to know where the workspace directory is. In this case, we are faking it out
-# by setting it to our cloned repo directory.
-export "BUILD_WORKSPACE_DIRECTORY=${repo_dir}"
 
 
 # MARK - Test changelog between two known tags 

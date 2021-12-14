@@ -77,7 +77,6 @@ is_github_repo_url "${repo_url}" || \
 auth_status="$( get_gh_auth_status )"
 username="$( get_gh_username "${auth_status}" )"
 auth_token="$( get_gh_auth_token "${auth_status}")"
-# api_base_url="$( get_gh_api_base_url "${repo_url}" )"
 
 # Fetch the latest from origin
 fetch_latest_from_git_remote
