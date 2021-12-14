@@ -37,5 +37,3 @@ expected="cgrindel"
 actual="$( get_gh_username "${auth_status}" )"
 [[ "${actual}" == "${expected}" ]] || \
   fail "Expected username not found. actual: ${actual}, expected: ${expected}"
-# [[ "${actual}" == "${expected}" ]] || \
-#   fail "Expected token not found. actual: ${actual}, expected: ${expected}"
