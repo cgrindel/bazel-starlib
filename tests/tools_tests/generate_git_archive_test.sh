@@ -31,6 +31,10 @@ generate_git_archive_sh_location=cgrindel_bazel_starlib/tools/generate_git_archi
 generate_git_archive_sh="$(rlocation "${generate_git_archive_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_git_archive_sh_location}" && exit 1)
 
+generate_sha256_sh_location=cgrindel_bazel_starlib/tools/generate_sha256.sh
+generate_sha256_sh="$(rlocation "${generate_sha256_sh_location}")" || \
+  (echo >&2 "Failed to locate ${generate_sha256_sh_location}" && exit 1)
+
 is_installed git || fail "Could not find git."
 
 # MARK - Setup
@@ -41,4 +45,17 @@ cd "${repo_dir}"
 
 # MARK - Test
 
-fail "IMPLEMENT ME!"
+compressed_sha256="81ab205a4a57be6f1c9cf86ed510eba72ec3fca366b50b054f1250814ea99c08"
+uncompressed_sha256="82a33d1d182fe73805fe1f48870313fdc8d3457adfeab6b346c2f51e7db33de0"
+
+actual="$( "${generate_git_archive_sh}" --tag_name "v0.1.1" | "${generate_sha256_sh}" )"
+expected="${compressed_sha256}"
+[[ "${actual}" == "${expected}" ]] || \
+  fail "SHA256 for compressed archive did not match. actual: ${actual}, expected: ${expected}"
+
+
+actual="$( "${generate_git_archive_sh}" --tag_name "v0.1.1"  --nocompress | "${generate_sha256_sh}" )"
+expected="${uncompressed_sha256}"
+[[ "${actual}" == "${expected}" ]] || \
+  fail "SHA256 for uncompressed archive did not match. actual: ${actual}, expected: ${expected}"
+

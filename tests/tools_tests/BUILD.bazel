@@ -61,6 +61,7 @@ sh_test(
     srcs = ["generate_git_archive_test.sh"],
     data = [
         "//tools:generate_git_archive",
+        "//tools:generate_sha256",
     ],
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
