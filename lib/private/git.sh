@@ -27,9 +27,11 @@ get_git_release_tags() {
   git tag --sort=refname -l "v*"
 }
 
+# TODO: ADD TESTS
+
 git_tag_exists() {
   local target_tag="${1}"
-  tags=( get_git_tags )
+  tags=( $(get_git_release_tags) )
   for tag in "${tags[@]}" ; do
     [[ "${tag}" == "${target_tag}" ]] && return
   done
