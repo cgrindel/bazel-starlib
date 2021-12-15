@@ -13,11 +13,13 @@ get_git_remote_url() {
   git config --get remote.origin.url
 }
 
+# Fetch the latest info from the remote.
 fetch_latest_from_git_remote() { 
   git fetch 2> /dev/null
 }
 
-get_latest_git_commit_hash() {
+# Returns the commit hash for the provided branch or tag.
+get_git_commit_hash() {
   local branch="${1:-}"
   git log -n 1 --pretty=format:'%H' "${branch:-}"
 }
@@ -29,7 +31,7 @@ get_git_release_tags() {
 
 git_tag_exists() {
   local target_tag="${1}"
-  tags=( get_git_tags )
+  tags=( $(get_git_release_tags) )
   for tag in "${tags[@]}" ; do
     [[ "${tag}" == "${target_tag}" ]] && return
   done

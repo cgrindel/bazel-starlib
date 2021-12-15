@@ -29,6 +29,7 @@ sh_binary(
     srcs = ["generate_sha256.sh"],
     visibility = ["//visibility:public"],
     deps = [
+        "//lib/private:env",
         "//lib/private:fail",
         "@bazel_tools//tools/bash/runfiles",
     ],
@@ -40,6 +41,19 @@ sh_binary(
     visibility = ["//visibility:public"],
     deps = [
         "//lib/private:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_binary(
+    name = "generate_git_archive",
+    srcs = ["generate_git_archive.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:env",
+        "//lib/private:fail",
+        "//lib/private:git",
+        "//lib/private:github",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )

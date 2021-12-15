@@ -18,12 +18,11 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
-# MARK - Functions
+env_sh_location=cgrindel_bazel_starlib/lib/private/env.sh
+env_sh="$(rlocation "${env_sh_location}")" || \
+  (echo >&2 "Failed to locate ${env_sh_location}" && exit 1)
+source "${env_sh}"
 
-is_installed() {
-  local name="${1}"
-  which "${name}" > /dev/null
-}
 
 # MARK - Process Arguments
 
@@ -49,14 +48,6 @@ while (("$#")); do
   esac
 done
 
-if [[ -z "${source_path:-}" && -z "${output_path:-}" && ${#args[@]} == 2 ]]; then
-  source_path="${args[0]}"
-  output_path="${args[1]}"
-fi
-
-[[ -z "${source_path:-}" ]] && fail "Expected a source path."
-[[ -z "${output_path:-}" ]] && fail "Expected an output path."
-
 # Select the utility to use
 if [[ -z "${utility:-}" ]]; then
   if is_installed shasum; then
@@ -68,23 +59,23 @@ if [[ -z "${utility:-}" ]]; then
   fi
 fi
 
-# Generate the hash
+# Define the hash function
 case "${utility}" in
   shasum)
-    output="$(
-    shasum -a 256 "${source_path}" |  sed -E -n 's/^([^[:space:]]+).*/\1/gp'
-    )"
+    function sumsha256() {
+      shasum -a 256 | sed -E -n 's/^([^[:space:]]+).*/\1/gp'
+    }
     ;;
   openssl)
-    output="$(
-    openssl dgst -sha256 "${source_path}" | \
-      sed -E -n 's/^SHA256[^=]+= ([^[:space:]]+).*/\1/gp' 
-    )"
+    function sumsha256() {
+      # On Ubuntu, we can see a prefix of '(stdin)= '
+      openssl dgst -sha256 | sed -E 's|^\(stdin\)= (.*)|\1|g'
+    }
     ;;
   *)
     fail "Unrecognized utility. ${utility:-}"
     ;;
 esac
-  
-# Write the hash
-echo "${output}" > "${output_path}"
+
+# Generate the hash
+sumsha256 < "${source_path:-/dev/stdin}" > "${output_path:-/dev/stdout}"

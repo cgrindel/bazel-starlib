@@ -41,14 +41,6 @@ expected_hash="d85406eb129904c21b9b7c286a0efb775cf6681815035bd82f8ad19285deb250"
 
 # MARK - Tests
 
-err_msg_prefix="Positional args test"
-output_path=output_positional_args
-"${generate_sha256_sh}" "${source_path}" "${output_path}" || \
-  fail "${err_msg_prefix} - Execution failed."
-actual_hash="$(< "${output_path}")"
-[[ "${actual_hash}" == "${expected_hash}" ]] || \
-  fail "${err_msg_prefix} - Expected actual hash to equal expected. actual: ${actual_hash}, expected: ${expected_hash}"
-
 err_msg_prefix="Flags test"
 output_path=output_flags
 "${generate_sha256_sh}" --source "${source_path}" --output "${output_path}" || \
