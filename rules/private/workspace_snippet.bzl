@@ -1,5 +1,7 @@
 load("//rules:hash_sha256.bzl", "hash_sha256")
 
+# TODO: REMOVE ME!!
+
 def _workspace_snippet_impl(ctx):
     workspace_name = ctx.attr.workspace_name
     if workspace_name == "":
