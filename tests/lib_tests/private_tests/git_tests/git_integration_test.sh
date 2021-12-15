@@ -49,6 +49,9 @@ fetch_latest_from_git_remote
 
 release_tags=( $(get_git_release_tags) )
 [[ ${#release_tags[@]} > 0 ]] || fail "Did not find any release tags."
+for tag in "${release_tags[@]}" ; do
+  [[ "${tag}" =~ ^v ]] || fail "Release tag is not properly formed. tag: ${tag}"
+done
 
 git_tag_exists "v9999.0.0" && fail "Did not expect v9999.0.0 to exist."
 git_tag_exists "v0.1.1" || fail "Did expect v0.1.1 to exist."
