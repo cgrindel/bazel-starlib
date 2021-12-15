@@ -68,7 +68,8 @@ case "${utility}" in
     ;;
   openssl)
     function sumsha256() {
-      openssl dgst -sha256
+      # On Ubuntu, we can see a prefix of '(stdin)= '
+      openssl dgst -sha256 | sed -E 's|^\(stdin\)= (.*)|\1|g'
     }
     ;;
   *)
