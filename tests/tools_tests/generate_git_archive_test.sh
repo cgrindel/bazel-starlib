@@ -45,6 +45,10 @@ cd "${repo_dir}"
 
 # MARK - Test
 
+# NOTE: Checking the SHA256 values of compressed archive files is not portable
+# across OS. Hence, the assertions in this test always check the SHA256 of the
+# uncompressed contents.
+
 tag="v0.1.1"
 
 # Download the Github archive
@@ -81,40 +85,6 @@ output_path="output.tar.gz"
 actual="$( gunzip < "${output_path}" | "${generate_sha256_sh}" )"
 [[ "${actual}" == "${expected}" ]] || \
   fail "SHA256 for compressed archive file did not match. actual: ${actual}, expected: ${expected}"
-
-
-# compressed_sha256="81ab205a4a57be6f1c9cf86ed510eba72ec3fca366b50b054f1250814ea99c08"
-# uncompressed_sha256="82a33d1d182fe73805fe1f48870313fdc8d3457adfeab6b346c2f51e7db33de0"
-
-# # Compressed, output to stdout
-# actual="$( "${generate_git_archive_sh}" --tag_name "v0.1.1" | "${generate_sha256_sh}" )"
-# expected="${compressed_sha256}"
-# [[ "${actual}" == "${expected}" ]] || \
-#   fail "SHA256 for compressed archive did not match. actual: ${actual}, expected: ${expected}"
-
-# # Uncompressed, output to stdout
-# actual="$( "${generate_git_archive_sh}" --tag_name "v0.1.1"  --nocompress | "${generate_sha256_sh}" )"
-# expected="${uncompressed_sha256}"
-# [[ "${actual}" == "${expected}" ]] || \
-#   fail "SHA256 for uncompressed archive did not match. actual: ${actual}, expected: ${expected}"
-
-# # Compressed, output to file
-# output_path="output.tar.gz"
-# "${generate_git_archive_sh}" --tag_name "v0.1.1" --output "${output_path}"
-# [[ -f "${output_path}" ]] || fail "Expected compressed file to exist. ${output_path}"
-# actual="$( "${generate_sha256_sh}" --source "${output_path}" )"
-# expected="${compressed_sha256}"
-# [[ "${actual}" == "${expected}" ]] || \
-#   fail "SHA256 for compressed archive file did not match. actual: ${actual}, expected: ${expected}"
-
-# # Uncompressed, output to file
-# output_path="output.tar"
-# "${generate_git_archive_sh}" --tag_name "v0.1.1" --output "${output_path}" --nocompress
-# [[ -f "${output_path}" ]] || fail "Expected uncompressed file to exist. ${output_path}"
-# actual="$( "${generate_sha256_sh}" --source "${output_path}" )"
-# expected="${uncompressed_sha256}"
-# [[ "${actual}" == "${expected}" ]] || \
-#   fail "SHA256 for uncompressed archive file did not match. actual: ${actual}, expected: ${expected}"
 
 # Non-existent tag
 output_path="non-existent.tar.gz"
