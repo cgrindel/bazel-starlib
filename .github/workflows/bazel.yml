@@ -23,11 +23,11 @@ jobs:
       shell: bash
       run: |
         echo "FIRST"
-        git archive --format=tar --prefix=bazel-starlib-0.1.1/ refs/tags/v0.1.1 | gzip | openssl dgst -sha256
+        git archive --format=tar --prefix=bazel-starlib-0.1.1/ v0.1.1 | gzip | openssl dgst -sha256
         echo "SECOND"
-        git archive --format=tar --prefix=bazel-starlib-0.1.1/ refs/tags/v0.1.1 | gzip | openssl dgst -sha256
+        git archive --format=tar --prefix=bazel-starlib-0.1.1/ v0.1.1 | gzip | openssl dgst -sha256
         echo "THIRD"
-        git archive --format=tar --prefix=bazel-starlib-0.1.1/ refs/tags/v0.1.1 | gzip | openssl dgst -sha256
+        git archive --format=tar --prefix=bazel-starlib-0.1.1/ v0.1.1 | gzip | openssl dgst -sha256
         exit 1
 
     - name: Output the Bazel Info
