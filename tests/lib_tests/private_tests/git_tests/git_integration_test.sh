@@ -41,4 +41,19 @@ cd "${repo_dir}"
 
 # MARK - Test
 
-fail "IMPLEMENT ME!"
+remote_url="$(get_git_remote_url)"
+[[ "${remote_url}" =~ "bazel-starlib" ]] || fail "Unexpected remote URL."
+
+# Make sure that fetch does not fail
+fetch_latest_from_git_remote
+
+release_tags=( $(get_git_release_tags) )
+[[ ${#release_tags[@]} > 0 ]] || fail "Did not find any release tags."
+
+git_tag_exists "v9999.0.0" && fail "Did not expect v9999.0.0 to exist."
+git_tag_exists "v0.1.1" || fail "Did expect v0.1.1 to exist."
+
+commit="$( get_git_commit_hash "v0.1.1" )"
+expected_commit="fc5ed94542dc764ba17670803ca06eddafc5beb1"
+[[ "${commit}" == "${expected_commit}" ]] || \
+  fail "Unexpected commit hash. actual: ${commit}, expected:${expected_commit}"

@@ -81,7 +81,7 @@ fetch_latest_from_git_remote
 changelog_args=()
 changelog_args+=(--tag_name "${tag_name}")
 if ! git_tag_exists "${tag_name}"; then
-  last_commit_on_main="$( get_latest_git_commit_hash "${remote_name}/${main_branch}" )"
+  last_commit_on_main="$( get_git_commit_hash "${remote_name}/${main_branch}" )"
   changelog_args+=(--target_commitish "${last_commit_on_main}")
 fi
 [[ -z "${previous_tag_name:-}" ]] || changelog_args+=(--previous_tag_name "${previous_tag_name}")

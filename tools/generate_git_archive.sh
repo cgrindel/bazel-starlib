@@ -107,7 +107,7 @@ if git_tag_exists "${tag_name}"; then
   commit_or_tag="${tag_name}"
 else
   # The tag does not exist. Assume that we are about to tag the code in the main branch.
-  commit_or_tag="$( get_latest_git_commit_hash "${remote_name}/${main_branch}" )"
+  commit_or_tag="$( get_git_commit_hash "${remote_name}/${main_branch}" )"
 fi
 
 
