@@ -44,10 +44,14 @@ compress=true
 args=()
 while (("$#")); do
   case "${1}" in
-    # "--prefix")
-    #   prefix="${2}"
-    #   shift 2
-    #   ;;
+    "--remote")
+      remote="${2}"
+      shift 2
+      ;;
+    "--main")
+      main_branch="${2}"
+      shift 2
+      ;;
     "--repo")
       repo="${2}"
       shift 2
@@ -56,9 +60,17 @@ while (("$#")); do
       tag_name="${2}"
       shift 2
       ;;
+    "--prefix")
+      prefix="${2}"
+      shift 2
+      ;;
     "--nocompress")
       compress=false
       shift 1
+      ;;
+    "--output")
+      output_path="${2}"
+      shift 2
       ;;
     *)
       args+=("${1}")
@@ -76,48 +88,49 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 # Fetch the latest from origin
 fetch_latest_from_git_remote
 
-# Make sure that we have a repo name
-if [[ -z "${repo:-}" ]]; then
-  repo_url="$( get_git_remote_url )"
-  is_github_repo_url "${repo_url}" || \
-    fail "Could not figure out repo name. Please specify the repo name using the --repo flag."
-  repo="$( get_gh_repo_name "${repo_url}" )"
+if [[ -z "${prefix:-}" ]]; then
+  # Make sure that we have a repo name
+  if [[ -z "${repo:-}" ]]; then
+    repo_url="$( get_git_remote_url )"
+    is_github_repo_url "${repo_url}" || \
+      fail "Could not figure out repo name. Please specify the repo name using the --repo flag."
+    repo="$( get_gh_repo_name "${repo_url}" )"
+  fi
+  prefix_suffix="${tag_name}"
+  [[ "${prefix_suffix}" =~ ^v ]] && prefix_suffix="${prefix_suffix:1}"
+  prefix="${repo}-${prefix_suffix}"
 fi
-prefix_suffix="${tag_name}"
-[[ "${prefix_suffix}" =~ ^v ]] && prefix_suffix="${prefix_suffix:1}"
-prefix="${repo}-${prefix_suffix}"
-# prefix="${repo}-${tag_name}"
 
-# Figure out which commit
+
+# Figure out which commit or tag to use
 if git_tag_exists "${tag_name}"; then
-  # DEBUG BEGIN
-  echo >&2 "*** CHUCK tag exists" 
-  # DEBUG END
-  # commit="$( get_latest_git_commit_hash "${tag_name}" )"
-  # commit="${tag_name}"
-  commit="tags/${tag_name}"
+  commit_or_tag="${tag_name}"
 else
-  # DEBUG BEGIN
-  echo >&2 "*** CHUCK tag does not exist" 
-  # DEBUG END
   # The tag does not exist. Assume that we are about to tag the code in the main branch.
-  commit="$( get_latest_git_commit_hash "${remote_name}/${main_branch}" )"
+  commit_or_tag="$( get_latest_git_commit_hash "${remote_name}/${main_branch}" )"
 fi
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK  prefix: ${prefix}" 
-echo >&2 "*** CHUCK  commit: ${commit}" 
-echo >&2 "*** CHUCK  compress: ${compress}" 
-set -x
-# DEBUG END
 
 # Wrap the archive call
 create_archive() {
-  git archive --format=tar "--prefix=${prefix}/" "${commit}" 
+  git archive --format=tar "--prefix=${prefix}/" "${commit_or_tag}" 
 }
 
+# Compress
 if [[ "${compress}" == true ]]; then
-  create_archive | gzip
+  function do_archive() {
+    # The -n flag for gzip ensures that compression is consistent with every invocation.
+    create_archive | gzip -n
+  }
 else
-  create_archive
+  function do_archive() {
+    create_archive
+  }
+fi
+
+# Output
+if [[ -z "${output_path:-}" ]]; then
+  do_archive
+else
+  do_archive > "${output_path}"
 fi
