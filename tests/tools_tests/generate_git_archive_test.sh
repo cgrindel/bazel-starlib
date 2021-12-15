@@ -59,3 +59,18 @@ expected="${uncompressed_sha256}"
 [[ "${actual}" == "${expected}" ]] || \
   fail "SHA256 for uncompressed archive did not match. actual: ${actual}, expected: ${expected}"
 
+output_path="output.tar.gz"
+"${generate_git_archive_sh}" --tag_name "v0.1.1" --output "${output_path}"
+[[ -f "${output_path}" ]] || fail "Expected compressed file to exist. ${output_path}"
+actual="$( "${generate_sha256_sh}" --source "${output_path}" )"
+expected="${compressed_sha256}"
+[[ "${actual}" == "${expected}" ]] || \
+  fail "SHA256 for compressed archive file did not match. actual: ${actual}, expected: ${expected}"
+
+output_path="output.tar"
+"${generate_git_archive_sh}" --tag_name "v0.1.1" --output "${output_path}" --nocompress
+[[ -f "${output_path}" ]] || fail "Expected uncompressed file to exist. ${output_path}"
+actual="$( "${generate_sha256_sh}" --source "${output_path}" )"
+expected="${uncompressed_sha256}"
+[[ "${actual}" == "${expected}" ]] || \
+  fail "SHA256 for uncompressed archive file did not match. actual: ${actual}, expected: ${expected}"
