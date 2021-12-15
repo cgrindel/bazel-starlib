@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# Generate a git archive for a tag.
+# NOTE: The OS where the archive is compressed is important. The SHA256 value
+# for a compressed archive on MacOS does not match the one generated on
+# Ubuntu. If you are trying to generate an archive that is identical to the
+# one downloaded from https://github.com/<user>/<repo>/archive/<tag>.tar.gz,
+# be sure to generate it on Ubuntu.
+
 # --- begin runfiles.bash initialization v2 ---
 # Copy-pasted from the Bazel Bash runfiles library v2.
 set -uo pipefail; f=bazel_tools/tools/bash/runfiles/runfiles.bash
