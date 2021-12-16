@@ -64,3 +64,8 @@ actual="$(
 [[ "${actual}" =~ "## Workspace Snippet" ]]
 [[ "${actual}" =~ "http_archive(" ]]
 [[ "${actual}" =~ "bazel_starlib_dependencies()" ]]
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK  actual:"$'\n'"${actual}" 
+fail "STOP"
+# DEBUG END

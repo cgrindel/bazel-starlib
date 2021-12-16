@@ -71,8 +71,11 @@ tag_name="${args[0]}"
 
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
-# TODO: Add warning if this is being run on MacOS about SHA256 for archive not
-# being the same as Github archive.
+[[ "$(uname)" =~ "Linux" ]] || warn \
+  "Incompatible SHA256 for archive may occur due to the current OS ($(uname))!" \
+  "The result of gzip compression varies based upon the operating system. The archive file" \
+  "that Github produces appears to be compatible with Linux implementations of gzip. Hence," \
+  "generating release notes on this OS may result in an incompatible SHA256 value."
 
 changelog_md="$( "${generate_gh_changelog_sh}" "${tag_name}" )"
 archive_sha256="$( "${generate_git_archive_sh}" --tag_name "${tag_name}" | "${generate_sha256_sh}" )"
