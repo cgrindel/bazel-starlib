@@ -8,7 +8,6 @@ load(
     "updatesrc_update_all",
 )
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//rules:workspace_snippet.bzl", "workspace_snippet")
 
 bzlformat_pkg(name = "bzlformat")
 

@@ -18,6 +18,11 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
+git_sh_location=cgrindel_bazel_starlib/lib/private/git.sh
+git_sh="$(rlocation "${git_sh_location}")" || \
+  (echo >&2 "Failed to locate ${git_sh_location}" && exit 1)
+source "${git_sh}"
+
 github_sh_location=cgrindel_bazel_starlib/lib/private/github.sh
 github_sh="$(rlocation "${github_sh_location}")" || \
   (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)

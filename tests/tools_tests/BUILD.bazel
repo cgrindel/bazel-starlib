@@ -4,18 +4,6 @@ load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_
 bzlformat_pkg(name = "bzlformat")
 
 sh_test(
-    name = "generate_workspace_snippet_test",
-    srcs = ["generate_workspace_snippet_test.sh"],
-    data = [
-        "//tools:generate_workspace_snippet",
-    ],
-    deps = [
-        "//lib/private:fail",
-        "@bazel_tools//tools/bash/runfiles",
-    ],
-)
-
-sh_test(
     name = "write_bazel_status_vars_test",
     srcs = ["write_bazel_status_vars_test.sh"],
     data = [
@@ -40,6 +28,21 @@ sh_test(
 )
 
 # MARK: - Integration Tests
+
+sh_test(
+    name = "generate_workspace_snippet_test",
+    srcs = ["generate_workspace_snippet_test.sh"],
+    data = [
+        "//tools:generate_workspace_snippet",
+    ],
+    env_inherit = GH_ENV_INHERIT,
+    tags = INTEGRATION_TEST_TAGS,
+    deps = [
+        "//lib/private:fail",
+        "//tests:setup_git_repo",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
 
 sh_test(
     name = "generate_gh_changelog_test",
@@ -78,6 +81,7 @@ test_suite(
     tests = [
         ":generate_gh_changelog_test",
         ":generate_git_archive_test",
+        ":generate_workspace_snippet_test",
     ],
     visibility = ["//:__subpackages__"],
 )
