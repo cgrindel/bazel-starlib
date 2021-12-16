@@ -40,5 +40,27 @@ cd "${repo_dir}"
 
 # MARK - Test
 
-fail "STOP"
+# These assertions are primarily making sure different sections have been included.
 
+tag="v0.1.1"
+
+# Test wihtout init example
+actual="$( "${generate_release_notes_sh}" "${tag}" )"
+[[ "${actual}" =~ "## What's Changed" ]]
+[[ "${actual}" =~ "## Workspace Snippet" ]]
+[[ "${actual}" =~ "http_archive(" ]]
+
+# Test wih init example
+init_example_file="init_example.md"
+cat >"${init_example_file}" <<-EOF
+
+load("@cgrindel_bazel_starlib//:deps.bzl", "bazel_starlib_dependencies")
+bazel_starlib_dependencies()
+EOF
+actual="$( 
+  "${generate_release_notes_sh}" --workspace_init_example_file "${init_example_file}" "${tag}" 
+)"
+[[ "${actual}" =~ "## What's Changed" ]]
+[[ "${actual}" =~ "## Workspace Snippet" ]]
+[[ "${actual}" =~ "http_archive(" ]]
+[[ "${actual}" =~ "bazel_starlib_dependencies()" ]]
