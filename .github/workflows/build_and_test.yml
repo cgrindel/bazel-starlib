@@ -8,8 +8,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: ./.github/actions/setup_bazel_cache
-        with:
-          name: bazel_starlib
+      with:
+        name: bazel_starlib
     - uses: ./.github/actions/setup_bazel
     - uses: ./.github/actions/build_and_test
 
@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: ./.github/actions/setup_bazel_cache
-        with:
-          name: bazel_starlib
+      with:
+        name: bazel_starlib
     - uses: ./.github/actions/setup_bazel
     - uses: ./.github/actions/build_and_test
