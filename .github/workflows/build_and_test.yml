@@ -12,6 +12,8 @@ jobs:
         name: bazel_starlib
     - uses: ./.github/actions/setup_bazel
     - uses: ./.github/actions/build_and_test
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
   ubuntu_build:
     runs-on: ubuntu-20.04
@@ -24,3 +26,5 @@ jobs:
         name: bazel_starlib
     - uses: ./.github/actions/setup_bazel
     - uses: ./.github/actions/build_and_test
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
