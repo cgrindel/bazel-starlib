@@ -8,4 +8,4 @@ jobs:
   build_and_test:
     # NOTE: Need to provide a valid ref (e.g. SHA, release tag, branch). Github is working to add
     # local reference support. (https://github.community/t/ref-head-in-reusable-workflows/203690)
-    uses: cgrindel/bazel-starlib/.github/workflows/build_and_test.yml@1c62bff45d6d2185deb246fe6808756622cd9b63
+    uses: cgrindel/bazel-starlib/.github/workflows/build_and_test.yml@18f5ae29c570a7c75d022b959de265f07d8c0aa3
