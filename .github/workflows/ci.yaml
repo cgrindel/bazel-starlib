@@ -6,4 +6,4 @@ on:
 
 jobs:
   exec_build_and_test:
-    uses: cgrindel/bazel-starlib/.github/workflows/build_and_test.yml@${{ github.ref_name }}
+    uses: cgrindel/bazel-starlib/.github/workflows/build_and_test.yml
