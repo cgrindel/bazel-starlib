@@ -6,60 +6,46 @@ on:
       - "v*.*.*"
 
 jobs:
-  ubuntu_build:
-    runs-on: ubuntu-latest
-    env:
-      CC: clang
+  build_and_test:
+    # NOTE: Need to provide a valid ref (e.g. SHA, release tag, branch). Github is working to add
+    # local reference support. (https://github.community/t/ref-head-in-reusable-workflows/203690)
+    uses: cgrindel/bazel-starlib/.github/workflows/build_and_test.yml@50ea013c7fbf5b0a598afc77af28ab111bc191ea
 
-    steps:
+  create_release:
+    # NOTE: Need to provide a valid ref (e.g. SHA, release tag, branch). Github is working to add
+    # local reference support. (https://github.community/t/ref-head-in-reusable-workflows/203690)
+    uses: cgrindel/bazel-starlib/.github/workflows/create_release.yml@
 
-    - uses: actions/checkout@v2
+  # ubuntu_build:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     CC: clang
 
-    - name: Write local.bazelrc File
-      shell: bash
-      run: |
-        cat >local.bazelrc <<EOF
-        common --config=ci
-        EOF
+  #   steps:
 
-    - name: Output the Bazel Info
-      shell: bash
-      run: |
-        bazelisk info
+  #   - uses: actions/checkout@v2
 
-    - name: Execute Tests
-      shell: bash
-      run: |
-        bazelisk test //... 
+  #   - name: Write local.bazelrc File
+  #     shell: bash
+  #     run: |
+  #       cat >local.bazelrc <<EOF
+  #       common --config=ci
+  #       EOF
 
-    - name: Build Anything Not Tested
-      shell: bash
-      run: |
-        bazelisk build //... 
+  #   - name: Output the Bazel Info
+  #     shell: bash
+  #     run: |
+  #       bazelisk info
 
-    - name: Execute Integration Tests
-      shell: bash
-      env:
-        # The integration tests make use of Github-specific functionality 
-        # (e.g. gh).
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        bazelisk test //:all_integration_tests
+  #   - name: Generate Release Notes
+  #     shell: bash
+  #     run: |
+  #       bazelisk run //tools:generate_release_notes -- \
+  #         --output release_notes.md \
+  #         "${GITHUB_REF_NAME}"
 
-    - name: Ensure Bazel packages covered by bzlformat_pkg
-      shell: bash
-      run: |
-        bazelisk run //:bzlformat_missing_pkgs_test
-
-    - name: Generate Release Notes
-      shell: bash
-      run: |
-        bazelisk run //tools:generate_release_notes -- \
-          --output release_notes.md \
-          "${GITHUB_REF_NAME}"
-
-    - name: Create Release
-      uses: softprops/action-gh-release@v1
-      with:
-        name: Release ${{ github.ref_name }}
-        body_path: release_notes.md
+  #   - name: Create Release
+  #     uses: softprops/action-gh-release@v1
+  #     with:
+  #       name: Release ${{ github.ref_name }}
+  #       body_path: release_notes.md
