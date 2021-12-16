@@ -12,3 +12,9 @@ build:ci --local_cpu_resources=2
 
 # Test output information
 test:ci --test_output=errors --test_summary=detailed
+
+# Disk Cache
+build:ci --disk_cache=~/.cache/bazel_disk
+
+# Repository Cache
+build:ci --repository_cache=~/.cache/bazel_repo
