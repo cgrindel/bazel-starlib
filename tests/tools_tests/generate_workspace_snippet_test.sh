@@ -112,53 +112,28 @@ EOF
 [[ "${actual_snippet}" == "${expected_snippet}" ]] || \
   fail $'Snippet with specified parameters did not match expected.  actual:\n'"${actual_snippet}"$'\nexpected:\n'"${expected_snippet}"
 
-# # MARK - Test Arg Checks
+# MARK - Test Arg Checks
 
-# err_output="$(
-# "${generate_workspace_snippet_sh}" \
-#   --status_file "${stable_status_path}" \
-#   --status_file "${volatile_status_path}" \
-#   --workspace_name "${workspace_name}" \
-#   --url "${url1}" \
-#   --url "${url2}" \
-#   --sha256_file "${sha256_file}" \
-#   2>&1 || true
-# )"
-# [[ "${err_output}" =~ "Expected an output path." ]] || fail "Missing output path failure."
+err_output="$(
+"${generate_workspace_snippet_sh}" \
+  --sha256 "${sha256}" \
+  2>&1 || true
+)"
+[[ "${err_output}" =~ "Expected a tag value." ]] || fail "Missing tag failure."
 
-# err_output="$(
-# "${generate_workspace_snippet_sh}" \
-#   --status_file "${stable_status_path}" \
-#   --status_file "${volatile_status_path}" \
-#   --output "${output_path}" \
-#   --url "${url1}" \
-#   --url "${url2}" \
-#   --sha256_file "${sha256_file}" \
-#   2>&1 || true
-# )"
-# [[ "${err_output}" =~ "Expected workspace name." ]] || fail "Missing workspace name failure."
+err_output="$(
+"${generate_workspace_snippet_sh}" \
+  --tag "${tag}" \
+  2>&1 || true
+)"
+[[ "${err_output}" =~ "Expected a SHA256 value." ]] || fail "Missing SHA256 failure."
 
+err_output="$(
+"${generate_workspace_snippet_sh}" \
+  --tag "${tag}" \
+  --sha256 "${sha256}" \
+  --no_github_archive_url \
+  2>&1 || true
+)"
+[[ "${err_output}" =~ "Expected one ore more url templates." ]] || fail "Missing url template failure."
 
-# err_output="$(
-# "${generate_workspace_snippet_sh}" \
-#   --status_file "${stable_status_path}" \
-#   --status_file "${volatile_status_path}" \
-#   --output "${output_path}" \
-#   --workspace_name "${workspace_name}" \
-#   --sha256_file "${sha256_file}" \
-#   2>&1 || true
-# )"
-# [[ "${err_output}" =~ "Expected one ore more url templates." ]] || fail "Missing url template failure."
-
-
-# err_output="$(
-# "${generate_workspace_snippet_sh}" \
-#   --status_file "${stable_status_path}" \
-#   --status_file "${volatile_status_path}" \
-#   --output "${output_path}" \
-#   --workspace_name "${workspace_name}" \
-#   --url "${url1}" \
-#   --url "${url2}" \
-#   2>&1 || true
-# )"
-# [[ "${err_output}" =~ "Expected a SHA256 file." ]] || fail "Missing SHA256 file failure."
