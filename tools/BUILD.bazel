@@ -76,6 +76,9 @@ sh_binary(
     srcs = ["generate_release_notes.sh"],
     data = [
         ":generate_gh_changelog",
+        ":generate_git_archive",
+        ":generate_sha256",
+        ":generate_workspace_snippet",
     ],
     visibility = ["//visibility:public"],
     deps = [
