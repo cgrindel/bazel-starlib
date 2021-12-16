@@ -58,6 +58,5 @@ jobs:
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        prerelease: true
         name: Release ${{ github.ref_name }}
-        body_path: release_notes.txt
+        body_path: release_notes.md
