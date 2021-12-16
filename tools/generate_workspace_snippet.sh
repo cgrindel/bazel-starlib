@@ -18,21 +18,16 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
-source_bazel_status_vars_sh_location=cgrindel_bazel_starlib/lib/private/source_bazel_status_vars.sh
-source_bazel_status_vars_sh="$(rlocation "${source_bazel_status_vars_sh_location}")" || \
-  (echo >&2 "Failed to locate ${source_bazel_status_vars_sh_location}" && exit 1)
-source "${source_bazel_status_vars_sh}"
+github_sh_location=cgrindel_bazel_starlib/lib/private/github.sh
+github_sh="$(rlocation "${github_sh_location}")" || \
+  (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)
+source "${github_sh}"
 
 # MARK - Process Args
 
 url_templates=()
-status_file_paths=()
 while (("$#")); do
   case "${1}" in
-    "--status_file")
-      status_file_paths+=( "${2}" )
-      shift 2
-      ;;
     "--output")
       output_path="${2}"
       shift 2
@@ -45,8 +40,8 @@ while (("$#")); do
       url_templates+=( "${2}" )
       shift 2
       ;;
-    "--sha256_file")
-      sha256_file="${2}"
+    "--sha256")
+      sha256="${2}"
       shift 2
       ;;
     *)
@@ -55,32 +50,31 @@ while (("$#")); do
   esac
 done
 
+# MARK - Generate the snippet
+
+cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 [[ -z "${output_path:-}" ]] && fail "Expected an output path."
-[[ -z "${workspace_name:-}" ]] && fail "Expected workspace name."
-[[ ${#url_templates[@]} > 0 ]] || fail "Expected one ore more url templates."
-[[ -z "${sha256_file:-}" ]] && fail "Expected a SHA256 file."
-[[ -f "${sha256_file}" ]] || fail "The SHA256 file does not exist. ${sha256_file}"
+# [[ -z "${workspace_name:-}" ]] && fail "Expected workspace name."
+[[ -z "${sha256:-}" ]] && fail "Expected a SHA256 value."
+# [[ ${#url_templates[@]} > 0 ]] || fail "Expected one ore more url templates."
+# [[ ${#url_templates[@]} > 0 ]] || fail "Expected one ore more url templates."
 
-
-sha256="$(< "${sha256_file}")"
+repo_url="$( get_git_remote_url )"
+is_github_repo_url "${repo_url}" || fail "This git repository's remote does not appear to be hosted by Github. repo_url: ${repo_url}"
+owner="$( get_gh_repo_owner "${repo_url}" )"
+repo="$( get_gh_repo_name "${repo_url}" )"
 
 # Evaluate the URL template
 urls="$(
-  # Source the stable-status.txt and volatile-status.txt values as Bash variables
-  for status_file_path in "${status_file_paths[@]:-}" ; do
-    eval "$( source_bazel_status_vars "${status_file_path}" )"
-  done
-
   for url_template in "${url_templates[@]}" ; do
     url="$(eval echo "${url_template}")"
     echo "        \"${url}\","
   done
 )"
 
-
 # Generate the workspace snippet
-cat > "${output_path}" <<-EOF
+snippet="$(cat  <<-EOF
 http_archive(
     name = "${workspace_name}",
     sha256 = "${sha256}",
@@ -89,3 +83,12 @@ ${urls}
     ],
 )
 EOF
+)"
+
+
+# Output the changelog
+if [[ -z "${output_path:-}" ]]; then
+  echo "${snippet}"
+else
+  echo "${snippet}" > "${output_path}"
+fi
