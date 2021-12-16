@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+# Generates a workspace snippet suitable for inclusion in a WORKSPACE file.
+
+# The --url flag accepts a string template that will be evaluated with the
+# result being added to the list of download URLs. The available parameters
+# are:
+#   ${owner}: The owner of the current Github hosted repository.
+#   ${repo}: The name of the current Github hosted repository.
+#   ${tag}: The tag name, if one is provided.
+#   ${workspace_name}: The name used in the workspace snippet.
+
 # --- begin runfiles.bash initialization v2 ---
 # Copy-pasted from the Bazel Bash runfiles library v2.
 set -uo pipefail; f=bazel_tools/tools/bash/runfiles/runfiles.bash
@@ -30,45 +40,74 @@ source "${github_sh}"
 
 # MARK - Process Args
 
+add_github_archive_url=true
 url_templates=()
+args=()
 while (("$#")); do
   case "${1}" in
-    "--output")
-      output_path="${2}"
+    "--sha256")
+      sha256="${2}"
       shift 2
       ;;
-    "--workspace_name")
-      workspace_name="${2}"
+    "--tag")
+      tag="${2}"
       shift 2
       ;;
     "--url")
       url_templates+=( "${2}" )
       shift 2
       ;;
-    "--sha256")
-      sha256="${2}"
+    "--no_github_archive_url")
+      add_github_archive_url=false
+      shift 1
+      ;;
+    "--owner")
+      owner="${2}"
+      shift 2
+      ;;
+    "--repo")
+      repo="${2}"
+      shift 2
+      ;;
+    "--workspace_name")
+      workspace_name="${2}"
+      shift 2
+      ;;
+    "--output")
+      output_path="${2}"
       shift 2
       ;;
     *)
+      args+=( "${1}" )
       shift 1
       ;;
   esac
 done
 
+[[ -z "${sha256:-}" ]] && fail "Expected a SHA256 value."
+[[ -z "${tag:-}" ]] && fail "Expected a tag value."
+
+[[ "${add_github_archive_url}" == true ]] && \
+  url_templates+=( 'http://github.com/${owner}/${repo}/archive/${tag}.tar.gz' )
+[[ ${#url_templates[@]} > 0 ]] || fail "Expected one ore more url templates."
+
+
 # MARK - Generate the snippet
 
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
-[[ -z "${output_path:-}" ]] && fail "Expected an output path."
-# [[ -z "${workspace_name:-}" ]] && fail "Expected workspace name."
-[[ -z "${sha256:-}" ]] && fail "Expected a SHA256 value."
-# [[ ${#url_templates[@]} > 0 ]] || fail "Expected one ore more url templates."
-# [[ ${#url_templates[@]} > 0 ]] || fail "Expected one ore more url templates."
+if [[ -z "${owner:-}" ]] || [[ -z "${repo:-}" ]]; then
+  repo_url="$( get_git_remote_url )"
+  is_github_repo_url "${repo_url}" || fail "This git repository's remote does not appear to be hosted by Github. repo_url: ${repo_url}"
+  owner="$( get_gh_repo_owner "${repo_url}" )"
+  repo="$( get_gh_repo_name "${repo_url}" )"
+fi
 
-repo_url="$( get_git_remote_url )"
-is_github_repo_url "${repo_url}" || fail "This git repository's remote does not appear to be hosted by Github. repo_url: ${repo_url}"
-owner="$( get_gh_repo_owner "${repo_url}" )"
-repo="$( get_gh_repo_name "${repo_url}" )"
+if [[ -z "${workspace_name:-}" ]]; then
+  workspace_name="${owner}_${repo}"
+  # Replace hyphens with underscores
+  workspace_name="${workspace_name//-/_}"
+fi
 
 # Evaluate the URL template
 urls="$(
