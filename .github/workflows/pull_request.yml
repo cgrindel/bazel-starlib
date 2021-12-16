@@ -37,6 +37,7 @@ jobs:
     - name: Execute Integration Tests
       shell: bash
       env:
+        # The integration tests make use of Github-specific functionality (e.g. gh).
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         bazelisk test //:all_integration_tests
@@ -81,6 +82,7 @@ jobs:
     - name: Execute Integration Tests
       shell: bash
       env:
+        # The integration tests make use of Github-specific functionality (e.g. gh).
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         bazelisk test //:all_integration_tests
