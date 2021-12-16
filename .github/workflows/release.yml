@@ -40,7 +40,8 @@ jobs:
     - name: Execute Integration Tests
       shell: bash
       env:
-        # The integration tests make use of Github-specific functionality (e.g. gh).
+        # The integration tests make use of Github-specific functionality 
+        # (e.g. gh).
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         bazelisk test //:all_integration_tests
@@ -53,7 +54,9 @@ jobs:
     - name: Generate Release Notes
       shell: bash
       run: |
-        bazelisk run //tools:generate_release_notes -- --output release_notes.md "${GITHUB_REF_NAME}"
+        bazelisk run //tools:generate_release_notes -- \
+          --output release_notes.md \
+          "${GITHUB_REF_NAME}"
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
