@@ -7,30 +7,15 @@ runs:
   using: composite
   steps:
     - name: Bazel Repo Cache for ${{ inputs.name }}
-      uses: ./github/actions/setup_action_cache
+      uses: ./.github/actions/setup_action_cache
       with:
         path: ~/.cache/bazel_repo
         cache_name: ${{ inputs.name }}-repo
         key_suffix: ${{ hashFiles('WORKSPACE') }}
 
     - name: Bazel Repo Cache for ${{ inputs.name }}
-      uses: ./github/actions/setup_action_cache
+      uses: ./.github/actions/setup_action_cache
       with:
         path: ~/.cache/bazel_disk
         cache_name: ${{ inputs.name }}-disk
         key_suffix: ${{ github.sha }}
-
-    # - name: Bazel Disk and Output Cache
-    #   uses: actions/cache@v2
-    #   env:
-    #     cache-name: fly_without_fear
-    #   with:
-    #     path: |
-    #       ~/.bazel-cache
-    #       ~/bazel-output
-    #     key: ${{ secrets.GH_ACTION_CACHE_VERSION }}-${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
-    #     restore-keys: |
-    #       ${{ secrets.GH_ACTION_CACHE_VERSION }}-${{ runner.os }}-build-${{ env.cache-name }}-
-    #       ${{ secrets.GH_ACTION_CACHE_VERSION }}-${{ runner.os }}-build-
-    #       ${{ secrets.GH_ACTION_CACHE_VERSION }}-${{ runner.os }}-
-    #       ${{ secrets.GH_ACTION_CACHE_VERSION }}-
