@@ -18,12 +18,23 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
-gith_sh_location=cgrindel_bazel_starlib/lib/private/gith.sh
-gith_sh="$(rlocation "${gith_sh_location}")" || \
-  (echo >&2 "Failed to locate ${gith_sh_location}" && exit 1)
-source "${gith_sh}"
+git_sh_location=cgrindel_bazel_starlib/lib/private/git.sh
+git_sh="$(rlocation "${git_sh_location}")" || \
+  (echo >&2 "Failed to locate ${git_sh_location}" && exit 1)
+source "${git_sh}"
 
 # MARK - Process Args
+
+get_usage() {
+  utility="$(basename "${BASH_SOURCE[0]}")"
+  echo "$(cat <<-EOF
+Create a release tag and push it to the remote.
+
+Usage:
+${utility} [--remote <remote>] [--branch <branch>] <tag>
+EOF
+  )"
+}
 
 remote=origin
 main_branch=main
@@ -31,6 +42,18 @@ main_branch=main
 args=()
 while (("$#")); do
   case "${1}" in
+    "--help")
+      show_usage
+      exit 0
+      ;;
+    --remote)
+      remote="${2}"
+      shift 2
+      ;;
+    --branch)
+      main_branch="${2}"
+      shift 2
+      ;;
     *)
       args+=("${1}")
       shift 1
@@ -42,7 +65,7 @@ done
 
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
-[[ ${#args[@]} == 0 ]] && fail "Expected a tag or semver. (e.g v.1.2.3)"
+[[ ${#args[@]} == 0 ]] && usage_error "Expected a tag or semver. (e.g v.1.2.3)"
 tag="${args[0]}"
 [[ "${tag}" =~ ^v ]] || tag="v${tag}"
 
