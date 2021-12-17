@@ -85,6 +85,12 @@ get_gh_repo_name() {
   basename -s .git "${repo_url}"
 }
 
+# Succeeds if the Github release exists. Otherwise, it fails.
+gh_release_exists() {
+  local tag="${1}"
+  gh release view "${tag}" 2> /dev/null
+}
+
 # MARK - Github API Functions
 
 # Returns a base URL suitable for API calls.

@@ -93,8 +93,10 @@ sh_binary(
     srcs = ["create_release.sh"],
     visibility = ["//visibility:public"],
     deps = [
+        "//lib/private:env",
         "//lib/private:fail",
         "//lib/private:git",
+        "//lib/private:github",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
