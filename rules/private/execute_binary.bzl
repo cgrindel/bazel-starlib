@@ -38,7 +38,6 @@ fi
     )
     runfiles = ctx.runfiles(files = ctx.files.data)
     runfiles = runfiles.merge(ctx.attr.binary[DefaultInfo].default_runfiles)
-
     return DefaultInfo(executable = out, runfiles = runfiles)
 
 execute_binary = rule(

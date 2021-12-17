@@ -14,4 +14,37 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 assertions_lib="$(rlocation cgrindel_bazel_starlib/lib/private/assertions.sh)"
 source "${assertions_lib}"
 
-fail "IMPLEMENT ME!"
+setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
+setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" || \
+  (echo >&2 "Failed to locate ${setup_git_repo_sh_location}" && exit 1)
+
+
+without_init_example_sh_location=cgrindel_bazel_starlib/tests/rules_tests/generate_release_notes_tests/without_init_example.sh
+without_init_example_sh="$(rlocation "${without_init_example_sh_location}")" || \
+  (echo >&2 "Failed to locate ${without_init_example_sh_location}" && exit 1)
+
+with_init_example_sh_location=cgrindel_bazel_starlib/tests/rules_tests/generate_release_notes_tests/with_init_example.sh
+with_init_example_sh="$(rlocation "${with_init_example_sh_location}")" || \
+  (echo >&2 "Failed to locate ${with_init_example_sh_location}" && exit 1)
+
+
+# MARK - Setup
+
+source "${setup_git_repo_sh}"
+
+# cd "${repo_dir}"
+
+
+# MARK - Test
+
+tag="v999.0.0"
+
+actual="$( "${without_init_example_sh}" "${tag}" )"
+[[ "${actual}" =~ "## What's Changed" ]] || \
+  fail "Without Init Example: Did not find release notes header."
+
+actual="$( "${with_init_example_sh}" "${tag}" )"
+[[ "${actual}" =~ "## What's Changed" ]] || \
+  fail "With Init Example: Did not find release notes header."
+[[ "${actual}" =~ "Workspace Init for Test" ]] || \
+  fail "With Init Example: Did not find init example."
