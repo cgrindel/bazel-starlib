@@ -8,6 +8,7 @@ load(
     "updatesrc_update_all",
 )
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("//rules:generate_release_notes.bzl", "generate_release_notes")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -37,4 +38,11 @@ test_suite(
         "//tests/tools_tests:integration_tests",
     ],
     visibility = ["//:__subpackages__"],
+)
+
+# MARK: - Release
+
+generate_release_notes(
+    name = "generate_release_notes",
+    workspace_init_example_file = "workspace_init_example.bzl",
 )

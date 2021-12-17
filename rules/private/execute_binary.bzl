@@ -38,7 +38,7 @@ else
 fi
 """.format(binary = bin_path),
     )
-    runfiles = ctx.runfiles()
+    runfiles = ctx.runfiles(files = ctx.files.data)
     runfiles = runfiles.merge(ctx.attr.binary[DefaultInfo].default_runfiles)
 
     return DefaultInfo(executable = out, runfiles = runfiles)
@@ -51,6 +51,10 @@ execute_binary = rule(
             mandatory = True,
             cfg = "target",
             doc = "The binary to be executed.",
+        ),
+        "data": attr.label_list(
+            allow_files = True,
+            doc = "Files needed by the binary at runtime.",
         ),
     },
     doc = """\

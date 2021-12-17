@@ -7,7 +7,7 @@
 ## execute_binary
 
 <pre>
-execute_binary(<a href="#execute_binary-name">name</a>, <a href="#execute_binary-binary">binary</a>)
+execute_binary(<a href="#execute_binary-name">name</a>, <a href="#execute_binary-binary">binary</a>, <a href="#execute_binary-data">data</a>)
 </pre>
 
 This rule executes a binary target with the specified arguments. It generates a Bash script that contains a call to the binary with the arguments embedded in the script. This is useful in the following situations:
@@ -28,5 +28,6 @@ You can use a macro which encapsulates the details of the xxx_binary declaration
 | :------------- | :------------- | :------------- | :------------- | :------------- |
 | <a id="execute_binary-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/docs/build-ref.html#name">Name</a> | required |  |
 | <a id="execute_binary-binary"></a>binary |  The binary to be executed.   | <a href="https://bazel.build/docs/build-ref.html#labels">Label</a> | required |  |
+| <a id="execute_binary-data"></a>data |  Files needed by the binary at runtime.   | <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a> | optional | [] |
 
 

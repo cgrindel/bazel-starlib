@@ -47,10 +47,6 @@ while (("$#")); do
       workspace_init_example_file="${2}"
       shift 2
       ;;
-    "--workspace_init_example")
-      workspace_init_example="${2}"
-      shift 2
-      ;;
     *)
       args+=("${1}")
       shift 1
@@ -61,8 +57,9 @@ done
 [[ ${#args[@]} == 0 ]] && fail "A tag name for the release must be specified."
 tag_name="${args[0]}"
 
-[[ -z "${workspace_init_example:-}" ]] && [[ ! -z "${workspace_init_example_file:-}" ]] && \
+[[ -z "${workspace_init_example_file:-}" ]] || \
   workspace_init_example="$(< "${workspace_init_example_file}")"
+
 
 # MARK - Generate the changelog.
 
@@ -77,7 +74,7 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 changelog_md="$( "${generate_gh_changelog_sh}" "${tag_name}" )"
 archive_sha256="$( "${generate_git_archive_sh}" --tag_name "${tag_name}" | "${generate_sha256_sh}" )"
 workspace_snippet="$( "${generate_workspace_snippet_sh}" --sha256 "${archive_sha256}" --tag "${tag_name}" )"
-[[ -z "${workspace_init_example:-}" ]] || workspace_snippet="${workspace_snippet}"$'\n'"${workspace_init_example}"
+[[ -z "${workspace_init_example:-}" ]] || workspace_snippet="${workspace_snippet}"$'\n\n'"${workspace_init_example}"
 
 release_notes_md="$(cat <<-EOF
 ${changelog_md}
