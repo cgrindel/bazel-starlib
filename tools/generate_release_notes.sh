@@ -36,9 +36,6 @@ generate_workspace_snippet_sh="$(rlocation "${generate_workspace_snippet_sh_loca
 
 # MARK - Process Arguments
 
-remote_name=origin
-main_branch=main
-
 args=()
 while (("$#")); do
   case "${1}" in
