@@ -31,9 +31,10 @@ get_git_release_tags() {
 
 git_tag_exists() {
   local target_tag="${1}"
-  tags=( $(get_git_release_tags) )
-  for tag in "${tags[@]}" ; do
-    [[ "${tag}" == "${target_tag}" ]] && return
+  local tags=( $(get_git_release_tags) )
+  # Make sure that the for loop variable is not tag or something else common.
+  for cur_tag in "${tags[@]}" ; do
+    [[ "${cur_tag}" == "${target_tag}" ]] && return
   done
   return -1
 }
