@@ -31,9 +31,36 @@ get_git_release_tags() {
 
 git_tag_exists() {
   local target_tag="${1}"
-  tags=( $(get_git_release_tags) )
-  for tag in "${tags[@]}" ; do
-    [[ "${tag}" == "${target_tag}" ]] && return
+  local tags=( $(get_git_release_tags) )
+  # Make sure that the for loop variable is not tag or something else common.
+  for cur_tag in "${tags[@]}" ; do
+    [[ "${cur_tag}" == "${target_tag}" ]] && return
   done
   return -1
+}
+
+create_git_release_tag() {
+  local tag="${1}"
+  local commit="${2:-}"
+  [[ "${tag}" =~ ^v ]] || tag="v${tag}"
+  msg="Release ${tag}"
+  git_tag_cmd=(git tag -a -m "${msg}" "${tag}")
+  [[ -z "${commit:-}" ]] || git_tag_cmd+=( "${commit}" )
+  "${git_tag_cmd[@]}"
+}
+
+git_tag_exists_on_remote() {
+  local tag="${1}"
+  local remote="${2:-origin}"
+  git ls-remote --exit-code "${remote}" "refs/tags/${tag}" > /dev/null
+}
+
+push_git_tag_to_remote() {
+  local tag="${1}"
+  local remote="${2:-origin}"
+  git push "${remote}" "${tag}"
+}
+
+get_current_branch_name() {
+  git rev-parse --abbrev-ref HEAD
 }
