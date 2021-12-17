@@ -19,3 +19,13 @@ bzl_library(
     name = "write_bazel_status_vars",
     srcs = ["write_bazel_status_vars.bzl"],
 )
+
+bzl_library(
+    name = "generate_release_notes",
+    srcs = ["generate_release_notes.bzl"],
+)
+
+bzl_library(
+    name = "execute_binary",
+    srcs = ["execute_binary.bzl"],
+)

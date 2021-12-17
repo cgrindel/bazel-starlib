@@ -48,3 +48,12 @@ sh_library(
         "//tools:__subpackages__",
     ],
 )
+
+sh_library(
+    name = "assertions",
+    testonly = True,
+    srcs = ["assertions.sh"],
+    visibility = [
+        "//tests:__subpackages__",
+    ],
+)

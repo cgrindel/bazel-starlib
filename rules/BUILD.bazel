@@ -30,6 +30,14 @@ bzl_library(
     ],
 )
 
+bzl_library(
+    name = "execute_binary",
+    srcs = ["execute_binary.bzl"],
+    deps = [
+        "//rules/private:execute_binary",
+    ],
+)
+
 pkg_files(
     name = "package_files",
     srcs = glob([
