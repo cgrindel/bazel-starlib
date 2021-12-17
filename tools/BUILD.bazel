@@ -8,7 +8,8 @@ sh_binary(
     visibility = ["//visibility:public"],
     deps = [
         "//lib/private:fail",
-        "//lib/private:source_bazel_status_vars",
+        "//lib/private:git",
+        "//lib/private:github",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -61,15 +62,28 @@ sh_binary(
 sh_binary(
     name = "generate_gh_changelog",
     srcs = ["generate_gh_changelog.sh"],
-    # data = [
-    #     ":get_gh_auth_token",
-    # ],
     visibility = ["//visibility:public"],
     deps = [
         "//lib/private:env",
         "//lib/private:fail",
         "//lib/private:git",
         "//lib/private:github",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_binary(
+    name = "generate_release_notes",
+    srcs = ["generate_release_notes.sh"],
+    data = [
+        ":generate_gh_changelog",
+        ":generate_git_archive",
+        ":generate_sha256",
+        ":generate_workspace_snippet",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:fail",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )

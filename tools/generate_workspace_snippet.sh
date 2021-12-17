@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+# Generates a workspace snippet suitable for inclusion in a WORKSPACE file.
+
+# The --url flag accepts a string template that will be evaluated with the
+# result being added to the list of download URLs. The available parameters
+# are:
+#   ${owner}: The owner of the current Github hosted repository.
+#   ${repo}: The name of the current Github hosted repository.
+#   ${tag}: The tag name, if one is provided.
+#   ${workspace_name}: The name used in the workspace snippet.
+
 # --- begin runfiles.bash initialization v2 ---
 # Copy-pasted from the Bazel Bash runfiles library v2.
 set -uo pipefail; f=bazel_tools/tools/bash/runfiles/runfiles.bash
@@ -18,69 +28,97 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
-source_bazel_status_vars_sh_location=cgrindel_bazel_starlib/lib/private/source_bazel_status_vars.sh
-source_bazel_status_vars_sh="$(rlocation "${source_bazel_status_vars_sh_location}")" || \
-  (echo >&2 "Failed to locate ${source_bazel_status_vars_sh_location}" && exit 1)
-source "${source_bazel_status_vars_sh}"
+git_sh_location=cgrindel_bazel_starlib/lib/private/git.sh
+git_sh="$(rlocation "${git_sh_location}")" || \
+  (echo >&2 "Failed to locate ${git_sh_location}" && exit 1)
+source "${git_sh}"
+
+github_sh_location=cgrindel_bazel_starlib/lib/private/github.sh
+github_sh="$(rlocation "${github_sh_location}")" || \
+  (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)
+source "${github_sh}"
 
 # MARK - Process Args
 
+add_github_archive_url=true
 url_templates=()
-status_file_paths=()
+args=()
 while (("$#")); do
   case "${1}" in
-    "--status_file")
-      status_file_paths+=( "${2}" )
+    "--sha256")
+      sha256="${2}"
       shift 2
       ;;
-    "--output")
-      output_path="${2}"
-      shift 2
-      ;;
-    "--workspace_name")
-      workspace_name="${2}"
+    "--tag")
+      tag="${2}"
       shift 2
       ;;
     "--url")
       url_templates+=( "${2}" )
       shift 2
       ;;
-    "--sha256_file")
-      sha256_file="${2}"
+    "--no_github_archive_url")
+      add_github_archive_url=false
+      shift 1
+      ;;
+    "--owner")
+      owner="${2}"
+      shift 2
+      ;;
+    "--repo")
+      repo="${2}"
+      shift 2
+      ;;
+    "--workspace_name")
+      workspace_name="${2}"
+      shift 2
+      ;;
+    "--output")
+      output_path="${2}"
       shift 2
       ;;
     *)
+      args+=( "${1}" )
       shift 1
       ;;
   esac
 done
 
+[[ -z "${sha256:-}" ]] && fail "Expected a SHA256 value."
+[[ -z "${tag:-}" ]] && fail "Expected a tag value."
 
-[[ -z "${output_path:-}" ]] && fail "Expected an output path."
-[[ -z "${workspace_name:-}" ]] && fail "Expected workspace name."
+[[ "${add_github_archive_url}" == true ]] && \
+  url_templates+=( 'http://github.com/${owner}/${repo}/archive/${tag}.tar.gz' )
 [[ ${#url_templates[@]} > 0 ]] || fail "Expected one ore more url templates."
-[[ -z "${sha256_file:-}" ]] && fail "Expected a SHA256 file."
-[[ -f "${sha256_file}" ]] || fail "The SHA256 file does not exist. ${sha256_file}"
 
 
-sha256="$(< "${sha256_file}")"
+# MARK - Generate the snippet
+
+cd "${BUILD_WORKSPACE_DIRECTORY}"
+
+if [[ -z "${owner:-}" ]] || [[ -z "${repo:-}" ]]; then
+  repo_url="$( get_git_remote_url )"
+  is_github_repo_url "${repo_url}" || fail "This git repository's remote does not appear to be hosted by Github. repo_url: ${repo_url}"
+  owner="$( get_gh_repo_owner "${repo_url}" )"
+  repo="$( get_gh_repo_name "${repo_url}" )"
+fi
+
+if [[ -z "${workspace_name:-}" ]]; then
+  workspace_name="${owner}_${repo}"
+  # Replace hyphens with underscores
+  workspace_name="${workspace_name//-/_}"
+fi
 
 # Evaluate the URL template
 urls="$(
-  # Source the stable-status.txt and volatile-status.txt values as Bash variables
-  for status_file_path in "${status_file_paths[@]:-}" ; do
-    eval "$( source_bazel_status_vars "${status_file_path}" )"
-  done
-
   for url_template in "${url_templates[@]}" ; do
     url="$(eval echo "${url_template}")"
     echo "        \"${url}\","
   done
 )"
 
-
 # Generate the workspace snippet
-cat > "${output_path}" <<-EOF
+snippet="$(cat  <<-EOF
 http_archive(
     name = "${workspace_name}",
     sha256 = "${sha256}",
@@ -89,3 +127,12 @@ ${urls}
     ],
 )
 EOF
+)"
+
+
+# Output the changelog
+if [[ -z "${output_path:-}" ]]; then
+  echo "${snippet}"
+else
+  echo "${snippet}" > "${output_path}"
+fi

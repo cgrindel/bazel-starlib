@@ -18,108 +18,122 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
+setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
+setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" || \
+  (echo >&2 "Failed to locate ${setup_git_repo_sh_location}" && exit 1)
+
 generate_workspace_snippet_sh_location=cgrindel_bazel_starlib/tools/generate_workspace_snippet.sh
 generate_workspace_snippet_sh="$(rlocation "${generate_workspace_snippet_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_workspace_snippet_sh_location}" && exit 1)
 
-# MARK - Set up Status Files
 
-stable_status_path="stable-status.txt"
-cat > "${stable_status_path}" <<-EOF
-STABLE_VALUE chicken
-STABLE_NOT_USED howdy
-STABLE_CURRENT_RELEASE_TAG v1.2.3
-STABLE_CURRENT_RELEASE 1.2.3
-EOF
+# MARK - Setup
 
-volatile_status_path="volatile-status.txt"
-cat > "${volatile_status_path}" <<-EOF
-VOLATILE_VALUE smidgen
-EOF
+source "${setup_git_repo_sh}"
+cd "${repo_dir}"
 
-# MARK - Test Successful Snippet Generation
-
-output_path="actual_snippet.bzl"
-workspace_name="acme_rules_fun"
-url1='http://github.com/acme/rules_fun/releases/download/${STABLE_CURRENT_RELEASE_TAG}/rules_fun-${STABLE_CURRENT_RELEASE}.tar.gz'
-url2='http://mirror.bazel.build/github.com/acme/rules_fun/releases/download/${STABLE_CURRENT_RELEASE_TAG}/rules_fun-${STABLE_CURRENT_RELEASE}.tar.gz'
 sha256=5b80d60e00a7ea2d9d540c594e5ec41c946c163e272056c626026fcbb7918de2
-sha256_file="sha256.txt"
+tag="v1.2.3"
 
-echo "${sha256}" > "${sha256_file}"
+# MARK - Test Extracting Info from Git Repository
 
+actual_snippet="$(
 "${generate_workspace_snippet_sh}" \
-  --status_file "${stable_status_path}" \
-  --status_file "${volatile_status_path}" \
-  --output "${output_path}" \
-  --workspace_name "${workspace_name}" \
-  --url "${url1}" \
-  --url "${url2}" \
-  --sha256_file "${sha256_file}"
+  --sha256 "${sha256}" \
+  --tag "${tag}"
+)"
 
-[[ -f "${output_path}" ]] || fail "Expected output file to exist. ${output_path}"
-actual_snippet="$(< "${output_path}")"
 expected_snippet=$(cat <<-EOF
 http_archive(
-    name = "acme_rules_fun",
-    sha256 = "5b80d60e00a7ea2d9d540c594e5ec41c946c163e272056c626026fcbb7918de2",
+    name = "cgrindel_bazel_starlib",
+    sha256 = "${sha256}",
     urls = [
-        "http://github.com/acme/rules_fun/releases/download/v1.2.3/rules_fun-1.2.3.tar.gz",
-        "http://mirror.bazel.build/github.com/acme/rules_fun/releases/download/v1.2.3/rules_fun-1.2.3.tar.gz",
+        "http://github.com/cgrindel/bazel-starlib/archive/${tag}.tar.gz",
     ],
 )
 EOF
 )
 [[ "${actual_snippet}" == "${expected_snippet}" ]] || \
-  fail $'Snippet did not match expected.  actual:\n'"${actual_snippet}"$'\nexpected:\n'"${expected_snippet}"
+  fail $'Snippet with defaults did not match expected.  actual:\n'"${actual_snippet}"$'\nexpected:\n'"${expected_snippet}"
+
+# MARK - Test write to file
+
+output_path="snippet.bzl"
+
+"${generate_workspace_snippet_sh}" \
+  --sha256 "${sha256}" \
+  --tag "${tag}" \
+  --output "${output_path}"
+actual_snippet="$(< "${output_path}")"
+
+expected_snippet=$(cat <<-EOF
+http_archive(
+    name = "cgrindel_bazel_starlib",
+    sha256 = "${sha256}",
+    urls = [
+        "http://github.com/cgrindel/bazel-starlib/archive/${tag}.tar.gz",
+    ],
+)
+EOF
+)
+[[ "${actual_snippet}" == "${expected_snippet}" ]] || \
+  fail $'Snippet written to file did not match expected.  actual:\n'"${actual_snippet}"$'\nexpected:\n'"${expected_snippet}"
+
+
+# MARK - Test Specifying Info
+
+owner=acme
+repo=rules_fun
+url1='http://github.com/${owner}/${repo}/releases/download/${tag}/${repo}-${tag:1}.tar.gz'
+url2='http://mirror.bazel.build/github.com/${owner}/${repo}/releases/download/${tag}/${repo}-${tag:1}.tar.gz'
+
+actual_snippet="$(
+"${generate_workspace_snippet_sh}" \
+  --sha256 "${sha256}" \
+  --tag "${tag}" \
+  --no_github_archive_url \
+  --url "${url1}" \
+  --url "${url2}" \
+  --owner "${owner}" \
+  --repo "${repo}"
+)"
+
+expected_snippet=$(cat <<-EOF
+http_archive(
+    name = "${owner}_${repo}",
+    sha256 = "${sha256}",
+    urls = [
+        "http://github.com/${owner}/${repo}/releases/download/${tag}/${repo}-${tag:1}.tar.gz",
+        "http://mirror.bazel.build/github.com/${owner}/${repo}/releases/download/${tag}/rules_fun-${tag:1}.tar.gz",
+    ],
+)
+EOF
+)
+[[ "${actual_snippet}" == "${expected_snippet}" ]] || \
+  fail $'Snippet with specified parameters did not match expected.  actual:\n'"${actual_snippet}"$'\nexpected:\n'"${expected_snippet}"
 
 # MARK - Test Arg Checks
 
 err_output="$(
 "${generate_workspace_snippet_sh}" \
-  --status_file "${stable_status_path}" \
-  --status_file "${volatile_status_path}" \
-  --workspace_name "${workspace_name}" \
-  --url "${url1}" \
-  --url "${url2}" \
-  --sha256_file "${sha256_file}" \
+  --sha256 "${sha256}" \
   2>&1 || true
 )"
-[[ "${err_output}" =~ "Expected an output path." ]] || fail "Missing output path failure."
+[[ "${err_output}" =~ "Expected a tag value." ]] || fail "Missing tag failure."
 
 err_output="$(
 "${generate_workspace_snippet_sh}" \
-  --status_file "${stable_status_path}" \
-  --status_file "${volatile_status_path}" \
-  --output "${output_path}" \
-  --url "${url1}" \
-  --url "${url2}" \
-  --sha256_file "${sha256_file}" \
+  --tag "${tag}" \
   2>&1 || true
 )"
-[[ "${err_output}" =~ "Expected workspace name." ]] || fail "Missing workspace name failure."
-
+[[ "${err_output}" =~ "Expected a SHA256 value." ]] || fail "Missing SHA256 failure."
 
 err_output="$(
 "${generate_workspace_snippet_sh}" \
-  --status_file "${stable_status_path}" \
-  --status_file "${volatile_status_path}" \
-  --output "${output_path}" \
-  --workspace_name "${workspace_name}" \
-  --sha256_file "${sha256_file}" \
+  --tag "${tag}" \
+  --sha256 "${sha256}" \
+  --no_github_archive_url \
   2>&1 || true
 )"
 [[ "${err_output}" =~ "Expected one ore more url templates." ]] || fail "Missing url template failure."
 
-
-err_output="$(
-"${generate_workspace_snippet_sh}" \
-  --status_file "${stable_status_path}" \
-  --status_file "${volatile_status_path}" \
-  --output "${output_path}" \
-  --workspace_name "${workspace_name}" \
-  --url "${url1}" \
-  --url "${url2}" \
-  2>&1 || true
-)"
-[[ "${err_output}" =~ "Expected a SHA256 file." ]] || fail "Missing SHA256 file failure."
