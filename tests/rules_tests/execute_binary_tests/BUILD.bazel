@@ -27,6 +27,9 @@ sh_test(
 
 # MARK: - Test with args
 
+# TODO: Add a test ensuring that args with spaces are passed through properly.
+# TODO: Add test using data
+
 execute_binary(
     name = "my_bin_with_args",
     args = [
