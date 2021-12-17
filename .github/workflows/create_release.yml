@@ -2,7 +2,17 @@ name: Create Release Workflow
 
 on:
   workflow_dispatch:
+    inputs:
+      release_notes_target:
+        required: true
+        type: string
+        default: "//:generate_release_notes"
   workflow_call:
+    inputs:
+      release_notes_target:
+        required: true
+        type: string
+        default: "//:generate_release_notes"
 
 jobs:
   create_release:
@@ -33,8 +43,9 @@ jobs:
         # (e.g. gh).
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_REF_NAME: ${{ github.ref_name }}
+        RELEASE_NOTES_TARGET: ${{ inputs.release_notes_target }}
       run: |
-        bazelisk run //tools:generate_release_notes -- \
+        bazelisk run "${RELEASE_NOTES_TARGET}" -- \
           --output release_notes.md \
           "${GITHUB_REF_NAME}"
 
