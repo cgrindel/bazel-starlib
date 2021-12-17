@@ -18,10 +18,28 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
+env_sh_location=cgrindel_bazel_starlib/lib/private/env.sh
+env_sh="$(rlocation "${env_sh_location}")" || \
+  (echo >&2 "Failed to locate ${env_sh_location}" && exit 1)
+source "${env_sh}"
+
 git_sh_location=cgrindel_bazel_starlib/lib/private/git.sh
 git_sh="$(rlocation "${git_sh_location}")" || \
   (echo >&2 "Failed to locate ${git_sh_location}" && exit 1)
 source "${git_sh}"
+
+github_sh_location=cgrindel_bazel_starlib/lib/private/github.sh
+github_sh="$(rlocation "${github_sh_location}")" || \
+  (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)
+source "${github_sh}"
+
+
+# MARK - Check for Required Software
+
+required_software="Both git and Github CLI (gh) are required to run this utility."
+is_installed gh || fail "Could not find Github CLI (gh)." "${required_software}"
+is_installed git || fail "Could not find git." "${required_software}"
+
 
 # MARK - Process Args
 
@@ -69,18 +87,22 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 tag="${args[0]}"
 [[ "${tag}" =~ ^v ]] || tag="v${tag}"
 
-commit="$( get_git_commit_hash "${main_branch}" )"
+gh_release_exists "${tag}" && fail "A release for this tag already exists. tag: ${tag}"
 git_tag_exists_on_remote "${tag}" "${remote}" && fail "This tag already exists on origin. tag: ${tag}"
-git_tag_exists "${tag}" && fail "This tag exists locally, but does not exist on origin. tag: ${tag}"
 
-echo "$(cat <<-EOF
-Creating release tag.
-Tag:    ${tag}
-Branch: ${main_branch}
-Commit: ${commit}
-EOF
-)"
-create_git_release_tag "${tag}" "${commit}"
+if git_tag_exists "${tag}"; then
+  echo "The tag (${tag}) exists locally, but does not exist on origin."
+else
+  commit="$( get_git_commit_hash "${main_branch}" )"
+  echo "$(cat <<-EOF
+  Creating release tag.
+  Tag:    ${tag}
+  Branch: ${main_branch}
+  Commit: ${commit}
+  EOF
+  )"
+  create_git_release_tag "${tag}" "${commit}"
+fi
 
-echo "Pushing release tag to ${remote}..."
+echo "Pushing release tag (${tag}) to ${remote}..."
 push_git_tag_to_remote "${tag}" "${remote}"
