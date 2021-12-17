@@ -56,6 +56,7 @@ EOF
 
 remote=origin
 main_branch=main
+reset_tag=false
 
 args=()
 while (("$#")); do
@@ -71,6 +72,10 @@ while (("$#")); do
     --branch)
       main_branch="${2}"
       shift 2
+      ;;
+    --reset_tag)
+      reset_tag=true
+      shift 1
       ;;
     *)
       args+=("${1}")
@@ -88,6 +93,13 @@ tag="${args[0]}"
 [[ "${tag}" =~ ^v ]] || tag="v${tag}"
 
 gh_release_exists "${tag}" && fail "A release for this tag already exists. tag: ${tag}"
+
+if [[ "${reset_tag}" == true ]]; then
+  echo "Deleting tag (${tag}) locally and on remote (${remote})..."
+  git_tag_exists "${tag}" && delete_git_tag "${tag}"
+  git_tag_exists_on_remote "${tag}" "${remote}" && delete_git_tag_on_remote "${tag}" "${remote}"
+fi
+
 git_tag_exists_on_remote "${tag}" "${remote}" && fail "This tag already exists on origin. tag: ${tag}"
 
 if git_tag_exists "${tag}"; then

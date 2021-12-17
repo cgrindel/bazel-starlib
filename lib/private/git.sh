@@ -18,6 +18,8 @@ fetch_latest_from_git_remote() {
   git fetch 2> /dev/null
 }
 
+# MARK - Tag Functions
+
 # Returns the commit hash for the provided branch or tag.
 get_git_commit_hash() {
   local branch="${1:-}"
@@ -55,11 +57,25 @@ git_tag_exists_on_remote() {
   git ls-remote --exit-code "${remote}" "refs/tags/${tag}" > /dev/null
 }
 
+delete_git_tag() {
+  local tag="${1}"
+  git tag -d "${tag}" > /dev/null
+}
+
 push_git_tag_to_remote() {
   local tag="${1}"
   local remote="${2:-origin}"
   git push "${remote}" "${tag}"
 }
+
+delete_git_tag_on_remote() {
+  local tag="${1}"
+  local remote="${2:-origin}"
+  git push --delete "${remote}" "${tag}" > /dev/null
+}
+
+
+# MARK - Branch Functions
 
 get_current_branch_name() {
   git rev-parse --abbrev-ref HEAD
