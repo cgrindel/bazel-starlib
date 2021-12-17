@@ -1,0 +1,12 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_test(
+    name = "generate_release_notes_test",
+    srcs = ["generate_release_notes_test.sh"],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_starlib//lib/private:assertions",
+    ],
+)

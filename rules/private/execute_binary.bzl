@@ -1,5 +1,3 @@
-# TODO: Add a test ensuring that args with spaces are passed through properly.
-
 def _execute_binary_impl(ctx):
     bin_path = ctx.executable.binary.short_path
     out = ctx.actions.declare_file(ctx.label.name + ".sh")
