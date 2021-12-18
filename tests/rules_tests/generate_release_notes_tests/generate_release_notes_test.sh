@@ -32,9 +32,6 @@ with_init_example_sh="$(rlocation "${with_init_example_sh_location}")" || \
 
 source "${setup_git_repo_sh}"
 
-# cd "${repo_dir}"
-
-
 # MARK - Test
 
 tag="v999.0.0"
@@ -48,3 +45,5 @@ actual="$( "${with_init_example_sh}" "${tag}" )"
   fail "With Init Example: Did not find release notes header."
 [[ "${actual}" =~ "Workspace Init for Test" ]] || \
   fail "With Init Example: Did not find init example."
+
+

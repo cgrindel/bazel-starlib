@@ -57,6 +57,11 @@ done
 [[ ${#args[@]} == 0 ]] && fail "A tag name for the release must be specified."
 tag_name="${args[0]}"
 
+# DEBUG BEGIN
+echo >&2 "*** CHUCK  PWD: ${PWD}" 
+echo >&2 "*** CHUCK  workspace_init_example_file: ${workspace_init_example_file:-}" 
+# DEBUG END
+
 [[ -z "${workspace_init_example_file:-}" ]] || \
   workspace_init_example="$(< "${workspace_init_example_file}")"
 
