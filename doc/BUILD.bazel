@@ -15,6 +15,7 @@ bzlformat_pkg(name = "bzlformat")
 _RULE_NAMES = [
     "execute_binary",
     "filter_srcs",
+    "generate_release_notes",
     "hash_sha256",
     "write_bazel_status_vars",
 ]

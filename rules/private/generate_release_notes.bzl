@@ -1,4 +1,4 @@
-load("//rules:execute_binary.bzl", "execute_binary", "file_placeholder")
+load("//rules/private:execute_binary.bzl", "execute_binary", "file_placeholder")
 
 def generate_release_notes(name = "generate_release_notes", workspace_init_example_file = None):
     file_args = {}

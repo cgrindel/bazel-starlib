@@ -21,11 +21,14 @@ bzl_library(
 )
 
 bzl_library(
-    name = "generate_release_notes",
-    srcs = ["generate_release_notes.bzl"],
+    name = "execute_binary",
+    srcs = ["execute_binary.bzl"],
 )
 
 bzl_library(
-    name = "execute_binary",
-    srcs = ["execute_binary.bzl"],
+    name = "generate_release_notes",
+    srcs = ["generate_release_notes.bzl"],
+    deps = [
+        ":execute_binary",
+    ],
 )
