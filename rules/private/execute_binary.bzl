@@ -1,19 +1,16 @@
-# def _replace_file_arg_placeholders(ctx, value):
-#     result = value
-#     for file_arg, placeholder in ctx.attr.file_args.items():
-
-#         print("*** CHUCK file_arg: ", file_arg)
-#         print("*** CHUCK placeholder: ", placeholder)
-
 def file_placeholder(key):
+    """Returns a placeholder string that is suitable for inclusion in the args for `execute_binary`.
+
+    Args:
+        key: The name for the placeholder as a `string`.
+
+    Returns:
+        A `string` that can be added to the arguments of `execute_binary`.
+    """
     return "{%s}" % (key)
 
 def _create_file_args_placeholder_dict(ctx):
     return {p: fa.files.to_list()[0] for fa, p in ctx.attr.file_args.items()}
-    # placeholder_dict = {}
-    # for file_arg, placeholder in ctx.attr.file_args.items():
-    #     placeholder_dict[placeholder] = file_arg.files.to_list()[0]
-    # return placeholder_dict
 
 def _substitute_placehodlers(placeholder_dict, value):
     new_value = value
@@ -25,15 +22,6 @@ def _substitute_placehodlers(placeholder_dict, value):
 def _execute_binary_impl(ctx):
     bin_path = ctx.executable.binary.short_path
     out = ctx.actions.declare_file(ctx.label.name + ".sh")
-
-    # # DEBUG BEGIN
-    # print("*** CHUCK placeholder_dict: ")
-    # for key in placeholder_dict:
-    #     print("*** CHUCK", key, ":", placeholder_dict[key])
-    # # chuck_test = "foo {workspace_init_example_file} bar".format(**placeholder_dict)
-    # chuck_test = _substitute_placehodlers(placeholder_dict, "foo {workspace_init_example_file} bar")
-    # print("*** CHUCK chuck_test: ", chuck_test)
-    # # DEBUG END
 
     placeholder_dict = _create_file_args_placeholder_dict(ctx)
     quoted_args = []
@@ -91,6 +79,32 @@ execute_binary = rule(
         ),
         "file_args": attr.label_keyed_string_dict(
             allow_files = True,
+            doc = """\
+A `dict` mapping of file labels to placeholder names. If any of the specified \
+args for `execute_binary` are paths to files, add an entry in this attribute \
+where the key is the filename or label referencing the file and the value is \
+a placeholder name. Use the `file_placeholder` function to create a suitable \
+placeholder string for the args.
+
+Example
+
+```
+execute_binary(
+    name = "do_something",
+    args = [
+        "--input",
+        file_placeholder("foo"),
+        "--input",
+        file_placeholder("bar"),
+    ],
+    file_args = {
+        # The key is the path 
+        "foo.txt": "foo",
+        ":bar":  "bar",
+    },
+)
+```
+""",
         ),
     },
     doc = """\
