@@ -60,7 +60,10 @@ else
 fi
 """.format(binary = bin_path),
     )
-    runfiles = ctx.runfiles(files = ctx.files.data)
+
+    # The file_args attribute shows up as a dict under ctx.attr.file_args and
+    # as a list under ctx.files.file_args
+    runfiles = ctx.runfiles(files = ctx.files.data + ctx.files.file_args)
     runfiles = runfiles.merge(ctx.attr.binary[DefaultInfo].default_runfiles)
     return DefaultInfo(executable = out, runfiles = runfiles)
 
