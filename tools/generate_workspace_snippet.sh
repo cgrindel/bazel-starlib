@@ -98,7 +98,8 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 if [[ -z "${owner:-}" ]] || [[ -z "${repo:-}" ]]; then
   repo_url="$( get_git_remote_url )"
-  is_github_repo_url "${repo_url}" || fail "This git repository's remote does not appear to be hosted by Github. repo_url: ${repo_url}"
+  is_github_repo_url "${repo_url}" || \
+    fail "This git repository's remote does not appear to be hosted by Github. repo_url: ${repo_url}"
   owner="$( get_gh_repo_owner "${repo_url}" )"
   repo="$( get_gh_repo_name "${repo_url}" )"
 fi
@@ -128,7 +129,6 @@ ${urls}
 )
 EOF
 )"
-
 
 # Output the changelog
 if [[ -z "${output_path:-}" ]]; then
