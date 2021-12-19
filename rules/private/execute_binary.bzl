@@ -16,7 +16,7 @@ def _substitute_placehodlers(placeholder_dict, value):
     new_value = value
     for key, file in placeholder_dict.items():
         p_str = file_placeholder(key)
-        new_value = new_value.replace(p_str, file.path)
+        new_value = new_value.replace(p_str, file.short_path)
     return new_value
 
 def _execute_binary_impl(ctx):
