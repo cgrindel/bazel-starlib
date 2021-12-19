@@ -1,0 +1,39 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("//rules:generate_release_notes.bzl", "generate_release_notes")
+load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
+
+bzlformat_pkg(name = "bzlformat")
+
+generate_release_notes(
+    name = "without_init_example",
+)
+
+generate_release_notes(
+    name = "with_init_example",
+    workspace_init_example_file = "workspace_init_example.bzl",
+)
+
+sh_test(
+    name = "generate_release_notes_test",
+    srcs = ["generate_release_notes_test.sh"],
+    data = [
+        ":with_init_example",
+        ":without_init_example",
+    ],
+    env_inherit = GH_ENV_INHERIT,
+    tags = INTEGRATION_TEST_TAGS,
+    deps = [
+        "//tests:setup_git_repo",
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_starlib//lib/private:assertions",
+    ],
+)
+
+test_suite(
+    name = "integration_tests",
+    tags = INTEGRATION_TEST_TAGS,
+    tests = [
+        ":generate_release_notes_test",
+    ],
+    visibility = ["//:__subpackages__"],
+)

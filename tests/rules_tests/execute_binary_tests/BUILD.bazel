@@ -1,0 +1,75 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("//rules:execute_binary.bzl", "execute_binary", "file_placeholder")
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_binary(
+    name = "my_bin",
+    srcs = ["my_bin.sh"],
+)
+
+# MARK: - Test no args
+
+execute_binary(
+    name = "my_bin_no_args",
+    binary = ":my_bin",
+)
+
+sh_test(
+    name = "execute_binary_no_args_test",
+    srcs = ["execute_binary_no_args_test.sh"],
+    data = [":my_bin_no_args"],
+    deps = [
+        "//lib/private:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+# MARK: - Test with args
+
+write_file(
+    name = "data_file",
+    out = "data.txt",
+    content = [
+        "This is a data file.",
+    ],
+)
+
+write_file(
+    name = "input_file",
+    out = "input.txt",
+    content = [
+        "This is an input file.",
+    ],
+)
+
+execute_binary(
+    name = "my_bin_with_args",
+    args = [
+        "--first",
+        "first value has spaces",
+        "not_a_flag",
+        "\"quoted value with spaces\"",
+        "--check_data_file",
+        "--input",
+        file_placeholder("input"),
+    ],
+    binary = ":my_bin",
+    data = [
+        ":data_file",
+    ],
+    file_args = {
+        ":input_file": "input",
+    },
+)
+
+sh_test(
+    name = "execute_binary_with_args_test",
+    srcs = ["execute_binary_with_args_test.sh"],
+    data = [":my_bin_with_args"],
+    deps = [
+        "//lib/private:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
