@@ -43,9 +43,16 @@ while (("$#")); do
       output_path="${2}"
       shift 2
       ;;
-    "--workspace_init_example_file")
-      workspace_init_example_file="${2}"
+    # "--workspace_init_example_file")
+    #   workspace_init_example_file="${2}"
+    #   shift 2
+    #   ;;
+    "--snippet_template")
+      snippet_template="${2}"
       shift 2
+      ;;
+    --*)
+      fail "Unrecognized flag ${1}."
       ;;
     *)
       args+=("${1}")
@@ -58,8 +65,8 @@ done
 tag_name="${args[0]}"
 
 
-[[ -z "${workspace_init_example_file:-}" ]] || \
-  workspace_init_example="$(< "${workspace_init_example_file}")"
+# [[ -z "${workspace_init_example_file:-}" ]] || \
+#   workspace_init_example="$(< "${workspace_init_example_file}")"
 
 
 # MARK - Generate the changelog.
@@ -74,19 +81,18 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 changelog_md="$( "${generate_gh_changelog_sh}" "${tag_name}" )"
 archive_sha256="$( "${generate_git_archive_sh}" --tag_name "${tag_name}" | "${generate_sha256_sh}" )"
-workspace_snippet="$( "${generate_workspace_snippet_sh}" --sha256 "${archive_sha256}" --tag "${tag_name}" )"
-[[ -z "${workspace_init_example:-}" ]] || workspace_snippet="${workspace_snippet}"$'\n\n'"${workspace_init_example}"
+
+workspace_snippet_args=(--sha256 "${archive_sha256}" --tag "${tag_name}")
+[[ -z "${snippet_template:-}" ]] || workspace_snippet_args+=(--template "${snippet_template}")
+workspace_snippet="$( "${generate_workspace_snippet_sh}" "${workspace_snippet_args[@]}" )"
+# [[ -z "${workspace_init_example:-}" ]] || workspace_snippet="${workspace_snippet}"$'\n\n'"${workspace_init_example}"
 
 release_notes_md="$(cat <<-EOF
 ${changelog_md}
 
 ## Workspace Snippet
 
-\`\`\`python
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
 ${workspace_snippet}
-\`\`\`
 EOF
 )"
 

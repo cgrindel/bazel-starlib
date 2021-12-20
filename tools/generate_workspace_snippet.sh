@@ -147,14 +147,15 @@ else
       -e '/\${http_archive_statement}/d'  \
       "${template}"
   )"
-  # Wrap the resulting snippet in a markdown codeblock.
-  snippet="$(cat <<-EOF
+fi
+
+# Wrap the resulting snippet in a markdown codeblock.
+snippet="$(cat <<-EOF
 \`\`\`python
 ${snippet}
 \`\`\`
 EOF
-  )"
-fi
+)"
 
 # Output the changelog
 if [[ -z "${output_path:-}" ]]; then

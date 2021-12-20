@@ -45,5 +45,5 @@ test_suite(
 
 generate_release_notes(
     name = "generate_release_notes",
-    workspace_init_example_file = "workspace_init_example.bzl",
+    snippet_template = "workspace_snippet.tmpl",
 )

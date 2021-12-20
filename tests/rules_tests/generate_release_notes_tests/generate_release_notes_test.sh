@@ -19,13 +19,13 @@ setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" || \
   (echo >&2 "Failed to locate ${setup_git_repo_sh_location}" && exit 1)
 
 
-without_init_example_sh_location=cgrindel_bazel_starlib/tests/rules_tests/generate_release_notes_tests/without_init_example.sh
-without_init_example_sh="$(rlocation "${without_init_example_sh_location}")" || \
-  (echo >&2 "Failed to locate ${without_init_example_sh_location}" && exit 1)
+without_template_sh_location=cgrindel_bazel_starlib/tests/rules_tests/generate_release_notes_tests/without_template.sh
+without_template_sh="$(rlocation "${without_template_sh_location}")" || \
+  (echo >&2 "Failed to locate ${without_template_sh_location}" && exit 1)
 
-with_init_example_sh_location=cgrindel_bazel_starlib/tests/rules_tests/generate_release_notes_tests/with_init_example.sh
-with_init_example_sh="$(rlocation "${with_init_example_sh_location}")" || \
-  (echo >&2 "Failed to locate ${with_init_example_sh_location}" && exit 1)
+with_template_sh_location=cgrindel_bazel_starlib/tests/rules_tests/generate_release_notes_tests/with_template.sh
+with_template_sh="$(rlocation "${with_template_sh_location}")" || \
+  (echo >&2 "Failed to locate ${with_template_sh_location}" && exit 1)
 
 
 # MARK - Setup
@@ -36,14 +36,16 @@ source "${setup_git_repo_sh}"
 
 tag="v999.0.0"
 
-actual="$( "${without_init_example_sh}" "${tag}" )"
+actual="$( "${without_template_sh}" "${tag}" )"
 [[ "${actual}" =~ "## What's Changed" ]] || \
-  fail "Without Init Example: Did not find release notes header."
+  fail "Without Template: Did not find release notes header."
+[[ ! "${actual}" =~ "bazel_starlib_dependencies()" ]] || \
+  fail "Without Template: Found content from the template."
 
-actual="$( "${with_init_example_sh}" "${tag}" )"
+actual="$( "${with_template_sh}" "${tag}" )"
 [[ "${actual}" =~ "## What's Changed" ]] || \
-  fail "With Init Example: Did not find release notes header."
-[[ "${actual}" =~ "Workspace Init for Test" ]] || \
-  fail "With Init Example: Did not find init example."
+  fail "With Template: Did not find release notes header."
+[[ "${actual}" =~ "bazel_starlib_dependencies()" ]] || \
+  fail "With Template: Did not find content from the template."
 
 

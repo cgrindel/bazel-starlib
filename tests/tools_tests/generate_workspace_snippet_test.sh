@@ -47,6 +47,7 @@ actual_snippet="$(
 )"
 
 expected_snippet=$(cat <<-EOF
+\`\`\`python
 http_archive(
     name = "cgrindel_bazel_starlib",
     sha256 = "${sha256}",
@@ -54,6 +55,7 @@ http_archive(
         "http://github.com/cgrindel/bazel-starlib/archive/${tag}.tar.gz",
     ],
 )
+\`\`\`
 EOF
 )
 [[ "${actual_snippet}" == "${expected_snippet}" ]] || \
@@ -69,16 +71,16 @@ output_path="snippet.bzl"
   --output "${output_path}"
 actual_snippet="$(< "${output_path}")"
 
-expected_snippet=$(cat <<-EOF
-http_archive(
-    name = "cgrindel_bazel_starlib",
-    sha256 = "${sha256}",
-    urls = [
-        "http://github.com/cgrindel/bazel-starlib/archive/${tag}.tar.gz",
-    ],
-)
-EOF
-)
+# expected_snippet=$(cat <<-EOF
+# http_archive(
+#     name = "cgrindel_bazel_starlib",
+#     sha256 = "${sha256}",
+#     urls = [
+#         "http://github.com/cgrindel/bazel-starlib/archive/${tag}.tar.gz",
+#     ],
+# )
+# EOF
+# )
 [[ "${actual_snippet}" == "${expected_snippet}" ]] || \
   fail $'Snippet written to file did not match expected.  actual:\n'"${actual_snippet}"$'\nexpected:\n'"${expected_snippet}"
 
@@ -102,6 +104,7 @@ actual_snippet="$(
 )"
 
 expected_snippet=$(cat <<-EOF
+\`\`\`python
 http_archive(
     name = "${owner}_${repo}",
     sha256 = "${sha256}",
@@ -110,6 +113,7 @@ http_archive(
         "http://mirror.bazel.build/github.com/${owner}/${repo}/releases/download/${tag}/rules_fun-${tag:1}.tar.gz",
     ],
 )
+\`\`\`
 EOF
 )
 [[ "${actual_snippet}" == "${expected_snippet}" ]] || \

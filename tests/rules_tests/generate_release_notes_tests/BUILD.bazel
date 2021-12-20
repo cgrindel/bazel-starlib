@@ -5,20 +5,20 @@ load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_
 bzlformat_pkg(name = "bzlformat")
 
 generate_release_notes(
-    name = "without_init_example",
+    name = "without_template",
 )
 
 generate_release_notes(
-    name = "with_init_example",
-    workspace_init_example_file = "workspace_init_example.bzl",
+    name = "with_template",
+    snippet_template = "workspace_snippet.tmpl",
 )
 
 sh_test(
     name = "generate_release_notes_test",
     srcs = ["generate_release_notes_test.sh"],
     data = [
-        ":with_init_example",
-        ":without_init_example",
+        ":with_template",
+        ":without_template",
     ],
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
