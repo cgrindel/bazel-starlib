@@ -137,17 +137,8 @@ EOF
 if [[ -z "${template:-}" ]]; then
   snippet="${http_archive_statement}"
 else
-  # snippet_template="$(< "${template}")"
-  # snippet="$(eval "${snippet_template}")"
-  # snippet="$(
-  #   sed -E \
-  #     -e '/\${http_archive_statement}/c\'"${http_archive_statement}" \
-  #     "${template}"
-  # )"
+  # Evaluate the template
   snippet="$(
-    # DEBUG BEGIN
-    set -x
-    # DEBUG END
     tmp_snippet_path="$(mktemp)"
     trap 'rm -rf "${tmp_snippet_path}"' EXIT
     echo "${http_archive_statement}" > "${tmp_snippet_path}"
@@ -156,6 +147,7 @@ else
       -e '/\${http_archive_statement}/d'  \
       "${template}"
   )"
+  # Wrap the resulting snippet in a markdown codeblock.
   snippet="$(cat <<-EOF
 \`\`\`python
 ${snippet}

@@ -125,10 +125,10 @@ actual_snippet="$(
   --template "${workspace_snippet_tmpl}"
 )"
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK  actual_snippet:"$'\n'"${actual_snippet}" 
-fail "STOP"
-# DEBUG END
+[[ "${actual_snippet}" =~ load.*http_archive ]] || \
+  fail "Did not find load statement from the template."
+[[ "${actual_snippet}" =~ 'http_archive(' ]] || \
+  fail "Did not find http_archive statement from the utility."
 
 
 # MARK - Test Arg Checks
