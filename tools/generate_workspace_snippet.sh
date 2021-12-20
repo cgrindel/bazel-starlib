@@ -77,6 +77,10 @@ while (("$#")); do
       output_path="${2}"
       shift 2
       ;;
+    "--template")
+      template="${2}"
+      shift 2
+      ;;
     *)
       args+=( "${1}" )
       shift 1
@@ -119,7 +123,7 @@ urls="$(
 )"
 
 # Generate the workspace snippet
-snippet="$(cat  <<-EOF
+http_archive_statement="$(cat  <<-EOF
 http_archive(
     name = "${workspace_name}",
     sha256 = "${sha256}",
@@ -129,6 +133,36 @@ ${urls}
 )
 EOF
 )"
+
+if [[ -z "${template:-}" ]]; then
+  snippet="${http_archive_statement}"
+else
+  # snippet_template="$(< "${template}")"
+  # snippet="$(eval "${snippet_template}")"
+  # snippet="$(
+  #   sed -E \
+  #     -e '/\${http_archive_statement}/c\'"${http_archive_statement}" \
+  #     "${template}"
+  # )"
+  snippet="$(
+    # DEBUG BEGIN
+    set -x
+    # DEBUG END
+    tmp_snippet_path="$(mktemp)"
+    trap 'rm -rf "${tmp_snippet_path}"' EXIT
+    echo "${http_archive_statement}" > "${tmp_snippet_path}"
+    sed -E \
+      -e '/\${http_archive_statement}/r '"${tmp_snippet_path}"  \
+      -e '/\${http_archive_statement}/d'  \
+      "${template}"
+  )"
+  snippet="$(cat <<-EOF
+\`\`\`python
+${snippet}
+\`\`\`
+EOF
+  )"
+fi
 
 # Output the changelog
 if [[ -z "${output_path:-}" ]]; then

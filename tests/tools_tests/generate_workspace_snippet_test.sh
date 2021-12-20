@@ -26,6 +26,9 @@ generate_workspace_snippet_sh_location=cgrindel_bazel_starlib/tools/generate_wor
 generate_workspace_snippet_sh="$(rlocation "${generate_workspace_snippet_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_workspace_snippet_sh_location}" && exit 1)
 
+workspace_snippet_tmpl_location=cgrindel_bazel_starlib/tests/tools_tests/workspace_snippet.tmpl
+workspace_snippet_tmpl="$(rlocation "${workspace_snippet_tmpl_location}")" || \
+  (echo >&2 "Failed to locate ${workspace_snippet_tmpl_location}" && exit 1)
 
 # MARK - Setup
 
@@ -80,7 +83,7 @@ EOF
   fail $'Snippet written to file did not match expected.  actual:\n'"${actual_snippet}"$'\nexpected:\n'"${expected_snippet}"
 
 
-# MARK - Test Specifying Info
+# MARK - Test without Template
 
 owner=acme
 repo=rules_fun
@@ -111,6 +114,22 @@ EOF
 )
 [[ "${actual_snippet}" == "${expected_snippet}" ]] || \
   fail $'Snippet with specified parameters did not match expected.  actual:\n'"${actual_snippet}"$'\nexpected:\n'"${expected_snippet}"
+
+
+# MARK - Test with Template
+
+actual_snippet="$(
+"${generate_workspace_snippet_sh}" \
+  --sha256 "${sha256}" \
+  --tag "${tag}" \
+  --template "${workspace_snippet_tmpl}"
+)"
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK  actual_snippet:"$'\n'"${actual_snippet}" 
+fail "STOP"
+# DEBUG END
+
 
 # MARK - Test Arg Checks
 
