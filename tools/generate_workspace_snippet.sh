@@ -104,6 +104,8 @@ while (("$#")); do
   esac
 done
 
+[[ ${#args[@]} > 0 ]] && fail "Received unexpected arguments: ${args[@]}"
+
 [[ -z "${tag:-}" ]] && fail "Expected a tag value."
 
 [[ "${add_github_archive_url}" == true ]] && \
