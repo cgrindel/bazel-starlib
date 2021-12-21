@@ -21,7 +21,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v2 ---
 
-# MARK - Locate Depedencies
+# MARK - Locate Dependencies
 
 fail_sh_location=cgrindel_bazel_starlib/lib/private/fail.sh
 fail_sh="$(rlocation "${fail_sh_location}")" || \
