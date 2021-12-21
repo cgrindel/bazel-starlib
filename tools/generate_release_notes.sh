@@ -67,10 +67,6 @@ done
 tag_name="${args[0]}"
 
 
-# [[ -z "${workspace_init_example_file:-}" ]] || \
-#   workspace_init_example="$(< "${workspace_init_example_file}")"
-
-
 # MARK - Generate the changelog.
 
 cd "${BUILD_WORKSPACE_DIRECTORY}"
