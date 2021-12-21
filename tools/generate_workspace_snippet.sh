@@ -137,6 +137,10 @@ EOF
 if [[ -z "${template:-}" ]]; then
   snippet="${http_archive_statement}"
 else
+  # DEBUG BEGIN
+  echo >&2 "*** CHUCK generate_workspace_snippet.sh" 
+  tree >&2
+  # DEBUG END
   # Evaluate the template
   snippet="$(
     tmp_snippet_path="$(mktemp)"

@@ -42,6 +42,10 @@ actual="$( "${without_template_sh}" "${tag}" )"
 [[ ! "${actual}" =~ "bazel_starlib_dependencies()" ]] || \
   fail "Without Template: Found content from the template."
 
+# DEBUG BEGIN
+echo >&2 "*** CHUCK START" 
+# DEBUG END
+
 actual="$( "${with_template_sh}" "${tag}" )"
 [[ "${actual}" =~ "## What's Changed" ]] || \
   fail "With Template: Did not find release notes header."

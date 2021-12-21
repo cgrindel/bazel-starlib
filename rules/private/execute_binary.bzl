@@ -65,7 +65,16 @@ fi
     # as a list under ctx.files.file_args
     runfiles = ctx.runfiles(files = ctx.files.data + ctx.files.file_args)
     runfiles = runfiles.merge(ctx.attr.binary[DefaultInfo].default_runfiles)
+
+    # DEBUG BEGIN
+    print("*** CHUCK ctx.label: ", ctx.label)
+    print("*** CHUCK runfiles.files.to_list(): ")
+    for idx, item in enumerate(runfiles.files.to_list()):
+        print("*** CHUCK", idx, ":", item)
+
+    # DEBUG END
     return DefaultInfo(executable = out, runfiles = runfiles)
+    # return DefaultInfo(executable = out, files = runfiles.files, runfiles = runfiles)
 
 execute_binary = rule(
     implementation = _execute_binary_impl,
