@@ -147,9 +147,14 @@ if [[ -z "${template:-}" ]]; then
 else
   # Evaluate the template
   snippet="$(
+    # Write the multline http_archive statement to a temp file. Be sure to
+    # remove the temp file when we are done.
     tmp_snippet_path="$(mktemp)"
     trap 'rm -rf "${tmp_snippet_path}"' EXIT
     echo "${http_archive_statement}" > "${tmp_snippet_path}"
+
+    # Replace the '${http_archive_statement}' with the generated http_archive
+    # statement.
     sed -E \
       -e '/\${http_archive_statement}/r '"${tmp_snippet_path}"  \
       -e '/\${http_archive_statement}/d'  \
