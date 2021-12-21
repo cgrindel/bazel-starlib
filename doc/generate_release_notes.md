@@ -7,7 +7,7 @@
 ## generate_release_notes
 
 <pre>
-generate_release_notes(<a href="#generate_release_notes-name">name</a>, <a href="#generate_release_notes-snippet_template">snippet_template</a>)
+generate_release_notes(<a href="#generate_release_notes-name">name</a>, <a href="#generate_release_notes-generate_workspace_snippet">generate_workspace_snippet</a>)
 </pre>
 
 
@@ -18,6 +18,6 @@ generate_release_notes(<a href="#generate_release_notes-name">name</a>, <a href=
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
 | <a id="generate_release_notes-name"></a>name |  <p align="center"> - </p>   |  <code>"generate_release_notes"</code> |
-| <a id="generate_release_notes-snippet_template"></a>snippet_template |  <p align="center"> - </p>   |  <code>None</code> |
+| <a id="generate_release_notes-generate_workspace_snippet"></a>generate_workspace_snippet |  <p align="center"> - </p>   |  <code>None</code> |
 
 

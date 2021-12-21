@@ -1,0 +1,13 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("//rules:generate_workspace_snippet.bzl", "generate_workspace_snippet")
+
+bzlformat_pkg(name = "bzlformat")
+
+generate_workspace_snippet(
+    name = "without_template",
+)
+
+generate_workspace_snippet(
+    name = "with_template",
+    template = "workspace_snippet.tmpl",
+)

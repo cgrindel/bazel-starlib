@@ -30,9 +30,9 @@ generate_sha256_sh_location=cgrindel_bazel_starlib/tools/generate_sha256.sh
 generate_sha256_sh="$(rlocation "${generate_sha256_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_sha256_sh_location}" && exit 1)
 
-generate_workspace_snippet_sh_location=cgrindel_bazel_starlib/tools/generate_workspace_snippet.sh
-generate_workspace_snippet_sh="$(rlocation "${generate_workspace_snippet_sh_location}")" || \
-  (echo >&2 "Failed to locate ${generate_workspace_snippet_sh_location}" && exit 1)
+# generate_workspace_snippet_sh_location=cgrindel_bazel_starlib/tools/generate_workspace_snippet.sh
+# generate_workspace_snippet_sh="$(rlocation "${generate_workspace_snippet_sh_location}")" || \
+#   (echo >&2 "Failed to locate ${generate_workspace_snippet_sh_location}" && exit 1)
 
 # MARK - Process Arguments
 
@@ -45,12 +45,13 @@ while (("$#")); do
       output_path="${2}"
       shift 2
       ;;
-    "--snippet_template")
+    "--generate_workspace_snippet")
       # If the input path is not absolute, then resolve it to be relative to
       # the starting directory. We do this before we starting changing
       # directories.
-      snippet_template="${2}"
-      [[ "${snippet_template}" =~ ^/ ]] || snippet_template="${starting_dir}/${2}"
+      generate_workspace_snippet="${2}"
+      [[ "${generate_workspace_snippet}" =~ ^/ ]] || \
+        generate_workspace_snippet="${starting_dir}/${generate_workspace_snippet}"
       shift 2
       ;;
     --*)
@@ -65,6 +66,9 @@ done
 
 [[ ${#args[@]} == 0 ]] && fail "A tag name for the release must be specified."
 tag_name="${args[0]}"
+
+[[ -z "${generate_workspace_snippet:-}" ]] && \
+  fail "Expected a value for --generate_workspace_snippet."
 
 
 # MARK - Generate the changelog.
@@ -81,8 +85,7 @@ changelog_md="$( "${generate_gh_changelog_sh}" "${tag_name}" )"
 archive_sha256="$( "${generate_git_archive_sh}" --tag_name "${tag_name}" | "${generate_sha256_sh}" )"
 
 workspace_snippet_args=(--sha256 "${archive_sha256}" --tag "${tag_name}")
-[[ -z "${snippet_template:-}" ]] || workspace_snippet_args+=(--template "${snippet_template}")
-workspace_snippet="$( "${generate_workspace_snippet_sh}" "${workspace_snippet_args[@]}" )"
+workspace_snippet="$( "${generate_workspace_snippet}" "${workspace_snippet_args[@]}" )"
 
 release_notes_md="$(cat <<-EOF
 ${changelog_md}

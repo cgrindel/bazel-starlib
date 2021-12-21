@@ -79,7 +79,6 @@ sh_binary(
         ":generate_gh_changelog",
         ":generate_git_archive",
         ":generate_sha256",
-        ":generate_workspace_snippet",
     ],
     visibility = ["//visibility:public"],
     deps = [

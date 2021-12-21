@@ -1,12 +1,12 @@
 load("//rules/private:execute_binary.bzl", "execute_binary", "file_placeholder")
 
-def generate_release_notes(name = "generate_release_notes", snippet_template = None):
+def generate_release_notes(name = "generate_release_notes", generate_workspace_snippet = None):
     file_args = {}
     args = []
-    if snippet_template != None:
-        file_key = "snippet_template"
-        args.extend(["--snippet_template", file_placeholder(file_key)])
-        file_args[snippet_template] = file_key
+    if generate_workspace_snippet != None:
+        file_key = "generate_workspace_snippet"
+        args.extend(["--generate_workspace_snippet", file_placeholder(file_key)])
+        file_args[generate_workspace_snippet] = file_key
 
     execute_binary(
         name = name,

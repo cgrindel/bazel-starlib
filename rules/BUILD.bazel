@@ -39,12 +39,22 @@ bzl_library(
 )
 
 bzl_library(
+    name = "generate_workspace_snippet",
+    srcs = ["generate_workspace_snippet.bzl"],
+    deps = [
+        "//rules/private:generate_workspace_snippet",
+    ],
+)
+
+bzl_library(
     name = "generate_release_notes",
     srcs = ["generate_release_notes.bzl"],
     deps = [
         "//rules/private:generate_release_notes",
     ],
 )
+
+# TODO: Can I remove pkg_files and pkg_filegroup?
 
 pkg_files(
     name = "package_files",
