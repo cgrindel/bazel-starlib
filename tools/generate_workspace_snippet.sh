@@ -38,6 +38,10 @@ github_sh="$(rlocation "${github_sh_location}")" || \
   (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)
 source "${github_sh}"
 
+# MARK - Keep Track of the starting directory
+
+starting_dir="${PWD}"
+
 # MARK - Process Args
 
 add_github_archive_url=true
@@ -78,6 +82,9 @@ while (("$#")); do
       shift 2
       ;;
     "--template")
+      # The input path is relative to the original runfiles directory. Keep an absolute path
+      # so that we can find the template when we switch directories.
+      # template="${starting_dir}/${2}"
       template="${2}"
       shift 2
       ;;
@@ -138,7 +145,7 @@ if [[ -z "${template:-}" ]]; then
   snippet="${http_archive_statement}"
 else
   # DEBUG BEGIN
-  echo >&2 "*** CHUCK generate_workspace_snippet.sh" 
+  echo >&2 "*** CHUCK generate_workspace_snippet.sh with template" 
   tree >&2
   # DEBUG END
   # Evaluate the template

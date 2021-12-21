@@ -86,6 +86,7 @@ done
 
 # MARK - Create the release
 
+starting_dir="${PWD}"
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 [[ ${#args[@]} == 0 ]] && usage_error "Expected a tag or semver. (e.g v.1.2.3)"

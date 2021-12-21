@@ -30,6 +30,10 @@ with_template_sh="$(rlocation "${with_template_sh_location}")" || \
 
 # MARK - Setup
 
+# DEBUG BEGIN
+echo >&2 "*** CHUCK generate_release_notes_tests PWD: ${PWD}" 
+# DEBUG END
+
 source "${setup_git_repo_sh}"
 
 # MARK - Test
@@ -43,7 +47,9 @@ actual="$( "${without_template_sh}" "${tag}" )"
   fail "Without Template: Found content from the template."
 
 # DEBUG BEGIN
-echo >&2 "*** CHUCK START" 
+echo >&2 "*** CHUCK START with Template" 
+echo >&2 "*** CHUCK generate_release_notes_tests template PWD: ${PWD}" 
+ls -la
 # DEBUG END
 
 actual="$( "${with_template_sh}" "${tag}" )"

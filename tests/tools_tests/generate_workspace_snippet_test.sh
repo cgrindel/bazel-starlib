@@ -70,17 +70,6 @@ output_path="snippet.bzl"
   --tag "${tag}" \
   --output "${output_path}"
 actual_snippet="$(< "${output_path}")"
-
-# expected_snippet=$(cat <<-EOF
-# http_archive(
-#     name = "cgrindel_bazel_starlib",
-#     sha256 = "${sha256}",
-#     urls = [
-#         "http://github.com/cgrindel/bazel-starlib/archive/${tag}.tar.gz",
-#     ],
-# )
-# EOF
-# )
 [[ "${actual_snippet}" == "${expected_snippet}" ]] || \
   fail $'Snippet written to file did not match expected.  actual:\n'"${actual_snippet}"$'\nexpected:\n'"${expected_snippet}"
 

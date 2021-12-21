@@ -68,6 +68,7 @@ tag_name="${args[0]}"
 
 # MARK - Generate the changelog.
 
+starting_dir="${PWD}"
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 repo_url="$( get_git_remote_url )"

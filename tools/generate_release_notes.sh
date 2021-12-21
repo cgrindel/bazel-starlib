@@ -43,10 +43,6 @@ while (("$#")); do
       output_path="${2}"
       shift 2
       ;;
-    # "--workspace_init_example_file")
-    #   workspace_init_example_file="${2}"
-    #   shift 2
-    #   ;;
     "--snippet_template")
       snippet_template="${2}"
       shift 2
@@ -71,6 +67,7 @@ tag_name="${args[0]}"
 
 # MARK - Generate the changelog.
 
+starting_dir="${PWD}"
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 [[ "$(uname)" =~ "Linux" ]] || warn \
