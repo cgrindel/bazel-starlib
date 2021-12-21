@@ -34,4 +34,12 @@ source "${setup_git_repo_sh}"
 
 # MARK - Test
 
+tag="v999.0.0"
+
+actual="$( "${without_template_sh}" --tag "${tag}" )"
+assert_match 'http_archive\(' "${actual}" "Without Template http_archive"
+
+
+# DEBUG BEGIN
 fail "IMPLEMENT ME!"
+# DEBUG END

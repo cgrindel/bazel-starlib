@@ -39,3 +39,24 @@ assert_equal() {
   [[ "${expected}" == "${actual}" ]] || fail "${err_msg}"
 }
 
+# Asserts that the actual value contains the specified regex pattern.
+#
+# Args:
+#   pattern: The expected pattern.
+#   actual: The actual value.
+#   err_msg: Optional. The error message to print if the assertion fails.
+#
+# Outputs:
+#   stdout: None.
+#   stderr: None.
+assert_match() {
+  local pattern=${1}
+  local actual="${2}"
+  local err_msg_prefix="${3:-}"
+  local err_msg="Expected to match. pattern: ${pattern}, actual: ${actual}"
+  if [[ ! -z "${err_msg_prefix}" ]]; then
+    local err_msg="${err_msg_prefix} ${err_msg}"
+  fi
+  [[ "${actual}" =~ ${pattern} ]] || fail "${err_msg}"
+}
+
