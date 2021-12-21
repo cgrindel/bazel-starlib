@@ -36,6 +36,8 @@ generate_workspace_snippet_sh="$(rlocation "${generate_workspace_snippet_sh_loca
 
 # MARK - Process Arguments
 
+starting_dir="${PWD}"
+
 args=()
 while (("$#")); do
   case "${1}" in
@@ -44,7 +46,14 @@ while (("$#")); do
       shift 2
       ;;
     "--snippet_template")
+      # If the input path is not absolute, then resolve it to be relative to
+      # the starting directory. We do this before we starting changing
+      # directories.
       snippet_template="${2}"
+      [[ "${snippet_template}" =~ ^/ ]] || snippet_template="${starting_dir}/${2}"
+      # DEBUG BEGIN
+      echo >&2 "*** CHUCK generate_release_notes snippet_template: ${snippet_template}" 
+      # DEBUG END
       shift 2
       ;;
     --*)
@@ -67,7 +76,6 @@ tag_name="${args[0]}"
 
 # MARK - Generate the changelog.
 
-starting_dir="${PWD}"
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 [[ "$(uname)" =~ "Linux" ]] || warn \

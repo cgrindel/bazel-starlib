@@ -41,6 +41,9 @@ source "${github_sh}"
 # MARK - Keep Track of the starting directory
 
 starting_dir="${PWD}"
+# DEBUG BEGIN
+echo >&2 "*** CHUCK generate_workspace_snippet starting_dir: ${starting_dir}" 
+# DEBUG END
 
 # MARK - Process Args
 
@@ -82,10 +85,14 @@ while (("$#")); do
       shift 2
       ;;
     "--template")
-      # The input path is relative to the original runfiles directory. Keep an absolute path
-      # so that we can find the template when we switch directories.
-      # template="${starting_dir}/${2}"
+      # If the input path is not absolute, then resolve it to be relative to
+      # the starting directory. We do this before we starting changing
+      # directories.
       template="${2}"
+      [[ "${template}" =~ ^/ ]] || template="${starting_dir}/${2}"
+      # DEBUG BEGIN
+      echo >&2 "*** CHUCK generate_workspace_snippet template: ${template}" 
+      # DEBUG END
       shift 2
       ;;
     *)
@@ -144,10 +151,6 @@ EOF
 if [[ -z "${template:-}" ]]; then
   snippet="${http_archive_statement}"
 else
-  # DEBUG BEGIN
-  echo >&2 "*** CHUCK generate_workspace_snippet.sh with template" 
-  tree >&2
-  # DEBUG END
   # Evaluate the template
   snippet="$(
     tmp_snippet_path="$(mktemp)"
