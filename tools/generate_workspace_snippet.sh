@@ -156,8 +156,8 @@ else
     # Replace the '${http_archive_statement}' with the generated http_archive
     # statement.
     sed -E \
-      -e '/\${http_archive_statement}/r '"${tmp_snippet_path}"  \
-      -e '/\${http_archive_statement}/d'  \
+      -e '/\$\{http_archive_statement\}/r '"${tmp_snippet_path}"  \
+      -e '/\$\{http_archive_statement\}/d'  \
       "${template}"
   )"
 fi
