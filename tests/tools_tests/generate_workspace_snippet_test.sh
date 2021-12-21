@@ -136,13 +136,6 @@ err_output="$(
 err_output="$(
 "${generate_workspace_snippet_sh}" \
   --tag "${tag}" \
-  2>&1 || true
-)"
-[[ "${err_output}" =~ "Expected a SHA256 value." ]] || fail "Missing SHA256 failure."
-
-err_output="$(
-"${generate_workspace_snippet_sh}" \
-  --tag "${tag}" \
   --sha256 "${sha256}" \
   --no_github_archive_url \
   2>&1 || true

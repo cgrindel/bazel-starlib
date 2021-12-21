@@ -38,6 +38,14 @@ github_sh="$(rlocation "${github_sh_location}")" || \
   (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)
 source "${github_sh}"
 
+generate_git_archive_sh_location=cgrindel_bazel_starlib/tools/generate_git_archive.sh
+generate_git_archive_sh="$(rlocation "${generate_git_archive_sh_location}")" || \
+  (echo >&2 "Failed to locate ${generate_git_archive_sh_location}" && exit 1)
+
+generate_sha256_sh_location=cgrindel_bazel_starlib/tools/generate_sha256.sh
+generate_sha256_sh="$(rlocation "${generate_sha256_sh_location}")" || \
+  (echo >&2 "Failed to locate ${generate_sha256_sh_location}" && exit 1)
+
 # MARK - Keep Track of the starting directory
 
 starting_dir="${PWD}"
@@ -96,13 +104,17 @@ while (("$#")); do
   esac
 done
 
-[[ -z "${sha256:-}" ]] && fail "Expected a SHA256 value."
 [[ -z "${tag:-}" ]] && fail "Expected a tag value."
 
 [[ "${add_github_archive_url}" == true ]] && \
   url_templates+=( 'http://github.com/${owner}/${repo}/archive/${tag}.tar.gz' )
 [[ ${#url_templates[@]} > 0 ]] || fail "Expected one ore more url templates."
 
+# MARK - Ensure that we have a SHA256 value
+
+if [[ -z "${sha256:-}" ]]; then
+  sha256="$( "${generate_git_archive_sh}" --tag_name "${tag}" | "${generate_sha256_sh}" )"
+fi
 
 # MARK - Generate the snippet
 
