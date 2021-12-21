@@ -1,5 +1,6 @@
 load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
 load("//rules:generate_workspace_snippet.bzl", "generate_workspace_snippet")
+load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -10,4 +11,29 @@ generate_workspace_snippet(
 generate_workspace_snippet(
     name = "with_template",
     template = "workspace_snippet.tmpl",
+)
+
+sh_test(
+    name = "generate_workspace_snippet_test",
+    srcs = ["generate_workspace_snippet_test.sh"],
+    data = [
+        ":with_template",
+        ":without_template",
+    ],
+    env_inherit = GH_ENV_INHERIT,
+    tags = INTEGRATION_TEST_TAGS,
+    deps = [
+        "//tests:setup_git_repo",
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_starlib//lib/private:assertions",
+    ],
+)
+
+test_suite(
+    name = "integration_tests",
+    tags = INTEGRATION_TEST_TAGS,
+    tests = [
+        ":generate_workspace_snippet_test",
+    ],
+    visibility = ["//:__subpackages__"],
 )
