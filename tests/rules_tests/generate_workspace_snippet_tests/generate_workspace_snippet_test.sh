@@ -39,6 +39,7 @@ tag="v999.0.0"
 actual="$( "${without_template_sh}" --tag "${tag}" )"
 assert_match 'http_archive\(' "${actual}" "Without Template http_archive"
 assert_match 'name = "cgrindel_bazel_starlib"' "${actual}" "Without Template name attribute"
+assert_no_match bazel_starlib_dependencies "${actual}" "Without Template bazel_starlib_dependencies"
 
 actual="$( "${with_template_sh}" --tag "${tag}" )"
 assert_match 'http_archive\(' "${actual}" "With Template http_archive"

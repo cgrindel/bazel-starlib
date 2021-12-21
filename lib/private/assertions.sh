@@ -41,11 +41,6 @@ assert_equal() {
   local expected="${1}"
   local actual="${2}"
   local err_msg="$(make_err_msg "Expected to be equal. expected: ${expected}, actual: ${actual}" "${3:-}")"
-  # local err_msg_prefix="${3:-}"
-  # local err_msg="Expected to be equal. expected: ${expected}, actual: ${actual}"
-  # if [[ ! -z "${err_msg_prefix}" ]]; then
-  #   local err_msg="${err_msg_prefix} ${err_msg}"
-  # fi
   [[ "${expected}" == "${actual}" ]] || fail "${err_msg}"
 }
 
@@ -63,11 +58,6 @@ assert_match() {
   local pattern=${1}
   local actual="${2}"
   local err_msg="$(make_err_msg "Expected to match. pattern: ${pattern}, actual: ${actual}" "${3:-}")"
-  # local err_msg_prefix="${3:-}"
-  # local err_msg="Expected to match. pattern: ${pattern}, actual: ${actual}"
-  # if [[ ! -z "${err_msg_prefix}" ]]; then
-  #   local err_msg="${err_msg_prefix} ${err_msg}"
-  # fi
   [[ "${actual}" =~ ${pattern} ]] || fail "${err_msg}"
 }
 
@@ -85,10 +75,7 @@ assert_no_match() {
   local pattern=${1}
   local actual="${2}"
   local err_msg="$(make_err_msg "Expected not to match. pattern: ${pattern}, actual: ${actual}" "${3:-}")"
-  # local err_msg_prefix="${3:-}"
-  # local err_msg="Expected not to match. pattern: ${pattern}, actual: ${actual}"
-  # if [[ ! -z "${err_msg_prefix}" ]]; then
-  #   local err_msg="${err_msg_prefix} ${err_msg}"
-  # fi
   [[ "${actual}" =~ ${pattern} ]] && fail "${err_msg}"
+  # Because this is a negative test, we need to end on a positive note if all is well.
+  echo ""
 }
