@@ -38,6 +38,10 @@ github_sh="$(rlocation "${github_sh_location}")" || \
   (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)
 source "${github_sh}"
 
+# MARK - Keep Track of the starting directory
+
+starting_dir="${PWD}"
+
 # MARK - Process Args
 
 add_github_archive_url=true
@@ -77,6 +81,14 @@ while (("$#")); do
       output_path="${2}"
       shift 2
       ;;
+    "--template")
+      # If the input path is not absolute, then resolve it to be relative to
+      # the starting directory. We do this before we starting changing
+      # directories.
+      template="${2}"
+      [[ "${template}" =~ ^/ ]] || template="${starting_dir}/${2}"
+      shift 2
+      ;;
     *)
       args+=( "${1}" )
       shift 1
@@ -98,7 +110,8 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 if [[ -z "${owner:-}" ]] || [[ -z "${repo:-}" ]]; then
   repo_url="$( get_git_remote_url )"
-  is_github_repo_url "${repo_url}" || fail "This git repository's remote does not appear to be hosted by Github. repo_url: ${repo_url}"
+  is_github_repo_url "${repo_url}" || \
+    fail "This git repository's remote does not appear to be hosted by Github. repo_url: ${repo_url}"
   owner="$( get_gh_repo_owner "${repo_url}" )"
   repo="$( get_gh_repo_name "${repo_url}" )"
 fi
@@ -118,7 +131,7 @@ urls="$(
 )"
 
 # Generate the workspace snippet
-snippet="$(cat  <<-EOF
+http_archive_statement="$(cat  <<-EOF
 http_archive(
     name = "${workspace_name}",
     sha256 = "${sha256}",
@@ -129,6 +142,33 @@ ${urls}
 EOF
 )"
 
+if [[ -z "${template:-}" ]]; then
+  snippet="${http_archive_statement}"
+else
+  # Evaluate the template
+  snippet="$(
+    # Write the multline http_archive statement to a temp file. Be sure to
+    # remove the temp file when we are done.
+    tmp_snippet_path="$(mktemp)"
+    trap 'rm -rf "${tmp_snippet_path}"' EXIT
+    echo "${http_archive_statement}" > "${tmp_snippet_path}"
+
+    # Replace the '${http_archive_statement}' with the generated http_archive
+    # statement.
+    sed -E \
+      -e '/\$\{http_archive_statement\}/r '"${tmp_snippet_path}"  \
+      -e '/\$\{http_archive_statement\}/d'  \
+      "${template}"
+  )"
+fi
+
+# Wrap the resulting snippet in a markdown codeblock.
+snippet="$(cat <<-EOF
+\`\`\`python
+${snippet}
+\`\`\`
+EOF
+)"
 
 # Output the changelog
 if [[ -z "${output_path:-}" ]]; then

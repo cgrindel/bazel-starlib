@@ -36,6 +36,8 @@ generate_workspace_snippet_sh="$(rlocation "${generate_workspace_snippet_sh_loca
 
 # MARK - Process Arguments
 
+starting_dir="${PWD}"
+
 args=()
 while (("$#")); do
   case "${1}" in
@@ -43,9 +45,16 @@ while (("$#")); do
       output_path="${2}"
       shift 2
       ;;
-    "--workspace_init_example_file")
-      workspace_init_example_file="${2}"
+    "--snippet_template")
+      # If the input path is not absolute, then resolve it to be relative to
+      # the starting directory. We do this before we starting changing
+      # directories.
+      snippet_template="${2}"
+      [[ "${snippet_template}" =~ ^/ ]] || snippet_template="${starting_dir}/${2}"
       shift 2
+      ;;
+    --*)
+      fail "Unrecognized flag ${1}."
       ;;
     *)
       args+=("${1}")
@@ -56,10 +65,6 @@ done
 
 [[ ${#args[@]} == 0 ]] && fail "A tag name for the release must be specified."
 tag_name="${args[0]}"
-
-
-[[ -z "${workspace_init_example_file:-}" ]] || \
-  workspace_init_example="$(< "${workspace_init_example_file}")"
 
 
 # MARK - Generate the changelog.
@@ -74,19 +79,17 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 changelog_md="$( "${generate_gh_changelog_sh}" "${tag_name}" )"
 archive_sha256="$( "${generate_git_archive_sh}" --tag_name "${tag_name}" | "${generate_sha256_sh}" )"
-workspace_snippet="$( "${generate_workspace_snippet_sh}" --sha256 "${archive_sha256}" --tag "${tag_name}" )"
-[[ -z "${workspace_init_example:-}" ]] || workspace_snippet="${workspace_snippet}"$'\n\n'"${workspace_init_example}"
+
+workspace_snippet_args=(--sha256 "${archive_sha256}" --tag "${tag_name}")
+[[ -z "${snippet_template:-}" ]] || workspace_snippet_args+=(--template "${snippet_template}")
+workspace_snippet="$( "${generate_workspace_snippet_sh}" "${workspace_snippet_args[@]}" )"
 
 release_notes_md="$(cat <<-EOF
 ${changelog_md}
 
 ## Workspace Snippet
 
-\`\`\`python
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
 ${workspace_snippet}
-\`\`\`
 EOF
 )"
 

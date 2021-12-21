@@ -90,6 +90,7 @@ done
 
 # MARK - Main
 
+starting_dir="${PWD}"
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 # Fetch the latest from origin

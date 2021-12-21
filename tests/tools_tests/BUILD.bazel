@@ -33,6 +33,7 @@ sh_test(
     name = "generate_workspace_snippet_test",
     srcs = ["generate_workspace_snippet_test.sh"],
     data = [
+        "workspace_snippet.tmpl",
         "//tools:generate_workspace_snippet",
     ],
     env_inherit = GH_ENV_INHERIT,
@@ -79,6 +80,7 @@ sh_test(
     name = "generate_release_notes_test",
     srcs = ["generate_release_notes_test.sh"],
     data = [
+        "workspace_snippet.tmpl",
         "//tools:generate_release_notes",
     ],
     env_inherit = GH_ENV_INHERIT,

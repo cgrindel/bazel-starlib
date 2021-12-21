@@ -31,6 +31,10 @@ generate_release_notes_sh_location=cgrindel_bazel_starlib/tools/generate_release
 generate_release_notes_sh="$(rlocation "${generate_release_notes_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_release_notes_sh_location}" && exit 1)
 
+workspace_snippet_tmpl_location=cgrindel_bazel_starlib/tests/tools_tests/workspace_snippet.tmpl
+workspace_snippet_tmpl="$(rlocation "${workspace_snippet_tmpl_location}")" || \
+  (echo >&2 "Failed to locate ${workspace_snippet_tmpl_location}" && exit 1)
+
 is_installed git || fail "Could not find git."
 
 # MARK - Setup
@@ -44,21 +48,15 @@ cd "${repo_dir}"
 
 tag="v0.1.1"
 
-# Test wihtout init example
+# Test without template
 actual="$( "${generate_release_notes_sh}" "${tag}" )"
 [[ "${actual}" =~ "## What's Changed" ]]
 [[ "${actual}" =~ "## Workspace Snippet" ]]
 [[ "${actual}" =~ "http_archive(" ]]
 
-# Test wih init example
-init_example_file="init_example.md"
-cat >"${init_example_file}" <<-EOF
-
-load("@cgrindel_bazel_starlib//:deps.bzl", "bazel_starlib_dependencies")
-bazel_starlib_dependencies()
-EOF
+# Test with template
 actual="$( 
-  "${generate_release_notes_sh}" --workspace_init_example_file "${init_example_file}" "${tag}" 
+  "${generate_release_notes_sh}" --snippet_template "${workspace_snippet_tmpl}" "${tag}" 
 )"
 [[ "${actual}" =~ "## What's Changed" ]]
 [[ "${actual}" =~ "## Workspace Snippet" ]]
