@@ -51,9 +51,6 @@ while (("$#")); do
       # directories.
       snippet_template="${2}"
       [[ "${snippet_template}" =~ ^/ ]] || snippet_template="${starting_dir}/${2}"
-      # DEBUG BEGIN
-      echo >&2 "*** CHUCK generate_release_notes snippet_template: ${snippet_template}" 
-      # DEBUG END
       shift 2
       ;;
     --*)

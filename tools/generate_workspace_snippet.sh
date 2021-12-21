@@ -41,9 +41,6 @@ source "${github_sh}"
 # MARK - Keep Track of the starting directory
 
 starting_dir="${PWD}"
-# DEBUG BEGIN
-echo >&2 "*** CHUCK generate_workspace_snippet starting_dir: ${starting_dir}" 
-# DEBUG END
 
 # MARK - Process Args
 
@@ -90,9 +87,6 @@ while (("$#")); do
       # directories.
       template="${2}"
       [[ "${template}" =~ ^/ ]] || template="${starting_dir}/${2}"
-      # DEBUG BEGIN
-      echo >&2 "*** CHUCK generate_workspace_snippet template: ${template}" 
-      # DEBUG END
       shift 2
       ;;
     *)
