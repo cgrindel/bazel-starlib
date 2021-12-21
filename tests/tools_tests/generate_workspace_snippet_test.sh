@@ -74,7 +74,7 @@ actual_snippet="$(< "${output_path}")"
   fail $'Snippet written to file did not match expected.  actual:\n'"${actual_snippet}"$'\nexpected:\n'"${expected_snippet}"
 
 
-# MARK - Test without Template
+# MARK - Test Without Template
 
 owner=acme
 repo=rules_fun
@@ -109,7 +109,7 @@ EOF
   fail $'Snippet with specified parameters did not match expected.  actual:\n'"${actual_snippet}"$'\nexpected:\n'"${expected_snippet}"
 
 
-# MARK - Test with Template
+# MARK - Test With Template
 
 actual_snippet="$(
 "${generate_workspace_snippet_sh}" \

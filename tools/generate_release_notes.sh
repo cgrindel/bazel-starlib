@@ -83,7 +83,6 @@ archive_sha256="$( "${generate_git_archive_sh}" --tag_name "${tag_name}" | "${ge
 workspace_snippet_args=(--sha256 "${archive_sha256}" --tag "${tag_name}")
 [[ -z "${snippet_template:-}" ]] || workspace_snippet_args+=(--template "${snippet_template}")
 workspace_snippet="$( "${generate_workspace_snippet_sh}" "${workspace_snippet_args[@]}" )"
-# [[ -z "${workspace_init_example:-}" ]] || workspace_snippet="${workspace_snippet}"$'\n\n'"${workspace_init_example}"
 
 release_notes_md="$(cat <<-EOF
 ${changelog_md}
