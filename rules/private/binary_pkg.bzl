@@ -1,10 +1,6 @@
 # Lovingly inspired by https://www.linuxjournal.com/node/1005818.
 
 def _binary_pkg_impl(ctx):
-    # DEBUG BEGIN
-    print("*** CHUCK ctx.bin_dir: ", ctx.bin_dir)
-    # DEBUG END
-
     #exec_binary = ctx.actions.declare_file("exec_binary.sh")
     #ctx.actions.write(
     #    output = exec_binary,

@@ -20,9 +20,14 @@ hello_world_pkg_sh_location=cgrindel_bazel_starlib/tests/rules_tests/binary_pkg_
 hello_world_pkg_sh="$(rlocation "${hello_world_pkg_sh_location}")" || \
   (echo >&2 "Failed to locate ${hello_world_pkg_sh_location}" && exit 1)
 
-# MARK - Hello World 
+# MARK - No Args
 
 output="$("${hello_world_pkg_sh}")"
 assert_match "Hello, World!" "${output}" 
+assert_match "Args Count: 0" "${output}" 
 
-fail "IMPLEMENT ME!"
+# MARK - With Args
+
+output="$("${hello_world_pkg_sh}" chicken smidgen)"
+assert_match "Hello, World!" "${output}" 
+assert_match "Args Count: 2" "${output}" 
