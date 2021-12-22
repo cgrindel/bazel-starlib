@@ -28,6 +28,8 @@ def _execute_binary_impl(ctx):
     # execute_binary (#1) references another execute_binary (#2) and is tested
     # by an sh_test. Any file args for #2 need to be present and have the correct
     # permissions.
+    # Note: The file_args attribute shows up as a dict under ctx.attr.file_args and
+    # as a list under ctx.files.file_args
     out_files_dict = {}
     out_files_dir = ctx.label.name + "_eb_args"
     for in_file in ctx.files.file_args:
@@ -95,8 +97,6 @@ fi
 """.format(binary = bin_path),
     )
 
-    # The file_args attribute shows up as a dict under ctx.attr.file_args and
-    # as a list under ctx.files.file_args
     out_files = out_files_dict.values()
     runfiles = ctx.runfiles(files = ctx.files.data + out_files)
     runfiles = runfiles.merge(ctx.attr.binary[DefaultInfo].default_runfiles)
@@ -109,7 +109,6 @@ fi
 
     # DEBUG END
     return DefaultInfo(executable = out, files = depset(out_files), runfiles = runfiles)
-    # return DefaultInfo(executable = out, files = runfiles.files, runfiles = runfiles)
 
 execute_binary = rule(
     implementation = _execute_binary_impl,
