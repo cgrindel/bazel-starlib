@@ -26,5 +26,5 @@ assert_fail() {
 }
 
 assert_no_fail(){
-  [[ ${#FAIL_ERR_MSGS[@]} == 0 ]] || new_fail "Expected no failures. Found ${#FAIL_ERR_MSGS[@]}. ${FAIL_ERR_MSGS[@]}"
+  [[ ${#FAIL_ERR_MSGS[@]} == 0 ]] || new_fail "Expected no failures. Found ${#FAIL_ERR_MSGS[@]}. '${FAIL_ERR_MSGS[@]}'"
 }
