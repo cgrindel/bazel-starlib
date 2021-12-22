@@ -23,6 +23,6 @@ hello_world_pkg_sh="$(rlocation "${hello_world_pkg_sh_location}")" || \
 # MARK - Hello World 
 
 output="$("${hello_world_pkg_sh}")"
-assert_equal "Hello, World!" "${output}" 
+assert_match "Hello, World!" "${output}" 
 
 fail "IMPLEMENT ME!"
