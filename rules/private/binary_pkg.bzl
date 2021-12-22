@@ -21,9 +21,26 @@ def _binary_pkg_impl(ctx):
         is_executable = True,
     )
 
-    files_to_compress = [
-        ctx.executable.binary,
-    ]
+    # files_to_compress = [
+    #     ctx.executable.binary,
+    # ]
+    # files_to_compress = depset(
+    #     [ctx.executable.binary],
+    #     transitive = ctx.attr.binary[DefaultInfo].default_runfiles.files,
+    # )
+    files_to_compress = ctx.runfiles(
+        files = [ctx.executable.binary],
+        transitive_files = ctx.attr.binary[DefaultInfo].default_runfiles.files,
+    ).files
+
+    # DEBUG BEGIN
+    print("*** CHUCK files_to_compress.to_list(): ")
+    for idx, item in enumerate(files_to_compress.to_list()):
+        print("*** CHUCK", idx, ":", item, ", short:", item.short_path, ", path:", item.path)
+
+    # DEBUG END
+
+    # TODO: Clean up the command below.
 
     archive_out = ctx.actions.declare_file(ctx.label.name + "_archive.tar.gz")
     archive_args = ctx.actions.args()

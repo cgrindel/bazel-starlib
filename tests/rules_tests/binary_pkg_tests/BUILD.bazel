@@ -57,6 +57,9 @@ binary_pkg(
 sh_test(
     name = "process_file_pkg_test",
     srcs = ["process_file_pkg_test.sh"],
+    data = [
+        ":process_file_pkg",
+    ],
     deps = [
         "//lib/private:assertions",
         "@bazel_tools//tools/bash/runfiles",
