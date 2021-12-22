@@ -83,10 +83,15 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 changelog_md="$( "${generate_gh_changelog_sh}" "${tag_name}" )"
 
+# # Go back to the starting directory so that embedded binary for generate_workspace_snippet can be found.
+# cd "${starting_dir}"
+
 # archive_sha256="$( "${generate_git_archive_sh}" --tag_name "${tag_name}" | "${generate_sha256_sh}" )"
 # workspace_snippet_args=(--sha256 "${archive_sha256}" --tag "${tag_name}")
 # workspace_snippet="$( "${generate_workspace_snippet}" "${workspace_snippet_args[@]}" )"
+
 workspace_snippet="$( "${generate_workspace_snippet}" --tag "${tag_name}" )"
+
 
 release_notes_md="$(cat <<-EOF
 ${changelog_md}
