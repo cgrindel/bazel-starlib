@@ -1,0 +1,30 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_test(
+    name = "assert_equal_test",
+    srcs = ["assert_equal_test.sh"],
+    deps = [
+        "//lib/private:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_test(
+    name = "assert_match_test",
+    srcs = ["assert_match_test.sh"],
+    deps = [
+        "//lib/private:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_test(
+    name = "assert_no_match_test",
+    srcs = ["assert_no_match_test.sh"],
+    deps = [
+        "//lib/private:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
