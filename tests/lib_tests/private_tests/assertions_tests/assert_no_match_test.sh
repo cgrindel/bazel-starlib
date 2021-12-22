@@ -16,4 +16,19 @@ assertions_sh="$(rlocation "${assertions_sh_location}")" || \
   (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
 source "${assertions_sh}"
 
-fail "IMPLEMENT ME!"
+assert_fail_sh_location=cgrindel_bazel_starlib/tests/lib_tests/private_tests/assertions_tests/assert_fail.sh
+assert_fail_sh="$(rlocation "${assert_fail_sh_location}")" || \
+  (echo >&2 "Failed to locate ${assert_fail_sh_location}" && exit 1)
+source "${assert_fail_sh}"
+
+# MARK - Test assert_no_match
+
+reset_fail_err_msgs
+assert_no_match ^Begin "Begin with hello"
+assert_fail "Expected not to match."
+reset_fail_err_msgs
+
+reset_fail_err_msgs
+assert_no_match ^Begin "Not Begin with hello"
+assert_no_fail
+reset_fail_err_msgs
