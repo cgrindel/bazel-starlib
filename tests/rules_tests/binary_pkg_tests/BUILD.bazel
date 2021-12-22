@@ -1,7 +1,10 @@
 load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
 load("//rules:binary_pkg.bzl", "binary_pkg")
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
 
 bzlformat_pkg(name = "bzlformat")
+
+# MARK: - Hello World
 
 sh_binary(
     name = "hello_world",
@@ -19,6 +22,41 @@ sh_test(
     data = [
         ":hello_world_pkg",
     ],
+    deps = [
+        "//lib/private:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+# MARK: - Binary with Data Files
+
+write_file(
+    name = "data_file",
+    out = "data_file.txt",
+    content = [
+        "This is a data file.",
+    ],
+)
+
+sh_binary(
+    name = "process_file",
+    srcs = ["process_file.sh"],
+    data = [
+        ":data_file",
+    ],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+binary_pkg(
+    name = "process_file_pkg",
+    binary = ":process_file",
+)
+
+sh_test(
+    name = "process_file_pkg_test",
+    srcs = ["process_file_pkg_test.sh"],
     deps = [
         "//lib/private:assertions",
         "@bazel_tools//tools/bash/runfiles",

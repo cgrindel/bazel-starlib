@@ -11,7 +11,7 @@ def _binary_pkg_impl(ctx):
     #    is_executable = True,
     #)
 
-    decompress_out = ctx.actions.declare_file("decompress.sh")
+    decompress_out = ctx.actions.declare_file(ctx.label.name + "_decompress.sh")
     ctx.actions.expand_template(
         output = decompress_out,
         template = ctx.file._decompress_template,
@@ -25,10 +25,8 @@ def _binary_pkg_impl(ctx):
         ctx.executable.binary,
     ]
 
-    archive_out = ctx.actions.declare_file("archive.tar.gz")
+    archive_out = ctx.actions.declare_file(ctx.label.name + "_archive.tar.gz")
     archive_args = ctx.actions.args()
-
-    # archive_args.add(ctx.bin_dir.path)
     archive_args.add(archive_out)
     archive_args.add_all(files_to_compress)
     ctx.actions.run_shell(
