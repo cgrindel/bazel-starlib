@@ -1,0 +1,26 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("//rules:binary_pkg.bzl", "binary_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_binary(
+    name = "hello_world",
+    srcs = ["hello_world.sh"],
+)
+
+binary_pkg(
+    name = "hello_world_pkg",
+    binary = ":hello_world",
+)
+
+sh_test(
+    name = "hello_world_pkg_test",
+    srcs = ["hello_world_pkg_test.sh"],
+    data = [
+        ":hello_world_pkg",
+    ],
+    deps = [
+        "//lib/private:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)

@@ -5,6 +5,8 @@ package(default_visibility = ["//rules:__pkg__"])
 
 bzlformat_pkg(name = "bzlformat")
 
+exports_files(["decompress.sh.tmpl"])
+
 bzl_library(
     name = "filter_srcs",
     srcs = ["filter_srcs.bzl"],
@@ -23,6 +25,11 @@ bzl_library(
 bzl_library(
     name = "execute_binary",
     srcs = ["execute_binary.bzl"],
+)
+
+bzl_library(
+    name = "binary_pkg",
+    srcs = ["binary_pkg.bzl"],
 )
 
 bzl_library(
