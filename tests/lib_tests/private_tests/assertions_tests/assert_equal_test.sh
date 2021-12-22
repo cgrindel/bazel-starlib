@@ -21,8 +21,6 @@ assert_fail_sh="$(rlocation "${assert_fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${assert_fail_sh_location}" && exit 1)
 source "${assert_fail_sh}"
 
-# MARK - Replace fail
-
 
 # MARK - Test assert_equal
 
@@ -31,12 +29,12 @@ assert_equal "hello" "goodbye"
 assert_fail "Expected to be equal."
 reset_fail_err_msgs
 
-# reset_fail_err_msgs
-# # DEBUG BEGIN
-# echo >&2 "*** CHUCK  #FAIL_ERR_MSGS[@]: ${#FAIL_ERR_MSGS[@]}" 
-# # DEBUG END
-# assert_equal "hello" "goodbye" "Custom prefix"
-# assert_fail "Custom prefix Expected to be equal."
-# reset_fail_err_msgs
+reset_fail_err_msgs
+assert_equal "hello" "goodbye" "Custom prefix."
+assert_fail "Custom prefix. Expected to be equal."
+reset_fail_err_msgs
 
-fail "IMPLEMENT ME!"
+reset_fail_err_msgs
+assert_equal "hello" "hello"
+assert_no_fail
+reset_fail_err_msgs

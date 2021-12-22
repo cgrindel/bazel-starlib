@@ -22,7 +22,7 @@ assert_fail() {
   local pattern=${1}
   [[ ${#FAIL_ERR_MSGS[@]} == 0 ]] && new_fail "Expected a failure. None found. pattern: ${pattern}"
   [[ ${#FAIL_ERR_MSGS[@]} > 1 ]] && new_fail "Expected a single failure. Found ${#FAIL_ERR_MSGS[@]}. pattern: ${pattern}"
-  [[ "${FAIL_ERR_MSGS[0]}" =~ ${pattern} ]] || new_fail "Unexpected failure. Found ${FAIL_ERR_MSGS[0]}. pattern: ${pattern}"
+  [[ "${FAIL_ERR_MSGS[0]}" =~ ${pattern} ]] || new_fail "Unexpected failure. Found '${FAIL_ERR_MSGS[0]}'. pattern: ${pattern}"
 }
 
 assert_no_fail(){
