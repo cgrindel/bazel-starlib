@@ -127,3 +127,15 @@ execute_binary(
         ":process_file_eb": "process_file",
     },
 )
+
+sh_test(
+    name = "process_file_consumer_eb_test",
+    srcs = ["process_file_consumer_eb_test.sh"],
+    data = [
+        ":process_file_consumer_eb",
+    ],
+    deps = [
+        "//lib/private:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
