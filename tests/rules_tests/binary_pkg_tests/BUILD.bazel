@@ -89,7 +89,32 @@ execute_binary(
     },
 )
 
+binary_pkg(
+    name = "exec_process_file_pkg",
+    binary = ":exec_process_file",
+)
+
+sh_binary(
+    name = "process_file_consumer",
+    srcs = ["process_file_consumer.sh"],
+    deps = [
+        "//lib/private:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+execute_binary(
+    name = "process_file_consumer_eb",
+    arguments = [
+        "--process_file",
+        file_placeholder("process_file"),
+    ],
+    binary = ":process_file_consumer",
+    file_arguments = {
+        ":exec_process_file": "process_file",
+        # ":exec_process_file_pkg": "process_file",
+    },
+)
+
 # TODO: Add process_file consumer, wrap it in execute_binary and feed it to a test. Should fail.
 # Then, add binary_pkg for exec_process_file and feed that to an process_file_consumer
-
-# TODO: Silence the tar expand command in the decompress.
