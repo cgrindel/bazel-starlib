@@ -1,6 +1,7 @@
 load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
-load("//rules:binary_pkg.bzl", "binary_pkg")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("//rules:binary_pkg.bzl", "binary_pkg")
+load("//rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -65,3 +66,30 @@ sh_test(
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
+
+# MARK: - Test execute_binary embedded
+
+write_file(
+    name = "arg_file",
+    out = "arg_file.txt",
+    content = [
+        "This is an arg file.",
+    ],
+)
+
+execute_binary(
+    name = "exec_process_file",
+    args = [
+        "--file",
+        file_placeholder("arg_file"),
+    ],
+    binary = ":process_file",
+    file_args = {
+        ":arg_file": "arg_file",
+    },
+)
+
+# TODO: Update process_file to look for --file arg and dump the input.
+
+# TODO: Add process_file consumer, wrap it in execute_binary and feed it to a test. Should fail.
+# Then, add binary_pkg for exec_process_file and feed that to an process_file_consumer
