@@ -35,7 +35,6 @@ assert_embedded_args() {
   assert_arg "${output}" 4 "quoted value with spaces"
   assert_arg "${output}" 5 "--check_data_file"
   assert_arg "${output}" 6 "--input"
-  # assert_arg "${output}" 7 "{input}"
 }
 
 # MARK - Test that embedded arguments are passed along properly.
