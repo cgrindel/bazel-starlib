@@ -18,7 +18,7 @@ trap cleanup EXIT
 archive_start=$(awk '/^__ARCHIVE_BELOW__/ {print NR + 1; exit 0; }' $0)
 
 # Decompress the archive
-tail "-n+${archive_start}" $0 | tar xzv -C "${tmpdir}"
+tail "-n+${archive_start}" $0 | tar xzv -C "${tmpdir}" &> /dev/null
 
 # Change to the tmp directory
 cd "${tmpdir}"

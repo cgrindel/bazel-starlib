@@ -37,13 +37,6 @@ The args attribute is not supported for execute_binary. Use the arguments instea
         else:
             quoted_args.append("\"%s\"" % (arg))
 
-    # DEBUG BEGIN
-    print("*** CHUCK quoted_args: ")
-    for idx, item in enumerate(quoted_args):
-        print("*** CHUCK", idx, ":", item)
-
-    # DEBUG END
-
     ctx.actions.write(
         output = out,
         is_executable = True,

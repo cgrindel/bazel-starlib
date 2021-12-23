@@ -36,9 +36,6 @@ data="$(< "${data_file_txt}")"
 echo "Data: ${data}"
 
 if [[ ! -z "${arg_file:-}" ]]; then
-  # DEBUG BEGIN
-  echo >&2 "*** CHUCK  arg_file: ${arg_file}" 
-  # DEBUG END
   arg_file_data="$(< "${arg_file}")"
   echo "Arg File: ${arg_file_data}"
 fi
