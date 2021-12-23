@@ -49,6 +49,11 @@ set -euo pipefail
 # finding the runfiles directory. So, we help.
 [[ -f "${PWD}/../MANIFEST" ]] && export RUNFILES_DIR="${PWD}/.."
 
+# DEBUG BEGIN
+echo >&2 "*** CHUCK $(basename ${BASH_SOURCE[0]}) PWD: ${PWD}" 
+tree >&2
+# DEBUG END
+
 args=()
 """ + "\n".join([
             # Do not quote the {arg}. The values are already quoted. Adding the
@@ -70,6 +75,12 @@ fi
     # as a list under ctx.files.file_arguments
     runfiles = ctx.runfiles(files = ctx.files.data + ctx.files.file_arguments)
     runfiles = runfiles.merge(ctx.attr.binary[DefaultInfo].default_runfiles)
+
+    # Check if any of the file_arguments have runfiles and add them as well.
+    for target in ctx.attr.file_arguments:
+        if DefaultInfo in target:
+            runfiles = runfiles.merge(target[DefaultInfo].default_runfiles)
+
     return DefaultInfo(executable = out, runfiles = runfiles)
 
 execute_binary = rule(
