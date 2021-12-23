@@ -120,6 +120,7 @@ cat "${@}" > "${output}"
 
 binary_pkg = rule(
     implementation = _binary_pkg_impl,
+    executable = True,
     attrs = {
         "binary": attr.label(
             executable = True,
@@ -132,5 +133,13 @@ binary_pkg = rule(
             default = "@cgrindel_bazel_starlib//rules/private:decompress.sh.tmpl",
         ),
     },
-    doc = "",
+    doc = """\
+Generates an executable script that includes the specified binary and all of its runtime \
+dependencies.
+
+This rule was created to mitigate issues with runtime (i.e., runfiles) not being propagated \
+properly in certain situations. For instance, if an `execute_binary` embeds another \
+`execute_binary` and the first `execute_binary` is used in an `sh_test`, the dependencies \
+for second `execute_binary` can be lost.
+""",
 )

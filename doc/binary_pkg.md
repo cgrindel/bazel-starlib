@@ -10,6 +10,9 @@
 binary_pkg(<a href="#binary_pkg-name">name</a>, <a href="#binary_pkg-binary">binary</a>)
 </pre>
 
+Generates an executable script that includes the specified binary and all of its runtime dependencies.
+
+This rule was created to mitigate issues with runtime (i.e., runfiles) not being propagated properly in certain situations. For instance, if an `execute_binary` embeds another `execute_binary` and the first `execute_binary` is used in an `sh_test`, the dependencies for second `execute_binary` can be lost.
 
 
 **ATTRIBUTES**
