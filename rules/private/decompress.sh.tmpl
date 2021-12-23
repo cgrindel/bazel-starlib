@@ -33,13 +33,6 @@ export RUNFILES_DIR="${tmpdir}"
 run_dir="${tmpdir}/{{RUN_DIR}}"
 cd "${run_dir}"
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") decompress START" 
-echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") decompress RUNFILES_DIR: ${RUNFILES_DIR:-}" 
-echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") decompress run_dir: ${run_dir}" 
-tree >&2
-# DEBUG END
-
 # Execute the binary
 cmd=( "${RUNFILES_DIR}/{{EXEC_BINARY}}" )
 [[ ${#} > 0 ]] && cmd+=( "${@}" )

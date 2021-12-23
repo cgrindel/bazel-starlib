@@ -111,7 +111,6 @@ execute_binary(
     ],
     binary = ":process_file_consumer",
     file_arguments = {
-        # ":exec_process_file": "process_file",
         ":exec_process_file_pkg": "process_file",
     },
 )
