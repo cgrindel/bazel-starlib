@@ -46,7 +46,7 @@ write_file(
 
 execute_binary(
     name = "my_bin_with_args",
-    args = [
+    arguments = [
         "--first",
         "first value has spaces",
         "not_a_flag",
@@ -59,7 +59,7 @@ execute_binary(
     data = [
         ":data_file",
     ],
-    file_args = {
+    file_arguments = {
         ":input_file": "input",
     },
 )

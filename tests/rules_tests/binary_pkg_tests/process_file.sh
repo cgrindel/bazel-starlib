@@ -17,6 +17,28 @@ data_file_txt_location=cgrindel_bazel_starlib/tests/rules_tests/binary_pkg_tests
 data_file_txt="$(rlocation "${data_file_txt_location}")" || \
   (echo >&2 "Failed to locate ${data_file_txt_location}" && exit 1)
 
+args=()
+while (("$#")); do
+  case "${1}" in
+    "--file")
+      arg_file="${2}"
+      shift 2
+      ;;
+    *)
+      args+=("${1}")
+      shift 1
+      ;;
+  esac
+done
+
 
 data="$(< "${data_file_txt}")"
 echo "Data: ${data}"
+
+if [[ ! -z "${arg_file:-}" ]]; then
+  # DEBUG BEGIN
+  echo >&2 "*** CHUCK  arg_file: ${arg_file}" 
+  # DEBUG END
+  arg_file_data="$(< "${arg_file}")"
+  echo "Arg File: ${arg_file_data}"
+fi

@@ -79,12 +79,12 @@ write_file(
 
 execute_binary(
     name = "exec_process_file",
-    args = [
+    arguments = [
         "--file",
         file_placeholder("arg_file"),
     ],
     binary = ":process_file",
-    file_args = {
+    file_arguments = {
         ":arg_file": "arg_file",
     },
 )
@@ -93,3 +93,5 @@ execute_binary(
 
 # TODO: Add process_file consumer, wrap it in execute_binary and feed it to a test. Should fail.
 # Then, add binary_pkg for exec_process_file and feed that to an process_file_consumer
+
+# TODO: Silence the tar expand command in the decompress.

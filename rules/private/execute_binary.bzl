@@ -10,7 +10,7 @@ def file_placeholder(key):
     return "{%s}" % (key)
 
 def _create_file_args_placeholder_dict(ctx):
-    return {p: fa.files.to_list()[0] for fa, p in ctx.attr.file_args.items()}
+    return {p: fa.files.to_list()[0] for fa, p in ctx.attr.file_arguments.items()}
 
 def _substitute_placehodlers(placeholder_dict, value):
     new_value = value
@@ -23,14 +23,26 @@ def _execute_binary_impl(ctx):
     bin_path = ctx.executable.binary.short_path
     out = ctx.actions.declare_file(ctx.label.name + ".sh")
 
+    if len(ctx.attr.args) > 0:
+        fail("""\
+The args attribute is not supported for execute_binary. Use the arguments instead.\
+""")
+
     placeholder_dict = _create_file_args_placeholder_dict(ctx)
     quoted_args = []
-    for arg in ctx.attr.args:
+    for arg in ctx.attr.arguments:
         arg = _substitute_placehodlers(placeholder_dict, arg)
         if arg.startswith("\"") and arg.endswith("\""):
             quoted_args.append(arg)
         else:
             quoted_args.append("\"%s\"" % (arg))
+
+    # DEBUG BEGIN
+    print("*** CHUCK quoted_args: ")
+    for idx, item in enumerate(quoted_args):
+        print("*** CHUCK", idx, ":", item)
+
+    # DEBUG END
 
     ctx.actions.write(
         output = out,
@@ -61,9 +73,9 @@ fi
 """.format(binary = bin_path),
     )
 
-    # The file_args attribute shows up as a dict under ctx.attr.file_args and
-    # as a list under ctx.files.file_args
-    runfiles = ctx.runfiles(files = ctx.files.data + ctx.files.file_args)
+    # The file_arguments attribute shows up as a dict under ctx.attr.file_arguments and
+    # as a list under ctx.files.file_arguments
+    runfiles = ctx.runfiles(files = ctx.files.data + ctx.files.file_arguments)
     runfiles = runfiles.merge(ctx.attr.binary[DefaultInfo].default_runfiles)
     return DefaultInfo(executable = out, runfiles = runfiles)
 
@@ -76,31 +88,39 @@ execute_binary = rule(
             cfg = "target",
             doc = "The binary to be executed.",
         ),
+        "arguments": attr.string_list(
+            doc = """\
+The list of arguments that will be embedded into the resulting executable. 
+
+NOTE: Use this attribute instead of `args`. The `args` attribute is not \
+processed for file arguments and is not preserved in the resulting script. 
+""",
+        ),
         "data": attr.label_list(
             allow_files = True,
             doc = "Files needed by the binary at runtime.",
         ),
-        "file_args": attr.label_keyed_string_dict(
+        "file_arguments": attr.label_keyed_string_dict(
             allow_files = True,
             doc = """\
 A `dict` mapping of file labels to placeholder names. If any of the specified \
-args for `execute_binary` are paths to files, add an entry in this attribute \
+`arguments` for `execute_binary` are paths to files, add an entry in this attribute \
 where the key is the filename or label referencing the file and the value is \
 a placeholder name. Use the `file_placeholder` function to create a suitable \
-placeholder string for the args.
+placeholder string for the arguments.
 
 Example
 
 ```
 execute_binary(
     name = "do_something",
-    args = [
+    arguments = [
         "--input",
         file_placeholder("foo"),
         "--input",
         file_placeholder("bar"),
     ],
-    file_args = {
+    file_arguments = {
         # The key is the path 
         "foo.txt": "foo",
         ":bar":  "bar",
