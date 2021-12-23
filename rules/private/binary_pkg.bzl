@@ -2,27 +2,47 @@ load("@bazel_skylib//lib:paths.bzl", "paths")
 
 # Lovingly inspired by https://www.linuxjournal.com/node/1005818.
 
-def _copy_to_compress_dir(ctx, compress_dir_name, file):
-    if file.path.startswith("external/"):
-        dest_path = paths.join(compress_dir_name, ctx.workspace_name, file.path)
-    else:
-        dest_path = paths.join(compress_dir_name, ctx.workspace_name, file.short_path)
-    dest = ctx.actions.declare_file(dest_path)
+_EXTERNAL_PREFIX = "external/"
+_EXTERNAL_PREFIX_LEN = len(_EXTERNAL_PREFIX)
 
-    cp_args = ctx.actions.args()
-    cp_args.add_all([file, dest])
-    ctx.actions.run_shell(
-        outputs = [dest],
-        inputs = [file],
-        arguments = [cp_args],
-        command = """\
+def _copy_to_compress_dir(ctx, compress_dir_name, file):
+    # Depending upon the type of file, we may copy it to multiple locations
+    dest_paths = []
+    if file.path.startswith(_EXTERNAL_PREFIX):
+        dest_paths.extend([
+            # Copy to the <workspace_name>/external/<external_name>
+            paths.join(compress_dir_name, ctx.workspace_name, file.path),
+            # Copy to the <external_name>
+            # This is needed to mimic runfiles.bash expectations.
+            paths.join(compress_dir_name, file.path[_EXTERNAL_PREFIX_LEN:]),
+        ])
+    else:
+        dest_paths.append(
+            paths.join(compress_dir_name, ctx.workspace_name, file.short_path),
+        )
+
+    # Declare destination files
+    destinations = [
+        ctx.actions.declare_file(path)
+        for path in dest_paths
+    ]
+
+    for dest in destinations:
+        cp_args = ctx.actions.args()
+        cp_args.add_all([file, dest])
+        ctx.actions.run_shell(
+            outputs = [dest],
+            inputs = [file],
+            arguments = [cp_args],
+            command = """\
 src="${1}"
 dest="${2}"
 mkdir -p "$(dirname "${src}")"
 cp "${src}" "${dest}"
 """,
-    )
-    return dest
+        )
+
+    return destinations
 
 def _binary_pkg_impl(ctx):
     dest_files = []
@@ -50,15 +70,16 @@ def _binary_pkg_impl(ctx):
     compress_dir_path = paths.dirname(placeholder_out.path)
 
     # Copy the binary to the compress dir
-    binary_dest = _copy_to_compress_dir(ctx, compress_dir_name, ctx.executable.binary)
+    binary_dests = _copy_to_compress_dir(ctx, compress_dir_name, ctx.executable.binary)
+    binary_dest = binary_dests[0]
     dest_files.append(binary_dest)
     compress_dir_prefix_len = len(compress_dir_path) + 1
     binary_path = binary_dest.path[compress_dir_prefix_len:]
 
     # Copy the runfiles for the binary.
     for file in ctx.attr.binary[DefaultInfo].default_runfiles.files.to_list():
-        dest = _copy_to_compress_dir(ctx, compress_dir_name, file)
-        dest_files.append(dest)
+        dests = _copy_to_compress_dir(ctx, compress_dir_name, file)
+        dest_files.extend(dests)
 
     # Create an archive file with the binary and the runfiles
     archive_out = ctx.actions.declare_file(ctx.label.name + "_archive.tar.gz")
