@@ -97,6 +97,9 @@ tar -czf ${archive} -C "${compress_dir}" .
         template = ctx.file._decompress_template,
         substitutions = {
             "{{EXEC_BINARY}}": binary_path,
+            # This is a relative path that will be appended to the tmp dir
+            # where the executable will be run. This is not RUNFILES_DIR.
+            "{{RUN_DIR}}": ctx.workspace_name,
         },
         is_executable = True,
     )

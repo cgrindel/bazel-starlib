@@ -38,4 +38,3 @@ done
 [[ -z "${process_file:-}" ]] && fail "Expected a process_file executable"
 
 "${process_file}"
-

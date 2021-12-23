@@ -45,6 +45,11 @@ The args attribute is not supported for execute_binary. Use the arguments instea
 
 set -euo pipefail
 
+# DEBUG BEGIN
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") START" 
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") RUNFILES_DIR: ${RUNFILES_DIR:-}" 
+# DEBUG END
+
 # Set the RUNFILES_DIR. If an embedded binary is a sh_binary, it has trouble 
 # finding the runfiles directory. So, we help.
 [[ -z "${RUNFILES_DIR:-}" ]] && \
