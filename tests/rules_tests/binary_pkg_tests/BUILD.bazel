@@ -118,3 +118,5 @@ execute_binary(
 
 # TODO: Add process_file consumer, wrap it in execute_binary and feed it to a test. Should fail.
 # Then, add binary_pkg for exec_process_file and feed that to an process_file_consumer
+
+# TODO: Move the embed execute_binary tests to execute_binary_tests directory.
