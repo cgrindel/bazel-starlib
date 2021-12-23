@@ -26,6 +26,8 @@ cp "${src}" "${dest}"
 
 def _binary_pkg_impl(ctx):
     dest_files = []
+    compress_dir_name = ctx.label.name + "_compress"
+
     #exec_binary = ctx.actions.declare_file("exec_binary.sh")
     #ctx.actions.write(
     #    output = exec_binary,
@@ -35,8 +37,6 @@ def _binary_pkg_impl(ctx):
     #""".format(binary = ctx.executable.binary.path),
     #    is_executable = True,
     #)
-
-    compress_dir_name = ctx.label.name + "_compress"
 
     # Make sure that something exists in the compress dir
     placeholder_out = ctx.actions.declare_file(
@@ -49,41 +49,18 @@ def _binary_pkg_impl(ctx):
     )
     compress_dir_path = paths.dirname(placeholder_out.path)
 
+    # Copy the binary to the compress dir
     binary_dest = _copy_to_compress_dir(ctx, compress_dir_name, ctx.executable.binary)
     dest_files.append(binary_dest)
     compress_dir_prefix_len = len(compress_dir_path) + 1
     binary_path = binary_dest.path[compress_dir_prefix_len:]
 
-    # DEBUG BEGIN
-    print("*** CHUCK binary_dest.path: ", binary_dest.path)
-    print("*** CHUCK binary_path: ", binary_path)
-    # DEBUG END
-
+    # Copy the runfiles for the binary.
     for file in ctx.attr.binary[DefaultInfo].default_runfiles.files.to_list():
         dest = _copy_to_compress_dir(ctx, compress_dir_name, file)
         dest_files.append(dest)
-        # if file.path.startswith("external/"):
-        #     dest_path = paths.join(compress_dir_name, ctx.workspace_name, file.path)
-        # else:
-        #     dest_path = paths.join(compress_dir_name, ctx.workspace_name, file.short_path)
 
-        # dest = ctx.actions.declare_file(dest_path)
-        # dest_files.append(dest)
-        # cp_args = ctx.actions.args()
-        # cp_args.add_all([file, dest])
-        # ctx.actions.run_shell(
-        #     outputs = [dest],
-        #     inputs = [file],
-        #     arguments = [cp_args],
-        #     command = """\
-
-    # src="${1}"
-    # dest="${2}"
-    # mkdir -p "$(dirname "${src}")"
-    # cp "${src}" "${dest}"
-    # """,
-    # )
-
+    # Create an archive file with the binary and the runfiles
     archive_out = ctx.actions.declare_file(ctx.label.name + "_archive.tar.gz")
     archive_args = ctx.actions.args()
     archive_args.add(archive_out)
@@ -102,17 +79,18 @@ tar -czf ${archive} -C "${compress_dir}" .
 """,
     )
 
+    # Create the decompression script
     decompress_out = ctx.actions.declare_file(ctx.label.name + "_decompress.sh")
     ctx.actions.expand_template(
         output = decompress_out,
         template = ctx.file._decompress_template,
         substitutions = {
-            # "{{EXEC_BINARY}}": ctx.executable.binary.path,
             "{{EXEC_BINARY}}": binary_path,
         },
         is_executable = True,
     )
 
+    # Construct the final output by concatenating the decompression script with the archive.
     bin_pkg_out = ctx.actions.declare_file(ctx.label.name + ".sh")
     cat_args = ctx.actions.args()
     cat_args.add_all([bin_pkg_out, decompress_out, archive_out])
