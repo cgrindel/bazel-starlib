@@ -48,16 +48,6 @@ def _binary_pkg_impl(ctx):
     dest_files = []
     compress_dir_name = ctx.label.name + "_compress"
 
-    #exec_binary = ctx.actions.declare_file("exec_binary.sh")
-    #ctx.actions.write(
-    #    output = exec_binary,
-    #    content = """\
-    ##!/usr/bin/env bash
-    #{binary}
-    #""".format(binary = ctx.executable.binary.path),
-    #    is_executable = True,
-    #)
-
     # Make sure that something exists in the compress dir
     placeholder_out = ctx.actions.declare_file(
         paths.join(compress_dir_name, "placeholder"),
@@ -138,16 +128,9 @@ binary_pkg = rule(
             doc = "The binary to be executed.",
         ),
         "_decompress_template": attr.label(
-            # executable = True,
             allow_single_file = True,
             default = "@cgrindel_bazel_starlib//rules/private:decompress.sh.tmpl",
         ),
-        # "args": attr.string_list(
-        #     doc = "Arguments to be passed to the binary.",
-        # ),
-        # "file_args": attr.label_keyed_string_dict(
-        #     allow_files = True,
-        # ),
     },
     doc = "",
 )
