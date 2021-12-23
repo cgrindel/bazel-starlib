@@ -13,6 +13,7 @@ bzlformat_pkg(name = "bzlformat")
 # MARK: - Documentation Providers
 
 _RULE_NAMES = [
+    "binary_pkg",
     "execute_binary",
     "filter_srcs",
     "generate_release_notes",
