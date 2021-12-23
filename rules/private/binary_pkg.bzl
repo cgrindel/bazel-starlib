@@ -2,7 +2,30 @@ load("@bazel_skylib//lib:paths.bzl", "paths")
 
 # Lovingly inspired by https://www.linuxjournal.com/node/1005818.
 
+def _copy_to_compress_dir(ctx, compress_dir_name, file):
+    if file.path.startswith("external/"):
+        dest_path = paths.join(compress_dir_name, ctx.workspace_name, file.path)
+    else:
+        dest_path = paths.join(compress_dir_name, ctx.workspace_name, file.short_path)
+    dest = ctx.actions.declare_file(dest_path)
+
+    cp_args = ctx.actions.args()
+    cp_args.add_all([file, dest])
+    ctx.actions.run_shell(
+        outputs = [dest],
+        inputs = [file],
+        arguments = [cp_args],
+        command = """\
+src="${1}"
+dest="${2}"
+mkdir -p "$(dirname "${src}")"
+cp "${src}" "${dest}"
+""",
+    )
+    return dest
+
 def _binary_pkg_impl(ctx):
+    dest_files = []
     #exec_binary = ctx.actions.declare_file("exec_binary.sh")
     #ctx.actions.write(
     #    output = exec_binary,
@@ -13,68 +36,53 @@ def _binary_pkg_impl(ctx):
     #    is_executable = True,
     #)
 
-    decompress_out = ctx.actions.declare_file(ctx.label.name + "_decompress.sh")
-    ctx.actions.expand_template(
-        output = decompress_out,
-        template = ctx.file._decompress_template,
-        substitutions = {
-            "{{EXEC_BINARY}}": ctx.executable.binary.path,
-        },
-        is_executable = True,
-    )
-
-    files_to_compress = ctx.runfiles(
-        files = [ctx.executable.binary],
-        transitive_files = ctx.attr.binary[DefaultInfo].default_runfiles.files,
-    ).files
-
-    # # DEBUG BEGIN
-    # print("*** CHUCK files_to_compress.to_list(): ")
-    # for idx, item in enumerate(files_to_compress.to_list()):
-    #     print("*** CHUCK", idx, ":", item, ", short:", item.short_path, ", path:", item.path)
-    # # DEBUG END
-
     compress_dir_name = ctx.label.name + "_compress"
 
     # Make sure that something exists in the compress dir
     placeholder_out = ctx.actions.declare_file(
         paths.join(compress_dir_name, "placeholder"),
     )
+    dest_files.append(placeholder_out)
     ctx.actions.write(
         output = placeholder_out,
         content = "# Intentionally blank",
     )
-
     compress_dir_path = paths.dirname(placeholder_out.path)
 
+    binary_dest = _copy_to_compress_dir(ctx, compress_dir_name, ctx.executable.binary)
+    dest_files.append(binary_dest)
+    compress_dir_prefix_len = len(compress_dir_path) + 1
+    binary_path = binary_dest.path[compress_dir_prefix_len:]
+
     # DEBUG BEGIN
-    print("*** CHUCK placeholder_out.path: ", placeholder_out.path)
-    print("*** CHUCK compress_dir_path: ", compress_dir_path)
+    print("*** CHUCK binary_dest.path: ", binary_dest.path)
+    print("*** CHUCK binary_path: ", binary_path)
     # DEBUG END
 
-    bin_dir = ctx.bin_dir.path
-    dest_files = [placeholder_out]
-    for file in files_to_compress.to_list():
-        if file.path.startswith("external/"):
-            dest_path = paths.join(compress_dir_name, ctx.workspace_name, file.path)
-        else:
-            dest_path = paths.join(compress_dir_name, ctx.workspace_name, file.short_path)
-
-        dest = ctx.actions.declare_file(dest_path)
+    for file in ctx.attr.binary[DefaultInfo].default_runfiles.files.to_list():
+        dest = _copy_to_compress_dir(ctx, compress_dir_name, file)
         dest_files.append(dest)
-        cp_args = ctx.actions.args()
-        cp_args.add_all([file, dest])
-        ctx.actions.run_shell(
-            outputs = [dest],
-            inputs = [file],
-            arguments = [cp_args],
-            command = """\
-src="${1}"
-dest="${2}"
-mkdir -p "$(dirname "${src}")"
-cp "${src}" "${dest}"
-""",
-        )
+        # if file.path.startswith("external/"):
+        #     dest_path = paths.join(compress_dir_name, ctx.workspace_name, file.path)
+        # else:
+        #     dest_path = paths.join(compress_dir_name, ctx.workspace_name, file.short_path)
+
+        # dest = ctx.actions.declare_file(dest_path)
+        # dest_files.append(dest)
+        # cp_args = ctx.actions.args()
+        # cp_args.add_all([file, dest])
+        # ctx.actions.run_shell(
+        #     outputs = [dest],
+        #     inputs = [file],
+        #     arguments = [cp_args],
+        #     command = """\
+
+    # src="${1}"
+    # dest="${2}"
+    # mkdir -p "$(dirname "${src}")"
+    # cp "${src}" "${dest}"
+    # """,
+    # )
 
     archive_out = ctx.actions.declare_file(ctx.label.name + "_archive.tar.gz")
     archive_args = ctx.actions.args()
@@ -90,12 +98,19 @@ src_dir="${2}"
 compress_dir="$(basename "${src_dir}")_clean"
 mkdir -p "${compress_dir}"
 cp -R -L "${src_dir}"/* "${compress_dir}"
-# DEBUG BEGIN
-echo >&2 "*** CHUCK tar START" 
-tree >&2
-# DEBUG END
-tar -czf ${archive} -C "${compress_dir}" .
+tar -czf ${archive} -C "${compress_dir}" . 
 """,
+    )
+
+    decompress_out = ctx.actions.declare_file(ctx.label.name + "_decompress.sh")
+    ctx.actions.expand_template(
+        output = decompress_out,
+        template = ctx.file._decompress_template,
+        substitutions = {
+            # "{{EXEC_BINARY}}": ctx.executable.binary.path,
+            "{{EXEC_BINARY}}": binary_path,
+        },
+        is_executable = True,
     )
 
     bin_pkg_out = ctx.actions.declare_file(ctx.label.name + ".sh")
