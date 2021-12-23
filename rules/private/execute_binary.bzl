@@ -47,12 +47,9 @@ set -euo pipefail
 
 # Set the RUNFILES_DIR. If an embedded binary is a sh_binary, it has trouble 
 # finding the runfiles directory. So, we help.
-[[ -f "${PWD}/../MANIFEST" ]] && export RUNFILES_DIR="${PWD}/.."
-
-# DEBUG BEGIN
-echo >&2 "*** CHUCK $(basename ${BASH_SOURCE[0]}) PWD: ${PWD}" 
-tree >&2
-# DEBUG END
+[[ -z "${RUNFILES_DIR:-}" ]] && \
+  [[ -f "${PWD}/../MANIFEST" ]] && \
+  export RUNFILES_DIR="${PWD}/.."
 
 args=()
 """ + "\n".join([

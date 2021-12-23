@@ -73,3 +73,57 @@ sh_test(
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
+
+# MARK: - Test execute_binary passed as arg to another execute_binary
+
+sh_binary(
+    name = "process_file",
+    srcs = ["process_file.sh"],
+    data = [
+        ":data_file",
+    ],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+write_file(
+    name = "arg_file",
+    out = "arg_file.txt",
+    content = [
+        "This is an arg file.",
+    ],
+)
+
+execute_binary(
+    name = "process_file_eb",
+    arguments = [
+        "--file",
+        file_placeholder("arg_file"),
+    ],
+    binary = ":process_file",
+    file_arguments = {
+        ":arg_file": "arg_file",
+    },
+)
+
+sh_binary(
+    name = "process_file_consumer",
+    srcs = ["process_file_consumer.sh"],
+    deps = [
+        "//lib/private:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+execute_binary(
+    name = "process_file_consumer_eb",
+    arguments = [
+        "--process_file",
+        file_placeholder("process_file"),
+    ],
+    binary = ":process_file_consumer",
+    file_arguments = {
+        ":process_file_eb": "process_file",
+    },
+)
