@@ -18,18 +18,4 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
-# MARK - Functions
 
-is_installed() {
-  local name="${1}"
-  which "${name}" > /dev/null
-}
-
-# MARK - Check for Required Software
-
-is_installed gh || fail "Could not find Github CLI (gh)."
-
-# MARK - Get the 
-
-gh auth status -t 2>&1 | \
-  sed -E -n 's/^.* Token:[[:space:]]+([^[:space:]]+).*/\1/gp'

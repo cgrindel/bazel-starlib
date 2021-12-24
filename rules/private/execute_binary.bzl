@@ -1,3 +1,5 @@
+load("@bazel_skylib//lib:paths.bzl", "paths")
+
 def file_placeholder(key):
     """Returns a placeholder string that is suitable for inclusion in the args for `execute_binary`.
 
@@ -20,7 +22,7 @@ def _substitute_placehodlers(placeholder_dict, value):
     return new_value
 
 def _execute_binary_impl(ctx):
-    bin_path = ctx.executable.binary.short_path
+    bin_path = paths.join(ctx.workspace_name, ctx.executable.binary.short_path)
     out = ctx.actions.declare_file(ctx.label.name + ".sh")
 
     if len(ctx.attr.args) > 0:
@@ -51,21 +53,29 @@ set -euo pipefail
   [[ -f "${PWD}/../MANIFEST" ]] && \
   export RUNFILES_DIR="${PWD}/.."
 
-args=()
+[[ -z "${RUNFILES_DIR:-}" ]] && \
+  echo >&2 "The RUNFILES_DIR for $(basename "${BASH_SOURCE[0]}") could not be found."
+
+""" + """\
+bin_path="{bin_path}"
+""".format(bin_path = bin_path) + """\
+binary="${RUNFILES_DIR}/${bin_path}"
+
+# Construct the command (binary plus args).
+cmd=( "${binary}" )
 """ + "\n".join([
             # Do not quote the {arg}. The values are already quoted. Adding the
             # quotes here will ruin the Bash substitution.
-            """args+=( {arg} )""".format(arg = arg)
+            """cmd+=( {arg} )""".format(arg = arg)
             for arg in quoted_args
         ]) + """
-[[ $# > 0 ]] && args+=( "${@}" )
-if [[ ${#args[@]} > 0 ]]; then
-""" + """\
-  "{binary}" "${{args[@]}}"
-else
-  "{binary}"
-fi
-""".format(binary = bin_path),
+
+# Add any args that were passed to this invocation
+[[ $# > 0 ]] && cmd+=( "${@}" )
+
+# Execute the binary with its args
+"${cmd[@]}"
+""",
     )
 
     # The file_arguments attribute shows up as a dict under ctx.attr.file_arguments and

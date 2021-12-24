@@ -9,6 +9,7 @@ load(
 )
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//rules:generate_release_notes.bzl", "generate_release_notes")
+load("//rules:generate_workspace_snippet.bzl", "generate_workspace_snippet")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -36,6 +37,7 @@ test_suite(
         "//tests/lib_tests/private_tests/git_tests:integration_tests",
         "//tests/lib_tests/private_tests/github_tests:integration_tests",
         "//tests/rules_tests/generate_release_notes_tests:integration_tests",
+        "//tests/rules_tests/generate_workspace_snippet_tests:integration_tests",
         "//tests/tools_tests:integration_tests",
     ],
     visibility = ["//:__subpackages__"],
@@ -43,7 +45,12 @@ test_suite(
 
 # MARK: - Release
 
+generate_workspace_snippet(
+    name = "generate_workspace_snippet",
+    template = "workspace_snippet.tmpl",
+)
+
 generate_release_notes(
     name = "generate_release_notes",
-    snippet_template = "workspace_snippet.tmpl",
+    generate_workspace_snippet = ":generate_workspace_snippet",
 )

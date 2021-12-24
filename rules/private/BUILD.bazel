@@ -25,6 +25,17 @@ bzl_library(
 bzl_library(
     name = "execute_binary",
     srcs = ["execute_binary.bzl"],
+    deps = [
+        "@bazel_skylib//lib:paths",
+    ],
+)
+
+bzl_library(
+    name = "generate_workspace_snippet",
+    srcs = ["generate_workspace_snippet.bzl"],
+    deps = [
+        ":execute_binary",
+    ],
 )
 
 bzl_library(

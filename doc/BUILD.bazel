@@ -17,6 +17,7 @@ _RULE_NAMES = [
     "execute_binary",
     "filter_srcs",
     "generate_release_notes",
+    "generate_workspace_snippet",
     "hash_sha256",
     "write_bazel_status_vars",
 ]
