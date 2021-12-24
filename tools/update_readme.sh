@@ -68,9 +68,61 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 [[ -z "${readme_path:-}" ]] && readme_path="README.md"
 [[ -f "${readme_path}" ]] || fail "Could not find the README.md file. ${readme_path}"
 
-
+readme_backup="${readme_path}.bak"
 snippet_path="$(mktemp)"
+cleanup() {
+  local exit_code="${1}"
+  rm -f "${snippet_path}" 
+  if [[ ${exit_code} == 0 ]]; then
+    rm -f "${readme_backup}"
+  fi
+}
+trap 'cleanup $?' EXIT
+
+# Generate the snippet
 "${generate_workspace_snippet}" --tag "${tag_name}" --output "${snippet_path}"
 
+# # DEBUG BEGIN
+# echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") snippet:"$'\n'"$(< "${snippet_path}")" 
+# # DEBUG END
 
+# Update the snippet
+# sed_script="$(cat <<-EOF
+# /^<!-- BEGIN WORKSPACE SNIPPET/{:a;N;/^<!-- END WORKSPACE SNIPPET/!ba;N;r ${snippet_path}};p
+# EOF
+# )"
+# sed -E -i.bak -e "${sed_script}" "${readme_path}"
+  # -e '/^<!-- BEGIN WORKSPACE SNIPPET/{:a;N;/^<!-- END WORKSPACE SNIPPET/!ba;N;r '"${snippet_path}"'};p' \
+  # -e '/BEGIN WORKSPACE SNIPPET/{:a;N;/END WORKSPACE SNIPPET/!ba;N;r '"${snippet_path}"'};p' \
+  # -e '/BEGIN WORKSPACE SNIPPET/\{:a;N;/END WORKSPACE SNIPPET/!ba;N;s/.*\n/REPLACEMENT\n/\};p' \
+  # -e '/BEGIN WORKSPACE SNIPPET/{:a;N;/END WORKSPACE SNIPPET/!ba;N;s/.*\n/REPLACEMENT\n/};p' \
+# /BEGIN WORKSPACE SNIPPET/{
+#   :a
+#   N
+#   /END WORKSPACE SNIPPET/!ba
+#   N
+#   s/.*\n/REPLACEMENT\n/
+# }
+# p
 
+# sed -i.bak -e '
+# /BEGIN WORKSPACE SNIPPET/{
+#   :a
+#   N
+#   /END WORKSPACE SNIPPET/!ba
+#   N
+#   s/.*\n/REPLACEMENT\n/
+# }
+# p
+# ' \
+#   "${readme_path}"
+
+# DELETES LINES BETWEEN COMMENTS
+sed -i.bak \
+  -e '
+/BEGIN WORKSPACE SNIPPET/,/END WORKSPACE SNIPPET/{
+  /BEGIN WORKSPACE SNIPPET/n
+  /END WORKSPACE SNIPPET/!d
+}
+' \
+  "${readme_path}"
