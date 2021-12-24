@@ -51,6 +51,11 @@ set -euo pipefail
   [[ -f "${PWD}/../MANIFEST" ]] && \
   export RUNFILES_DIR="${PWD}/.."
 
+# DEBUG BEGIN
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") PWD: ${PWD}" 
+tree >&2
+# DEBUG END
+
 args=()
 """ + "\n".join([
             # Do not quote the {arg}. The values are already quoted. Adding the

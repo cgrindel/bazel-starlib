@@ -52,6 +52,10 @@ starting_dir="${PWD}"
 
 # MARK - Process Args
 
+# DEBUG BEGIN
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") @: ${@}" 
+# DEBUG END
+
 add_github_archive_url=true
 url_templates=()
 args=()

@@ -50,3 +50,7 @@ assert_match "bazel_starlib_dependencies()" "${actual}" "Did not find template c
 # echo >&2 "*** CHUCK  actual:"$'\n'"${actual}" 
 # fail "STOP"
 # # DEBUG END
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") PWD: ${PWD}" 
+# DEBUG END
