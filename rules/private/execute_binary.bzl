@@ -1,3 +1,5 @@
+load("@bazel_skylib//lib:paths.bzl", "paths")
+
 def file_placeholder(key):
     """Returns a placeholder string that is suitable for inclusion in the args for `execute_binary`.
 
@@ -20,7 +22,7 @@ def _substitute_placehodlers(placeholder_dict, value):
     return new_value
 
 def _execute_binary_impl(ctx):
-    bin_path = ctx.executable.binary.short_path
+    bin_path = paths.join(ctx.workspace_name, ctx.executable.binary.short_path)
     out = ctx.actions.declare_file(ctx.label.name + ".sh")
 
     if len(ctx.attr.args) > 0:
@@ -51,14 +53,13 @@ set -euo pipefail
   [[ -f "${PWD}/../MANIFEST" ]] && \
   export RUNFILES_DIR="${PWD}/.."
 
-# DEBUG BEGIN
-# echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") PWD: ${PWD}" 
-# tree >&2
-# DEBUG END
+[[ -z "${RUNFILES_DIR:-}" ]] && \
+  echo >&2 "The RUNFILES_DIR for $(basename "${BASH_SOURCE[0]}") could not be found."
 
 """ + """\
-binary="{binary}"
-""".format(binary = bin_path) + """\
+bin_path="{bin_path}"
+""".format(bin_path = bin_path) + """\
+binary="${RUNFILES_DIR}/${bin_path}"
 
 # Construct the command (binary plus args).
 cmd=( "${binary}" )
@@ -73,9 +74,6 @@ cmd=( "${binary}" )
 [[ $# > 0 ]] && cmd+=( "${@}" )
 
 # Execute the binary with its args
-# DEBUG BEGIN
-set -x
-# DEBUG END
 "${cmd[@]}"
 """,
     )
