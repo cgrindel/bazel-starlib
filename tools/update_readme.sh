@@ -117,12 +117,50 @@ trap 'cleanup $?' EXIT
 # ' \
 #   "${readme_path}"
 
-# DELETES LINES BETWEEN COMMENTS
-sed -i.bak \
+# # DELETES LINES BETWEEN COMMENTS
+# sed -i.bak \
+#   -e '
+# /BEGIN WORKSPACE SNIPPET/,/END WORKSPACE SNIPPET/{
+#   /BEGIN WORKSPACE SNIPPET/n
+#   /END WORKSPACE SNIPPET/!d
+# }
+# ' \
+#   "${readme_path}"
+
+# # CLEARS THE LINES BETWEEN MARKERS
+# sed -n -i.bak \
+#   -e '
+# /BEGIN WORKSPACE SNIPPET/{
+#   p
+#   :a
+#   n
+#   /END WORKSPACE SNIPPET/!b a
+# }
+# /BEGIN WORKSPACE SNIPPET/!p
+# ' \
+#   "${readme_path}"
+
+# Describe sed 
+# /BEGIN WORKSPACE SNIPPET/{      # Find the begin marker
+#   p                             # Print the begin marker
+#   r '"${snippet_path}"'         # Insert the snippet
+#   :a                            # Declare the label 'a'
+#   n                             # Read the next line
+#   /END WORKSPACE SNIPPET/!b a   # If not the end marker, loop to 'a'
+# }
+# /BEGIN WORKSPACE SNIPPET/!p     # Print all the other lines
+
+
+# WORKS
+sed -n -i.bak \
   -e '
-/BEGIN WORKSPACE SNIPPET/,/END WORKSPACE SNIPPET/{
-  /BEGIN WORKSPACE SNIPPET/n
-  /END WORKSPACE SNIPPET/!d
+/BEGIN WORKSPACE SNIPPET/{
+  p
+  r '"${snippet_path}"'
+  :a
+  n
+  /END WORKSPACE SNIPPET/!b a
 }
+/BEGIN WORKSPACE SNIPPET/!p
 ' \
   "${readme_path}"
