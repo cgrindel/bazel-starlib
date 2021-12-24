@@ -52,25 +52,32 @@ set -euo pipefail
   export RUNFILES_DIR="${PWD}/.."
 
 # DEBUG BEGIN
-echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") PWD: ${PWD}" 
-tree >&2
+# echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") PWD: ${PWD}" 
+# tree >&2
 # DEBUG END
 
-args=()
+""" + """\
+binary="{binary}"
+""".format(binary = bin_path) + """\
+
+# Construct the command (binary plus args).
+cmd=( "${binary}" )
 """ + "\n".join([
             # Do not quote the {arg}. The values are already quoted. Adding the
             # quotes here will ruin the Bash substitution.
-            """args+=( {arg} )""".format(arg = arg)
+            """cmd+=( {arg} )""".format(arg = arg)
             for arg in quoted_args
         ]) + """
-[[ $# > 0 ]] && args+=( "${@}" )
-if [[ ${#args[@]} > 0 ]]; then
-""" + """\
-  "{binary}" "${{args[@]}}"
-else
-  "{binary}"
-fi
-""".format(binary = bin_path),
+
+# Add any args that were passed to this invocation
+[[ $# > 0 ]] && cmd+=( "${@}" )
+
+# Execute the binary with its args
+# DEBUG BEGIN
+set -x
+# DEBUG END
+"${cmd[@]}"
+""",
     )
 
     # The file_arguments attribute shows up as a dict under ctx.attr.file_arguments and
