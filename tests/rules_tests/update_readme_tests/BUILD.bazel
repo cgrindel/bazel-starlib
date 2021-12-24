@@ -1,0 +1,40 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("//rules:generate_workspace_snippet.bzl", "generate_workspace_snippet")
+load("//rules:update_readme.bzl", "update_readme")
+load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
+
+bzlformat_pkg(name = "bzlformat")
+
+generate_workspace_snippet(
+    name = "generate_workspace_snippet",
+    template = "workspace_snippet.tmpl",
+)
+
+update_readme(
+    name = "update_readme",
+    generate_workspace_snippet = ":generate_workspace_snippet",
+)
+
+sh_test(
+    name = "update_readme_test",
+    srcs = ["update_readme_test.sh"],
+    data = [
+        ":update_readme",
+    ],
+    env_inherit = GH_ENV_INHERIT,
+    tags = INTEGRATION_TEST_TAGS,
+    deps = [
+        "//tests:setup_git_repo",
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_starlib//lib/private:assertions",
+    ],
+)
+
+test_suite(
+    name = "integration_tests",
+    tags = INTEGRATION_TEST_TAGS,
+    tests = [
+        ":update_readme_test",
+    ],
+    visibility = ["//:__subpackages__"],
+)

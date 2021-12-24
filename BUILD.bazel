@@ -39,6 +39,7 @@ test_suite(
         "//tests/lib_tests/private_tests/github_tests:integration_tests",
         "//tests/rules_tests/generate_release_notes_tests:integration_tests",
         "//tests/rules_tests/generate_workspace_snippet_tests:integration_tests",
+        "//tests/rules_tests/update_readme_tests:integration_tests",
         "//tests/tools_tests:integration_tests",
     ],
     visibility = ["//:__subpackages__"],
