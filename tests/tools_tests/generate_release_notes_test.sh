@@ -35,10 +35,6 @@ generate_release_notes_sh_location=cgrindel_bazel_starlib/tools/generate_release
 generate_release_notes_sh="$(rlocation "${generate_release_notes_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_release_notes_sh_location}" && exit 1)
 
-# workspace_snippet_tmpl_location=cgrindel_bazel_starlib/tests/tools_tests/workspace_snippet.tmpl
-# workspace_snippet_tmpl="$(rlocation "${workspace_snippet_tmpl_location}")" || \
-#   (echo >&2 "Failed to locate ${workspace_snippet_tmpl_location}" && exit 1)
-
 is_installed git || fail "Could not find git."
 
 # MARK - Setup
