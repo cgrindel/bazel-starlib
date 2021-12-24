@@ -54,8 +54,3 @@ generate_release_notes(
     name = "generate_release_notes",
     generate_workspace_snippet = ":generate_workspace_snippet",
 )
-
-# update_readme(
-#     name = "update_readme",
-#     generate_workspace_snippet = ":generate_workspace_snippet",
-# )

@@ -22,18 +22,6 @@ generate_gh_changelog_sh_location=cgrindel_bazel_starlib/tools/generate_gh_chang
 generate_gh_changelog_sh="$(rlocation "${generate_gh_changelog_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_gh_changelog_sh_location}" && exit 1)
 
-# generate_git_archive_sh_location=cgrindel_bazel_starlib/tools/generate_git_archive.sh
-# generate_git_archive_sh="$(rlocation "${generate_git_archive_sh_location}")" || \
-#   (echo >&2 "Failed to locate ${generate_git_archive_sh_location}" && exit 1)
-
-# generate_sha256_sh_location=cgrindel_bazel_starlib/tools/generate_sha256.sh
-# generate_sha256_sh="$(rlocation "${generate_sha256_sh_location}")" || \
-#   (echo >&2 "Failed to locate ${generate_sha256_sh_location}" && exit 1)
-
-# generate_workspace_snippet_sh_location=cgrindel_bazel_starlib/tools/generate_workspace_snippet.sh
-# generate_workspace_snippet_sh="$(rlocation "${generate_workspace_snippet_sh_location}")" || \
-#   (echo >&2 "Failed to locate ${generate_workspace_snippet_sh_location}" && exit 1)
-
 # MARK - Process Arguments
 
 starting_dir="${PWD}"

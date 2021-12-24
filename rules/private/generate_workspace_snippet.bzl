@@ -1,8 +1,17 @@
 load("//rules/private:execute_binary.bzl", "execute_binary", "file_placeholder")
 
-# TODO: Add doc.
+def generate_workspace_snippet(name, template = None):
+    """Defines an executable target that generates a workspace snippet suitable \
+    for inclusion in a markdown document.
 
-def generate_workspace_snippet(name = "generate_workspace_snippet", template = None):
+    Without a template, the utility will output an `http_archive` declaration. \
+    With a template, the utility will output the template replacing \
+    `${http_archive_statement}` with the `http_archive` declaration.
+
+    Args:
+        name: The name of the executable target as a `string`.
+        template: The path to a template file  as a `string`.
+    """
     file_arguments = {}
     arguments = []
     if template != None:
