@@ -10,6 +10,7 @@ repository. Check out [the documentation](/doc/) for more information.
 
 ### Workspace Configuration
 
+<!-- BEGIN WORKSPACE SNIPPET -->
 ```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
@@ -36,4 +37,4 @@ load("@io_bazel_stardoc//:setup.bzl", "stardoc_repositories")
 
 stardoc_repositories()
 ```
-
+<!-- END WORKSPACE SNIPPET -->

@@ -19,3 +19,58 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
 source "${fail_sh}"
 
 
+# MARK - Process Arguments
+
+starting_dir="${PWD}"
+
+args=()
+while (("$#")); do
+  case "${1}" in
+    "--output")
+      output_path="${2}"
+      shift 2
+      ;;
+    "--generate_workspace_snippet")
+      # If the input path is not absolute, then resolve it to be relative to
+      # the starting directory. We do this before we starting changing
+      # directories.
+      generate_workspace_snippet="${2}"
+      [[ "${generate_workspace_snippet}" =~ ^/ ]] || \
+        generate_workspace_snippet="${starting_dir}/${generate_workspace_snippet}"
+      shift 2
+      ;;
+    "--readme")
+      # This is a relative path from the root of the workspace.
+      readme_path="${2}"
+      shift 2
+      ;;
+    --*)
+      fail "Unrecognized flag ${1}."
+      ;;
+    *)
+      args+=("${1}")
+      shift 1
+      ;;
+  esac
+done
+
+[[ ${#args[@]} == 0 ]] && fail "A tag name for the release must be specified."
+tag_name="${args[0]}"
+
+[[ -z "${generate_workspace_snippet:-}" ]] && \
+  fail "Expected a value for --generate_workspace_snippet."
+
+
+# MARK - Update README.md
+
+cd "${BUILD_WORKSPACE_DIRECTORY}"
+
+[[ -z "${readme_path:-}" ]] && readme_path="README.md"
+[[ -f "${readme_path}" ]] || fail "Could not find the README.md file. ${readme_path}"
+
+
+snippet_path="$(mktemp)"
+"${generate_workspace_snippet}" --tag "${tag_name}" --output "${snippet_path}"
+
+
+

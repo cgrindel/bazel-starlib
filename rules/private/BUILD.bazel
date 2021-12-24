@@ -53,3 +53,11 @@ bzl_library(
         ":execute_binary",
     ],
 )
+
+bzl_library(
+    name = "update_readme",
+    srcs = ["update_readme.bzl"],
+    deps = [
+        ":execute_binary",
+    ],
+)

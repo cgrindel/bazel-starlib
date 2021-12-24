@@ -19,6 +19,7 @@ _RULE_NAMES = [
     "generate_release_notes",
     "generate_workspace_snippet",
     "hash_sha256",
+    "update_readme",
     "write_bazel_status_vars",
 ]
 
