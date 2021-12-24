@@ -68,6 +68,7 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 [[ -z "${readme_path:-}" ]] && readme_path="README.md"
 [[ -f "${readme_path}" ]] || fail "Could not find the README.md file. ${readme_path}"
 
+# Set up the cleanup
 readme_backup="${readme_path}.bak"
 snippet_path="$(mktemp)"
 cleanup() {
@@ -82,76 +83,7 @@ trap 'cleanup $?' EXIT
 # Generate the snippet
 "${generate_workspace_snippet}" --tag "${tag_name}" --output "${snippet_path}"
 
-# # DEBUG BEGIN
-# echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") snippet:"$'\n'"$(< "${snippet_path}")" 
-# # DEBUG END
-
-# Update the snippet
-# sed_script="$(cat <<-EOF
-# /^<!-- BEGIN WORKSPACE SNIPPET/{:a;N;/^<!-- END WORKSPACE SNIPPET/!ba;N;r ${snippet_path}};p
-# EOF
-# )"
-# sed -E -i.bak -e "${sed_script}" "${readme_path}"
-  # -e '/^<!-- BEGIN WORKSPACE SNIPPET/{:a;N;/^<!-- END WORKSPACE SNIPPET/!ba;N;r '"${snippet_path}"'};p' \
-  # -e '/BEGIN WORKSPACE SNIPPET/{:a;N;/END WORKSPACE SNIPPET/!ba;N;r '"${snippet_path}"'};p' \
-  # -e '/BEGIN WORKSPACE SNIPPET/\{:a;N;/END WORKSPACE SNIPPET/!ba;N;s/.*\n/REPLACEMENT\n/\};p' \
-  # -e '/BEGIN WORKSPACE SNIPPET/{:a;N;/END WORKSPACE SNIPPET/!ba;N;s/.*\n/REPLACEMENT\n/};p' \
-# /BEGIN WORKSPACE SNIPPET/{
-#   :a
-#   N
-#   /END WORKSPACE SNIPPET/!ba
-#   N
-#   s/.*\n/REPLACEMENT\n/
-# }
-# p
-
-# sed -i.bak -e '
-# /BEGIN WORKSPACE SNIPPET/{
-#   :a
-#   N
-#   /END WORKSPACE SNIPPET/!ba
-#   N
-#   s/.*\n/REPLACEMENT\n/
-# }
-# p
-# ' \
-#   "${readme_path}"
-
-# # DELETES LINES BETWEEN COMMENTS
-# sed -i.bak \
-#   -e '
-# /BEGIN WORKSPACE SNIPPET/,/END WORKSPACE SNIPPET/{
-#   /BEGIN WORKSPACE SNIPPET/n
-#   /END WORKSPACE SNIPPET/!d
-# }
-# ' \
-#   "${readme_path}"
-
-# # CLEARS THE LINES BETWEEN MARKERS
-# sed -n -i.bak \
-#   -e '
-# /BEGIN WORKSPACE SNIPPET/{
-#   p
-#   :a
-#   n
-#   /END WORKSPACE SNIPPET/!b a
-# }
-# /BEGIN WORKSPACE SNIPPET/!p
-# ' \
-#   "${readme_path}"
-
-# Describe sed 
-# /BEGIN WORKSPACE SNIPPET/{      # Find the begin marker
-#   p                             # Print the begin marker
-#   r '"${snippet_path}"'         # Insert the snippet
-#   :a                            # Declare the label 'a'
-#   n                             # Read the next line
-#   /END WORKSPACE SNIPPET/!b a   # If not the end marker, loop to 'a'
-# }
-# /BEGIN WORKSPACE SNIPPET/!p     # Print all the other lines
-
-
-# WORKS
+# Update the README.md inserting the workspace snippet
 sed -n -i.bak \
   -e '
 /BEGIN WORKSPACE SNIPPET/{
