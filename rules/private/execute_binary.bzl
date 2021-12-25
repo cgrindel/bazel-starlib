@@ -14,11 +14,13 @@ def file_placeholder(key):
 def _create_file_args_placeholder_dict(ctx):
     return {p: fa.files.to_list()[0] for fa, p in ctx.attr.file_arguments.items()}
 
-def _substitute_placehodlers(placeholder_dict, value):
+def _substitute_placehodlers(ctx, placeholder_dict, value):
     new_value = value
     for key, file in placeholder_dict.items():
         p_str = file_placeholder(key)
-        new_value = new_value.replace(p_str, file.short_path)
+
+        path = paths.join("${RUNFILES_DIR}", ctx.workspace_name, file.short_path)
+        new_value = new_value.replace(p_str, path)
     return new_value
 
 def _execute_binary_impl(ctx):
@@ -33,7 +35,7 @@ The args attribute is not supported for execute_binary. Use the arguments instea
     placeholder_dict = _create_file_args_placeholder_dict(ctx)
     quoted_args = []
     for arg in ctx.attr.arguments:
-        arg = _substitute_placehodlers(placeholder_dict, arg)
+        arg = _substitute_placehodlers(ctx, placeholder_dict, arg)
         if arg.startswith("\"") and arg.endswith("\""):
             quoted_args.append(arg)
         else:
