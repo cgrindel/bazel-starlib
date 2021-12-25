@@ -58,6 +58,4 @@ actual="$(< "${readme_path}")"
 assert_match "Text before snippet" "${actual}" "Find README.md"
 assert_match "Text after snippet" "${actual}" "Find README.md"
 assert_no_match "Text should be replaced" "${actual}" "Find README.md"
-
-
 assert_match "fake snippet" "${actual}" "Find README.md"

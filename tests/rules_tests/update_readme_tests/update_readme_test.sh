@@ -47,17 +47,12 @@ echo "${readme_content}" > "${readme_path}"
 tag_name="v99999.0.0"
 
 
-# MARK - Test
-
-# DEBUG BEGIN
-set -x
-# DEBUG END
+# MARK - Test Specify README path
 
 "${update_readme_sh}" --readme "${readme_path}" "${tag_name}"
 
 actual="$(< "${readme_path}")"
-
-# DEBUG BEGIN
-echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") actual:"$'\n'"${actual}" 
-fail "STOP"
-# DEBUG END
+assert_match "Text before snippet" "${actual}" "Find README.md"
+assert_match "Text after snippet" "${actual}" "Find README.md"
+assert_no_match "Text should be replaced" "${actual}" "Find README.md"
+assert_match "http_archive" "${actual}" "Find README.md"
