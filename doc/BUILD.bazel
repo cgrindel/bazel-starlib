@@ -6,7 +6,6 @@ load(
     "write_header",
     doc_providers = "providers",
 )
-load("@rules_pkg//:mappings.bzl", "pkg_filegroup", "pkg_files")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -121,20 +120,3 @@ write_file_list(
 # MARK: - Generate Documentation from Providers
 
 doc_for_provs(doc_provs = _ALL_DOC_PROVIDERS)
-
-pkg_files(
-    name = "package_files",
-    srcs = glob(
-        [
-            "*.bazel",
-            "*.md",
-        ],
-    ),
-)
-
-pkg_filegroup(
-    name = "package_content",
-    srcs = [":package_files"],
-    prefix = "doc",
-    visibility = ["//:__pkg__"],
-)
