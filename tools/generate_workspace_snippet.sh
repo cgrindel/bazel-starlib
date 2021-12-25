@@ -159,9 +159,6 @@ EOF
 if [[ -z "${template:-}" ]]; then
   snippet="${http_archive_statement}"
 else
-  # DEBUG BEGIN
-  echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") template: ${template}" 
-  # DEBUG END
   # Evaluate the template
   snippet="$(
     # Write the multline http_archive statement to a temp file. Be sure to
