@@ -1,4 +1,4 @@
-name: Create Release Workflow
+name: Create Release
 
 on:
   workflow_dispatch:
@@ -21,20 +21,11 @@ jobs:
       CC: clang
 
     steps:
-
     - uses: actions/checkout@v2
-
-    - name: Write local.bazelrc File
-      shell: bash
-      run: |
-        cat >local.bazelrc <<EOF
-        common --config=ci
-        EOF
-
-    - name: Output the Bazel Info
-      shell: bash
-      run: |
-        bazelisk info
+    - uses: ./.github/actions/setup_bazel_cache
+      with:
+        name: bazel_starlib
+    - uses: ./.github/actions/setup_bazel
 
     - name: Generate Release Notes
       shell: bash
