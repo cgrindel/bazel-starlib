@@ -56,6 +56,7 @@ assert_match "Text before snippet" "${actual}" "Find README.md"
 assert_match "Text after snippet" "${actual}" "Find README.md"
 assert_no_match "Text should be replaced" "${actual}" "Find README.md"
 assert_match "http_archive" "${actual}" "Find README.md"
+assert_match "${tag_name}" "${actual}" "Find README.md"
 
 
 # MARK - Test Find README.md
@@ -70,3 +71,4 @@ assert_match "Text before snippet" "${actual}" "Find README.md"
 assert_match "Text after snippet" "${actual}" "Find README.md"
 assert_no_match "Text should be replaced" "${actual}" "Find README.md"
 assert_match "http_archive" "${actual}" "Find README.md"
+assert_match "${tag_name}" "${actual}" "Find README.md"
