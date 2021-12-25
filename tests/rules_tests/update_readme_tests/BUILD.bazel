@@ -1,6 +1,6 @@
 load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
-load("//rules:generate_workspace_snippet.bzl", "generate_workspace_snippet")
 load("//rules:update_readme.bzl", "update_readme")
+load("//rules:generate_workspace_snippet.bzl", "generate_workspace_snippet")
 load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
 
 bzlformat_pkg(name = "bzlformat")

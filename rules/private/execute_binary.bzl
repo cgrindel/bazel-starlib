@@ -39,6 +39,9 @@ The args attribute is not supported for execute_binary. Use the arguments instea
         else:
             quoted_args.append("\"%s\"" % (arg))
 
+    # TODO: Update the file args to be <workspace_name>/<short_path> if path is not external.
+    # and use rlocation to resolve the location when injecting into the bash script.
+
     ctx.actions.write(
         output = out,
         is_executable = True,

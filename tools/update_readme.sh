@@ -80,6 +80,11 @@ cleanup() {
 }
 trap 'cleanup $?' EXIT
 
+# DEBUG BEGIN
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") snippet_path: ${snippet_path}" 
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") readme_path: ${readme_path}" 
+# DEBUG END
+
 # Generate the snippet
 "${generate_workspace_snippet}" --tag "${tag_name}" --output "${snippet_path}"
 
