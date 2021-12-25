@@ -40,16 +40,30 @@ Text after snippet
 EOF
 )"
 
-readme_path="${BUILD_WORKSPACE_DIRECTORY}/foo/README.md"
-mkdir -p "$(dirname "${readme_path}")"
-echo "${readme_content}" > "${readme_path}"
-
 tag_name="v99999.0.0"
 
 
 # MARK - Test Specify README path
 
+readme_path="${BUILD_WORKSPACE_DIRECTORY}/foo/README.md"
+mkdir -p "$(dirname "${readme_path}")"
+echo "${readme_content}" > "${readme_path}"
+
 "${update_readme_sh}" --readme "${readme_path}" "${tag_name}"
+
+actual="$(< "${readme_path}")"
+assert_match "Text before snippet" "${actual}" "Find README.md"
+assert_match "Text after snippet" "${actual}" "Find README.md"
+assert_no_match "Text should be replaced" "${actual}" "Find README.md"
+assert_match "http_archive" "${actual}" "Find README.md"
+
+
+# MARK - Test Find README.md
+
+readme_path="${BUILD_WORKSPACE_DIRECTORY}/README.md"
+echo "${readme_content}" > "${readme_path}"
+
+"${update_readme_sh}" "${tag_name}"
 
 actual="$(< "${readme_path}")"
 assert_match "Text before snippet" "${actual}" "Find README.md"
