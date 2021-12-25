@@ -84,6 +84,17 @@ trap 'cleanup $?' EXIT
 "${generate_workspace_snippet}" --tag "${tag_name}" --output "${snippet_path}"
 
 # Update the README.md inserting the workspace snippet
+# 
+# sed script explanation
+#
+# /BEGIN WORKSPACE SNIPPET/{      # Find the begin marker
+#   p                             # Print the begin marker
+#   r '"${snippet_path}"'         # Read in the snippet
+#   :a                            # Declare label 'a'
+#   n                             # Read the next line
+#   /END WORKSPACE SNIPPET/!b a   # If not the end marker, loop to 'a'
+# }
+# /BEGIN WORKSPACE SNIPPET/!p     # Print any line that is not begin marker
 sed -n -i.bak \
   -e '
 /BEGIN WORKSPACE SNIPPET/{
