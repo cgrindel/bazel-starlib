@@ -21,6 +21,6 @@ Typically, this macro is used in conjunction with the     `generate_workspace_sn
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
 | <a id="generate_release_notes-name"></a>name |  The name of the executable target as a <code>string</code>.   |  none |
-| <a id="generate_release_notes-generate_workspace_snippet"></a>generate_workspace_snippet |  The label that should be executed to                                     generate the workspace snippet.   |  none |
+| <a id="generate_release_notes-generate_workspace_snippet"></a>generate_workspace_snippet |  The label that should be executed to generate the workspace snippet.   |  none |
 
 

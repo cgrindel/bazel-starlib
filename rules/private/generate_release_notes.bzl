@@ -10,7 +10,7 @@ def generate_release_notes(name, generate_workspace_snippet):
 
     Args:
         name: The name of the executable target as a `string`.
-        generate_workspace_snippet: The label that should be executed to \
+        generate_workspace_snippet: The label that should be executed to
                                     generate the workspace snippet.
     """
     file_arguments = {}

@@ -27,6 +27,28 @@ sh_test(
     ],
 )
 
+sh_binary(
+    name = "generate_fake_snippet",
+    srcs = ["generate_fake_snippet.sh"],
+    deps = [
+        "//lib/private:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_test(
+    name = "update_readme_test",
+    srcs = ["update_readme_test.sh"],
+    data = [
+        ":generate_fake_snippet",
+        "//tools:update_readme",
+    ],
+    deps = [
+        "//lib/private:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
 # MARK: - Integration Tests
 
 sh_test(

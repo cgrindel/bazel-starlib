@@ -10,6 +10,7 @@ load(
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("//rules:generate_release_notes.bzl", "generate_release_notes")
 load("//rules:generate_workspace_snippet.bzl", "generate_workspace_snippet")
+load("//rules:update_readme.bzl", "update_readme")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -38,6 +39,7 @@ test_suite(
         "//tests/lib_tests/private_tests/github_tests:integration_tests",
         "//tests/rules_tests/generate_release_notes_tests:integration_tests",
         "//tests/rules_tests/generate_workspace_snippet_tests:integration_tests",
+        "//tests/rules_tests/update_readme_tests:integration_tests",
         "//tests/tools_tests:integration_tests",
     ],
     visibility = ["//:__subpackages__"],
@@ -52,5 +54,10 @@ generate_workspace_snippet(
 
 generate_release_notes(
     name = "generate_release_notes",
+    generate_workspace_snippet = ":generate_workspace_snippet",
+)
+
+update_readme(
+    name = "update_readme",
     generate_workspace_snippet = ":generate_workspace_snippet",
 )
