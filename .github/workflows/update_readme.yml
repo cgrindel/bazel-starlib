@@ -24,6 +24,12 @@ jobs:
       with:
         name: bazel_starlib
     - uses: ./.github/actions/setup_bazel
+    - name: DEBUG
+      shell: bash
+      env:
+        RELEASE_TAG: ${{ inputs.release_tag }}
+      run: |
+        echo "RELEASE_TAG: ${RELEASE_TAG}"
     - uses: ./.github/actions/update_readme
       with:
         release_tag: ${{ inputs.release_tag }}
