@@ -28,7 +28,7 @@ runs:
         set -x
         # DEBUG END
         bazelisk run "${UPDATE_README_TARGET}" -- \
-          --readme "${README_PATH}"
+          --readme "${README_PATH}" \
           "${RELEASE_TAG}"
 
     - name: Commit Changes
