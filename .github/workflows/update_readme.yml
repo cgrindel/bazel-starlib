@@ -30,6 +30,9 @@ jobs:
         RELEASE_TAG: "${{ github.events.inputs.release_tag }}"
       run: |
         echo "RELEASE_TAG: ${RELEASE_TAG}"
+        echo "inputs.release_tag: ${{ inputs.release_tag }}"
+        echo "github.events.inputs.release_tag: ${{ github.events.inputs.release_tag }}"
+        echo "github.event.inputs.release_tag: ${{ github.event.inputs.release_tag }}"
     - uses: ./.github/actions/update_readme
       with:
         release_tag: ${{ inputs.release_tag }}
