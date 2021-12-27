@@ -35,3 +35,4 @@ runs:
         message: Update README.md for ${{ inputs.release_tag }}
         add: ${{ inputs.readme_path }}
         branch: update_readme_for_${{ inputs.release_tag }}
+        branch_mode: create
