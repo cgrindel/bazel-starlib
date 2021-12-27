@@ -24,15 +24,6 @@ jobs:
       with:
         name: bazel_starlib
     - uses: ./.github/actions/setup_bazel
-    - name: DEBUG
-      shell: bash
-      env:
-        RELEASE_TAG: "${{ github.events.inputs.release_tag }}"
-      run: |
-        echo "RELEASE_TAG: ${RELEASE_TAG}"
-        echo "inputs.release_tag: ${{ inputs.release_tag }}"
-        echo "github.events.inputs.release_tag: ${{ github.events.inputs.release_tag }}"
-        echo "github.event.inputs.release_tag: ${{ github.event.inputs.release_tag }}"
     - uses: ./.github/actions/update_readme
       with:
-        release_tag: ${{ inputs.release_tag }}
+        release_tag: ${{  github.event.inputs.release_tag }}
