@@ -38,3 +38,4 @@ runs:
         message: Update README.md for ${{ inputs.release_tag }}
         add: ${{ inputs.readme_path }}
         branch: main
+        push: origin main --force
