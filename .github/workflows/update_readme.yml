@@ -27,7 +27,7 @@ jobs:
     - name: DEBUG
       shell: bash
       env:
-        RELEASE_TAG: ${{ inputs.release_tag }}
+        RELEASE_TAG: "${{ inputs.release_tag }}"
       run: |
         echo "RELEASE_TAG: ${RELEASE_TAG}"
     - uses: ./.github/actions/update_readme
