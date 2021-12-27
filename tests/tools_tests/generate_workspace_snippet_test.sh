@@ -37,6 +37,7 @@ cd "${repo_dir}"
 
 sha256=5b80d60e00a7ea2d9d540c594e5ec41c946c163e272056c626026fcbb7918de2
 tag="v1.2.3"
+strip_prefix="bazel-starlib-1.2.3"
 
 # MARK - Test Extracting Info from Git Repository
 
@@ -51,6 +52,7 @@ expected_snippet=$(cat <<-EOF
 http_archive(
     name = "cgrindel_bazel_starlib",
     sha256 = "${sha256}",
+    strip_prefix = "${strip_prefix}",
     urls = [
         "http://github.com/cgrindel/bazel-starlib/archive/${tag}.tar.gz",
     ],
@@ -80,6 +82,7 @@ owner=acme
 repo=rules_fun
 url1='http://github.com/${owner}/${repo}/releases/download/${tag}/${repo}-${tag:1}.tar.gz'
 url2='http://mirror.bazel.build/github.com/${owner}/${repo}/releases/download/${tag}/${repo}-${tag:1}.tar.gz'
+strip_prefix="rules_fun-1.2.3"
 
 actual_snippet="$(
 "${generate_workspace_snippet_sh}" \
@@ -97,6 +100,7 @@ expected_snippet=$(cat <<-EOF
 http_archive(
     name = "${owner}_${repo}",
     sha256 = "${sha256}",
+    strip_prefix = "${strip_prefix}",
     urls = [
         "http://github.com/${owner}/${repo}/releases/download/${tag}/${repo}-${tag:1}.tar.gz",
         "http://mirror.bazel.build/github.com/${owner}/${repo}/releases/download/${tag}/rules_fun-${tag:1}.tar.gz",

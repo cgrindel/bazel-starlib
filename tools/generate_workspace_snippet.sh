@@ -130,6 +130,16 @@ if [[ -z "${owner:-}" ]] || [[ -z "${repo:-}" ]]; then
   repo="$( get_gh_repo_name "${repo_url}" )"
 fi
 
+strip_prefix_suffix="${tag}"
+[[ "${strip_prefix_suffix}" =~ ^v ]] && strip_prefix_suffix="${strip_prefix_suffix:1}"
+strip_prefix="${repo}-${strip_prefix_suffix}"
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") owner: ${owner}" 
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") repo: ${repo}" 
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") strip_prefix: ${strip_prefix}" 
+# DEBUG END
+
 if [[ -z "${workspace_name:-}" ]]; then
   workspace_name="${owner}_${repo}"
   # Replace hyphens with underscores
@@ -149,6 +159,7 @@ http_archive_statement="$(cat  <<-EOF
 http_archive(
     name = "${workspace_name}",
     sha256 = "${sha256}",
+    strip_prefix = "${strip_prefix}",
     urls = [
 ${urls}
     ],
