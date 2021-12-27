@@ -26,4 +26,4 @@ jobs:
     - uses: ./.github/actions/setup_bazel
     - uses: ./.github/actions/update_readme
       with:
-        release_tag: ${{ github.ref_name }}
+        release_tag: ${{ inputs.release_tag }}

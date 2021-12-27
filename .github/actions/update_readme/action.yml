@@ -1,4 +1,4 @@
-name: Build and Test
+name: Update README.md
 
 inputs:
   release_tag:
@@ -24,6 +24,9 @@ runs:
         RELEASE_TAG: ${{ inputs.release_tag }}
         README_PATH: ${{ inputs.readme_path }}
       run: |
+        # DEBUG BEGIN
+        set -x
+        # DEBUG END
         bazelisk run "${UPDATE_README_TARGET}" -- \
           --readme "${README_PATH}"
           "${RELEASE_TAG}"
