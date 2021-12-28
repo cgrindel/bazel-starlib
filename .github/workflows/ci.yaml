@@ -2,7 +2,7 @@ name: CI for PR Merge
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ main, test_main ]
 
 jobs:
   build_and_test:
