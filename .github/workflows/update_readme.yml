@@ -27,3 +27,4 @@ jobs:
     - uses: ./.github/actions/update_readme
       with:
         release_tag: ${{  github.event.inputs.release_tag }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
