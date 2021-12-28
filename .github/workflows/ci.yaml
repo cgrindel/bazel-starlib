@@ -1,4 +1,4 @@
-name: CI
+name: CI for PR Merge
 
 on:
   pull_request:

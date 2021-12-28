@@ -1,4 +1,4 @@
-name: Release
+name: Release on Version Tag Push
 
 on:
   push:

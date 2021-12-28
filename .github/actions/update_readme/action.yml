@@ -1,4 +1,4 @@
-name: Build and Test
+name: Update README.md, Commit, and Push to Branch
 
 inputs:
   release_tag:
@@ -25,7 +25,7 @@ runs:
         README_PATH: ${{ inputs.readme_path }}
       run: |
         bazelisk run "${UPDATE_README_TARGET}" -- \
-          --readme "${README_PATH}"
+          --readme "${README_PATH}" \
           "${RELEASE_TAG}"
 
     - name: Commit Changes
@@ -34,4 +34,5 @@ runs:
         default_author: github_actions
         message: Update README.md for ${{ inputs.release_tag }}
         add: ${{ inputs.readme_path }}
-        branch: main
+        branch: auto_update_readme_for_${{ inputs.release_tag }}
+        branch_mode: create
