@@ -15,6 +15,11 @@ inputs:
     required: true
     type: string
     default: "//:update_readme"
+  base_branch:
+    description: The branch being merged to.
+    required: true
+    type: string
+    default: main
 
 runs:
   using: composite
@@ -39,7 +44,7 @@ runs:
         add-paths: |
           ${{ inputs.readme_path }}
         branch: auto_update_readme_for_${{ inputs.release_tag }}
-        base: main
+        base: ${{ inputs.base_branch }}
         delete-branch: true
         title: Update REAMDE.md for ${{ inputs.release_tag }}
         body: Automated update of `${{ inputs.readme_path }}` for release ${{ inputs.release_tag }}
