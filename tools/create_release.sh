@@ -47,9 +47,15 @@ EOF
   )"
 }
 
+reset_tag=false
+
 args=()
 while (("$#")); do
   case "${1}" in
+    --reset_tag)
+      reset_tag=true
+      shift 1
+      ;;
     --*)
       fail "Unrecognized flag. ${1}"
       ;;
@@ -65,4 +71,13 @@ tag="${args[0]}"
 
 is_valid_release_tag "${tag}" || fail "Invalid version tag. Expected it to start with 'v'."
 
+
+# MARK - Run the workflow
+
+cd "${BUILD_WORKSPACE_DIRECTORY}"
+
+# Launch the workflow
+gh_cmd=(gh workflow run 'Create Release' -f "release_tag=${tag}")
+[[ "${reset_tag}" == true ]] && gh_cmd+=(-f "reset_tag=true")
+"${gh_cmd[@]}"
 

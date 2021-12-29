@@ -87,6 +87,7 @@ tag="${args[0]}"
 
 is_valid_release_tag "${tag}" || fail "Invalid version tag. Expected it to start with 'v'."
 
+
 # MARK - Create the release
 
 cd "${BUILD_WORKSPACE_DIRECTORY}"
