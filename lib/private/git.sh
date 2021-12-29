@@ -5,6 +5,11 @@
 # This is used to determine if the library has been loaded
 cgrindel_bazel_starlib_lib_private_git_loaded() { return; }
 
+# MARK - Default Values
+
+remote=origin
+main_branch=main
+
 # Returns the URL for the git repository. It is typically in the form:
 #  git@github.com:cgrindel/bazel-starlib.git
 # OR 

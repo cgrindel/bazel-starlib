@@ -54,8 +54,8 @@ EOF
   )"
 }
 
-remote=origin
-main_branch=main
+# remote=origin
+# main_branch=main
 reset_tag=false
 
 args=()
@@ -89,9 +89,9 @@ done
 starting_dir="${PWD}"
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
-[[ ${#args[@]} == 0 ]] && usage_error "Expected a tag or semver. (e.g v.1.2.3)"
+[[ ${#args[@]} == 0 ]] && usage_error "Expected a version tag. (e.g v.1.2.3)"
 tag="${args[0]}"
-[[ "${tag}" =~ ^v ]] || tag="v${tag}"
+# [[ "${tag}" =~ ^v ]] || tag="v${tag}"
 
 gh_release_exists "${tag}" && fail "A release for this tag already exists. tag: ${tag}"
 
@@ -100,10 +100,6 @@ if [[ "${reset_tag}" == true ]]; then
   git_tag_exists "${tag}" && delete_git_tag "${tag}"
   git_tag_exists_on_remote "${tag}" "${remote}" && delete_git_tag_on_remote "${tag}" "${remote}"
 fi
-
-# DEBUG BEGIN
-set -x
-# DEBUG END
 
 git_tag_exists_on_remote "${tag}" "${remote}" && fail "This tag already exists on origin. tag: ${tag}"
 
