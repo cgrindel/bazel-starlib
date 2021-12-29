@@ -80,3 +80,4 @@ Exists Locally: ${tag_exists_local}
 Exists on Remote: ${tag_exists_remote}
 EOF
 )"
+echo "${output}"
