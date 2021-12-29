@@ -101,6 +101,10 @@ if [[ "${reset_tag}" == true ]]; then
   git_tag_exists_on_remote "${tag}" "${remote}" && delete_git_tag_on_remote "${tag}" "${remote}"
 fi
 
+# DEBUG BEGIN
+set -x
+# DEBUG END
+
 git_tag_exists_on_remote "${tag}" "${remote}" && fail "This tag already exists on origin. tag: ${tag}"
 
 if git_tag_exists "${tag}"; then
