@@ -84,16 +84,18 @@ while (("$#")); do
   esac
 done
 
-# MARK - Create the release
-
-starting_dir="${PWD}"
-cd "${BUILD_WORKSPACE_DIRECTORY}"
-
 [[ ${#args[@]} == 0 ]] && usage_error "Expected a version tag. (e.g v.1.2.3)"
 tag="${args[0]}"
-# [[ "${tag}" =~ ^v ]] || tag="v${tag}"
+
+is_valid_release_tag "${tag}" || fail "Invalid version tag. Expected it to start with 'v'."
+
+# MARK - Create the release
+
+cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 gh_release_exists "${tag}" && fail "A release for this tag already exists. tag: ${tag}"
+
+fetch_latest_from_git_remote "${remote}" "${main_branch}"
 
 if [[ "${reset_tag}" == true ]]; then
   echo "Deleting tag (${tag}) locally and on remote (${remote})..."
@@ -106,7 +108,6 @@ git_tag_exists_on_remote "${tag}" "${remote}" && fail "This tag already exists o
 if git_tag_exists "${tag}"; then
   echo "The tag (${tag}) exists locally, but does not exist on origin."
 else
-  fetch_latest_from_git_remote "${remote}" "${main_branch}"
   commit="$( get_git_commit_hash "${remote}/${main_branch}" )"
   echo "$(cat <<-EOF
 Creating release tag.
