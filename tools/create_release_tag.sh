@@ -44,7 +44,7 @@ is_installed git || fail "Could not find git." "${required_software}"
 # MARK - Process Args
 
 get_usage() {
-  utility="$(basename "${BASH_SOURCE[0]}")"
+  local utility="$(basename "${BASH_SOURCE[0]}")"
   echo "$(cat <<-EOF
 Create a release tag and push it to the remote.
 
@@ -54,8 +54,6 @@ EOF
   )"
 }
 
-# remote=origin
-# main_branch=main
 reset_tag=false
 
 args=()
