@@ -65,23 +65,32 @@ jobs:
         private_key: ${{ secrets.APP_PRIVATE_KEY }}
     - uses: ./.github/actions/configure_git_user
 
+    # - name: Check if Tag Exists
+    #   id: tagged
+    #   shell: bash
+    #   env:
+    #     RELEASE_TAG: ${{ github.event.inputs.release_tag }}
+    #   run: |
+    #     # Fetch the tags
+    #     git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+    #     # Check if the tag exists
+    #     tag_exists=false
+    #     git show-ref --tags --verify --quiet -- "refs/tags/${RELEASE_TAG}" &&\
+    #       tag_exists=true
+    #     # Set the action output 
+    #     echo "::set-output name=tagged::${tag_exists}"
+
     - name: Check if Tag Exists
-      id: tagged
+      id: validate_tag
       shell: bash
       env:
         RELEASE_TAG: ${{ github.event.inputs.release_tag }}
       run: |
-        # Fetch the tags
-        git fetch --depth=1 origin +refs/tags/*:refs/tags/*
-        # Check if the tag exists
-        tag_exists=false
-        git show-ref --tags --verify --quiet -- "refs/tags/${RELEASE_TAG}" &&\
-          tag_exists=true
-        # Set the action output 
-        echo "::set-output name=tagged::${tag_exists}"
+        # This command creates a Github Action output called 'tag_exists'
+        bazelisk run //tools:validate_release_tag -- --github_action_output "${RELEASE_TAG}"
 
     - name: Create Tag
-      if: ${{ steps.tagged.outputs.tagged == 'false' || github.event.inputs.reset_tag }}
+      if: ${{ steps.validate_tag.outputs.tag_exists == 'false' || github.event.inputs.reset_tag }}
       shell: bash
       env:
         # The integration tests make use of Github-specific functionality 
