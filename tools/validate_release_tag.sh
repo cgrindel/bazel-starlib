@@ -33,6 +33,8 @@ is_installed git || fail "Could not find git."
 
 # MARK - Process Args
 
+github_action_output=false
+
 args=()
 while (("$#")); do
   case "${1}" in
@@ -43,6 +45,10 @@ while (("$#")); do
     --branch)
       main_branch="${2}"
       shift 2
+      ;;
+    --github_action_output)
+      github_action_output=true
+      shift 1
       ;;
     --*)
       fail "Unrecognized flag. ${1}"
@@ -77,9 +83,13 @@ git_tag_exists_on_remote "${tag}" && tag_exists_remote=true
 
 # MARK - Output Existence Values
 
-output="$(cat <<-EOF
+if [[ "${github_action_output}" == true ]]; then
+  output="::set-output name=tag_exists::${tag_exists_remote}"
+else
+  output="$(cat <<-EOF
 Exists Locally: ${tag_exists_local}
 Exists on Remote: ${tag_exists_remote}
 EOF
 )"
+fi
 echo "${output}"
