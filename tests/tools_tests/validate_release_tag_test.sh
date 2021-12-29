@@ -45,3 +45,12 @@ assert_match "Exists on Remote: true" "${actual}"
 actual="$("${validate_release_tag_sh}" "v999.0.0")"
 assert_match "Exists Locally: false" "${actual}"
 assert_match "Exists on Remote: false" "${actual}"
+
+
+# MARK - Test Tag Existence with Github Action Output
+
+actual="$("${validate_release_tag_sh}" --github_action_output "v0.1.1")"
+assert_match "::set-output name=tag_exists::true" "${actual}"
+
+actual="$("${validate_release_tag_sh}" --github_action_output "v999.0.0")"
+assert_match "::set-output name=tag_exists::false" "${actual}"
