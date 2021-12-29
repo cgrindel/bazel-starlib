@@ -12,6 +12,9 @@ jobs:
     # local reference support. (https://github.community/t/ref-head-in-reusable-workflows/203690)
     uses: cgrindel/bazel-starlib/.github/workflows/build_and_test.yml@e619166c2c82c7d2d94c48b2208206fdc81f8a58
 
+
+  # GH004: Update the SHA for create_release.yml after submitting changes.
+
   create_release:
     # Don't run unless the build/test succeeds
     needs: build_and_test
