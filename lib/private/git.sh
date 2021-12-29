@@ -15,7 +15,14 @@ get_git_remote_url() {
 
 # Fetch the latest info from the remote.
 fetch_latest_from_git_remote() { 
-  git fetch 2> /dev/null
+  local remote="${1:-}"
+  local branch="${2:-}"
+  fetch_cmd=(git fetch)
+  if [[ ! -z "${remote:-}" ]]; then
+    fetch_cmd+=( "${remote}" )
+    [[ -z "${branch:-}" ]] || fetch_cmd+=( "${branch}" )
+  fi
+  "${fetch_cmd[@]}" 2> /dev/null
 }
 
 # MARK - Tag Functions

@@ -106,6 +106,7 @@ git_tag_exists_on_remote "${tag}" "${remote}" && fail "This tag already exists o
 if git_tag_exists "${tag}"; then
   echo "The tag (${tag}) exists locally, but does not exist on origin."
 else
+  fetch_latest_from_git_remote "${remote}" "${main_branch}"
   commit="$( get_git_commit_hash "${main_branch}" )"
   echo "$(cat <<-EOF
 Creating release tag.
