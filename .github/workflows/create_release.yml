@@ -94,7 +94,6 @@ jobs:
         # (e.g. gh).
         GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
         RELEASE_TAG: ${{ github.event.inputs.release_tag }}
-        RELEASE_NOTES_TARGET: ${{ github.event.inputs.release_notes_target }}
         RESET_TAG: ${{ github.event.inputs.reset_tag }}
       run: |
         # Ensure that a user is configured
