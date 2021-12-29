@@ -64,20 +64,20 @@ jobs:
         app_id: ${{ secrets.APP_ID }}
         private_key: ${{ secrets.APP_PRIVATE_KEY }}
 
-    # - name: Check if Tag Exists
-    #   id: tagged
-    #   shell: bash
-    #   env:
-    #     RELEASE_TAG: ${{ github.event.inputs.release_tag }}
-    #   run: |
-    #     # Fetch the tags
-    #     git fetch --depth=1 origin +refs/tags/*:refs/tags/*
-    #     # Check if the tag exists
-    #     tag_exists=false
-    #     git show-ref --tags --verify --quiet -- "refs/tags/${RELEASE_TAG}" &&\
-    #       tag_exists=true
-    #     # Set the action output 
-    #     echo "::set-output name=tagged::${tag_exists}"
+    - name: Check if Tag Exists
+      id: tagged
+      shell: bash
+      env:
+        RELEASE_TAG: ${{ github.event.inputs.release_tag }}
+      run: |
+        # Fetch the tags
+        git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+        # Check if the tag exists
+        tag_exists=false
+        git show-ref --tags --verify --quiet -- "refs/tags/${RELEASE_TAG}" &&\
+          tag_exists=true
+        # Set the action output 
+        echo "::set-output name=tagged::${tag_exists}"
 
     # - name: Create the Tag
     #   if: ${{ steps.tagged.outputs.tagged == 'false' }}
@@ -86,7 +86,10 @@ jobs:
     #     tag: ${{ github.event.inputs.release_tag }}
     #     message: "Release ${{ github.event.inputs.release_tag }}"
 
+    # TODO: Rename create_release utility to create_release_tag.
+
     - name: Create Tag
+      if: ${{ steps.tagged.outputs.tagged == 'false' || github.event.inputs.reset_tag == 'true' }}
       shell: bash
       env:
         # The integration tests make use of Github-specific functionality 

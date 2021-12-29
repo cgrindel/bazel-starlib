@@ -54,6 +54,10 @@ _github_url_owner_sed_cmds+=('s|https://github.com/([^/]+)/.*|\1|gp')
 _github_url_patterns+=(https://api.github.com/repos/)
 _github_url_owner_sed_cmds+=('s|https://api.github.com/repos/([^/]+)/.*|\1|gp')
 
+# Example: https://github.com/cgrindel/bazel-starlib.git
+_github_url_patterns+=(github.com/)
+_github_url_owner_sed_cmds+=('s|.*github.com/([^/]+)/.*|\1|gp')
+
 # Returns the index for the Github URL pattern. This index can be used look up
 # owner and repo name.
 _get_github_repo_pattern_index() {
