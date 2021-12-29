@@ -86,8 +86,6 @@ jobs:
     #     tag: ${{ github.event.inputs.release_tag }}
     #     message: "Release ${{ github.event.inputs.release_tag }}"
 
-    # TODO: Rename create_release utility to create_release_tag.
-
     - name: Create Tag
       if: ${{ steps.tagged.outputs.tagged == 'false' || github.event.inputs.reset_tag }}
       shell: bash
@@ -106,7 +104,7 @@ jobs:
         tag_args=()
         [[ "${RESET_TAG:-}" == true ]] && tag_args+=( "--reset_tag" )
         tag_args+=( "${RELEASE_TAG}" )
-        bazelisk run //tools:create_release -- "${tag_args[@]}"
+        bazelisk run //tools:create_release_tag -- "${tag_args[@]}"
 
 
     - name: Generate Release Notes
