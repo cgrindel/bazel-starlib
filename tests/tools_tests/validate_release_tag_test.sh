@@ -30,13 +30,18 @@ validate_release_tag_sh="$(rlocation "${validate_release_tag_sh_location}")" || 
 source "${setup_git_repo_sh}"
 
 
-# MARK - Test
+# MARK - Test Format Checks
 
 "${validate_release_tag_sh}" "v1.2.3" || fail "Expected v1.2.3 to be valid."
 "${validate_release_tag_sh}" "v1.2.3-rc" || fail "Expected v1.2.3-rc to be valid."
 "${validate_release_tag_sh}" "1.2.3" && fail "Expected 1.2.3 to be invalid."
 
+# MARK - Test Tag Existence
 
-fail "IMPLEMENT ME!"
+actual="$("${validate_release_tag_sh}" "v0.1.1")"
+assert_match "Exists Locally: true" "${actual}"
+assert_match "Exists on Remote: true" "${actual}"
 
-
+actual="$("${validate_release_tag_sh}" "v999.0.0")"
+assert_match "Exists Locally: false" "${actual}"
+assert_match "Exists on Remote: false" "${actual}"
