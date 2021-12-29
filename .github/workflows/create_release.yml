@@ -8,8 +8,8 @@ on:
         type: string
       reset_tag:
         required: true
-        type: string
-        default: "false"
+        type: boolean
+        default: false
       release_notes_target:
         required: true
         type: string
@@ -30,8 +30,8 @@ on:
         type: string
       reset_tag:
         required: true
-        type: string
-        default: "false"
+        type: boolean
+        default: false
       release_notes_target:
         required: true
         type: string
@@ -89,7 +89,7 @@ jobs:
     # TODO: Rename create_release utility to create_release_tag.
 
     - name: Create Tag
-      if: ${{ steps.tagged.outputs.tagged == 'false' || github.event.inputs.reset_tag == 'true' }}
+      if: ${{ steps.tagged.outputs.tagged == 'false' || github.event.inputs.reset_tag }}
       shell: bash
       env:
         # The integration tests make use of Github-specific functionality 
