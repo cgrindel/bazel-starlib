@@ -90,6 +90,18 @@ sh_binary(
 )
 
 sh_binary(
+    name = "validate_release_tag",
+    srcs = ["validate_release_tag.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:env",
+        "//lib/private:fail",
+        "//lib/private:git",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_binary(
     name = "create_release_tag",
     srcs = ["create_release_tag.sh"],
     visibility = ["//visibility:public"],
