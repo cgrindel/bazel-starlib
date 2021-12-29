@@ -1,4 +1,6 @@
-name: Update README.md
+# This workflow exists to manually test or kick off the update of README.md.
+# Typically, the README.md update is executed in create_release.yml.
+name: Manually Execute Update README.md
 
 on:
   workflow_dispatch:

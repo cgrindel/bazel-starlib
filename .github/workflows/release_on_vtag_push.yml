@@ -18,3 +18,5 @@ jobs:
     # NOTE: Need to provide a valid ref (e.g. SHA, release tag, branch). Github is working to add
     # local reference support. (https://github.community/t/ref-head-in-reusable-workflows/203690)
     uses: cgrindel/bazel-starlib/.github/workflows/create_release.yml@31dfa03f5dfe712b3cd2ae0e99e11ba2379e02c0
+    with:
+      release_tag: ${{ github.ref_name }}
