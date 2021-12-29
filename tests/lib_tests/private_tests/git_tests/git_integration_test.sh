@@ -41,6 +41,10 @@ cd "${repo_dir}"
 
 # MARK - Test
 
+is_valid_release_tag "v1.2.3" || fail "Expected v1.2.3 to be valid."
+is_valid_release_tag "v1.2.3-rc" || fail "Expected v1.2.3-rc to be valid."
+is_valid_release_tag "1.2.3" && fail "Expected 1.2.3 to be invalid."
+
 remote_url="$(get_git_remote_url)"
 [[ "${remote_url}" =~ "bazel-starlib" ]] || fail "Unexpected remote URL."
 

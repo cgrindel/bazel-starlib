@@ -32,6 +32,11 @@ fetch_latest_from_git_remote() {
 
 # MARK - Tag Functions
 
+is_valid_release_tag() {
+  local tag="${1}"
+  [[ "${tag}" =~ ^v ]] || return -1
+}
+
 # Returns the commit hash for the provided branch or tag.
 get_git_commit_hash() {
   local branch="${1:-}"
