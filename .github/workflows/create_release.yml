@@ -63,6 +63,7 @@ jobs:
       with:
         app_id: ${{ secrets.APP_ID }}
         private_key: ${{ secrets.APP_PRIVATE_KEY }}
+    - uses: ./.github/actions/configure_git_user
 
     - name: Check if Tag Exists
       id: tagged
@@ -79,13 +80,6 @@ jobs:
         # Set the action output 
         echo "::set-output name=tagged::${tag_exists}"
 
-    # - name: Create the Tag
-    #   if: ${{ steps.tagged.outputs.tagged == 'false' }}
-    #   uses: rickstaa/action-create-tag@v1
-    #   with:
-    #     tag: ${{ github.event.inputs.release_tag }}
-    #     message: "Release ${{ github.event.inputs.release_tag }}"
-
     - name: Create Tag
       if: ${{ steps.tagged.outputs.tagged == 'false' || github.event.inputs.reset_tag }}
       shell: bash
@@ -96,10 +90,6 @@ jobs:
         RELEASE_TAG: ${{ github.event.inputs.release_tag }}
         RESET_TAG: ${{ github.event.inputs.reset_tag }}
       run: |
-        # Ensure that a user is configured
-        git config user.name "${GITHUB_ACTOR}"
-        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-
         tag_args=()
         [[ "${RESET_TAG:-}" == true ]] && tag_args+=( "--reset_tag" )
         tag_args+=( "${RELEASE_TAG}" )
