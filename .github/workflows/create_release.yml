@@ -56,6 +56,28 @@ jobs:
         app_id: ${{ secrets.APP_ID }}
         private_key: ${{ secrets.APP_PRIVATE_KEY }}
 
+    - name: Check if Tag Exists
+      id: tagged
+      shell: bash
+      env:
+        RELEASE_TAG: ${{ github.event.inputs.release_tag }}
+      run: |
+        # Fetch the tags
+        git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+        # Check if the tag exists
+        tag_exists=false
+        git show-ref --tags --verify --quiet -- "refs/tags/${RELEASE_TAG}" &&\
+          tag_exists=true
+        # Set the action output 
+        echo "::set-output name=tagged::${tag_exists}"
+
+    - name: Create the Tag
+      if: ${{ steps.tagged.outputs.tagged == 'false' }
+      uses: rickstaa/action-create-tag@v1
+      with:
+        tag: ${{ github.event.inputs.release_tag }}
+        message: "Release ${{ github.event.inputs.release_tag }}"
+
     - name: Generate Release Notes
       shell: bash
       env:
