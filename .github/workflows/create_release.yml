@@ -125,8 +125,9 @@ jobs:
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        name: Release ${{ github.ref_name }}
+        name: Release ${{ github.event.inputs.release_tag }}
         body_path: release_notes.md
+        tag_name: ${{ github.event.inputs.release_tag }}
 
     - name: Update the README.md
       uses: ./.github/actions/update_readme
