@@ -108,12 +108,12 @@ if git_tag_exists "${tag}"; then
 else
   commit="$( get_git_commit_hash "${main_branch}" )"
   echo "$(cat <<-EOF
-  Creating release tag.
-  Tag:    ${tag}
-  Branch: ${main_branch}
-  Commit: ${commit}
-  EOF
-  )"
+Creating release tag.
+Tag:    ${tag}
+Branch: ${main_branch}
+Commit: ${commit}
+EOF
+)"
   create_git_release_tag "${tag}" "${commit}"
 fi
 
