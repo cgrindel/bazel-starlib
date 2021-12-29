@@ -99,6 +99,10 @@ jobs:
         RELEASE_NOTES_TARGET: ${{ github.event.inputs.release_notes_target }}
         RESET_TAG: ${{ github.event.inputs.reset_tag }}
       run: |
+        # Ensure that a user is configured
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+
         tag_args=()
         [[ "${RESET_TAG:-}" == true ]] && tag_args+=( "--reset_tag" )
         tag_args+=( "${RELEASE_TAG}" )
