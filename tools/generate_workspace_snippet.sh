@@ -108,6 +108,10 @@ done
 
 [[ -z "${tag:-}" ]] && fail "Expected a tag value."
 
+# DEBUG BEGIN
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") BEGIN tag: ${tag}" 
+# DEBUG END
+
 [[ "${add_github_archive_url}" == true ]] && \
   url_templates+=( 'http://github.com/${owner}/${repo}/archive/${tag}.tar.gz' )
 [[ ${#url_templates[@]} > 0 ]] || fail "Expected one ore more url templates."
@@ -129,6 +133,11 @@ if [[ -z "${owner:-}" ]] || [[ -z "${repo:-}" ]]; then
   owner="$( get_gh_repo_owner "${repo_url}" )"
   repo="$( get_gh_repo_name "${repo_url}" )"
 fi
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") LATER tag: ${tag}" 
+# DEBUG END
+
 
 strip_prefix_suffix="${tag}"
 [[ "${strip_prefix_suffix}" =~ ^v ]] && strip_prefix_suffix="${strip_prefix_suffix:1}"
