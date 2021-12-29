@@ -72,7 +72,7 @@ jobs:
         echo "::set-output name=tagged::${tag_exists}"
 
     - name: Create the Tag
-      if: ${{ steps.tagged.outputs.tagged == 'false' }
+      if: ${{ steps.tagged.outputs.tagged == 'false' }}
       uses: rickstaa/action-create-tag@v1
       with:
         tag: ${{ github.event.inputs.release_tag }}
