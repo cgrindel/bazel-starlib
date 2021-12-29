@@ -120,7 +120,7 @@ jobs:
       run: |
         bazelisk run "${RELEASE_NOTES_TARGET}" -- \
           --output release_notes.md \
-          "${GITHUB_REF_NAME}"
+          "${RELEASE_TAG}"
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
