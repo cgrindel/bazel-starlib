@@ -59,10 +59,6 @@ tag="${args[0]}"
 
 # MARK - Format Check
 
-# DEBUG BEGIN
-set -x
-# DEBUG END
-
 [[ "${tag}" =~ ^v ]] || fail "Invalid version tag. Expected it to start with 'v'."
 
 
