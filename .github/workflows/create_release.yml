@@ -77,7 +77,6 @@ jobs:
         tag_args+=( "${RELEASE_TAG}" )
         bazelisk run //tools:create_release_tag -- "${tag_args[@]}"
 
-
     - name: Generate Release Notes
       shell: bash
       env:
