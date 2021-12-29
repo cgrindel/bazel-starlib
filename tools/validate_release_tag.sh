@@ -59,10 +59,16 @@ tag="${args[0]}"
 
 # MARK - Format Check
 
+# DEBUG BEGIN
+set -x
+# DEBUG END
+
 [[ "${tag}" =~ ^v ]] || fail "Invalid version tag. Expected it to start with 'v'."
 
 
 # MARK - Check for Existence
+
+cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 fetch_latest_from_git_remote "${remote}" "${main_branch}"
 
