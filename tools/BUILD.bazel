@@ -90,8 +90,8 @@ sh_binary(
 )
 
 sh_binary(
-    name = "create_release",
-    srcs = ["create_release.sh"],
+    name = "create_release_tag",
+    srcs = ["create_release_tag.sh"],
     visibility = ["//visibility:public"],
     deps = [
         "//lib/private:env",
