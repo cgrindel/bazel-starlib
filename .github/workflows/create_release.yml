@@ -7,20 +7,16 @@ on:
         required: true
         type: string
       reset_tag:
-        required: true
         type: boolean
         default: false
       release_notes_target:
-        required: true
         type: string
         default: "//:generate_release_notes"
       update_readme_target:
-        required: true
         type: string
         default: "//:update_readme"
       base_branch:
         description: The branch being merged to.
-        required: true
         type: string
         default: main
   workflow_call:
@@ -29,20 +25,16 @@ on:
         required: true
         type: string
       reset_tag:
-        required: true
         type: boolean
         default: false
       release_notes_target:
-        required: true
         type: string
         default: "//:generate_release_notes"
       update_readme_target:
-        required: true
         type: string
         default: "//:update_readme"
       base_branch:
         description: The branch being merged to.
-        required: true
         type: string
         default: main
 

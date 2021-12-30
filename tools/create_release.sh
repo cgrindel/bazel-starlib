@@ -36,20 +36,18 @@ source "${github_sh}"
 
 # MARK - Check for Required Software
 
-required_software="Both git and Github CLI (gh) are required to run this utility."
-is_installed gh || fail "Could not find Github CLI (gh)." "${required_software}"
-is_installed git || fail "Could not find git." "${required_software}"
+is_installed gh || fail "Could not find Github CLI (gh)."
 
 
-# MARK - Process Args
+# MARK - Process Arguments
 
 get_usage() {
   local utility="$(basename "${BASH_SOURCE[0]}")"
   echo "$(cat <<-EOF
-Create a release tag and push it to the remote.
+Execute a Github Action workflow to create a relase with the specified tag.
 
 Usage:
-${utility} [--remote <remote>] [--branch <branch>] <tag>
+${utility} <tag>
 EOF
   )"
 }
@@ -59,21 +57,16 @@ reset_tag=false
 args=()
 while (("$#")); do
   case "${1}" in
-    "--help")
-      show_usage
-      exit 0
-      ;;
-    --remote)
-      remote="${2}"
-      shift 2
-      ;;
-    --branch)
-      main_branch="${2}"
+    --ref)
+      ref="${2}"
       shift 2
       ;;
     --reset_tag)
       reset_tag=true
       shift 1
+      ;;
+    --*)
+      fail "Unrecognized flag. ${1}"
       ;;
     *)
       args+=("${1}")
@@ -82,41 +75,18 @@ while (("$#")); do
   esac
 done
 
-[[ ${#args[@]} == 0 ]] && usage_error "Expected a version tag. (e.g v.1.2.3)"
+[[ ${#args[@]} == 0 ]] && usage_error "Expected a version tag for the release. (e.g v.1.2.3)"
 tag="${args[0]}"
-
 is_valid_release_tag "${tag}" || fail "Invalid version tag. Expected it to start with 'v'."
 
 
-# MARK - Create the release
+# MARK - Run the workflow
 
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
-gh_release_exists "${tag}" && fail "A release for this tag already exists. tag: ${tag}"
-
-fetch_latest_from_git_remote "${remote}" "${main_branch}"
-
-if [[ "${reset_tag}" == true ]]; then
-  echo "Deleting tag (${tag}) locally and on remote (${remote})..."
-  git_tag_exists "${tag}" && delete_git_tag "${tag}"
-  git_tag_exists_on_remote "${tag}" "${remote}" && delete_git_tag_on_remote "${tag}" "${remote}"
-fi
-
-git_tag_exists_on_remote "${tag}" "${remote}" && fail "This tag already exists on origin. tag: ${tag}"
-
-if git_tag_exists "${tag}"; then
-  echo "The tag (${tag}) exists locally, but does not exist on origin."
-else
-  commit="$( get_git_commit_hash "${remote}/${main_branch}" )"
-  echo "$(cat <<-EOF
-Creating release tag.
-Tag:    ${tag}
-Branch: ${main_branch}
-Commit: ${commit}
-EOF
-)"
-  create_git_release_tag "${tag}" "${commit}"
-fi
-
-echo "Pushing release tag (${tag}) to ${remote}..."
-push_git_tag_to_remote "${tag}" "${remote}"
+# Launch the workflow
+gh_cmd=(gh workflow run 'Create Release')
+[[ -z "${ref:-}" ]] || gh_cmd+=(--ref "${ref}")
+gh_cmd+=(-f "release_tag=${tag}")
+gh_cmd+=(-f "reset_tag=${reset_tag}")
+"${gh_cmd[@]}"
