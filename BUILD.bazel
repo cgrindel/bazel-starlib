@@ -7,10 +7,6 @@ load(
     "@cgrindel_rules_updatesrc//updatesrc:updatesrc.bzl",
     "updatesrc_update_all",
 )
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//rules:generate_release_notes.bzl", "generate_release_notes")
-load("//rules:generate_workspace_snippet.bzl", "generate_workspace_snippet")
-load("//rules:update_readme.bzl", "update_readme")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -43,21 +39,4 @@ test_suite(
         "//tests/tools_tests:integration_tests",
     ],
     visibility = ["//:__subpackages__"],
-)
-
-# MARK: - Release
-
-generate_workspace_snippet(
-    name = "generate_workspace_snippet",
-    template = "workspace_snippet.tmpl",
-)
-
-generate_release_notes(
-    name = "generate_release_notes",
-    generate_workspace_snippet = ":generate_workspace_snippet",
-)
-
-update_readme(
-    name = "update_readme",
-    generate_workspace_snippet = ":generate_workspace_snippet",
 )
