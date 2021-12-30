@@ -1,4 +1,4 @@
-load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("@cgrindel_rules_bzlformat//bzlformat:defs.bzl", "bzlformat_pkg")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
 load("//rules:binary_pkg.bzl", "binary_pkg")
 load("//rules:execute_binary.bzl", "execute_binary", "file_placeholder")

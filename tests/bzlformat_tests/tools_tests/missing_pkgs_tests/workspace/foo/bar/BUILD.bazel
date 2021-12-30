@@ -1,0 +1,4 @@
+sh_binary(
+    name = "bar",
+    srcs = ["bar.sh"],
+)

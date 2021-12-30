@@ -1,0 +1,44 @@
+load("@cgrindel_rules_bzlformat//bzlformat:defs.bzl", "bzlformat_pkg")
+load(
+    "@cgrindel_bazel_doc//bazeldoc:bazeldoc.bzl",
+    "doc_for_provs",
+    "write_file_list",
+    "write_header",
+    doc_providers = "providers",
+)
+
+bzlformat_pkg(name = "bzlformat")
+
+# MARK: - Documentation Providers
+
+_RULES_AND_MACROS_DOC_PROVIDER = doc_providers.create(
+    name = "rules_and_macros_overview",
+    stardoc_input = "//bzlformat:defs.bzl",
+    symbols = [
+        "bzlformat_format",
+        "bzlformat_pkg",
+        "bzlformat_missing_pkgs",
+    ],
+    deps = ["//bzlformat"],
+)
+
+_ALL_DOC_PROVIDERS = [
+    _RULES_AND_MACROS_DOC_PROVIDER,
+]
+
+# MARK: - Headers
+
+write_header(
+    name = _RULES_AND_MACROS_DOC_PROVIDER.header_label,
+    header_content = [
+        "# Rules and Macros",
+        "",
+        "The rules and macros described below are used to format, test and ",
+        "copy Starlark source files.",
+    ],
+    symbols = _RULES_AND_MACROS_DOC_PROVIDER.symbols,
+)
+
+# MARK: - Generate Documentation from Providers
+
+doc_for_provs(doc_provs = _ALL_DOC_PROVIDERS)

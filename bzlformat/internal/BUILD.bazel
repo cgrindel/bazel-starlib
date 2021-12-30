@@ -1,0 +1,40 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load(":bzlformat_pkg.bzl", "bzlformat_pkg")
+
+package(default_visibility = ["//bzlformat:__subpackages__"])
+
+bzlformat_pkg(name = "bzlformat")
+
+bzl_library(
+    name = "bzlformat_format",
+    srcs = ["bzlformat_format.bzl"],
+    deps = [
+        "@bazel_skylib//lib:paths",
+        "@cgrindel_rules_updatesrc//updatesrc",
+    ],
+)
+
+bzl_library(
+    name = "bzlformat_pkg",
+    srcs = ["bzlformat_pkg.bzl"],
+    deps = [
+        ":bzlformat_format",
+        "@bazel_skylib//rules:diff_test",
+        "@cgrindel_bazel_starlib//lib:src_utils",
+        "@cgrindel_rules_updatesrc//updatesrc",
+    ],
+)
+
+bzl_library(
+    name = "bzlformat_missing_pkgs",
+    srcs = ["bzlformat_missing_pkgs.bzl"],
+    deps = [
+        "@cgrindel_bazel_shlib//rules:execute_binary",
+    ],
+)
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)

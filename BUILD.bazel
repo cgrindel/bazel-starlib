@@ -1,5 +1,5 @@
 load(
-    "@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl",
+    "@cgrindel_rules_bzlformat//bzlformat:defs.bzl",
     "bzlformat_missing_pkgs",
     "bzlformat_pkg",
 )

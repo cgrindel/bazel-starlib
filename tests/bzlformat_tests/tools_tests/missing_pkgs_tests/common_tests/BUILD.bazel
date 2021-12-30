@@ -1,0 +1,13 @@
+load("@cgrindel_rules_bzlformat//bzlformat:defs.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_test(
+    name = "normalize_pkg_test",
+    srcs = ["normalize_pkg_test.sh"],
+    deps = [
+        "//tools/missing_pkgs:common",
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_shlib//lib:assertions",
+    ],
+)

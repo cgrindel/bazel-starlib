@@ -1,4 +1,4 @@
-load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("@cgrindel_rules_bzlformat//bzlformat:defs.bzl", "bzlformat_pkg")
 load(
     "//bzlrelease:defs.bzl",
     "create_release",

@@ -1,0 +1,93 @@
+load("//bzlformat:bzlformat.bzl", "bzlformat_format")
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
+load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@cgrindel_bazel_starlib//rules:filter_srcs.bzl", "filter_srcs")
+
+build_test(
+    name = "public_api",
+    targets = [
+        "//bzlformat:deps",
+        "//bzlformat:bzlformat",
+    ],
+)
+
+# MARK: - bzlformat_format Tests
+
+# Array of tuples
+# 0: name
+# 1: original content
+# 2: expected content
+_FORMAT_INFOS = [
+    (
+        "foo",
+        [
+            "def foo(tags=[], srcs=[]):",
+            "    pass",
+        ],
+        [
+            "def foo(tags = [], srcs = []):",
+            "    pass",
+            "",
+        ],
+    ),
+    (
+        "bar",
+        [
+            "load(':foo.bzl', 'foo'); foo(tags=['b', 'a'],srcs=['d', 'c'])",
+        ],
+        [
+            """load(":foo.bzl", "foo")""",
+            "",
+            """foo(tags = ["b", "a"], srcs = ["d", "c"])""",
+            "",
+        ],
+    ),
+]
+
+# Write the original content
+[
+    write_file(
+        name = fi[0] + "_bzl",
+        out = fi[0] + ".bzl",
+        content = fi[1],
+    )
+    for fi in _FORMAT_INFOS
+]
+
+# Format the original content
+bzlformat_format(
+    name = "format",
+    srcs = [":" + fi[0] + "_bzl" for fi in _FORMAT_INFOS],
+)
+
+# Write the expected content
+[
+    write_file(
+        name = fi[0] + "_bzl_expected",
+        out = fi[0] + ".bzl.expected",
+        content = fi[2],
+    )
+    for fi in _FORMAT_INFOS
+]
+
+# Extract each output file in prep for the diff_test
+[
+    filter_srcs(
+        name = fi[0] + "_bzl_formatted",
+        srcs = [":format"],
+        expected_count = 1,
+        filename_ends_with = fi[0] + ".bzl.formatted",
+    )
+    for fi in _FORMAT_INFOS
+]
+
+# Perform the diff_tests
+[
+    diff_test(
+        name = fi[0] + "_bzl_diff",
+        file1 = ":" + fi[0] + "_bzl_formatted",
+        file2 = ":" + fi[0] + "_bzl_expected",
+    )
+    for fi in _FORMAT_INFOS
+]
