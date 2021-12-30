@@ -12,6 +12,7 @@ bzlformat_pkg(name = "bzlformat")
 # MARK: - Documentation Providers
 
 _RULE_NAMES = [
+    "create_release",
     "generate_release_notes",
     "generate_workspace_snippet",
     "hash_sha256",

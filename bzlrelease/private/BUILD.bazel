@@ -33,3 +33,11 @@ bzl_library(
         "//rules:execute_binary",
     ],
 )
+
+bzl_library(
+    name = "create_release",
+    srcs = ["create_release.bzl"],
+    deps = [
+        "//rules:execute_binary",
+    ],
+)

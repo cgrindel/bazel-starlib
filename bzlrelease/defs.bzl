@@ -11,6 +11,12 @@ load(
     "//bzlrelease/private:update_readme.bzl",
     _update_readme = "update_readme",
 )
+load(
+    "//bzlrelease/private:create_release.bzl",
+    _create_release = "create_release",
+)
+
+create_release = _create_release
 
 generate_workspace_snippet = _generate_workspace_snippet
 
