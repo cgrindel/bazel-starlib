@@ -23,6 +23,11 @@ env_sh="$(rlocation "${env_sh_location}")" || \
   (echo >&2 "Failed to locate ${env_sh_location}" && exit 1)
 source "${env_sh}"
 
+git_sh_location=cgrindel_bazel_starlib/lib/private/git.sh
+git_sh="$(rlocation "${git_sh_location}")" || \
+  (echo >&2 "Failed to locate ${git_sh_location}" && exit 1)
+source "${git_sh}"
+
 github_sh_location=cgrindel_bazel_starlib/lib/private/github.sh
 github_sh="$(rlocation "${github_sh_location}")" || \
   (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)
@@ -68,7 +73,6 @@ done
 
 [[ ${#args[@]} == 0 ]] && usage_error "Expected a version tag for the release. (e.g v.1.2.3)"
 tag="${args[0]}"
-
 is_valid_release_tag "${tag}" || fail "Invalid version tag. Expected it to start with 'v'."
 
 
