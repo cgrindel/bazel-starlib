@@ -39,7 +39,7 @@ source "${github_sh}"
 is_installed gh || fail "Could not find Github CLI (gh)."
 
 
-# MARK - Process Arguments
+# MARK - Usage
 
 get_usage() {
   local utility="$(basename "${BASH_SOURCE[0]}")"
@@ -47,16 +47,37 @@ get_usage() {
 Execute a Github Action workflow to create a relase with the specified tag.
 
 Usage:
-${utility} <tag>
+${utility} --worklfow <workflow_name> [OPTION]... <tag>
+
+Required:
+  --workflow <name>   The name of the Github Actions workflow that will create 
+                      the release.
+  <tag>               The release tag.
+
+Options:
+  --ref <ref>         The ref (e.g. branch) from which to run the workflow.
+  --reset_tag         If specified and if a release does not exist for the tag,
+                      the existing tag will be deleted and a new one created.
 EOF
   )"
 }
+
+
+# MARK - Process Arguments
 
 reset_tag=false
 
 args=()
 while (("$#")); do
   case "${1}" in
+    "--help")
+      show_usage
+      exit 0
+      ;;
+    --workflow)
+      workflow_name="${2}"
+      shift 2
+      ;;
     --ref)
       ref="${2}"
       shift 2
@@ -75,6 +96,8 @@ while (("$#")); do
   esac
 done
 
+[[ -z "${workflow_name:-}" ]] && usage_error "Expected a workflow name."
+
 [[ ${#args[@]} == 0 ]] && usage_error "Expected a version tag for the release. (e.g v.1.2.3)"
 tag="${args[0]}"
 is_valid_release_tag "${tag}" || fail "Invalid version tag. Expected it to start with 'v'."
@@ -85,7 +108,7 @@ is_valid_release_tag "${tag}" || fail "Invalid version tag. Expected it to start
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 # Launch the workflow
-gh_cmd=(gh workflow run 'Create Release')
+gh_cmd=(gh workflow run "${workflow_name}")
 [[ -z "${ref:-}" ]] || gh_cmd+=(--ref "${ref}")
 gh_cmd+=(-f "release_tag=${tag}")
 gh_cmd+=(-f "reset_tag=${reset_tag}")

@@ -1,25 +1,24 @@
 load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
-load("//rules:generate_release_notes.bzl", "generate_release_notes")
-load("//rules:generate_workspace_snippet.bzl", "generate_workspace_snippet")
+load("//bzlrelease:defs.bzl", "generate_workspace_snippet")
 load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
 
 bzlformat_pkg(name = "bzlformat")
 
 generate_workspace_snippet(
-    name = "generate_workspace_snippet",
+    name = "without_template",
+)
+
+generate_workspace_snippet(
+    name = "with_template",
     template = "workspace_snippet.tmpl",
 )
 
-generate_release_notes(
-    name = "generate_release_notes",
-    generate_workspace_snippet = ":generate_workspace_snippet",
-)
-
 sh_test(
-    name = "generate_release_notes_test",
-    srcs = ["generate_release_notes_test.sh"],
+    name = "generate_workspace_snippet_test",
+    srcs = ["generate_workspace_snippet_test.sh"],
     data = [
-        ":generate_release_notes",
+        ":with_template",
+        ":without_template",
     ],
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
@@ -34,7 +33,7 @@ test_suite(
     name = "integration_tests",
     tags = INTEGRATION_TEST_TAGS,
     tests = [
-        ":generate_release_notes_test",
+        ":generate_workspace_snippet_test",
     ],
     visibility = ["//:__subpackages__"],
 )

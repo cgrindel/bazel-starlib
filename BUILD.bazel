@@ -7,10 +7,6 @@ load(
     "@cgrindel_rules_updatesrc//updatesrc:updatesrc.bzl",
     "updatesrc_update_all",
 )
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//rules:generate_release_notes.bzl", "generate_release_notes")
-load("//rules:generate_workspace_snippet.bzl", "generate_workspace_snippet")
-load("//rules:update_readme.bzl", "update_readme")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -21,6 +17,8 @@ bzlformat_missing_pkgs(
 updatesrc_update_all(
     name = "update_all",
     targets_to_run = [
+        "//doc/bazeldoc:update",
+        "//doc/bzlrelease:update",
         "//doc:update",
         ":bzlformat_missing_pkgs_fix",
     ],
@@ -35,29 +33,12 @@ test_suite(
         "manual",
     ],
     tests = [
+        "//tests/bzlrelease_tests/rules_tests/generate_release_notes_tests:integration_tests",
+        "//tests/bzlrelease_tests/rules_tests/generate_workspace_snippet_tests:integration_tests",
+        "//tests/bzlrelease_tests/rules_tests/update_readme_tests:integration_tests",
         "//tests/lib_tests/private_tests/git_tests:integration_tests",
         "//tests/lib_tests/private_tests/github_tests:integration_tests",
-        "//tests/rules_tests/generate_release_notes_tests:integration_tests",
-        "//tests/rules_tests/generate_workspace_snippet_tests:integration_tests",
-        "//tests/rules_tests/update_readme_tests:integration_tests",
         "//tests/tools_tests:integration_tests",
     ],
     visibility = ["//:__subpackages__"],
-)
-
-# MARK: - Release
-
-generate_workspace_snippet(
-    name = "generate_workspace_snippet",
-    template = "workspace_snippet.tmpl",
-)
-
-generate_release_notes(
-    name = "generate_release_notes",
-    generate_workspace_snippet = ":generate_workspace_snippet",
-)
-
-update_readme(
-    name = "update_readme",
-    generate_workspace_snippet = ":generate_workspace_snippet",
 )

@@ -40,3 +40,7 @@ load("@io_bazel_stardoc//:setup.bzl", "stardoc_repositories")
 stardoc_repositories()
 ```
 <!-- END WORKSPACE SNIPPET -->
+
+## Other Documentation
+
+- [Release Process](release/README.md)
