@@ -1,0 +1,103 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load(
+    "//bazeldoc:defs.bzl",
+    "doc_for_provs",
+    "write_file_list",
+    "write_header",
+    doc_providers = "providers",
+)
+
+bzlformat_pkg(name = "bzlformat")
+
+# Lovingly inspired by
+# https://github.com/bazelbuild/rules_swift/blob/021c11b1d578ffba547140eb24854cdfe74c794f/doc/BUILD.bazel#L3
+
+# MARK: - Documentation Declarations
+
+_API_SRCS = [
+    "providers",
+]
+
+_STARDOC_INPUT = "//bazeldoc:defs.bzl"
+
+_DOC_DEPS = [
+    "//bazeldoc:defs",
+]
+
+_API_DOC_PROVIDERS = [
+    doc_providers.create(
+        name = name,
+        stardoc_input = _STARDOC_INPUT,
+        symbols = [name],
+        deps = _DOC_DEPS,
+    )
+    for name in _API_SRCS
+]
+
+_BUILD_RULES_PROV = doc_providers.create(
+    name = "build_rules_overview",
+    stardoc_input = _STARDOC_INPUT,
+    symbols = [
+        "doc_for_provs",
+        "write_header",
+        "write_file_list",
+    ],
+    deps = _DOC_DEPS,
+)
+
+_ALL_DOC_PROVIDERS = [
+    _BUILD_RULES_PROV,
+    doc_providers.create(
+        name = "api",
+        is_stardoc = False,
+        stardoc_input = _STARDOC_INPUT,
+        deps = _DOC_DEPS,
+    ),
+] + _API_DOC_PROVIDERS
+
+# MARK: - Special Case api.md
+
+write_file_list(
+    name = "api_doc",
+    out = "api.md_",
+    doc_provs = _API_DOC_PROVIDERS,
+    header_content = [
+        "# Documentation API",
+        "",
+        "The APIs described below are used by ",
+        "[the build rules](/doc/build_rules_overview.md) to facilitate the ",
+        "generation of the Starlark documentation.",
+        "",
+    ],
+)
+
+# MARK: - Headers
+
+write_header(
+    name = "build_rules_overview_header",
+    header_content = [
+        "# Build Rules",
+        "",
+        "The macros described below are used to generate, test and copy ",
+        "Starlark documentation.",
+    ],
+    symbols = _BUILD_RULES_PROV.symbols,
+)
+
+# Write the API headers
+[
+    write_header(
+        name = doc_prov.header_label,
+        out = doc_prov.header_basename,
+        header_content = [
+            "# `{name}` API".format(name = doc_prov.name),
+        ],
+    )
+    for doc_prov in _API_DOC_PROVIDERS
+    if doc_prov.is_stardoc
+]
+
+doc_for_provs(
+    doc_path = "doc/bazeldoc",
+    doc_provs = _ALL_DOC_PROVIDERS,
+)
