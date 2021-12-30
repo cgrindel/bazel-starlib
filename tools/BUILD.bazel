@@ -3,17 +3,6 @@ load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
 bzlformat_pkg(name = "bzlformat")
 
 sh_binary(
-    name = "write_bazel_status_vars",
-    srcs = ["write_bazel_status_vars.sh"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//lib/private:fail",
-        "//lib/private:source_bazel_status_vars",
-        "@bazel_tools//tools/bash/runfiles",
-    ],
-)
-
-sh_binary(
     name = "get_gh_auth_token",
     srcs = ["get_gh_auth_token.sh"],
     visibility = ["//visibility:public"],

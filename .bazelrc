@@ -1,6 +1,3 @@
-# Workspace Status
-build --workspace_status_command="bash ./tools/workspace_status.sh"
-
 # Import Shared settings
 import %workspace%/shared.bazelrc
 

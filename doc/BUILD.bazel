@@ -15,7 +15,6 @@ _RULE_NAMES = [
     "binary_pkg",
     "execute_binary",
     "filter_srcs",
-    "write_bazel_status_vars",
 ]
 
 _RULE_DOC_PROVIDERS = [
