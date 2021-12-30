@@ -31,15 +31,7 @@ _RULE_DOC_PROVIDERS = [
 
 _API_SRCS = []
 
-_API_DOC_PROVIDERS = [
-    # doc_providers.create(
-    #     name = name,
-    #     stardoc_input = "//lib:{name}.bzl".format(name = name),
-    #     symbols = [name],
-    #     deps = ["//lib:{name}".format(name = name)],
-    # )
-    # for name in _API_SRCS
-]
+_API_DOC_PROVIDERS = []
 
 _ALL_DOC_PROVIDERS = [
     doc_providers.create(
