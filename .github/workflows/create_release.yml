@@ -11,10 +11,10 @@ on:
         default: false
       release_notes_target:
         type: string
-        default: "//:generate_release_notes"
+        default: "//release:generate_release_notes"
       update_readme_target:
         type: string
-        default: "//:update_readme"
+        default: "//release:update_readme"
       base_branch:
         description: The branch being merged to.
         type: string
@@ -29,10 +29,10 @@ on:
         default: false
       release_notes_target:
         type: string
-        default: "//:generate_release_notes"
+        default: "//release:generate_release_notes"
       update_readme_target:
         type: string
-        default: "//:update_readme"
+        default: "//release:update_readme"
       base_branch:
         description: The branch being merged to.
         type: string
