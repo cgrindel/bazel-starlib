@@ -1,7 +1,7 @@
 load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
-load("//rules:generate_release_notes.bzl", "generate_release_notes")
-load("//rules:generate_workspace_snippet.bzl", "generate_workspace_snippet")
-load("//rules:update_readme.bzl", "update_readme")
+load("//bzlrelease:generate_release_notes.bzl", "generate_release_notes")
+load("//bzlrelease:generate_workspace_snippet.bzl", "generate_workspace_snippet")
+load("//bzlrelease:update_readme.bzl", "update_readme")
 
 bzlformat_pkg(name = "bzlformat")
 

@@ -1,0 +1,36 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
+bzlformat_pkg(name = "bzlformat")
+
+bzl_library(
+    name = "hash_sha256",
+    srcs = ["hash_sha256.bzl"],
+    deps = [
+        "//bzlrelease/private:hash_sha256",
+    ],
+)
+
+bzl_library(
+    name = "generate_workspace_snippet",
+    srcs = ["generate_workspace_snippet.bzl"],
+    deps = [
+        "//bzlrelease/private:generate_workspace_snippet",
+    ],
+)
+
+bzl_library(
+    name = "generate_release_notes",
+    srcs = ["generate_release_notes.bzl"],
+    deps = [
+        "//bzlrelease/private:generate_release_notes",
+    ],
+)
+
+bzl_library(
+    name = "update_readme",
+    srcs = ["update_readme.bzl"],
+    deps = [
+        "//bzlrelease/private:update_readme",
+    ],
+)
