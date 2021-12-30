@@ -28,3 +28,34 @@ There are two ways that this process could fail. First, if an improperly formatt
 specified, the release workflow will fail. Be sure to prefix the release tag with `v`. Second, the
 PR that contains the updates to the README.md file could fail if the PR cannot be automatically
 merged. 
+
+## Other Scenarios
+
+### Testing Changes to the Release Process
+
+If you are testing changes to the release workflows, you should make the desired changes in a
+branch, push the branch to `origin`, and then execute the `//release:create` target with the `--ref
+<branch_name>`. For instance, if the remote branch name is `fixes_for_release` and the next release
+is `v1.2.3`, then you would run the following:
+
+```sh
+$ bazel run //release:create -- v1.2.3 --ref fixes_for_release
+```
+
+### Rerunning a Failed Release
+
+If you executed a release workflow and it failed without creating the release, you can rerun the
+workflow with the same tag adding the `--reset_tag` option. For instance, if you need to rerun the
+release for `v1.2.3`, you would run the following:
+
+```sh
+$ bazel run //release:create -- v1.2.3 --reset_tag
+```
+
+If the failure occurred after the creation of the release, you have two options:
+
+1. Delete the release and run the release again with the `--reset_tag`; OR
+2. Create a new release with a new tag.
+
+One should be very careful with option #1 as clients may see the failed release and attempt to use
+it. Option #2 is always the safest path.
