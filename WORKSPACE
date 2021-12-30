@@ -8,10 +8,6 @@ load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 
 bazel_skylib_workspace()
 
-load("@cgrindel_bazel_doc//bazeldoc:deps.bzl", "bazeldoc_dependencies")
-
-bazeldoc_dependencies()
-
 load("@io_bazel_stardoc//:setup.bzl", "stardoc_repositories")
 
 stardoc_repositories()
@@ -40,9 +36,3 @@ gazelle_dependencies()
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
 protobuf_deps()
-
-# MARK: - Release Deps
-
-load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
-
-rules_pkg_dependencies()

@@ -1,6 +1,6 @@
 load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
 load(
-    "@cgrindel_bazel_doc//bazeldoc:bazeldoc.bzl",
+    "//bazeldoc:defs.bzl",
     "doc_for_provs",
     "write_file_list",
     "write_header",
@@ -113,4 +113,7 @@ write_file_list(
 
 # MARK: - Generate Documentation from Providers
 
-doc_for_provs(doc_provs = _ALL_DOC_PROVIDERS)
+doc_for_provs(
+    doc_path = "doc/bzlrelease",
+    doc_provs = _ALL_DOC_PROVIDERS,
+)
