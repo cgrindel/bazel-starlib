@@ -1,8 +1,7 @@
 # Release Process for Bazel-Starlib
 
 The release process for this repository is implemented using GitHub Actions and the [bzlrelease
-macros](/doc/bzlrelease/README.md). This document describes how to create a release followed by an
-overview of how the release process works.
+macros](/doc/bzlrelease/README.md). This document describes how to create a release.
 
 
 ## How to Create a Release
@@ -29,5 +28,3 @@ There are two ways that this process could fail. First, if an improperly formatt
 specified, the release workflow will fail. Be sure to prefix the release tag with `v`. Second, the
 PR that contains the updates to the README.md file could fail if the PR cannot be automatically
 merged. 
-
-## What Happens in the Release Process
