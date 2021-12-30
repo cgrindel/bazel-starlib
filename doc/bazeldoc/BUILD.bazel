@@ -24,6 +24,8 @@ _DOC_DEPS = [
     "//bazeldoc:defs",
 ]
 
+_DOC_PATH = "doc/bazeldoc"
+
 _API_DOC_PROVIDERS = [
     doc_providers.create(
         name = name,
@@ -60,12 +62,13 @@ _ALL_DOC_PROVIDERS = [
 write_file_list(
     name = "api_doc",
     out = "api.md_",
+    doc_path = _DOC_PATH,
     doc_provs = _API_DOC_PROVIDERS,
     header_content = [
         "# Documentation API",
         "",
         "The APIs described below are used by ",
-        "[the build rules](/doc/build_rules_overview.md) to facilitate the ",
+        "[the build rules](build_rules_overview.md) to facilitate the ",
         "generation of the Starlark documentation.",
         "",
     ],
@@ -98,6 +101,6 @@ write_header(
 ]
 
 doc_for_provs(
-    doc_path = "doc/bazeldoc",
+    doc_path = _DOC_PATH,
     doc_provs = _ALL_DOC_PROVIDERS,
 )

@@ -1,4 +1,10 @@
 # Documentation for Starlib
 
-- [API](/doc/api.md)
-- [Rules](/doc/rules.md)
+## Rule Sets Documentation
+- [bazeldoc](bazeldoc/README.md)
+- [bzlrelease](bzlrelease/README.md)
+
+## Other Documentation
+
+- [API](api.md)
+- [Rules](rules.md)
