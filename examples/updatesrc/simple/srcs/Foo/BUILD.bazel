@@ -1,0 +1,13 @@
+load("//header:header.bzl", "header")
+load("@cgrindel_bazel_starlib//updatesrc:defs.bzl", "updatesrc_update")
+
+header(
+    name = "add_headers",
+    srcs = glob(["*.txt"]),
+    header = "# Super cool header",
+)
+
+updatesrc_update(
+    name = "update",
+    deps = [":add_headers"],
+)

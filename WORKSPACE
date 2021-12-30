@@ -16,13 +16,6 @@ load("@cgrindel_rules_bzlformat//bzlformat:deps.bzl", "bzlformat_rules_dependenc
 
 bzlformat_rules_dependencies()
 
-load(
-    "@cgrindel_rules_updatesrc//updatesrc:deps.bzl",
-    "updatesrc_rules_dependencies",
-)
-
-updatesrc_rules_dependencies()
-
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()

@@ -29,3 +29,11 @@ def bazel_starlib_dependencies():
         strip_prefix = "rules_bzlformat-0.2.0",
         urls = ["https://github.com/cgrindel/rules_bzlformat/archive/v0.2.0.tar.gz"],
     )
+
+    maybe(
+        http_archive,
+        name = "cgrindel_rules_bazel_integration_test",
+        sha256 = "50b808269ee09373c099256103c40629db8a66fd884030d7a36cf9a2e8675b75",
+        strip_prefix = "rules_bazel_integration_test-0.3.1",
+        urls = ["https://github.com/cgrindel/rules_bazel_integration_test/archive/v0.3.1.tar.gz"],
+    )

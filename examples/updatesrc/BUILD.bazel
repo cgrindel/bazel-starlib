@@ -1,0 +1,53 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load(
+    "@cgrindel_rules_bazel_integration_test//bazel_integration_test:bazel_integration_test.bzl",
+    "bazel_integration_tests",
+    "default_test_runner",
+    "integration_test_utils",
+)
+load("//:bazel_versions.bzl", "SUPPORTED_BAZEL_VERSIONS")
+
+bzlformat_pkg(name = "bzlformat")
+
+# MARK: - Shared Attribute Values
+
+ADDITIONAL_WORKSPACE_FILES = [
+    # The example workspaces reference the *.bazelrc files in the parent.
+    "//:shared_bazelrc_files",
+
+    # The example workspaces use local_repository to reference this
+    # workspace.  This target collects all of the files needed for
+    # rules_spm to work in the child workspaces.
+    "//:local_repository_files",
+]
+
+# MARK: - Integration Tests
+
+default_test_runner(
+    name = "simple_test_runner",
+    bazel_cmds = [
+        "info",
+        "build //...",
+        "run //:update_all",
+    ],
+)
+
+bazel_integration_tests(
+    name = "simple_test",
+    bazel_versions = SUPPORTED_BAZEL_VERSIONS,
+    test_runner = ":simple_test_runner",
+    workspace_files = integration_test_utils.glob_workspace_files("simple") +
+                      ADDITIONAL_WORKSPACE_FILES,
+)
+
+# MARK: - Test Suites
+
+test_suite(
+    name = "integration_tests",
+    tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
+    tests = integration_test_utils.bazel_integration_test_names(
+        "simple_test",
+        SUPPORTED_BAZEL_VERSIONS,
+    ),
+    visibility = ["//:__subpackages__"],
+)
