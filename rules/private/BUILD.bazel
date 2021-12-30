@@ -8,11 +8,6 @@ bzlformat_pkg(name = "bzlformat")
 exports_files(["decompress.sh.tmpl"])
 
 bzl_library(
-    name = "filter_srcs",
-    srcs = ["filter_srcs.bzl"],
-)
-
-bzl_library(
     name = "execute_binary",
     srcs = ["execute_binary.bzl"],
     deps = [

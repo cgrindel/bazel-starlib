@@ -1,0 +1,9 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load(":src_utils_tests.bzl", "src_utils_test_suite")
+load(":filter_srcs_tests.bzl", "filter_srcs_test_suite")
+
+bzlformat_pkg(name = "bzlformat")
+
+src_utils_test_suite()
+
+filter_srcs_test_suite()
