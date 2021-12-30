@@ -16,5 +16,5 @@ def create_release(name, workflow_name):
     execute_binary(
         name = name,
         arguments = arguments,
-        binary = "@cgrindel_bazel_starlib//tools:create_release",
+        binary = "@cgrindel_bazel_starlib//bzlrelease/tools:create_release",
     )

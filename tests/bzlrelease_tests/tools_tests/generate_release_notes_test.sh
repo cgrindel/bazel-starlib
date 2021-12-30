@@ -27,11 +27,11 @@ setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
 setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" || \
   (echo >&2 "Failed to locate ${setup_git_repo_sh_location}" && exit 1)
 
-generate_workspace_snippet_sh_location=cgrindel_bazel_starlib/tools/generate_workspace_snippet.sh
+generate_workspace_snippet_sh_location=cgrindel_bazel_starlib/bzlrelease/tools/generate_workspace_snippet.sh
 generate_workspace_snippet_sh="$(rlocation "${generate_workspace_snippet_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_workspace_snippet_sh_location}" && exit 1)
 
-generate_release_notes_sh_location=cgrindel_bazel_starlib/tools/generate_release_notes.sh
+generate_release_notes_sh_location=cgrindel_bazel_starlib/bzlrelease/tools/generate_release_notes.sh
 generate_release_notes_sh="$(rlocation "${generate_release_notes_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_release_notes_sh_location}" && exit 1)
 

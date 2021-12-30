@@ -1,0 +1,105 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_binary(
+    name = "generate_workspace_snippet",
+    srcs = ["generate_workspace_snippet.sh"],
+    data = [
+        ":generate_git_archive",
+        ":generate_sha256",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:fail",
+        "//lib/private:git",
+        "//lib/private:github",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_binary(
+    name = "generate_sha256",
+    srcs = ["generate_sha256.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:env",
+        "//lib/private:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_binary(
+    name = "generate_git_archive",
+    srcs = ["generate_git_archive.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:env",
+        "//lib/private:fail",
+        "//lib/private:git",
+        "//lib/private:github",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_binary(
+    name = "generate_gh_changelog",
+    srcs = ["generate_gh_changelog.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:env",
+        "//lib/private:fail",
+        "//lib/private:git",
+        "//lib/private:github",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_binary(
+    name = "generate_release_notes",
+    srcs = ["generate_release_notes.sh"],
+    data = [
+        ":generate_gh_changelog",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_binary(
+    name = "create_release_tag",
+    srcs = ["create_release_tag.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:env",
+        "//lib/private:fail",
+        "//lib/private:git",
+        "//lib/private:github",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_binary(
+    name = "update_readme",
+    srcs = ["update_readme.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_binary(
+    name = "create_release",
+    srcs = ["create_release.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lib/private:env",
+        "//lib/private:fail",
+        "//lib/private:git",
+        "//lib/private:github",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)

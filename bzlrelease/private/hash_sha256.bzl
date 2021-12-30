@@ -31,7 +31,7 @@ hash_sha256 = rule(
         "_hash_tool": attr.label(
             executable = True,
             cfg = "host",
-            default = "@cgrindel_bazel_starlib//tools:generate_sha256",
+            default = "@cgrindel_bazel_starlib//bzlrelease/tools:generate_sha256",
         ),
     },
     doc = """\

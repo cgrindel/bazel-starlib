@@ -27,11 +27,11 @@ setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
 setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" || \
   (echo >&2 "Failed to locate ${setup_git_repo_sh_location}" && exit 1)
 
-generate_git_archive_sh_location=cgrindel_bazel_starlib/tools/generate_git_archive.sh
+generate_git_archive_sh_location=cgrindel_bazel_starlib/bzlrelease/tools/generate_git_archive.sh
 generate_git_archive_sh="$(rlocation "${generate_git_archive_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_git_archive_sh_location}" && exit 1)
 
-generate_sha256_sh_location=cgrindel_bazel_starlib/tools/generate_sha256.sh
+generate_sha256_sh_location=cgrindel_bazel_starlib/bzlrelease/tools/generate_sha256.sh
 generate_sha256_sh="$(rlocation "${generate_sha256_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_sha256_sh_location}" && exit 1)
 

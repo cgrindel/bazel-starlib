@@ -23,7 +23,7 @@ env_sh="$(rlocation "${env_sh_location}")" || \
   (echo >&2 "Failed to locate ${env_sh_location}" && exit 1)
 source "${env_sh}"
 
-generate_gh_changelog_sh_location=cgrindel_bazel_starlib/tools/generate_gh_changelog.sh
+generate_gh_changelog_sh_location=cgrindel_bazel_starlib/bzlrelease/tools/generate_gh_changelog.sh
 generate_gh_changelog_sh="$(rlocation "${generate_gh_changelog_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_gh_changelog_sh_location}" && exit 1)
 

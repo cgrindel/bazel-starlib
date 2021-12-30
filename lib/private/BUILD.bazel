@@ -6,9 +6,9 @@ sh_library(
     name = "fail",
     srcs = ["fail.sh"],
     visibility = [
+        "//:__subpackages__",
         "//rules/private:__subpackages__",
         "//tests:__subpackages__",
-        "//tools:__subpackages__",
     ],
 )
 
@@ -16,9 +16,9 @@ sh_library(
     name = "source_bazel_status_vars",
     srcs = ["source_bazel_status_vars.sh"],
     visibility = [
+        "//:__subpackages__",
         "//rules/private:__subpackages__",
         "//tests:__subpackages__",
-        "//tools:__subpackages__",
     ],
 )
 
@@ -26,8 +26,8 @@ sh_library(
     name = "env",
     srcs = ["env.sh"],
     visibility = [
+        "//:__subpackages__",
         "//tests:__subpackages__",
-        "//tools:__subpackages__",
     ],
 )
 
@@ -35,8 +35,8 @@ sh_library(
     name = "git",
     srcs = ["git.sh"],
     visibility = [
+        "//:__subpackages__",
         "//tests:__subpackages__",
-        "//tools:__subpackages__",
     ],
 )
 
@@ -44,8 +44,8 @@ sh_library(
     name = "github",
     srcs = ["github.sh"],
     visibility = [
+        "//:__subpackages__",
         "//tests:__subpackages__",
-        "//tools:__subpackages__",
     ],
 )
 

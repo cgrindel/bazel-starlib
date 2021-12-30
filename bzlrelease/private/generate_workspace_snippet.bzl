@@ -23,5 +23,5 @@ def generate_workspace_snippet(name, template = None):
         name = name,
         arguments = arguments,
         file_arguments = file_arguments,
-        binary = "@cgrindel_bazel_starlib//tools:generate_workspace_snippet",
+        binary = "@cgrindel_bazel_starlib//bzlrelease/tools:generate_workspace_snippet",
     )

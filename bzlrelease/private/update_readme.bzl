@@ -28,5 +28,5 @@ def update_readme(name, generate_workspace_snippet, readme = None):
         name = name,
         arguments = arguments,
         file_arguments = file_arguments,
-        binary = "@cgrindel_bazel_starlib//tools:update_readme",
+        binary = "@cgrindel_bazel_starlib//bzlrelease/tools:update_readme",
     )

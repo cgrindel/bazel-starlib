@@ -18,7 +18,7 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
-generate_sha256_sh_location=cgrindel_bazel_starlib/tools/generate_sha256.sh
+generate_sha256_sh_location=cgrindel_bazel_starlib/bzlrelease/tools/generate_sha256.sh
 generate_sha256_sh="$(rlocation "${generate_sha256_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_sha256_sh_location}" && exit 1)
 

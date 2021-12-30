@@ -18,11 +18,11 @@ assertions_sh="$(rlocation "${assertions_sh_location}")" || \
   (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
 source "${assertions_sh}"
 
-generate_fake_snippet_sh_location=cgrindel_bazel_starlib/tests/tools_tests/generate_fake_snippet.sh
+generate_fake_snippet_sh_location=cgrindel_bazel_starlib/tests/bzlrelease_tests/tools_tests/generate_fake_snippet.sh
 generate_fake_snippet_sh="$(rlocation "${generate_fake_snippet_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_fake_snippet_sh_location}" && exit 1)
 
-update_readme_sh_location=cgrindel_bazel_starlib/tools/update_readme.sh
+update_readme_sh_location=cgrindel_bazel_starlib/bzlrelease/tools/update_readme.sh
 update_readme_sh="$(rlocation "${update_readme_sh_location}")" || \
   (echo >&2 "Failed to locate ${update_readme_sh_location}" && exit 1)
 

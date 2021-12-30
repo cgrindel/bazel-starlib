@@ -22,11 +22,11 @@ setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
 setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" || \
   (echo >&2 "Failed to locate ${setup_git_repo_sh_location}" && exit 1)
 
-generate_workspace_snippet_sh_location=cgrindel_bazel_starlib/tools/generate_workspace_snippet.sh
+generate_workspace_snippet_sh_location=cgrindel_bazel_starlib/bzlrelease/tools/generate_workspace_snippet.sh
 generate_workspace_snippet_sh="$(rlocation "${generate_workspace_snippet_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_workspace_snippet_sh_location}" && exit 1)
 
-workspace_snippet_tmpl_location=cgrindel_bazel_starlib/tests/tools_tests/workspace_snippet.tmpl
+workspace_snippet_tmpl_location=cgrindel_bazel_starlib/tests/bzlrelease_tests/tools_tests/workspace_snippet.tmpl
 workspace_snippet_tmpl="$(rlocation "${workspace_snippet_tmpl_location}")" || \
   (echo >&2 "Failed to locate ${workspace_snippet_tmpl_location}" && exit 1)
 
