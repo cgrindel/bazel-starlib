@@ -1,4 +1,4 @@
-load("@cgrindel_rules_bzlformat//bzlformat:defs.bzl", "bzlformat_pkg")
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
 load(
     "//updatesrc/private:updatesrc_update_test.bzl",

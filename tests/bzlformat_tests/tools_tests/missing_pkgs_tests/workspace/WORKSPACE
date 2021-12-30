@@ -5,7 +5,7 @@ local_repository(
     path = "../../../..",
 )
 
-load("@cgrindel_rules_bzlformat//bzlformat:deps.bzl", "bzlformat_rules_dependencies")
+load("//bzlformat:deps.bzl", "bzlformat_rules_dependencies")
 
 bzlformat_rules_dependencies()
 

@@ -1,4 +1,4 @@
-load("@cgrindel_rules_bzlformat//bzlformat:defs.bzl", "bzlformat_pkg")
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load("//bzlrelease:defs.bzl", "hash_sha256")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
 

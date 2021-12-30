@@ -1,4 +1,4 @@
-load("@cgrindel_rules_bzlformat//bzlformat:defs.bzl", "bzlformat_missing_pkgs")
+load("//bzlformat:defs.bzl", "bzlformat_missing_pkgs")
 
 bzlformat_missing_pkgs(
     name = "bzlformat_missing_pkgs",
