@@ -57,6 +57,10 @@ reset_tag=false
 args=()
 while (("$#")); do
   case "${1}" in
+    --ref)
+      ref="${2}"
+      shift 2
+      ;;
     --reset_tag)
       reset_tag=true
       shift 1
@@ -81,7 +85,9 @@ is_valid_release_tag "${tag}" || fail "Invalid version tag. Expected it to start
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 # Launch the workflow
-gh_cmd=(gh workflow run 'Create Release' -f "release_tag=${tag}")
+gh_cmd=(gh workflow run 'Create Release')
+[[ -z "${ref:-}" ]] || gh_cmd+=(--ref "${ref}")
+gh_cmd+=(-f "release_tag=${tag}")
 [[ "${reset_tag}" == true ]] && gh_cmd+=(-f "reset_tag=true")
 "${gh_cmd[@]}"
 
