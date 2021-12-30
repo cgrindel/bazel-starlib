@@ -12,34 +12,32 @@ bzlformat_pkg(name = "bzlformat")
 # MARK: - Documentation Providers
 
 _RULE_NAMES = [
-    "binary_pkg",
-    "execute_binary",
-    "filter_srcs",
-    "write_bazel_status_vars",
+    "generate_release_notes",
+    "generate_workspace_snippet",
+    "hash_sha256",
+    "update_readme",
 ]
 
 _RULE_DOC_PROVIDERS = [
     doc_providers.create(
         name = rule,
-        stardoc_input = "//rules:{rule}.bzl".format(rule = rule),
+        stardoc_input = "//bzlrelease:defs.bzl",
         symbols = [rule],
-        deps = ["//rules:{rule}".format(rule = rule)],
+        deps = ["//bzlrelease:defs"],
     )
     for rule in _RULE_NAMES
 ]
 
-_API_SRCS = [
-    "src_utils",
-]
+_API_SRCS = []
 
 _API_DOC_PROVIDERS = [
-    doc_providers.create(
-        name = name,
-        stardoc_input = "//lib:{name}.bzl".format(name = name),
-        symbols = [name],
-        deps = ["//lib:{name}".format(name = name)],
-    )
-    for name in _API_SRCS
+    # doc_providers.create(
+    #     name = name,
+    #     stardoc_input = "//lib:{name}.bzl".format(name = name),
+    #     symbols = [name],
+    #     deps = ["//lib:{name}".format(name = name)],
+    # )
+    # for name in _API_SRCS
 ]
 
 _ALL_DOC_PROVIDERS = [
