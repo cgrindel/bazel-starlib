@@ -88,6 +88,5 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 gh_cmd=(gh workflow run 'Create Release')
 [[ -z "${ref:-}" ]] || gh_cmd+=(--ref "${ref}")
 gh_cmd+=(-f "release_tag=${tag}")
-[[ "${reset_tag}" == true ]] && gh_cmd+=(-f "reset_tag=true")
+gh_cmd+=(-f "reset_tag=${reset_tag}")
 "${gh_cmd[@]}"
-
