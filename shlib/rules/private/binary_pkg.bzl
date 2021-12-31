@@ -133,7 +133,7 @@ binary_pkg = rule(
         ),
         "_decompress_template": attr.label(
             allow_single_file = True,
-            default = "@cgrindel_bazel_starlib//rules/private:decompress.sh.tmpl",
+            default = "@cgrindel_bazel_starlib//shlib/rules/private:decompress.sh.tmpl",
         ),
     },
     doc = """\

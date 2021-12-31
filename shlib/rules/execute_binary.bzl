@@ -1,5 +1,5 @@
 load(
-    "//rules/private:execute_binary.bzl",
+    "//shlib/rules/private:execute_binary.bzl",
     _execute_binary = "execute_binary",
     _file_placeholder = "file_placeholder",
 )

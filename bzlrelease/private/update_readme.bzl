@@ -1,4 +1,4 @@
-load("//rules/private:execute_binary.bzl", "execute_binary", "file_placeholder")
+load("//shlib/rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 
 def update_readme(name, generate_workspace_snippet, readme = None):
     """Declares an executable target that updates a README.md with an updated workspace snippet.
