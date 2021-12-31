@@ -1,13 +1,7 @@
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
-load(
-    "//updatesrc/private:updatesrc_update_test.bzl",
-    "updatesrc_update_test",
-)
-load(
-    "//updatesrc/private:updatesrc_update.bzl",
-    "updatesrc_update",
-)
+load("//updatesrc/private:updatesrc_update_test.bzl", "updatesrc_update_test")
+load("//updatesrc:defs.bzl", "updatesrc_update")
 load(":letters.bzl", "letters")
 
 # MARK: - Build Tests
@@ -15,8 +9,7 @@ load(":letters.bzl", "letters")
 build_test(
     name = "public_api",
     targets = [
-        "//updatesrc:deps",
-        "//updatesrc:updatesrc",
+        "//updatesrc:defs",
     ],
 )
 

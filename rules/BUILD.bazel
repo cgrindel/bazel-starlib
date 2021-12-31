@@ -6,14 +6,6 @@ package(default_visibility = ["//visibility:public"])
 bzlformat_pkg(name = "bzlformat")
 
 bzl_library(
-    name = "filter_srcs",
-    srcs = ["filter_srcs.bzl"],
-    deps = [
-        "//rules/private:filter_srcs",
-    ],
-)
-
-bzl_library(
     name = "binary_pkg",
     srcs = ["binary_pkg.bzl"],
     deps = [

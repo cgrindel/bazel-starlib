@@ -7,7 +7,6 @@ load("//bzlformat:defs.bzl", "bzlformat_format")
 build_test(
     name = "public_api",
     targets = [
-        "//bzlformat:deps",
         "//bzlformat:defs",
     ],
 )

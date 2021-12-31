@@ -7,7 +7,7 @@ bzlformat_pkg(name = "bzlformat")
 sh_library(
     name = "common",
     srcs = ["common.sh"],
-    visibility = ["//tests/tools_tests/missing_pkgs_tests/common_tests:__subpackages__"],
+    visibility = ["//tests/bzlformat_tests/tools_tests/missing_pkgs_tests/common_tests:__subpackages__"],
 )
 
 # MARK: - Binaries

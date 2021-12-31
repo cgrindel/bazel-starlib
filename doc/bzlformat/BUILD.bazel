@@ -1,6 +1,6 @@
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load(
-    "@cgrindel_bazel_doc//bazeldoc:bazeldoc.bzl",
+    "//bazeldoc:defs.bzl",
     "doc_for_provs",
     "write_file_list",
     "write_header",
@@ -11,15 +11,21 @@ bzlformat_pkg(name = "bzlformat")
 
 # MARK: - Documentation Providers
 
+_DOC_PATH = "doc/bzlformat"
+
+_STARDOC_INPUT = "//bzlformat:defs.bzl"
+
+_DOC_DEPS = ["//bzlformat:defs"]
+
 _RULES_AND_MACROS_DOC_PROVIDER = doc_providers.create(
     name = "rules_and_macros_overview",
-    stardoc_input = "//bzlformat:defs.bzl",
+    stardoc_input = _STARDOC_INPUT,
     symbols = [
         "bzlformat_format",
         "bzlformat_pkg",
         "bzlformat_missing_pkgs",
     ],
-    deps = ["//bzlformat"],
+    deps = _DOC_DEPS,
 )
 
 _ALL_DOC_PROVIDERS = [
@@ -41,4 +47,7 @@ write_header(
 
 # MARK: - Generate Documentation from Providers
 
-doc_for_provs(doc_provs = _ALL_DOC_PROVIDERS)
+doc_for_provs(
+    doc_path = _DOC_PATH,
+    doc_provs = _ALL_DOC_PROVIDERS,
+)
