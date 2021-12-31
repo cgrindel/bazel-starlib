@@ -1,4 +1,4 @@
-load("//bzlformat:defs.bzl", "bzlformat_missing_pkgs")
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_missing_pkgs")
 
 bzlformat_missing_pkgs(
     name = "bzlformat_missing_pkgs",

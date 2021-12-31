@@ -2,8 +2,10 @@ workspace(name = "missing_pkgs")
 
 local_repository(
     name = "cgrindel_bazel_starlib",
-    path = "../../../..",
+    path = "../../../../..",
 )
+
+load("@cgrindel_bazel_starlib//:deps.bzl", "bazel_starlib_dependencies")
 
 bazel_starlib_dependencies()
 

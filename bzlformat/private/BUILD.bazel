@@ -9,8 +9,8 @@ bzl_library(
     name = "bzlformat_format",
     srcs = ["bzlformat_format.bzl"],
     deps = [
+        "//updatesrc:defs",
         "@bazel_skylib//lib:paths",
-        "@cgrindel_rules_updatesrc//updatesrc",
     ],
 )
 

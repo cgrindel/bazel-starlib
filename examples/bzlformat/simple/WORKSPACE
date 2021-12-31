@@ -5,6 +5,8 @@ local_repository(
     path = "../../..",
 )
 
+load("@cgrindel_bazel_starlib//:deps.bzl", "bazel_starlib_dependencies")
+
 bazel_starlib_dependencies()
 
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")

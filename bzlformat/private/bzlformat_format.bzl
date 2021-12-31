@@ -1,9 +1,5 @@
 load("@bazel_skylib//lib:paths.bzl", "paths")
-load(
-    "@cgrindel_rules_updatesrc//updatesrc:updatesrc.bzl",
-    "UpdateSrcsInfo",
-    "update_srcs",
-)
+load("//updatesrc:defs.bzl", "UpdateSrcsInfo", "update_srcs")
 
 def _bzlformat_format_impl(ctx):
     updsrcs = []
