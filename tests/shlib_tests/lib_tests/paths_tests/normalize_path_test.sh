@@ -13,10 +13,19 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 
 assertions_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/assertions.sh)"
 source "${assertions_lib}"
-source "$(rlocation cgrindel_bazel_starlib/bzlformat/tools/missing_pkgs/common.sh)"
 
-assert_equal "//foo/bar" "$(normalize_pkg "foo/bar")"
-assert_equal "//foo/bar" "$(normalize_pkg "/foo/bar")"
-assert_equal "//foo/bar" "$(normalize_pkg "//foo/bar")"
-assert_equal "//foo/bar" "$(normalize_pkg "//foo/bar:some_target")"
-assert_equal "//foo/bar" "$(normalize_pkg "foo/bar/")"
+paths_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/paths.sh)"
+source "${paths_lib}"
+
+current_dir="${PWD}"
+
+child_dirname="foo"
+mkdir "${child_dirname}"
+child_filename="${child_dirname}/bar"
+touch "${child_filename}"
+
+result="$(normalize_path "${child_dirname}")"
+assert_equal "${current_dir}/${child_dirname}" "${result}"
+
+result="$(normalize_path "${child_filename}")"
+assert_equal "${current_dir}/${child_filename}" "${result}"

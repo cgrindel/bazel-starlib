@@ -1,0 +1,12 @@
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_binary(
+    name = "contains_item_perf_comparison",
+    srcs = ["contains_item_perf_comparison.sh"],
+    deps = [
+        "//lib:arrays",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)

@@ -29,7 +29,7 @@ bzl_library(
     name = "bzlformat_missing_pkgs",
     srcs = ["bzlformat_missing_pkgs.bzl"],
     deps = [
-        "@cgrindel_bazel_shlib//rules:execute_binary",
+        "//rules:execute_binary",
     ],
 )
 

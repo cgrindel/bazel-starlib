@@ -18,8 +18,8 @@ sh_binary(
     visibility = ["//visibility:public"],
     deps = [
         ":common",
+        "//shlib/lib:arrays",
         "@bazel_tools//tools/bash/runfiles",
-        "@cgrindel_bazel_shlib//lib:arrays",
     ],
 )
 
@@ -33,8 +33,8 @@ sh_binary(
     visibility = ["//visibility:public"],
     deps = [
         ":common",
+        "//shlib/lib:arrays",
         "@bazel_tools//tools/bash/runfiles",
-        "@cgrindel_bazel_shlib//lib:arrays",
     ],
 )
 

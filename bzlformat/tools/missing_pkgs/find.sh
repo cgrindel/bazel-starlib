@@ -11,7 +11,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v2 ---
 
-arrays_lib="$(rlocation cgrindel_bazel_shlib/lib/arrays.sh)"
+arrays_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/arrays.sh)"
 source "${arrays_lib}"
 
 common_sh_location=cgrindel_bazel_starlib/bzlformat/tools/missing_pkgs/common.sh

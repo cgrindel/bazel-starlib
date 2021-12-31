@@ -1,0 +1,35 @@
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_library(
+    name = "messages",
+    srcs = ["messages.sh"],
+)
+
+sh_library(
+    name = "assertions",
+    testonly = True,
+    srcs = ["assertions.sh"],
+)
+
+sh_library(
+    name = "paths",
+    srcs = ["paths.sh"],
+)
+
+sh_library(
+    name = "files",
+    srcs = ["files.sh"],
+    deps = [
+        ":paths",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_library(
+    name = "arrays",
+    srcs = ["arrays.sh"],
+)

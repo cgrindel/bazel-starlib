@@ -1,0 +1,53 @@
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_test(
+    name = "sort_items",
+    srcs = ["sort_items_test.sh"],
+    deps = [
+        "//shlib/lib:arrays",
+        "//shlib/lib:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_test(
+    name = "print_by_line_test",
+    srcs = ["print_by_line_test.sh"],
+    deps = [
+        "//shlib/lib:arrays",
+        "//shlib/lib:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_test(
+    name = "join_by_test",
+    srcs = ["join_by_test.sh"],
+    deps = [
+        "//shlib/lib:arrays",
+        "//shlib/lib:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_test(
+    name = "contains_item_test",
+    srcs = ["contains_item_test.sh"],
+    deps = [
+        "//shlib/lib:arrays",
+        "//shlib/lib:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_test(
+    name = "contains_item_sorted_test",
+    srcs = ["contains_item_sorted_test.sh"],
+    deps = [
+        "//shlib/lib:arrays",
+        "//shlib/lib:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)

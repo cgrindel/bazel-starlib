@@ -3,11 +3,11 @@ load("//bzlformat:defs.bzl", "bzlformat_pkg")
 bzlformat_pkg(name = "bzlformat")
 
 sh_test(
-    name = "normalize_pkg_test",
-    srcs = ["normalize_pkg_test.sh"],
+    name = "normalize_path_test",
+    srcs = ["normalize_path_test.sh"],
     deps = [
-        "//bzlformat/tools/missing_pkgs:common",
         "//shlib/lib:assertions",
+        "//shlib/lib:paths",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )

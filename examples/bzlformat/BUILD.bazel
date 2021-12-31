@@ -19,10 +19,10 @@ sh_binary(
         "@com_github_bazelbuild_buildtools//buildozer",
     ],
     deps = [
+        "//shlib/lib:assertions",
+        "//shlib/lib:messages",
+        "//shlib/lib:paths",
         "@bazel_tools//tools/bash/runfiles",
-        "@cgrindel_bazel_shlib//lib:assertions",
-        "@cgrindel_bazel_shlib//lib:messages",
-        "@cgrindel_bazel_shlib//lib:paths",
     ],
 )
 

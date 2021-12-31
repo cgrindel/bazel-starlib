@@ -13,10 +13,8 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 
 assertions_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/assertions.sh)"
 source "${assertions_lib}"
-source "$(rlocation cgrindel_bazel_starlib/bzlformat/tools/missing_pkgs/common.sh)"
 
-assert_equal "//foo/bar" "$(normalize_pkg "foo/bar")"
-assert_equal "//foo/bar" "$(normalize_pkg "/foo/bar")"
-assert_equal "//foo/bar" "$(normalize_pkg "//foo/bar")"
-assert_equal "//foo/bar" "$(normalize_pkg "//foo/bar:some_target")"
-assert_equal "//foo/bar" "$(normalize_pkg "foo/bar/")"
+my_bin="$(rlocation cgrindel_bazel_starlib/tests/shlib_tests/rules_tests/execute_binary_tests/my_bin_no_args.sh)"
+
+output=$("${my_bin}")
+[[ "${output}" =~ "Args Count: 0" ]] || fail "Expected args count of 0."

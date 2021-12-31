@@ -13,10 +13,21 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 
 assertions_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/assertions.sh)"
 source "${assertions_lib}"
-source "$(rlocation cgrindel_bazel_starlib/bzlformat/tools/missing_pkgs/common.sh)"
 
-assert_equal "//foo/bar" "$(normalize_pkg "foo/bar")"
-assert_equal "//foo/bar" "$(normalize_pkg "/foo/bar")"
-assert_equal "//foo/bar" "$(normalize_pkg "//foo/bar")"
-assert_equal "//foo/bar" "$(normalize_pkg "//foo/bar:some_target")"
-assert_equal "//foo/bar" "$(normalize_pkg "foo/bar/")"
+arrays_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/arrays.sh)"
+source "${arrays_lib}"
+
+# Unsorted array
+array=(z b y c x aa az)
+
+# Confirm that we find an entry deep in the array
+contains_item az "${array[@]}" || fail "Expected 'az' to be contained in array."
+
+# This test will exit from the shortcut
+contains_item m "${array[@]}" && fail "Expected 'm' not to be contained in array."
+
+# This test will pass the shortcut, but will not find the entry
+contains_item a "${array[@]}" && fail "Expected `a` not to be contained in array."
+
+# If we made it this far, we want to be sure to exit success
+exit 0

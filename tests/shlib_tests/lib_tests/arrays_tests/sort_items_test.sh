@@ -13,10 +13,15 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 
 assertions_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/assertions.sh)"
 source "${assertions_lib}"
-source "$(rlocation cgrindel_bazel_starlib/bzlformat/tools/missing_pkgs/common.sh)"
 
-assert_equal "//foo/bar" "$(normalize_pkg "foo/bar")"
-assert_equal "//foo/bar" "$(normalize_pkg "/foo/bar")"
-assert_equal "//foo/bar" "$(normalize_pkg "//foo/bar")"
-assert_equal "//foo/bar" "$(normalize_pkg "//foo/bar:some_target")"
-assert_equal "//foo/bar" "$(normalize_pkg "foo/bar/")"
+arrays_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/arrays.sh)"
+source "${arrays_lib}"
+
+array=(b e a c e)
+expected=(a b c e)
+actual=( $(sort_items "${array[@]}") )
+
+assert_equal "${#expected[@]}" "${#actual[@]}"
+for (( i = 0; i < ${#expected[@]}; i++ )); do
+  assert_equal "${expected[i]}" "${actual[i]}"
+done
