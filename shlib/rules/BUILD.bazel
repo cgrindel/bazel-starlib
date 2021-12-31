@@ -9,7 +9,7 @@ bzl_library(
     name = "binary_pkg",
     srcs = ["binary_pkg.bzl"],
     deps = [
-        "//rules/private:binary_pkg",
+        "//shlib/rules/private:binary_pkg",
     ],
 )
 
@@ -17,6 +17,6 @@ bzl_library(
     name = "execute_binary",
     srcs = ["execute_binary.bzl"],
     deps = [
-        "//rules/private:execute_binary",
+        "//shlib/rules/private:execute_binary",
     ],
 )
