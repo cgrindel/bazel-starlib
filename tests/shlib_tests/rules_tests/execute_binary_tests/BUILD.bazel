@@ -21,7 +21,7 @@ sh_test(
     srcs = ["execute_binary_no_args_test.sh"],
     data = [":my_bin_no_args"],
     deps = [
-        "//lib/private:assertions",
+        "//shlib/lib:assertions",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -69,7 +69,7 @@ sh_test(
     srcs = ["execute_binary_with_args_test.sh"],
     data = [":my_bin_with_args"],
     deps = [
-        "//lib/private:assertions",
+        "//shlib/lib:assertions",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -111,7 +111,7 @@ sh_binary(
     name = "process_file_consumer",
     srcs = ["process_file_consumer.sh"],
     deps = [
-        "//lib/private:fail",
+        "//shlib/lib:fail",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -135,7 +135,7 @@ sh_test(
         ":process_file_consumer_eb",
     ],
     deps = [
-        "//lib/private:assertions",
+        "//shlib/lib:assertions",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )

@@ -13,24 +13,30 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 
 # MARK - Locate Dependencies
 
-fail_sh_location=cgrindel_bazel_starlib/lib/private/fail.sh
+fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
 fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
-env_sh_location=cgrindel_bazel_starlib/lib/private/env.sh
-env_sh="$(rlocation "${env_sh_location}")" || \
-  (echo >&2 "Failed to locate ${env_sh_location}" && exit 1)
-source "${env_sh}"
-
-github_sh_location=cgrindel_bazel_starlib/lib/private/github.sh
+github_sh_location=cgrindel_bazel_starlib/shlib/lib/github.sh
 github_sh="$(rlocation "${github_sh_location}")" || \
   (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)
 source "${github_sh}"
 
-is_installed gh || fail "Could not find Github CLI (gh)."
 
 # MARK - Test
 
-result="$( get_gh_auth_status )"
-[[ "${result}" =~ "Logged in to " ]] || fail "Expected auth status to indicate a user is logged in."
+urls=()
+urls+=(git@github.com:cgrindel/bazel-starlib.git)
+urls+=(git@github.com:cgrindel/bazel-starlib)
+urls+=(https://github.com/foo_bar/bazel-starlib.git)
+urls+=(https://github.com/chicken-smidgen/bazel-starlib)
+urls+=(https://api.github.com/repos/chicken-smidgen/bazel-starlib)
+
+expected=bazel-starlib
+for (( i = 0; i < ${#urls[@]}; i++ )); do
+  url="${urls[$i]}"
+  actual="$( get_gh_repo_name "${url}" )"
+  [[ "${actual}" == "${expected}" ]] || \
+    fail "Expected name not found. url: ${url}, expected: ${expected}, actual: ${actual}"
+done

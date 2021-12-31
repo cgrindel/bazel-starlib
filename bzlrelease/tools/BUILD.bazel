@@ -11,9 +11,9 @@ sh_binary(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//lib/private:fail",
-        "//lib/private:git",
-        "//lib/private:github",
+        "//shlib/lib:fail",
+        "//shlib/lib:git",
+        "//shlib/lib:github",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -23,8 +23,8 @@ sh_binary(
     srcs = ["generate_sha256.sh"],
     visibility = ["//visibility:public"],
     deps = [
-        "//lib/private:env",
-        "//lib/private:fail",
+        "//shlib/lib:env",
+        "//shlib/lib:fail",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -34,10 +34,10 @@ sh_binary(
     srcs = ["generate_git_archive.sh"],
     visibility = ["//visibility:public"],
     deps = [
-        "//lib/private:env",
-        "//lib/private:fail",
-        "//lib/private:git",
-        "//lib/private:github",
+        "//shlib/lib:env",
+        "//shlib/lib:fail",
+        "//shlib/lib:git",
+        "//shlib/lib:github",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -47,10 +47,10 @@ sh_binary(
     srcs = ["generate_gh_changelog.sh"],
     visibility = ["//visibility:public"],
     deps = [
-        "//lib/private:env",
-        "//lib/private:fail",
-        "//lib/private:git",
-        "//lib/private:github",
+        "//shlib/lib:env",
+        "//shlib/lib:fail",
+        "//shlib/lib:git",
+        "//shlib/lib:github",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -63,7 +63,7 @@ sh_binary(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//lib/private:fail",
+        "//shlib/lib:fail",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -73,10 +73,10 @@ sh_binary(
     srcs = ["create_release_tag.sh"],
     visibility = ["//visibility:public"],
     deps = [
-        "//lib/private:env",
-        "//lib/private:fail",
-        "//lib/private:git",
-        "//lib/private:github",
+        "//shlib/lib:env",
+        "//shlib/lib:fail",
+        "//shlib/lib:git",
+        "//shlib/lib:github",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -86,7 +86,7 @@ sh_binary(
     srcs = ["update_readme.sh"],
     visibility = ["//visibility:public"],
     deps = [
-        "//lib/private:fail",
+        "//shlib/lib:fail",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -96,10 +96,10 @@ sh_binary(
     srcs = ["create_release.sh"],
     visibility = ["//visibility:public"],
     deps = [
-        "//lib/private:env",
-        "//lib/private:fail",
-        "//lib/private:git",
-        "//lib/private:github",
+        "//shlib/lib:env",
+        "//shlib/lib:fail",
+        "//shlib/lib:git",
+        "//shlib/lib:github",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )

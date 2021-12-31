@@ -11,7 +11,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v2 ---
 
-assertions_lib="$(rlocation cgrindel_bazel_starlib/lib/private/assertions.sh)"
+assertions_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/assertions.sh)"
 source "${assertions_lib}"
 
 my_bin="$(rlocation cgrindel_bazel_starlib/tests/rules_tests/execute_binary_tests/my_bin_no_args.sh)"

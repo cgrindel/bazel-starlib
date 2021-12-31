@@ -12,7 +12,7 @@ sh_test(
         "//bzlrelease/tools:generate_sha256",
     ],
     deps = [
-        "//lib/private:fail",
+        "//shlib/lib:fail",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -21,7 +21,7 @@ sh_binary(
     name = "generate_fake_snippet",
     srcs = ["generate_fake_snippet.sh"],
     deps = [
-        "//lib/private:fail",
+        "//shlib/lib:fail",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -34,7 +34,7 @@ sh_test(
         "//bzlrelease/tools:update_readme",
     ],
     deps = [
-        "//lib/private:assertions",
+        "//shlib/lib:assertions",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -51,7 +51,7 @@ sh_test(
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
     deps = [
-        "//lib/private:fail",
+        "//shlib/lib:fail",
         "//tests:setup_git_repo",
         "@bazel_tools//tools/bash/runfiles",
     ],
@@ -66,7 +66,7 @@ sh_test(
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
     deps = [
-        "//lib/private:env",
+        "//shlib/lib:env",
         "//tests:setup_git_repo",
         "@bazel_tools//tools/bash/runfiles",
     ],
@@ -82,7 +82,7 @@ sh_test(
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
     deps = [
-        "//lib/private:env",
+        "//shlib/lib:env",
         "//tests:setup_git_repo",
         "@bazel_tools//tools/bash/runfiles",
     ],
@@ -98,7 +98,7 @@ sh_test(
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
     deps = [
-        "//lib/private:env",
+        "//shlib/lib:env",
         "//tests:setup_git_repo",
         "@bazel_tools//tools/bash/runfiles",
     ],

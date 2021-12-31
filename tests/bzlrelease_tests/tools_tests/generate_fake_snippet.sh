@@ -11,7 +11,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v2 ---
 
-fail_sh_location=cgrindel_bazel_starlib/lib/private/fail.sh
+fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
 fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"

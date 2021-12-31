@@ -13,12 +13,12 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 
 # MARK - Locate Dependencies
 
-fail_sh_location=cgrindel_bazel_starlib/lib/private/fail.sh
+fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
 fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
-github_sh_location=cgrindel_bazel_starlib/lib/private/github.sh
+github_sh_location=cgrindel_bazel_starlib/shlib/lib/github.sh
 github_sh="$(rlocation "${github_sh_location}")" || \
   (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)
 source "${github_sh}"
@@ -28,22 +28,15 @@ source "${github_sh}"
 
 urls=()
 urls+=(git@github.com:cgrindel/bazel-starlib.git)
-urls+=(https://github.com/foo_bar/bazel-starlib.git)
-urls+=(https://github.com/chicken-smidgen/bazel-starlib)
-urls+=(https://api.github.com/repos/chicken-smidgen/bazel-starlib)
-urls+=(***github.com/chicken-smidgen/bazel-starlib)
+urls+=(git@github.com:cgrindel/bazel-starlib)
+urls+=(https://github.com/cgrindel/bazel-starlib.git)
+urls+=(https://github.com/cgrindel/bazel-starlib)
+urls+=(https://api.github.com/repos/cgrindel/bazel-starlib)
 
-expected_owners=()
-expected_owners+=(cgrindel)
-expected_owners+=(foo_bar)
-expected_owners+=(chicken-smidgen)
-expected_owners+=(chicken-smidgen)
-expected_owners+=(chicken-smidgen)
-
-for (( i = 0; i < ${#urls[@]}; i++ )); do
-  url="${urls[$i]}"
-  expected="${expected_owners[$i]}"
-  actual="$( get_gh_repo_owner "${url}" )"
+expected="https://api.github.com/repos/cgrindel/bazel-starlib"
+for url in "${urls[@]}" ; do
+  actual="$( get_gh_api_base_url "${url}" )"
   [[ "${actual}" == "${expected}" ]] || \
-    fail "Expected owner not found. url: ${url}, expected: ${expected}, actual: ${actual}"
+    fail "Expected base API URL not found. url: ${url}, expected: ${expected}, actual: ${actual}"
 done
+

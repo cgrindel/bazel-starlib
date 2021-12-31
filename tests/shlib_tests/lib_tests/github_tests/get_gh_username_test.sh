@@ -11,12 +11,14 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v2 ---
 
-fail_sh_location=cgrindel_bazel_starlib/lib/private/fail.sh
+# MARK - Locate Dependencies
+
+fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
 fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
-github_sh_location=cgrindel_bazel_starlib/lib/private/github.sh
+github_sh_location=cgrindel_bazel_starlib/shlib/lib/github.sh
 github_sh="$(rlocation "${github_sh_location}")" || \
   (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)
 source "${github_sh}"
@@ -31,7 +33,7 @@ github.com
   ✓ Token: 1234567899b95cd24c3e91d210388a28bf560b73
 "
 
-expected="1234567899b95cd24c3e91d210388a28bf560b73"
-actual="$( get_gh_auth_token "${auth_status}" )"
+expected="cgrindel"
+actual="$( get_gh_username "${auth_status}" )"
 [[ "${actual}" == "${expected}" ]] || \
-  fail "Expected auth token not found. actual: ${actual}, expected: ${expected}"
+  fail "Expected username not found. actual: ${actual}, expected: ${expected}"

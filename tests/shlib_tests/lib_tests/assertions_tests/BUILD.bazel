@@ -13,7 +13,7 @@ sh_test(
     srcs = ["assert_equal_test.sh"],
     deps = [
         ":assert_fail",
-        "//lib/private:assertions",
+        "//shlib/lib:assertions",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -23,7 +23,7 @@ sh_test(
     srcs = ["assert_match_test.sh"],
     deps = [
         ":assert_fail",
-        "//lib/private:assertions",
+        "//shlib/lib:assertions",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -33,7 +33,7 @@ sh_test(
     srcs = ["assert_no_match_test.sh"],
     deps = [
         ":assert_fail",
-        "//lib/private:assertions",
+        "//shlib/lib:assertions",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )

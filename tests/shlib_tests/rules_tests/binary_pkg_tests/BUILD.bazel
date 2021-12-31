@@ -24,7 +24,7 @@ sh_test(
         ":hello_world_pkg",
     ],
     deps = [
-        "//lib/private:assertions",
+        "//shlib/lib:assertions",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -62,7 +62,7 @@ sh_test(
         ":process_file_pkg",
     ],
     deps = [
-        "//lib/private:assertions",
+        "//shlib/lib:assertions",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -98,7 +98,7 @@ sh_binary(
     name = "process_file_consumer",
     srcs = ["process_file_consumer.sh"],
     deps = [
-        "//lib/private:fail",
+        "//shlib/lib:fail",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -122,7 +122,7 @@ sh_test(
         ":process_file_consumer_eb",
     ],
     deps = [
-        "//lib/private:assertions",
+        "//shlib/lib:assertions",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )

@@ -13,7 +13,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 
 # MARK - Locate Deps
 
-assertions_sh_location=cgrindel_bazel_starlib/lib/private/assertions.sh
+assertions_sh_location=cgrindel_bazel_starlib/shlib/lib/assertions.sh
 assertions_sh="$(rlocation "${assertions_sh_location}")" || \
   (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
 source "${assertions_sh}"

@@ -13,12 +13,12 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 
 # MARK - Dependencies
 
-fail_sh_location=cgrindel_bazel_starlib/lib/private/fail.sh
+fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
 fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
-env_sh_location=cgrindel_bazel_starlib/lib/private/env.sh
+env_sh_location=cgrindel_bazel_starlib/shlib/lib/env.sh
 env_sh="$(rlocation "${env_sh_location}")" || \
   (echo >&2 "Failed to locate ${env_sh_location}" && exit 1)
 source "${env_sh}"

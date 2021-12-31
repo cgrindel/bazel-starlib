@@ -13,36 +13,37 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 
 # MARK - Locate Dependencies
 
-fail_sh_location=cgrindel_bazel_starlib/lib/private/fail.sh
+fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
 fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
-github_sh_location=cgrindel_bazel_starlib/lib/private/github.sh
+env_sh_location=cgrindel_bazel_starlib/shlib/lib/env.sh
+env_sh="$(rlocation "${env_sh_location}")" || \
+  (echo >&2 "Failed to locate ${env_sh_location}" && exit 1)
+source "${env_sh}"
+
+github_sh_location=cgrindel_bazel_starlib/shlib/lib/github.sh
 github_sh="$(rlocation "${github_sh_location}")" || \
   (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)
 source "${github_sh}"
 
+setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
+setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" || \
+  (echo >&2 "Failed to locate ${setup_git_repo_sh_location}" && exit 1)
+
+is_installed gh || fail "Could not find Github CLI (gh)."
+
+# MARK - Setup
+
+source "${setup_git_repo_sh}"
+cd "${repo_dir}"
 
 # MARK - Test
 
-good_urls=()
-good_urls+=(git@github.com:cgrindel/bazel-starlib.git)
-good_urls+=(https://github.com/cgrindel/bazel-starlib.git)
-good_urls+=(https://github.com/cgrindel/bazel-starlib)
+tag_name="v0.1.1"
+prev_tag_name="v0.1.0"
+result="$( get_gh_changelog --tag_name  "${tag_name}" --previous_tag_name "${prev_tag_name}" )"
+[[ "${result}" =~ "**Full Changelog**: https://github.com/cgrindel/bazel-starlib/compare/v0.1.0...v0.1.1" ]] || \
+  fail "Expected to find changelog URL for v0.1.0...v0.1.1. result: ${result}"
 
-for url in "${good_urls[@]}" ; do
-  is_github_repo_url "${url}" || fail "Expected '${url}' to be a Github URL."
-done
-
-bad_urls=()
-bad_urls+=(git@example.org:cgrindel/bazel-starlib.git)
-bad_urls+=(https://example.org/cgrindel/bazel-starlib.git)
-
-for url in "${bad_urls[@]}" ; do
-  is_github_repo_url "${url}" && fail "Expected '${url}' to not be a Github URL."
-done
-
-# Because the negative tests have failures when the test is working, we need to
-# end on a positive note.
-echo "ALL IS WELL"

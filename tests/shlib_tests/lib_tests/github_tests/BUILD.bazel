@@ -7,8 +7,8 @@ sh_test(
     name = "get_gh_username_test",
     srcs = ["get_gh_username_test.sh"],
     deps = [
-        "//lib/private:fail",
-        "//lib/private:github",
+        "//shlib/lib:fail",
+        "//shlib/lib:github",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -17,8 +17,8 @@ sh_test(
     name = "get_gh_auth_token_test",
     srcs = ["get_gh_auth_token_test.sh"],
     deps = [
-        "//lib/private:fail",
-        "//lib/private:github",
+        "//shlib/lib:fail",
+        "//shlib/lib:github",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -27,8 +27,8 @@ sh_test(
     name = "is_github_repo_url_test",
     srcs = ["is_github_repo_url_test.sh"],
     deps = [
-        "//lib/private:fail",
-        "//lib/private:github",
+        "//shlib/lib:fail",
+        "//shlib/lib:github",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -37,8 +37,8 @@ sh_test(
     name = "get_gh_repo_owner_test",
     srcs = ["get_gh_repo_owner_test.sh"],
     deps = [
-        "//lib/private:fail",
-        "//lib/private:github",
+        "//shlib/lib:fail",
+        "//shlib/lib:github",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -47,8 +47,8 @@ sh_test(
     name = "get_gh_repo_name_test",
     srcs = ["get_gh_repo_name_test.sh"],
     deps = [
-        "//lib/private:fail",
-        "//lib/private:github",
+        "//shlib/lib:fail",
+        "//shlib/lib:github",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -57,8 +57,8 @@ sh_test(
     name = "get_gh_api_base_url_test",
     srcs = ["get_gh_api_base_url_test.sh"],
     deps = [
-        "//lib/private:fail",
-        "//lib/private:github",
+        "//shlib/lib:fail",
+        "//shlib/lib:github",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -71,9 +71,9 @@ sh_test(
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
     deps = [
-        "//lib/private:env",
-        "//lib/private:fail",
-        "//lib/private:github",
+        "//shlib/lib:env",
+        "//shlib/lib:fail",
+        "//shlib/lib:github",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
@@ -84,9 +84,9 @@ sh_test(
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
     deps = [
-        "//lib/private:env",
-        "//lib/private:fail",
-        "//lib/private:github",
+        "//shlib/lib:env",
+        "//shlib/lib:fail",
+        "//shlib/lib:github",
         "//tests:setup_git_repo",
         "@bazel_tools//tools/bash/runfiles",
     ],

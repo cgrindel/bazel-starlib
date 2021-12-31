@@ -11,7 +11,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v2 ---
 
-assertions_sh_location=cgrindel_bazel_starlib/lib/private/assertions.sh
+assertions_sh_location=cgrindel_bazel_starlib/shlib/lib/assertions.sh
 assertions_sh="$(rlocation "${assertions_sh_location}")" || \
   (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
 source "${assertions_sh}"
@@ -21,14 +21,14 @@ assert_fail_sh="$(rlocation "${assert_fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${assert_fail_sh_location}" && exit 1)
 source "${assert_fail_sh}"
 
-# MARK - Test assert_no_match
+# MARK - Test assert_match
 
 reset_fail_err_msgs
-assert_no_match ^Begin "Begin with hello"
-assert_fail "Expected not to match."
-reset_fail_err_msgs
-
-reset_fail_err_msgs
-assert_no_match ^Begin "Not Begin with hello"
+assert_match ^Begin "Begin with hello"
 assert_no_fail
+reset_fail_err_msgs
+
+reset_fail_err_msgs
+assert_match ^Begin "Not Begin with hello"
+assert_fail "Expected to match."
 reset_fail_err_msgs

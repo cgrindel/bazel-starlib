@@ -33,3 +33,23 @@ sh_library(
     name = "arrays",
     srcs = ["arrays.sh"],
 )
+
+sh_library(
+    name = "fail",
+    srcs = ["fail.sh"],
+)
+
+sh_library(
+    name = "env",
+    srcs = ["env.sh"],
+)
+
+sh_library(
+    name = "git",
+    srcs = ["git.sh"],
+)
+
+sh_library(
+    name = "github",
+    srcs = ["github.sh"],
+)

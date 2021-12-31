@@ -11,7 +11,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v2 ---
 
-assertions_lib="$(rlocation cgrindel_bazel_starlib/lib/private/assertions.sh)"
+assertions_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/assertions.sh)"
 source "${assertions_lib}"
 
 setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
