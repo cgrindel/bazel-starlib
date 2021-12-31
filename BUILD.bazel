@@ -43,7 +43,6 @@ bzl_library(
 filegroup(
     name = "shared_bazelrc_files",
     srcs = glob(["*.bazelrc"]),
-    visibility = [":integration_test_visibility"],
 )
 
 # The example workspaces use local_repository to reference this workspace.
@@ -68,7 +67,6 @@ filegroup(
         "//updatesrc:all_files",
         "//updatesrc/private:all_files",
     ],
-    visibility = [":integration_test_visibility"],
 )
 
 filegroup(
