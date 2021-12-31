@@ -1,4 +1,4 @@
-load("//rules:execute_binary.bzl", "execute_binary")
+load("//shlib/rules:execute_binary.bzl", "execute_binary")
 
 def bzlformat_missing_pkgs(name, exclude = []):
     """Defines executable targets that find, test and fix any Bazel packages that are missing `bzlformat_pkg` declarations.

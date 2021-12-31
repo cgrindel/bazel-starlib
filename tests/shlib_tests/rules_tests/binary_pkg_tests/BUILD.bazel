@@ -1,80 +1,43 @@
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
-load("//rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("//shlib/rules:binary_pkg.bzl", "binary_pkg")
+load("//shlib/rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 
 bzlformat_pkg(name = "bzlformat")
 
+# MARK: - Hello World
+
 sh_binary(
-    name = "my_bin",
-    srcs = ["my_bin.sh"],
+    name = "hello_world",
+    srcs = ["hello_world.sh"],
 )
 
-# MARK: - Test no args
-
-execute_binary(
-    name = "my_bin_no_args",
-    binary = ":my_bin",
+binary_pkg(
+    name = "hello_world_pkg",
+    binary = ":hello_world",
 )
 
 sh_test(
-    name = "execute_binary_no_args_test",
-    srcs = ["execute_binary_no_args_test.sh"],
-    data = [":my_bin_no_args"],
+    name = "hello_world_pkg_test",
+    srcs = ["hello_world_pkg_test.sh"],
+    data = [
+        ":hello_world_pkg",
+    ],
     deps = [
         "//lib/private:assertions",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
 
-# MARK: - Test with args
+# MARK: - Binary with Data Files
 
 write_file(
     name = "data_file",
-    out = "data.txt",
+    out = "data_file.txt",
     content = [
         "This is a data file.",
     ],
 )
-
-write_file(
-    name = "input_file",
-    out = "input.txt",
-    content = [
-        "This is an input file.",
-    ],
-)
-
-execute_binary(
-    name = "my_bin_with_args",
-    arguments = [
-        "--first",
-        "first value has spaces",
-        "not_a_flag",
-        "\"quoted value with spaces\"",
-        "--check_data_file",
-        "--input",
-        file_placeholder("input"),
-    ],
-    binary = ":my_bin",
-    data = [
-        ":data_file",
-    ],
-    file_arguments = {
-        ":input_file": "input",
-    },
-)
-
-sh_test(
-    name = "execute_binary_with_args_test",
-    srcs = ["execute_binary_with_args_test.sh"],
-    data = [":my_bin_with_args"],
-    deps = [
-        "//lib/private:assertions",
-        "@bazel_tools//tools/bash/runfiles",
-    ],
-)
-
-# MARK: - Test execute_binary passed as arg to another execute_binary
 
 sh_binary(
     name = "process_file",
@@ -87,6 +50,25 @@ sh_binary(
     ],
 )
 
+binary_pkg(
+    name = "process_file_pkg",
+    binary = ":process_file",
+)
+
+sh_test(
+    name = "process_file_pkg_test",
+    srcs = ["process_file_pkg_test.sh"],
+    data = [
+        ":process_file_pkg",
+    ],
+    deps = [
+        "//lib/private:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+# MARK: - Test execute_binary embedded
+
 write_file(
     name = "arg_file",
     out = "arg_file.txt",
@@ -96,7 +78,7 @@ write_file(
 )
 
 execute_binary(
-    name = "process_file_eb",
+    name = "exec_process_file",
     arguments = [
         "--file",
         file_placeholder("arg_file"),
@@ -105,6 +87,11 @@ execute_binary(
     file_arguments = {
         ":arg_file": "arg_file",
     },
+)
+
+binary_pkg(
+    name = "exec_process_file_pkg",
+    binary = ":exec_process_file",
 )
 
 sh_binary(
@@ -124,7 +111,7 @@ execute_binary(
     ],
     binary = ":process_file_consumer",
     file_arguments = {
-        ":process_file_eb": "process_file",
+        ":exec_process_file_pkg": "process_file",
     },
 )
 
