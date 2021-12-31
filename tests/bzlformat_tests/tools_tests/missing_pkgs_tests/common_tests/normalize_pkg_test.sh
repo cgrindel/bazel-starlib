@@ -13,7 +13,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 
 assertions_lib="$(rlocation cgrindel_bazel_shlib/lib/assertions.sh)"
 source "${assertions_lib}"
-source "$(rlocation cgrindel_rules_bzlformat/tools/missing_pkgs/common.sh)"
+source "$(rlocation cgrindel_bazel_starlib/bzlformat/tools/missing_pkgs/common.sh)"
 
 assert_equal "//foo/bar" "$(normalize_pkg "foo/bar")"
 assert_equal "//foo/bar" "$(normalize_pkg "/foo/bar")"

@@ -14,7 +14,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 arrays_lib="$(rlocation cgrindel_bazel_shlib/lib/arrays.sh)"
 source "${arrays_lib}"
 
-common_sh_location=cgrindel_rules_bzlformat/tools/missing_pkgs/common.sh
+common_sh_location=cgrindel_bazel_starlib/bzlformat/tools/missing_pkgs/common.sh
 common_sh="$(rlocation "${common_sh_location}")" || \
   (echo >&2 "Failed to locate ${common_sh_location}" && exit 1)
 source "${common_sh}"
