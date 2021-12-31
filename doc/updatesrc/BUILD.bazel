@@ -1,6 +1,6 @@
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load(
-    "@cgrindel_bazel_doc//bazeldoc:bazeldoc.bzl",
+    "//bazeldoc:defs.bzl",
     "doc_for_provs",
     "write_file_list",
     "write_header",

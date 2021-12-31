@@ -1,10 +1,6 @@
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
-filegroup(
-    name = "all_files",
-    srcs = glob(["*"]),
-    visibility = ["//:__subpackages__"],
-)
+bzlformat_pkg(name = "bzlformat")
 
 # MARK: - Shared Libraries
 
@@ -42,4 +38,10 @@ sh_binary(
     ],
 )
 
-bzlformat_pkg(name = "bzlformat")
+# MARK: - Collect Files for Integation Tests
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)

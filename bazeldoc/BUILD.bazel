@@ -15,3 +15,11 @@ bzl_library(
         "//bazeldoc/private:write_header",
     ],
 )
+
+# MARK: - Collect Files for Integation Tests
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)

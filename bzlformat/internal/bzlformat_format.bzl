@@ -41,7 +41,7 @@ bzlformat_format = rule(
             doc = "The suffix added to the formatted output filename.",
         ),
         "_buildifier": attr.label(
-            default = "//tools:buildifier",
+            default = "//bzlformat/tools:buildifier",
             executable = True,
             cfg = "host",
             allow_files = True,
