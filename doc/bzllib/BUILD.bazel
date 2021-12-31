@@ -11,7 +11,7 @@ bzlformat_pkg(name = "bzlformat")
 
 # MARK: - Documentation Providers
 
-_STARDOC_INPUT = "//bazeldoc:defs.bzl"
+_STARDOC_INPUT = "//bzllib:defs.bzl"
 
 _DOC_DEPS = [
     "//bzllib:defs",

@@ -6,11 +6,6 @@ package(default_visibility = ["//visibility:public"])
 bzlformat_pkg(name = "bzlformat")
 
 bzl_library(
-    name = "deps",
-    srcs = ["deps.bzl"],
-)
-
-bzl_library(
     name = "defs",
     srcs = ["defs.bzl"],
     deps = [
