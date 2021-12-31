@@ -12,9 +12,9 @@ load("@io_bazel_stardoc//:setup.bzl", "stardoc_repositories")
 
 stardoc_repositories()
 
-load("//bzlformat:deps.bzl", "bzlformat_rules_dependencies")
+load("@cgrindel_rules_bazel_integration_test//bazel_integration_test:deps.bzl", "bazel_integration_test_rules_dependencies")
 
-bzlformat_rules_dependencies()
+bazel_integration_test_rules_dependencies()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 

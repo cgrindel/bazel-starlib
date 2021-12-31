@@ -1,0 +1,13 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
+bzlformat_pkg(name = "bzlformat")
+
+# Needs to exist for backwards compatibility.
+bzl_library(
+    name = "src_utils",
+    srcs = ["src_utils.bzl"],
+    deps = [
+        "//bzllib:defs",
+    ],
+)

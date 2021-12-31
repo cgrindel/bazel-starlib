@@ -6,11 +6,6 @@ package(default_visibility = ["//visibility:public"])
 bzlformat_pkg(name = "bzlformat")
 
 bzl_library(
-    name = "deps",
-    srcs = ["deps.bzl"],
-)
-
-bzl_library(
     name = "defs",
     srcs = ["defs.bzl"],
     deps = [
@@ -18,10 +13,4 @@ bzl_library(
         "//bzlformat/internal:bzlformat_missing_pkgs",
         "//bzlformat/internal:bzlformat_pkg",
     ],
-)
-
-filegroup(
-    name = "all_files",
-    srcs = glob(["*"]),
-    visibility = ["//:__subpackages__"],
 )

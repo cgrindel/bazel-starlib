@@ -1,6 +1,6 @@
 load(":bzlformat_format.bzl", "bzlformat_format")
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
-load("@cgrindel_bazel_starlib//lib:src_utils.bzl", "src_utils")
+load("@cgrindel_bazel_starlib//bzllib:defs.bzl", "src_utils")
 load(
     "@cgrindel_rules_updatesrc//updatesrc:updatesrc.bzl",
     "updatesrc_update",

@@ -19,9 +19,9 @@ bzl_library(
     srcs = ["bzlformat_pkg.bzl"],
     deps = [
         ":bzlformat_format",
+        "//bzllib:defs",
+        "//updatesrc:defs",
         "@bazel_skylib//rules:diff_test",
-        "@cgrindel_bazel_starlib//lib:src_utils",
-        "@cgrindel_rules_updatesrc//updatesrc",
     ],
 )
 
