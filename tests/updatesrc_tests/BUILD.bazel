@@ -4,6 +4,8 @@ load("//updatesrc/private:updatesrc_update_test.bzl", "updatesrc_update_test")
 load("//updatesrc:defs.bzl", "updatesrc_update")
 load(":letters.bzl", "letters")
 
+bzlformat_pkg(name = "bzlformat")
+
 # MARK: - Build Tests
 
 build_test(
@@ -67,5 +69,3 @@ updatesrc_update_test(
     outs = _LETTER_OUT_NAMES,
     update_target = ":src_out",
 )
-
-bzlformat_pkg(name = "bzlformat")

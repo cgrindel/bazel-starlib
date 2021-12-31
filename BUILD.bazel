@@ -89,6 +89,9 @@ test_suite(
     name = "all_integration_tests",
     tags = INTEGRATION_TEST_TAGS,
     tests = [
+        "//examples/bzlformat:integration_tests",
+        "//examples/updatesrc:integration_tests",
+        "//tests/bzlformat_tests:all_integration_tests",
         "//tests/bzlrelease_tests:all_integration_tests",
         "//tests/lib_tests/private_tests/git_tests:integration_tests",
         "//tests/lib_tests/private_tests/github_tests:integration_tests",
