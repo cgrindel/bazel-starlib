@@ -20,3 +20,11 @@ bzl_library(
         "//shlib/rules/private:execute_binary",
     ],
 )
+
+# MARK: - Collect Files for Integation Tests
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)
