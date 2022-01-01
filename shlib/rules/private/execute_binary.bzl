@@ -24,13 +24,22 @@ def _substitute_placehodlers(ctx, placeholder_dict, value):
     return new_value
 
 def _execute_binary_impl(ctx):
-    bin_path = paths.join(ctx.workspace_name, ctx.executable.binary.short_path)
-    out = ctx.actions.declare_file(ctx.label.name + ".sh")
-
     if len(ctx.attr.args) > 0:
         fail("""\
 The args attribute is not supported for execute_binary. Use the arguments instead.\
 """)
+
+    # bin_path = paths.join(ctx.workspace_name, ctx.executable.binary.short_path)
+    bin_path = ctx.executable.binary.short_path
+    bin_runfiles = ctx.attr.binary[DefaultInfo].default_runfiles
+
+    # DEBUG BEGIN
+    print("*** CHUCK bin_runfiles.files.to_list(): ")
+    for idx, item in enumerate(bin_runfiles.files.to_list()):
+        print("*** CHUCK", idx, "file:", item)
+        print("*** CHUCK", idx, "short_path:", item.short_path)
+
+    # DEBUG END
 
     placeholder_dict = _create_file_args_placeholder_dict(ctx)
     quoted_args = []
@@ -41,6 +50,7 @@ The args attribute is not supported for execute_binary. Use the arguments instea
         else:
             quoted_args.append("\"%s\"" % (arg))
 
+    out = ctx.actions.declare_file(ctx.label.name + ".sh")
     ctx.actions.write(
         output = out,
         is_executable = True,
@@ -58,10 +68,39 @@ set -euo pipefail
 [[ -z "${RUNFILES_DIR:-}" ]] && \
   echo >&2 "The RUNFILES_DIR for $(basename "${BASH_SOURCE[0]}") could not be found."
 
+# DEBUG BEGIN
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") PWD: ${PWD}" 
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") RUNFILES_DIR: ${RUNFILES_DIR}" 
+# DEBUG END
+
 """ + """\
+workspace_name="{workspace_name}"
 bin_path="{bin_path}"
-""".format(bin_path = bin_path) + """\
-binary="${RUNFILES_DIR}/${bin_path}"
+""".format(bin_path = bin_path, workspace_name = ctx.workspace_name) + """\
+# DEBUG BEGIN
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") bin_path: ${bin_path}" 
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") PWD + bin_path: ${PWD}/${bin_path}" 
+[[ -f "${PWD}/${bin_path}" ]] && echo >&2 "FOUND PWD + bin_path"
+# DEBUG END
+if [[ -f "${bin_path}" ]]; then
+  # DEBUG BEGIN
+  echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") Found bin_path" 
+  # DEBUG END
+  binary="${bin_path}"
+else
+  # DEBUG BEGIN
+  echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") Did not find bin_path" 
+  # DEBUG END
+  binary="${RUNFILES_DIR}/${workspace_name}/${bin_path}"
+fi
+
+# binary="${RUNFILES_DIR}/${bin_path}"
+# If the binary is an sh_binary, the bin_path can come through without the extension.
+# Example:
+#   Target: @cgrindel_bazel_starlib//bzlformat/tools/missing_pkgs:fix
+#   bin_path: cgrindel_bazel_starlib/bzlformat/tools/missing_pkgs/fix
+#   actual: cgrindel_bazel_starlib/bzlformat/tools/missing_pkgs/fix.sh
+# If we do not find the bin_path that is provided, check for the 
 
 # Construct the command (binary plus args).
 cmd=( "${binary}" )
@@ -83,7 +122,7 @@ cmd=( "${binary}" )
     # The file_arguments attribute shows up as a dict under ctx.attr.file_arguments and
     # as a list under ctx.files.file_arguments
     runfiles = ctx.runfiles(files = ctx.files.data + ctx.files.file_arguments)
-    runfiles = runfiles.merge(ctx.attr.binary[DefaultInfo].default_runfiles)
+    runfiles = runfiles.merge(bin_runfiles)
 
     # Check if any of the file_arguments have runfiles and add them as well.
     for target in ctx.attr.file_arguments:
