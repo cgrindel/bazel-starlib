@@ -6,7 +6,7 @@ sh_binary(
     name = "contains_item_perf_comparison",
     srcs = ["contains_item_perf_comparison.sh"],
     deps = [
-        "//lib:arrays",
+        "//shlib/lib:arrays",
         "@bazel_tools//tools/bash/runfiles",
     ],
 )

@@ -11,6 +11,8 @@ bzlformat_pkg(name = "bzlformat")
 
 # MARK: - Documentation Providers
 
+_DOC_PATH = "doc/shlib"
+
 _RULE_NAMES = [
     "binary_pkg",
     "execute_binary",
@@ -19,9 +21,9 @@ _RULE_NAMES = [
 _RULE_DOC_PROVIDERS = [
     doc_providers.create(
         name = rule,
-        stardoc_input = "//rules:{rule}.bzl".format(rule = rule),
+        stardoc_input = "//shlib/rules:{rule}.bzl".format(rule = rule),
         symbols = [rule],
-        deps = ["//rules:{rule}".format(rule = rule)],
+        deps = ["//shlib/rules:{rule}".format(rule = rule)],
     )
     for rule in _RULE_NAMES
 ]
@@ -31,9 +33,9 @@ _API_SRCS = []
 _API_DOC_PROVIDERS = [
     doc_providers.create(
         name = name,
-        stardoc_input = "//lib:{name}.bzl".format(name = name),
+        stardoc_input = "//shlib/lib:{name}.bzl".format(name = name),
         symbols = [name],
-        deps = ["//lib:{name}".format(name = name)],
+        deps = ["//shlib/lib:{name}".format(name = name)],
     )
     for name in _API_SRCS
 ]
@@ -87,6 +89,7 @@ _ALL_DOC_PROVIDERS = [
 write_file_list(
     name = "api_doc",
     out = "api.md_",
+    doc_path = _DOC_PATH,
     doc_provs = _API_DOC_PROVIDERS,
     header_content = [
         "# Build API",
@@ -100,6 +103,7 @@ write_file_list(
 write_file_list(
     name = "rules_doc",
     out = "rules.md_",
+    doc_path = _DOC_PATH,
     doc_provs = _RULE_DOC_PROVIDERS,
     header_content = [
         "# Rules",
@@ -111,4 +115,7 @@ write_file_list(
 
 # MARK: - Generate Documentation from Providers
 
-doc_for_provs(doc_provs = _ALL_DOC_PROVIDERS)
+doc_for_provs(
+    doc_path = _DOC_PATH,
+    doc_provs = _ALL_DOC_PROVIDERS,
+)
