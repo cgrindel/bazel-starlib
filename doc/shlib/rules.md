@@ -3,6 +3,6 @@
 
 The rules listed below are available in this repository.
 
-  * [binary_pkg](/doc/binary_pkg.md)
-  * [execute_binary](/doc/execute_binary.md)
+  * [binary_pkg](/doc/shlib/binary_pkg.md)
+  * [execute_binary](/doc/shlib/execute_binary.md)
 

@@ -16,7 +16,7 @@ assertions_sh="$(rlocation "${assertions_sh_location}")" || \
   (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
 source "${assertions_sh}"
 
-hello_world_pkg_sh_location=cgrindel_bazel_starlib/tests/rules_tests/binary_pkg_tests/hello_world_pkg.sh
+hello_world_pkg_sh_location=cgrindel_bazel_starlib/tests/shlib_tests/rules_tests/binary_pkg_tests/hello_world_pkg.sh
 hello_world_pkg_sh="$(rlocation "${hello_world_pkg_sh_location}")" || \
   (echo >&2 "Failed to locate ${hello_world_pkg_sh_location}" && exit 1)
 

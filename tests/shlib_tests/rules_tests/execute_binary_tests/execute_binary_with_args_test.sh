@@ -11,10 +11,14 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v2 ---
 
-assertions_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/assertions.sh)"
-source "${assertions_lib}"
+assertions_sh_location=cgrindel_bazel_starlib/shlib/lib/assertions.sh
+assertions_sh="$(rlocation "${assertions_sh_location}")" || \
+  (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
+source "${assertions_sh}"
 
-my_bin="$(rlocation cgrindel_bazel_starlib/tests/rules_tests/execute_binary_tests/my_bin_with_args.sh)"
+my_bin_with_args_sh_location=cgrindel_bazel_starlib/tests/shlib_tests/rules_tests/execute_binary_tests/my_bin_with_args.sh
+my_bin="$(rlocation "${my_bin_with_args_sh_location}")" || \
+  (echo >&2 "Failed to locate ${my_bin_with_args_sh_location}" && exit 1)
 
 # MARK - Additional Assertions
 

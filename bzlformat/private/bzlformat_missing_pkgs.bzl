@@ -38,13 +38,13 @@ def bzlformat_missing_pkgs(name, exclude = []):
     execute_binary(
         name = find_name,
         binary = "@cgrindel_bazel_starlib//bzlformat/tools/missing_pkgs:find",
-        args = exclude_args,
+        arguments = exclude_args,
     )
 
     execute_binary(
         name = test_name,
         binary = "@cgrindel_bazel_starlib//bzlformat/tools/missing_pkgs:find",
-        args = exclude_args + [
+        arguments = exclude_args + [
             "--fail_on_missing_pkgs",
         ],
     )
@@ -52,5 +52,5 @@ def bzlformat_missing_pkgs(name, exclude = []):
     execute_binary(
         name = fix_name,
         binary = "@cgrindel_bazel_starlib//bzlformat/tools/missing_pkgs:fix",
-        args = exclude_args,
+        arguments = exclude_args,
     )

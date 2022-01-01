@@ -43,7 +43,7 @@ while (("$#")); do
 done
 
 if [[ "${check_data_file}" == true ]]; then
-  data_txt_location=cgrindel_bazel_starlib/tests/rules_tests/execute_binary_tests/data.txt
+  data_txt_location=cgrindel_bazel_starlib/tests/shlib_tests/rules_tests/execute_binary_tests/data.txt
   data_txt="$(rlocation "${data_txt_location}")" || \
     (echo >&2 "Failed to locate ${data_txt_location}" && exit 1)
   echo "Data: $(< "${data_txt}")"

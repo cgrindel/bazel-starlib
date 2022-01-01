@@ -13,7 +13,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 
 # MARK - Locate Deps
 
-data_file_txt_location=cgrindel_bazel_starlib/tests/rules_tests/binary_pkg_tests/data_file.txt
+data_file_txt_location=cgrindel_bazel_starlib/tests/shlib_tests/rules_tests/binary_pkg_tests/data_file.txt
 data_file_txt="$(rlocation "${data_file_txt_location}")" || \
   (echo >&2 "Failed to locate ${data_file_txt_location}" && exit 1)
 

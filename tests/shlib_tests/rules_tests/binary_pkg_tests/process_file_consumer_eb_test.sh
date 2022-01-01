@@ -18,7 +18,7 @@ assertions_sh="$(rlocation "${assertions_sh_location}")" || \
   (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
 source "${assertions_sh}"
 
-process_file_consumer_eb_sh_location=cgrindel_bazel_starlib/tests/rules_tests/binary_pkg_tests/process_file_consumer_eb.sh
+process_file_consumer_eb_sh_location=cgrindel_bazel_starlib/tests/shlib_tests/rules_tests/binary_pkg_tests/process_file_consumer_eb.sh
 process_file_consumer_eb_sh="$(rlocation "${process_file_consumer_eb_sh_location}")" || \
   (echo >&2 "Failed to locate ${process_file_consumer_eb_sh_location}" && exit 1)
 

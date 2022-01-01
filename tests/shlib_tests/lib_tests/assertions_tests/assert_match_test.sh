@@ -16,7 +16,7 @@ assertions_sh="$(rlocation "${assertions_sh_location}")" || \
   (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
 source "${assertions_sh}"
 
-assert_fail_sh_location=cgrindel_bazel_starlib/tests/lib_tests/private_tests/assertions_tests/assert_fail.sh
+assert_fail_sh_location=cgrindel_bazel_starlib/tests/shlib_tests/lib_tests/assertions_tests/assert_fail.sh
 assert_fail_sh="$(rlocation "${assert_fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${assert_fail_sh_location}" && exit 1)
 source "${assert_fail_sh}"
