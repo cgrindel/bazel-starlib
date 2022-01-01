@@ -30,16 +30,6 @@ def bazel_starlib_dependencies():
         urls = ["https://github.com/cgrindel/rules_bazel_integration_test/archive/v0.3.1.tar.gz"],
     )
 
-    # TODO: CLEAN UP
-
-    # maybe(
-    #     http_archive,
-    #     name = "cgrindel_bazel_shlib",
-    #     sha256 = "39c250852fb455e5de18f836c0c339075d6e52ea5ec52a76d62ef9e2eed56337",
-    #     strip_prefix = "bazel_shlib-0.2.1",
-    #     urls = ["https://github.com/cgrindel/bazel_shlib/archive/v0.2.1.tar.gz"],
-    # )
-
     # Buildifier Deps
 
     maybe(

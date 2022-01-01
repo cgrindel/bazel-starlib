@@ -64,7 +64,6 @@ jobs:
         RELEASE_TAG: ${{ github.event.inputs.release_tag }}
         RESET_TAG: ${{ github.event.inputs.reset_tag }}
       run: |
-        # TODO: Figure out whether we should add the workspace name in front of the target.
         tag_args=()
         [[ "${RESET_TAG:-}" == true ]] && tag_args+=( "--reset_tag" )
         tag_args+=( "${RELEASE_TAG}" )
