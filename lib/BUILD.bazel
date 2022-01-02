@@ -1,11 +1,12 @@
-load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 
-package(default_visibility = ["//visibility:public"])
+bzlformat_pkg(name = "bzlformat")
 
 bzl_library(
     name = "src_utils",
     srcs = ["src_utils.bzl"],
+    deps = [
+        "//bzllib:defs",
+    ],
 )
-
-bzlformat_pkg(name = "bzlformat")

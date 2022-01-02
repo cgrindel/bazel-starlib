@@ -1,0 +1,20 @@
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_binary(
+    name = "contains_item_perf_comparison",
+    srcs = ["contains_item_perf_comparison.sh"],
+    deps = [
+        "//shlib/lib:arrays",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+# MARK: - Collect Files for Integation Tests
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)

@@ -1,0 +1,16 @@
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
+load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
+
+bzlformat_pkg(name = "bzlformat")
+
+test_suite(
+    name = "all_integration_tests",
+    tags = INTEGRATION_TEST_TAGS,
+    tests = [
+        "//tests/bzlrelease_tests/rules_tests/generate_release_notes_tests:integration_tests",
+        "//tests/bzlrelease_tests/rules_tests/generate_workspace_snippet_tests:integration_tests",
+        "//tests/bzlrelease_tests/rules_tests/update_readme_tests:integration_tests",
+        "//tests/bzlrelease_tests/tools_tests:integration_tests",
+    ],
+    visibility = ["//:__subpackages__"],
+)

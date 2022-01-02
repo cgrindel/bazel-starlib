@@ -67,7 +67,7 @@ jobs:
         tag_args=()
         [[ "${RESET_TAG:-}" == true ]] && tag_args+=( "--reset_tag" )
         tag_args+=( "${RELEASE_TAG}" )
-        bazelisk run //tools:create_release_tag -- "${tag_args[@]}"
+        bazelisk run //bzlrelease/tools:create_release_tag -- "${tag_args[@]}"
 
     - name: Generate Release Notes
       shell: bash

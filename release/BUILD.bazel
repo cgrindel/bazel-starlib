@@ -1,4 +1,4 @@
-load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load(
     "//bzlrelease:defs.bzl",
     "create_release",
@@ -6,7 +6,7 @@ load(
     "generate_workspace_snippet",
     "update_readme",
 )
-load("//rules/private:execute_binary.bzl", "execute_binary", "file_placeholder")
+load("//shlib/rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 
 bzlformat_pkg(name = "bzlformat")
 

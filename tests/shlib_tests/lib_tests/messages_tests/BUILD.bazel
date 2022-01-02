@@ -1,0 +1,13 @@
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_test(
+    name = "exit_with_msg_test",
+    srcs = ["exit_with_msg_test.sh"],
+    deps = [
+        "//shlib/lib:assertions",
+        "//shlib/lib:messages",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)

@@ -1,0 +1,121 @@
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
+load(
+    "//bazeldoc:defs.bzl",
+    "doc_for_provs",
+    "write_file_list",
+    "write_header",
+    doc_providers = "providers",
+)
+
+bzlformat_pkg(name = "bzlformat")
+
+# MARK: - Documentation Providers
+
+_STARDOC_INPUT = "//updatesrc:defs.bzl"
+
+_DOC_DEPS = ["//updatesrc:defs"]
+
+_DOC_PATH = "doc/updatesrc"
+
+_PROVIDERS_DOC_PROVIDER = doc_providers.create(
+    name = "providers_overview",
+    stardoc_input = _STARDOC_INPUT,
+    symbols = [
+        "UpdateSrcsInfo",
+    ],
+    deps = _DOC_DEPS,
+)
+
+_RULES_AND_MACROS_DOC_PROVIDER = doc_providers.create(
+    name = "rules_and_macros_overview",
+    stardoc_input = _STARDOC_INPUT,
+    symbols = [
+        "updatesrc_update",
+        "updatesrc_update_all",
+    ],
+    deps = _DOC_DEPS,
+)
+
+_API_SRCS = [
+    "update_srcs",
+]
+
+_API_DOC_PROVIDERS = [
+    doc_providers.create(
+        name = name,
+        stardoc_input = _STARDOC_INPUT,
+        symbols = [name],
+        deps = _DOC_DEPS,
+    )
+    for name in _API_SRCS
+]
+
+_ALL_DOC_PROVIDERS = [
+    _RULES_AND_MACROS_DOC_PROVIDER,
+    _PROVIDERS_DOC_PROVIDER,
+    doc_providers.create(
+        name = "api",
+        is_stardoc = False,
+        stardoc_input = _STARDOC_INPUT,
+        deps = _DOC_DEPS,
+    ),
+] + _API_DOC_PROVIDERS
+
+# MARK: - Headers
+
+write_header(
+    name = _PROVIDERS_DOC_PROVIDER.header_label,
+    header_content = [
+        "# Providers",
+        "",
+        "The providers described below are used by [the rules](/doc/rules_and_macros_overview.md) to",
+        "pass along information about the source files to be updated.",
+    ],
+    symbols = _PROVIDERS_DOC_PROVIDER.symbols,
+)
+
+write_header(
+    name = _RULES_AND_MACROS_DOC_PROVIDER.header_label,
+    header_content = [
+        "# Rules and Macros",
+        "",
+        "The rules and macros described below are used to update source files",
+        "from output files.",
+    ],
+    symbols = _RULES_AND_MACROS_DOC_PROVIDER.symbols,
+)
+
+# Write the API headers
+[
+    write_header(
+        name = doc_prov.header_label,
+        out = doc_prov.header_basename,
+        header_content = [
+            "# `{name}` API".format(name = doc_prov.name),
+        ],
+    )
+    for doc_prov in _API_DOC_PROVIDERS
+    if doc_prov.is_stardoc
+]
+
+# MARK: - Special Case api.md
+
+# Write the api.md_ file as a special case.
+write_file_list(
+    name = "api_doc",
+    out = "api.md_",
+    doc_provs = _API_DOC_PROVIDERS,
+    header_content = [
+        "# Build API",
+        "",
+        "The APIs list below are used by rules_updatesrc.",
+        "",
+    ],
+)
+
+# MARK: - Generate Documentation from Providers
+
+doc_for_provs(
+    doc_path = _DOC_PATH,
+    doc_provs = _ALL_DOC_PROVIDERS,
+)

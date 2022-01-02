@@ -1,0 +1,47 @@
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+# MARK: - Shared Libraries
+
+sh_library(
+    name = "common",
+    srcs = ["common.sh"],
+    visibility = ["//tests/bzlformat_tests/tools_tests/missing_pkgs_tests/common_tests:__subpackages__"],
+)
+
+# MARK: - Binaries
+
+sh_binary(
+    name = "find",
+    srcs = ["find.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":common",
+        "//shlib/lib:arrays",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_binary(
+    name = "fix",
+    srcs = ["fix.sh"],
+    data = [
+        ":find",
+        "@com_github_bazelbuild_buildtools//buildozer",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":common",
+        "//shlib/lib:arrays",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+# MARK: - Collect Files for Integation Tests
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)

@@ -1,0 +1,42 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load(":bzlformat_pkg.bzl", "bzlformat_pkg")
+
+package(default_visibility = ["//bzlformat:__subpackages__"])
+
+bzlformat_pkg(name = "bzlformat")
+
+bzl_library(
+    name = "bzlformat_format",
+    srcs = ["bzlformat_format.bzl"],
+    deps = [
+        "//updatesrc:defs",
+        "@bazel_skylib//lib:paths",
+    ],
+)
+
+bzl_library(
+    name = "bzlformat_pkg",
+    srcs = ["bzlformat_pkg.bzl"],
+    deps = [
+        ":bzlformat_format",
+        "//bzllib:defs",
+        "//updatesrc:defs",
+        "@bazel_skylib//rules:diff_test",
+    ],
+)
+
+bzl_library(
+    name = "bzlformat_missing_pkgs",
+    srcs = ["bzlformat_missing_pkgs.bzl"],
+    deps = [
+        "//shlib/rules:execute_binary",
+    ],
+)
+
+# MARK: - Collect Files for Integation Tests
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)

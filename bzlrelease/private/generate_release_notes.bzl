@@ -1,4 +1,4 @@
-load("//rules/private:execute_binary.bzl", "execute_binary", "file_placeholder")
+load("//shlib/rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 
 def generate_release_notes(name, generate_workspace_snippet):
     """Defines an executable target that generates release notes as Github markdown.
@@ -24,5 +24,5 @@ def generate_release_notes(name, generate_workspace_snippet):
         name = name,
         arguments = arguments,
         file_arguments = file_arguments,
-        binary = "@cgrindel_bazel_starlib//tools:generate_release_notes",
+        binary = "@cgrindel_bazel_starlib//bzlrelease/tools:generate_release_notes",
     )

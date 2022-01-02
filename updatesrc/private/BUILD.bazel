@@ -1,0 +1,40 @@
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
+package(default_visibility = ["//updatesrc:__subpackages__"])
+
+exports_files(["update_all.sh"])
+
+bzlformat_pkg(name = "bzlformat")
+
+bzl_library(
+    name = "providers",
+    srcs = ["providers.bzl"],
+)
+
+bzl_library(
+    name = "update_srcs",
+    srcs = ["update_srcs.bzl"],
+)
+
+bzl_library(
+    name = "updatesrc_update",
+    srcs = ["updatesrc_update.bzl"],
+    deps = [
+        ":providers",
+        ":update_srcs",
+    ],
+)
+
+bzl_library(
+    name = "updatesrc_update_all",
+    srcs = ["updatesrc_update_all.bzl"],
+)
+
+# MARK: - Collect Files for Integation Tests
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)

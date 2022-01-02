@@ -1,0 +1,32 @@
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
+package(default_visibility = ["//shlib/rules:__pkg__"])
+
+bzlformat_pkg(name = "bzlformat")
+
+exports_files(["decompress.sh.tmpl"])
+
+bzl_library(
+    name = "execute_binary",
+    srcs = ["execute_binary.bzl"],
+    deps = [
+        "@bazel_skylib//lib:paths",
+    ],
+)
+
+bzl_library(
+    name = "binary_pkg",
+    srcs = ["binary_pkg.bzl"],
+    deps = [
+        "@bazel_skylib//lib:paths",
+    ],
+)
+
+# MARK: - Collect Files for Integation Tests
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)

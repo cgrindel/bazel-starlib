@@ -1,0 +1,14 @@
+workspace(name = "simple_example")
+
+local_repository(
+    name = "cgrindel_bazel_starlib",
+    path = "../../..",
+)
+
+load("@cgrindel_bazel_starlib//:deps.bzl", "bazel_starlib_dependencies")
+
+bazel_starlib_dependencies()
+
+load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
+
+bazel_skylib_workspace()

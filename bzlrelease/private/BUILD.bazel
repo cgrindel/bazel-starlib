@@ -1,4 +1,4 @@
-load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 
 bzlformat_pkg(name = "bzlformat")
@@ -14,7 +14,7 @@ bzl_library(
     name = "generate_workspace_snippet",
     srcs = ["generate_workspace_snippet.bzl"],
     deps = [
-        "//rules:execute_binary",
+        "//shlib/rules:execute_binary",
     ],
 )
 
@@ -22,7 +22,7 @@ bzl_library(
     name = "generate_release_notes",
     srcs = ["generate_release_notes.bzl"],
     deps = [
-        "//rules:execute_binary",
+        "//shlib/rules:execute_binary",
     ],
 )
 
@@ -30,7 +30,7 @@ bzl_library(
     name = "update_readme",
     srcs = ["update_readme.bzl"],
     deps = [
-        "//rules:execute_binary",
+        "//shlib/rules:execute_binary",
     ],
 )
 
@@ -38,6 +38,14 @@ bzl_library(
     name = "create_release",
     srcs = ["create_release.bzl"],
     deps = [
-        "//rules:execute_binary",
+        "//shlib/rules:execute_binary",
     ],
+)
+
+# MARK: - Collect Files for Integation Tests
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
 )
