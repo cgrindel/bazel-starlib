@@ -45,7 +45,7 @@ information on how to configure the declaration check out the [documentation](/d
 
 ```python
 load(
-    "@cgrindel_bazel_starlib//updatesrc:updatesrc.bzl",
+    "@cgrindel_bazel_starlib//updatesrc:defs.bzl",
     "updatesrc_update",
 )
 

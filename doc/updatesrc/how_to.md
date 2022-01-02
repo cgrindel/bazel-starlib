@@ -40,7 +40,7 @@ mapping between the output files and the source files.
 
 ```python
 load(
-    "@cgrindel_bazel_starlib//updatesrc:updatesrc.bzl",
+    "@cgrindel_bazel_starlib//updatesrc:defs.bzl",
     "updatesrc_update",
 )
 
@@ -96,7 +96,7 @@ source file. In addition to returning a `DefaultInfo` provider, it returns an in
 # File: header/header.bzl
 
 load(
-    "@cgrindel_bazel_starlib//updatesrc:updatesrc.bzl",
+    "@cgrindel_bazel_starlib//updatesrc:defs.bzl",
     "UpdateSrcsInfo",
     "update_srcs",
 )
@@ -147,7 +147,7 @@ A Bazel package that uses the rule looks like the following:
 # File: path/to/pkg/BUILD.bazel
 
 load("//header:header.bzl", "header")
-load("@cgrindel_bazel_starlib//updatesrc:updatesrc.bzl", "updatesrc_update")
+load("@cgrindel_bazel_starlib//updatesrc:defs.bzl", "updatesrc_update")
 
 header(
     name = "add_headers",
