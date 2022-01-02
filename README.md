@@ -1,12 +1,28 @@
-# Starlib
+# Bazel Starlib
 
-Starlib is a library of Starlark APIs and rules that are useful for the implementation of Bazel
-projects, but do not exist in the [Skylib](https://github.com/bazelbuild/bazel-skylib) repository.
+Bazel Starlib is a collection of rulesets and libraries that are useful for the implementation of
+Bazel projects. This repository contains the following projects:
+
+- [bazeldoc](/doc/bazeldoc/README.md) - Generate Starlark documentation using [Bazel
+  Stardoc](https://github.com/bazelbuild/stardoc). Formerly hosted as [bazel-doc](https://github.com/cgrindel/bazel-doc).
+- [bzlformat](/doc/bzlformat/README.md) - Format Bazel Starlark files using
+  [Buildifier](https://github.com/bazelbuild/buildtools/tree/master/buildifier), test that the
+  formatted files exist in the workspace directory, and copy formatted files to the workspace
+  directory. Formerly hosted as [rules_bzlformat](https://github.com/cgrindel/rules_bzlformat).
+- [bzllib](/doc/bzllib/README.md) - Collection of Starlark libraries.
+- [bzlrelease](/doc/bzlrelease/README.md) - Automate and customize the generation of releases using
+  GitHub Actions.
+- [shlib](/doc/shlib/README.md) - Collection of libraries useful when implementing shell binaries,
+  libraries, and tests. Formerly hosted as [bazel_shlib](https://github.com/cgrindel/bazel_shlib).
+- [updatesrc](/doc/updatesrc/README.md) - Copy files from the Bazel output directories to the
+  workspace directory. Formerly hosted as [rules_updatesrc](https://github.com/cgrindel/rules_updatesrc)
+
 
 ## Quickstart
 
-The following provides a quick introduction on how to get started using the rules and APIs in this
-repository. Check out [the documentation](/doc/) for more information.
+The following provides a quick introduction on how to load this repository into your workspace.  For
+more information on how to use the projects from this repository in your workspace, check out the
+how-to links above and review the [the generated documentation](/doc/).
 
 ### Workspace Configuration
 
@@ -39,4 +55,4 @@ stardoc_repositories()
 
 ## Other Documentation
 
-- [Release Process](release/README.md)
+- [Release process for this repository](release/README.md)
