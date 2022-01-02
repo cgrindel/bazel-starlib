@@ -20,7 +20,7 @@ directory.
 The following provides a quick introduction on how to use the rules in this repository. Also, check
 out [the documentation](/doc/bzlformat/) and [the examples](/examples/) for more information.
 
-### 1. Configure your workspace to use `rules_bzlformat`
+### 1. Configure your workspace to use `bzlformat`
 
 In addition to the [workspace snippet for the repository](/README.md#workspace-configuration), add
 the following to your `WORKSPACE` file. These are dependencies for
@@ -124,7 +124,7 @@ $ bazel test //...
 
 ### 5. (Optional) Update Your CI Test Runs
 
-To ensure that all of your Bazel packages are monitored by `rules_bzlformat`, add a call to `bazel
+To ensure that all of your Bazel packages are monitored by `bzlformat`, add a call to `bazel
 run //:bzlformat_missing_pkgs_test` to your CI test runs. If any Bazel packages are missing
 `bzlformat_pkg` declarations, this executable target will exit with a non-zero value.
 
