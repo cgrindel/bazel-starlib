@@ -1,21 +1,16 @@
 # Bazel Starlib
 
-Bazel Starlib is a collection of rulesets and libraries that are useful for the implementation of
-Bazel projects. This repository contains the following projects:
+Bazel Starlib is a collection of projects that contain rulesets and libraries that are useful for
+the implementation of Bazel projects. 
 
-- [bazeldoc](/bazeldoc/README.md) - Generate Starlark documentation using [Bazel
-  Stardoc](https://github.com/bazelbuild/stardoc). Formerly hosted as [bazel-doc](https://github.com/cgrindel/bazel-doc).
-- [bzlformat](/bzlformat/README.md) - Format Bazel Starlark files using
-  [Buildifier](https://github.com/bazelbuild/buildtools/tree/master/buildifier), test that the
-  formatted files exist in the workspace directory, and copy formatted files to the workspace
-  directory. Formerly hosted as [rules_bzlformat](https://github.com/cgrindel/rules_bzlformat).
-- [bzllib](/bzllib/README.md) - Collection of Starlark libraries.
-- [bzlrelease](/bzlrelease/README.md) - Automate and customize the generation of releases using
-  GitHub Actions.
-- [shlib](/shlib/README.md) - Collection of libraries useful when implementing shell binaries,
-  libraries, and tests. Formerly hosted as [bazel_shlib](https://github.com/cgrindel/bazel_shlib).
-- [updatesrc](/updatesrc/README.md) - Copy files from the Bazel output directories to the
-  workspace directory. Formerly hosted as [rules_updatesrc](https://github.com/cgrindel/rules_updatesrc)
+| Project | Description | Documentation |
+| ------- | ----------- | ------------- |
+| bazeldoc | Generate Starlark documentation using [Bazel Stardoc](https://github.com/bazelbuild/stardoc). Formerly hosted as [bazel-doc](https://github.com/cgrindel/bazel-doc). | [API](/doc/bazeldoc/), [How-to](/bazeldoc/) |
+| bzlformat | Format Bazel Starlark files using [Buildifier](https://github.com/bazelbuild/buildtools/tree/master/buildifier), test that the formatted files exist in the workspace directory, and copy formatted files to the workspace directory. Formerly hosted as [rules_bzlformat](https://github.com/cgrindel/rules_bzlformat). | [API](/doc/bzlformat/), [How-to](/bzlformat/) |
+| bzllib | Collection of Starlark libraries. | [API](/doc/bzllib/), [How-to](/bzllib/) |
+| bzlrelease | Automate and customize the generation of releases using GitHub Actions. | [API](/doc/bzlrelease/), [How-to](/bzlrelease/) |
+| shlib | Collection of libraries useful when implementing shell binaries, libraries, and tests. Formerly hosted as [bazel_shlib](https://github.com/cgrindel/bazel_shlib). | [API](/doc/shlib/), [How-to](/shlib/) |
+| updatesrc | Copy files from the Bazel output directories to the workspace directory. Formerly hosted as [rules_updatesrc](https://github.com/cgrindel/rules_updatesrc) | [API](/doc/updatesrc/), [How-to](/updatesrc/) |
 
 
 ## Quickstart
@@ -23,6 +18,7 @@ Bazel projects. This repository contains the following projects:
 The following provides a quick introduction on how to load this repository into your workspace.  For
 more information on how to use the projects from this repository in your workspace, check out the
 how-to links above and review the [the generated documentation](/doc/).
+
 
 ### Workspace Configuration
 
