@@ -9,7 +9,7 @@ directory.
 ## Table of Contents
 
 * [Quickstart](#quickstart)
-  * [1\. Configure your workspace to use rules\_bzlformat](#1-configure-your-workspace-to-use-rules_bzlformat)
+  * [1\. Configure your workspace to use bzlformat](#1-configure-your-workspace-to-use-bzlformat)
   * [2\. Update the BUILD\.bazel at the root of your workspace](#2-update-the-buildbazel-at-the-root-of-your-workspace)
   * [3\. Add bzlformat\_pkg to every Bazel package](#3-add-bzlformat_pkg-to-every-bazel-package)
   * [4\. Format, Update, and Test](#4-format-update-and-test)
