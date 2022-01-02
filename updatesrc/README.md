@@ -67,6 +67,6 @@ $ bazel run //:update_all
 
 ## Learn More
 
-- [How to Use `rules_updatesrc`](/doc/updatesrc/how_to.md)
+- [How to Use `updatesrc`](/doc/updatesrc/how_to.md)
 - Check out [the examples](/examples/updatesrc/)
 - Peruse [the documentation](/doc/updatesrc/)

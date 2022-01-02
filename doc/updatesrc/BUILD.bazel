@@ -109,7 +109,7 @@ write_file_list(
     header_content = [
         "# Build API",
         "",
-        "The APIs list below are used by rules_updatesrc.",
+        "The APIs list below are used by updatesrc.",
         "",
     ],
 )

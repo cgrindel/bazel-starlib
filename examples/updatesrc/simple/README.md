@@ -1,4 +1,4 @@
-# Simple Example for `rules_updatesrc`
+# Simple Example for `updatesrc`
 
 This example demonstrates how to use the
 [updatesrc_update](/doc/updatesrc/rules_and_macros_overview.md#updatesrc_update) rule and the

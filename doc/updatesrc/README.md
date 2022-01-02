@@ -1,4 +1,4 @@
-# Documentation for `rules_updatesrc`
+# Documentation for `updatesrc`
 
 ## How-tos
 - [How to Use `updatesrc`](/doc/updatesrc/how_to.md)
