@@ -1,7 +1,7 @@
 # Documentation for `rules_updatesrc`
 
 ## How-tos
-- [How to Use `rules_updatesrc`](/doc/updatesrc/how_to.md)
+- [How to Use `updatesrc`](/doc/updatesrc/how_to.md)
 
 ## Reference Documentation
 
