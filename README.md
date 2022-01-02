@@ -3,18 +3,18 @@
 Bazel Starlib is a collection of rulesets and libraries that are useful for the implementation of
 Bazel projects. This repository contains the following projects:
 
-- [bazeldoc](/doc/bazeldoc/README.md) - Generate Starlark documentation using [Bazel
+- [bazeldoc](/bazeldoc/README.md) - Generate Starlark documentation using [Bazel
   Stardoc](https://github.com/bazelbuild/stardoc). Formerly hosted as [bazel-doc](https://github.com/cgrindel/bazel-doc).
-- [bzlformat](/doc/bzlformat/README.md) - Format Bazel Starlark files using
+- [bzlformat](/bzlformat/README.md) - Format Bazel Starlark files using
   [Buildifier](https://github.com/bazelbuild/buildtools/tree/master/buildifier), test that the
   formatted files exist in the workspace directory, and copy formatted files to the workspace
   directory. Formerly hosted as [rules_bzlformat](https://github.com/cgrindel/rules_bzlformat).
-- [bzllib](/doc/bzllib/README.md) - Collection of Starlark libraries.
-- [bzlrelease](/doc/bzlrelease/README.md) - Automate and customize the generation of releases using
+- [bzllib](/bzllib/README.md) - Collection of Starlark libraries.
+- [bzlrelease](/bzlrelease/README.md) - Automate and customize the generation of releases using
   GitHub Actions.
-- [shlib](/doc/shlib/README.md) - Collection of libraries useful when implementing shell binaries,
+- [shlib](/shlib/README.md) - Collection of libraries useful when implementing shell binaries,
   libraries, and tests. Formerly hosted as [bazel_shlib](https://github.com/cgrindel/bazel_shlib).
-- [updatesrc](/doc/updatesrc/README.md) - Copy files from the Bazel output directories to the
+- [updatesrc](/updatesrc/README.md) - Copy files from the Bazel output directories to the
   workspace directory. Formerly hosted as [rules_updatesrc](https://github.com/cgrindel/rules_updatesrc)
 
 
