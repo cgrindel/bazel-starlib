@@ -1,6 +1,8 @@
+load("//updatesrc:defs.bzl", "updatesrc_update")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@bazel_skylib//lib:paths.bzl", "paths")
 
-def update_doc(doc_provs, doc_path = "doc"):
+def update_doc(doc_provs, name = "update", doc_path = "doc"):
     """Defines an executable target that copies the documentation from the output directory to the workspace directory.
 
     Args:
@@ -12,27 +14,41 @@ def update_doc(doc_provs, doc_path = "doc"):
     Returns:
         None.
     """
-    write_file(
-        name = "gen_update",
-        out = "update.sh",
-        content = [
-            "#!/usr/bin/env bash",
-            "cd $BUILD_WORKSPACE_DIRECTORY",
-        ] + [
-            "cp -fv bazel-bin/{doc_path}/{gen_doc} {doc_path}/{src_doc}".format(
-                doc_path = doc_path,
-                gen_doc = doc_prov.out_basename,
-                src_doc = doc_prov.doc_basename,
-            )
-            for doc_prov in doc_provs
-        ],
+    srcs = []
+    outs = []
+    for doc_prov in doc_provs:
+        # srcs.append(paths.join(doc_path, doc_prov.doc_basename))
+        # outs.append(paths.join(doc_path, doc_prov.out_basename))
+        srcs.append(doc_prov.doc_basename)
+        outs.append(doc_prov.out_basename)
+
+    updatesrc_update(
+        name = name,
+        srcs = srcs,
+        outs = outs,
     )
 
-    native.sh_binary(
-        name = "update",
-        srcs = ["update.sh"],
-        data = [doc_prov.out_basename for doc_prov in doc_provs],
-        # The '@' in the following visibility is important. It makes the
-        # target visible relative to the repository where it is being used.
-        visibility = ["@//visibility:public"],
-    )
+    # write_file(
+    #     name = "gen_update",
+    #     out = "update.sh",
+    #     content = [
+    #         "#!/usr/bin/env bash",
+    #         "cd $BUILD_WORKSPACE_DIRECTORY",
+    #     ] + [
+    #         "cp -fv bazel-bin/{doc_path}/{gen_doc} {doc_path}/{src_doc}".format(
+    #             doc_path = doc_path,
+    #             gen_doc = doc_prov.out_basename,
+    #             src_doc = doc_prov.doc_basename,
+    #         )
+    #         for doc_prov in doc_provs
+    #     ],
+    # )
+
+    # native.sh_binary(
+    #     name = "update",
+    #     srcs = ["update.sh"],
+    #     data = [doc_prov.out_basename for doc_prov in doc_provs],
+    #     # The '@' in the following visibility is important. It makes the
+    #     # target visible relative to the repository where it is being used.
+    #     visibility = ["@//visibility:public"],
+    # )
