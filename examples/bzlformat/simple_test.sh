@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# This script performs an integration test for rules_bzlformat.
+# This script performs an integration test for bzlformat.
 # Changes are made to a build file and a bzl file, then the update
 # all command is run to format the changes and copy them back to 
 # the workspace. Finally, the tests are run to be sure that everything

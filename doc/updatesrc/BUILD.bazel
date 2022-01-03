@@ -104,11 +104,12 @@ write_header(
 write_file_list(
     name = "api_doc",
     out = "api.md_",
+    doc_path = _DOC_PATH,
     doc_provs = _API_DOC_PROVIDERS,
     header_content = [
         "# Build API",
         "",
-        "The APIs list below are used by rules_updatesrc.",
+        "The APIs list below are used by updatesrc.",
         "",
     ],
 )
