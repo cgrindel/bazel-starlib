@@ -1,6 +1,8 @@
 load(":write_doc.bzl", "write_doc")
 load(":doc_utilities.bzl", "doc_utilities")
 
+# TODO: Try using package_name() to remove doc_path.
+
 def write_file_list(
         name,
         out,
