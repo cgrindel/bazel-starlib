@@ -11,8 +11,6 @@ bzlformat_pkg(name = "bzlformat")
 
 # MARK: - Documentation Providers
 
-_DOC_PATH = "doc/shlib"
-
 _RULE_NAMES = [
     "binary_pkg",
     "execute_binary",
@@ -89,7 +87,6 @@ _ALL_DOC_PROVIDERS = [
 write_file_list(
     name = "api_doc",
     out = "api.md_",
-    doc_path = _DOC_PATH,
     doc_provs = _API_DOC_PROVIDERS,
     header_content = [
         "# Build API",
@@ -103,7 +100,6 @@ write_file_list(
 write_file_list(
     name = "rules_doc",
     out = "rules.md_",
-    doc_path = _DOC_PATH,
     doc_provs = _RULE_DOC_PROVIDERS,
     header_content = [
         "# Rules",

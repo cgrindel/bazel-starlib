@@ -24,8 +24,6 @@ _DOC_DEPS = [
     "//bazeldoc:defs",
 ]
 
-_DOC_PATH = "doc/bazeldoc"
-
 _API_DOC_PROVIDERS = [
     doc_providers.create(
         name = name,
@@ -62,7 +60,6 @@ _ALL_DOC_PROVIDERS = [
 write_file_list(
     name = "api_doc",
     out = "api.md_",
-    doc_path = _DOC_PATH,
     doc_provs = _API_DOC_PROVIDERS,
     header_content = [
         "# Documentation API",

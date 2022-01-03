@@ -3,5 +3,5 @@
 
 The rules listed below are available in this repository.
 
-  * [filter_srcs](/doc/filter_srcs.md)
+  * [filter_srcs](/doc/bzllib/filter_srcs.md)
 

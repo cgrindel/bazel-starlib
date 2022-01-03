@@ -15,8 +15,6 @@ _STARDOC_INPUT = "//updatesrc:defs.bzl"
 
 _DOC_DEPS = ["//updatesrc:defs"]
 
-_DOC_PATH = "doc/updatesrc"
-
 _PROVIDERS_DOC_PROVIDER = doc_providers.create(
     name = "providers_overview",
     stardoc_input = _STARDOC_INPUT,
@@ -104,7 +102,6 @@ write_header(
 write_file_list(
     name = "api_doc",
     out = "api.md_",
-    doc_path = _DOC_PATH,
     doc_provs = _API_DOC_PROVIDERS,
     header_content = [
         "# Build API",
