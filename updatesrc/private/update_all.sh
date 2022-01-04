@@ -3,7 +3,7 @@
 # This script will query for all of the updatesrc_update targets and execute
 # each one.
 
-set -uo pipefail
+set -euo pipefail
 
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
