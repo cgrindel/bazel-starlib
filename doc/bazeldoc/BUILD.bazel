@@ -15,6 +15,7 @@ bzlformat_pkg(name = "bzlformat")
 # MARK: - Documentation Declarations
 
 _API_SRCS = [
+    "doc_utilities",
     "providers",
 ]
 
@@ -38,9 +39,15 @@ _BUILD_RULES_PROV = doc_providers.create(
     name = "build_rules_overview",
     stardoc_input = _STARDOC_INPUT,
     symbols = [
+        "diff_test_for_prov",
+        "diff_test_for_provs",
         "doc_for_provs",
-        "write_header",
+        "stardoc_for_prov",
+        "stardoc_for_provs",
+        "update_doc",
+        "write_doc",
         "write_file_list",
+        "write_header",
     ],
     deps = _DOC_DEPS,
 )

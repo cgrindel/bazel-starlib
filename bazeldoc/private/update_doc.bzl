@@ -1,12 +1,13 @@
 load("//updatesrc:defs.bzl", "updatesrc_update")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
 
-def update_doc(doc_provs, name = "update"):
+def update_doc(doc_provs, name = "update", chicken = None):
     """Defines an executable target that copies the documentation from the output directory to the workspace directory.
 
     Args:
         doc_provs: A `list` of document provider `struct` values as returned
                    from `providers.create()`.
+        chicken: This is not real.
     """
     srcs = []
     outs = []
