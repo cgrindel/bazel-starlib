@@ -1,0 +1,31 @@
+load("@cgrindel_bazel_starlib//updatesrc:defs.bzl", "updatesrc_diff_and_update")
+
+srcs = [
+    "foo.txt",
+    "bar.txt",
+]
+
+outs = [
+    "foo.txt_modified",
+    "bar.txt_modified",
+]
+
+# Generate copies of the src. Do not make them different.
+[
+    genrule(
+        name = "gen_" + outs[idx],
+        srcs = [srcs[idx]],
+        outs = [outs[idx]],
+        cmd = """\
+cat $(location {src}) > $@
+""".format(src = srcs[idx]),
+    )
+    for idx in range(len(srcs))
+]
+
+updatesrc_diff_and_update(
+    srcs = srcs,
+    outs = outs,
+    diff_test_visibility = ["//diff_and_update_test:__pkg__"],
+    update_visibility = ["//diff_and_update_test:__pkg__"],
+)

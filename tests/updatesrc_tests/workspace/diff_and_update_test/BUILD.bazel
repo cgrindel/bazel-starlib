@@ -1,0 +1,55 @@
+load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+
+# MARK: - With Defaults
+
+_WITH_DEFAULTS_SCOPE = [
+    "//diff_and_update_test/with_defaults:foo.txt_difftest",
+    "//diff_and_update_test/with_defaults:bar.txt_difftest",
+    "//diff_and_update_test/with_defaults:update",
+]
+
+genquery(
+    name = "with_defaults_diff_test_query",
+    testonly = True,
+    expression = "kind(diff_test, //diff_and_update_test/with_defaults:all)",
+    scope = _WITH_DEFAULTS_SCOPE,
+)
+
+genquery(
+    name = "with_defaults_update_query",
+    testonly = True,
+    expression = "kind(updatesrc_update, //diff_and_update_test/with_defaults:all)",
+    scope = _WITH_DEFAULTS_SCOPE,
+)
+
+write_file(
+    name = "with_defaults_expected_diff_test_targets",
+    out = "with_defaults_expected_diff_test_targets.out",
+    content = [
+        "//diff_and_update_test/with_defaults:foo.txt_difftest",
+        "//diff_and_update_test/with_defaults:bar.txt_difftest",
+        "",
+    ],
+)
+
+diff_test(
+    name = "with_defaults_confirm_diff_test_targets",
+    file1 = ":with_defaults_diff_test_query",
+    file2 = ":with_defaults_expected_diff_test_targets",
+)
+
+write_file(
+    name = "with_defaults_expected_update_targets",
+    out = "with_defaults_expected_update_targets.out",
+    content = [
+        "//diff_and_update_test/with_defaults:update",
+        "",
+    ],
+)
+
+diff_test(
+    name = "with_defaults_confirm_update_targets",
+    file1 = ":with_defaults_update_query",
+    file2 = ":with_defaults_expected_update_targets",
+)

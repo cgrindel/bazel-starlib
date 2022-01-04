@@ -8,7 +8,9 @@ def updatesrc_diff_and_update(
         outs,
         update_name = "update",
         diff_test_prefix = "",
-        diff_test_suffix = "_difftest"):
+        diff_test_suffix = "_difftest",
+        update_visibility = None,
+        diff_test_visibility = None):
     """Defines an `updatesrc_update` for the package and `diff_test` targets for each src-out pair.
 
     Args:
@@ -24,6 +26,10 @@ def updatesrc_diff_and_update(
                           target names.
         diff_test_suffix: Optional. The suffix to be used for the `diff_test`
                           target names.
+        update_visibility: Optional. The visibility declarations for the
+                           `updatesrc_update` target.
+        diff_test_visibility: Optional. The visibility declarations for the
+                              `diff_test` targets.
     """
 
     # Make sure that we have the same number of srcs and outs.
@@ -33,12 +39,13 @@ def updatesrc_diff_and_update(
     # Define the diff tests.
     for idx in range(len(srcs)):
         src = srcs[idx]
-        out = outs[out]
+        out = outs[idx]
         src_name = src.replace("/", "_")
         diff_test(
             name = diff_test_prefix + src_name + diff_test_suffix,
             file1 = src,
             file2 = out,
+            visibility = diff_test_visibility,
         )
 
     # Define the update target
@@ -46,4 +53,5 @@ def updatesrc_diff_and_update(
         name = update_name,
         srcs = srcs,
         outs = outs,
+        visibility = update_visibility,
     )
