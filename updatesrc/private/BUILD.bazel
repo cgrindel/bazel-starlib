@@ -32,8 +32,8 @@ bzl_library(
 )
 
 bzl_library(
-    name = "updatesrc_update_and_test",
-    srcs = ["updatesrc_update_and_test.bzl"],
+    name = "updatesrc_diff_and_update",
+    srcs = ["updatesrc_diff_and_update.bzl"],
     deps = [
         ":updatesrc_update",
         "@bazel_skylib//rules:diff_test",

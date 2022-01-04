@@ -10,6 +10,7 @@ bzl_library(
     srcs = ["defs.bzl"],
     deps = [
         "//updatesrc/private:providers",
+        "//updatesrc/private:updatesrc_diff_and_update",
         "//updatesrc/private:updatesrc_update",
         "//updatesrc/private:updatesrc_update_all",
     ],
