@@ -6,20 +6,11 @@ package(default_visibility = ["//bazeldoc:__subpackages__"])
 bzlformat_pkg(name = "bzlformat")
 
 bzl_library(
-    name = "diff_test_for_provs",
-    srcs = ["diff_test_for_provs.bzl"],
-    deps = [
-        "@bazel_skylib//rules:diff_test",
-    ],
-)
-
-bzl_library(
     name = "doc_for_provs",
     srcs = ["doc_for_provs.bzl"],
     deps = [
-        ":diff_test_for_provs",
         ":stardoc_for_prov",
-        ":update_doc",
+        "//updatesrc:defs",
     ],
 )
 
@@ -38,15 +29,6 @@ bzl_library(
     srcs = ["stardoc_for_prov.bzl"],
     deps = [
         "@io_bazel_stardoc//stardoc:stardoc_lib",
-    ],
-)
-
-bzl_library(
-    name = "update_doc",
-    srcs = ["update_doc.bzl"],
-    deps = [
-        "//updatesrc:defs",
-        "@bazel_skylib//rules:write_file",
     ],
 )
 

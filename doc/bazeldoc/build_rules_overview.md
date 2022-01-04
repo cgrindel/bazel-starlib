@@ -6,12 +6,9 @@ Starlark documentation.
 
 On this page:
 
-  * [diff_test_for_prov](#diff_test_for_prov)
-  * [diff_test_for_provs](#diff_test_for_provs)
   * [doc_for_provs](#doc_for_provs)
   * [stardoc_for_prov](#stardoc_for_prov)
   * [stardoc_for_provs](#stardoc_for_provs)
-  * [update_doc](#update_doc)
   * [write_doc](#write_doc)
   * [write_file_list](#write_file_list)
   * [write_header](#write_header)
