@@ -30,6 +30,7 @@ _RULES_AND_MACROS_DOC_PROVIDER = doc_providers.create(
     symbols = [
         "updatesrc_update",
         "updatesrc_update_all",
+        "updatesrc_update_and_test",
     ],
     deps = _DOC_DEPS,
 )

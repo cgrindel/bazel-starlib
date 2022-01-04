@@ -8,6 +8,7 @@ On this page:
 
   * [updatesrc_update](#updatesrc_update)
   * [updatesrc_update_all](#updatesrc_update_all)
+  * [updatesrc_update_and_test](#updatesrc_update_and_test)
 
 
 <a id="#updatesrc_update"></a>
