@@ -1,5 +1,6 @@
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load(":sorted_genquery.bzl", "sorted_genquery")
 
 # MARK: - With Defaults
 
@@ -9,14 +10,14 @@ _WITH_DEFAULTS_SCOPE = [
     "//diff_and_update_test/with_defaults:update",
 ]
 
-genquery(
+sorted_genquery(
     name = "with_defaults_diff_test_query",
     testonly = True,
     expression = "kind(diff_test, //diff_and_update_test/with_defaults:all)",
     scope = _WITH_DEFAULTS_SCOPE,
 )
 
-genquery(
+sorted_genquery(
     name = "with_defaults_update_query",
     testonly = True,
     expression = "kind(updatesrc_update, //diff_and_update_test/with_defaults:all)",
@@ -27,8 +28,8 @@ write_file(
     name = "with_defaults_expected_diff_test_targets",
     out = "with_defaults_expected_diff_test_targets.out",
     content = [
-        "//diff_and_update_test/with_defaults:foo.txt_difftest",
         "//diff_and_update_test/with_defaults:bar.txt_difftest",
+        "//diff_and_update_test/with_defaults:foo.txt_difftest",
         "",
     ],
 )
@@ -62,14 +63,14 @@ _WITH_CUSTOM_VALUES_SCOPE = [
     "//diff_and_update_test/with_custom_values:my_update",
 ]
 
-genquery(
+sorted_genquery(
     name = "with_custom_values_diff_test_query",
     testonly = True,
     expression = "kind(diff_test, //diff_and_update_test/with_custom_values:all)",
     scope = _WITH_CUSTOM_VALUES_SCOPE,
 )
 
-genquery(
+sorted_genquery(
     name = "with_custom_values_update_query",
     testonly = True,
     expression = "kind(updatesrc_update, //diff_and_update_test/with_custom_values:all)",
@@ -80,8 +81,8 @@ write_file(
     name = "with_custom_values_expected_diff_test_targets",
     out = "with_custom_values_expected_diff_test_targets.out",
     content = [
-        "//diff_and_update_test/with_custom_values:my_prefix_foo.txt_my_suffix",
         "//diff_and_update_test/with_custom_values:my_prefix_bar.txt_my_suffix",
+        "//diff_and_update_test/with_custom_values:my_prefix_foo.txt_my_suffix",
         "",
     ],
 )
