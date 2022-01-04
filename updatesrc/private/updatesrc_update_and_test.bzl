@@ -2,6 +2,7 @@ load(":updatesrc_update.bzl", "updatesrc_update")
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 
 # TODO: Add documentation
+# TODO: Add tests
 
 def updatesrc_update_and_test(
         srcs,
