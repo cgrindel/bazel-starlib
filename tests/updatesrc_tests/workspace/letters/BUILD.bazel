@@ -1,9 +1,6 @@
-load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
 load("@cgrindel_bazel_starlib//updatesrc/private:updatesrc_update_test.bzl", "updatesrc_update_test")
 load("@cgrindel_bazel_starlib//updatesrc:defs.bzl", "updatesrc_update")
 load(":letters.bzl", "letters")
-
-bzlformat_pkg(name = "bzlformat")
 
 # MARK: - Update Tests
 
