@@ -1,0 +1,61 @@
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+load("@cgrindel_bazel_starlib//updatesrc/private:updatesrc_update_test.bzl", "updatesrc_update_test")
+load("@cgrindel_bazel_starlib//updatesrc:defs.bzl", "updatesrc_update")
+load(":letters.bzl", "letters")
+
+bzlformat_pkg(name = "bzlformat")
+
+# MARK: - Update Tests
+
+_LETTERS = [
+    "a",
+    "b",
+    "c",
+]
+
+_LETTER_STRUCTS = [
+    letters.create(letter)
+    for letter in _LETTERS
+]
+
+_LETTER_SRCS = [ls.src for ls in _LETTER_STRUCTS]
+
+_LETTER_OUT_NAMES = [":" + ls.out_name for ls in _LETTER_STRUCTS]
+
+[
+    genrule(
+        name = ls.src_name,
+        srcs = [],
+        outs = [ls.src],
+        cmd = """\
+echo "This is {filename}." > $@
+""".format(filename = ls.src),
+    )
+    for ls in _LETTER_STRUCTS
+]
+
+[
+    genrule(
+        name = ls.out_name,
+        srcs = [ls.src],
+        outs = [ls.out],
+        cmd = """\
+echo "# Howdy" > $@
+cat $(location {filename}) >> $@
+""".format(filename = ls.src),
+    )
+    for ls in _LETTER_STRUCTS
+]
+
+updatesrc_update(
+    name = "src_out",
+    srcs = _LETTER_SRCS,
+    outs = _LETTER_OUT_NAMES,
+)
+
+updatesrc_update_test(
+    name = "src_out_test",
+    srcs = _LETTER_SRCS,
+    outs = _LETTER_OUT_NAMES,
+    update_target = ":src_out",
+)

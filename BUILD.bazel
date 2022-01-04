@@ -95,6 +95,7 @@ test_suite(
         "//tests/bzlrelease_tests:all_integration_tests",
         "//tests/shlib_tests/lib_tests/git_tests:integration_tests",
         "//tests/shlib_tests/lib_tests/github_tests:integration_tests",
+        "//tests/updatesrc_tests:integration_tests",
     ],
     visibility = ["//:__subpackages__"],
 )
