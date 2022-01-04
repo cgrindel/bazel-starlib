@@ -9,6 +9,16 @@ trick in every Bazel project, try using the
 [updatesrc_update](/doc/updatesrc/rules_and_macros_overview.md#updatesrc_update) rule and the
 [updatesrc_update_all](/doc/updatesrc/rules_and_macros_overview.md#updatesrc_update_all) macro.
 
+## Table of Contents
+
+* [Quickstart](#quickstart)
+  * [1\. Configure your workspace](#1-configure-your-workspace)
+  * [2\. Update the BUILD\.bazel at the root of your workspace](#2-update-the-buildbazel-at-the-root-of-your-workspace)
+  * [3\. Add updatesrc\_update to every Bazel package that has files to copy](#3-add-updatesrc_update-to-every-bazel-package-that-has-files-to-copy)
+  * [4\. Execute the Update All Target](#4-execute-the-update-all-target)
+* [How to Ensure Workspace Files Are Up\-to\-Date](#how-to-ensure-workspace-files-are-up-to-date)
+* [Learn More](#learn-more)
+
 ## Quickstart
 
 The following provides a quick introduction on how to use the rules in this project. Also, check out
@@ -64,6 +74,52 @@ update all target at the root of your workspace.
 ```sh
 $ bazel run //:update_all
 ```
+
+## How to Ensure Workspace Files Are Up-to-Date
+
+If you are using [updatesrc_update](/doc/updatesrc/rules_and_macros_overview.md#updatesrc_update) to
+copy build outputs back to your workspace directory. You probably want to incorporate a check in
+your build to ensure that the workspace files match what is output by the build. With a single
+declaration, the
+[updatesrc_diff_and_update](/doc/updatesrc/rules_and_macros_overview.md#updatesrc_diff_and_update)
+macro defines a single
+[updatesrc_update](/doc/updatesrc/rules_and_macros_overview.md#updatesrc_update) target along with a
+[diff_test](https://github.com/bazelbuild/bazel-skylib/blob/main/docs/diff_test_doc.md) target for
+each of the source-output pairs that are specified. Just use
+[updatesrc_diff_and_update](/doc/updatesrc/rules_and_macros_overview.md#updatesrc_diff_and_update)
+wherever you would use
+[updatesrc_update](/doc/updatesrc/rules_and_macros_overview.md#updatesrc_update).
+
+```python
+load("//updatesrc:defs.bzl", "updatesrc_diff_and_update")
+
+srcs = ["foo.txt", "bar.txt"]
+outs = [f + "_formatted" for f in srcs]
+
+genrule(
+  name = "format_srcs",
+  srcs = srcs,
+  outs = outs,
+  cmd = "...",
+)
+
+# Defines the following:
+#   :update - updatesrc_update target that will copy the outs to the srcs.
+#   :foo.txt_difftest - diff_test for foo.txt
+#   :bar.txt_difftest - diff_test for bar.txt
+updatesrc_diff_and_update(
+  srcs = srcs,
+  outs = outs,
+)
+```
+
+NOTE: The
+[updatesrc_diff_and_update](/doc/updatesrc/rules_and_macros_overview.md#updatesrc_diff_and_update)
+macro only works with source-output pairs. It does not support update mappings specified by rules
+that output [UpdateSrcsInfo](/doc/updatesrc/providers_overview.md#UpdateSrcsInfo).
+
+Thanks to @lukedirtwalker for suggesting this feature.
+
 
 ## Learn More
 
