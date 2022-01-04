@@ -34,10 +34,6 @@ Defines targets for generating documentation, testing that the generated doc mat
 | :------------- | :------------- | :------------- |
 | <a id="doc_for_provs-doc_provs"></a>doc_provs |  A <code>list</code> of document provider <code>struct</code> values as returned from <code>providers.create()</code>.   |  none |
 
-**RETURNS**
-
-None.
-
 
 <a id="#write_file_list"></a>
 
