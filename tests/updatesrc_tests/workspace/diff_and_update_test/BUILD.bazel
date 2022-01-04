@@ -53,3 +53,56 @@ diff_test(
     file1 = ":with_defaults_update_query",
     file2 = ":with_defaults_expected_update_targets",
 )
+
+# MARK: - With Custom Values
+
+_WITH_CUSTOM_VALUES_SCOPE = [
+    "//diff_and_update_test/with_custom_values:my_prefix_foo.txt_my_suffix",
+    "//diff_and_update_test/with_custom_values:my_prefix_bar.txt_my_suffix",
+    "//diff_and_update_test/with_custom_values:my_update",
+]
+
+genquery(
+    name = "with_custom_values_diff_test_query",
+    testonly = True,
+    expression = "kind(diff_test, //diff_and_update_test/with_custom_values:all)",
+    scope = _WITH_CUSTOM_VALUES_SCOPE,
+)
+
+genquery(
+    name = "with_custom_values_update_query",
+    testonly = True,
+    expression = "kind(updatesrc_update, //diff_and_update_test/with_custom_values:all)",
+    scope = _WITH_CUSTOM_VALUES_SCOPE,
+)
+
+write_file(
+    name = "with_custom_values_expected_diff_test_targets",
+    out = "with_custom_values_expected_diff_test_targets.out",
+    content = [
+        "//diff_and_update_test/with_custom_values:my_prefix_foo.txt_my_suffix",
+        "//diff_and_update_test/with_custom_values:my_prefix_bar.txt_my_suffix",
+        "",
+    ],
+)
+
+diff_test(
+    name = "with_custom_values_confirm_diff_test_targets",
+    file1 = ":with_custom_values_diff_test_query",
+    file2 = ":with_custom_values_expected_diff_test_targets",
+)
+
+write_file(
+    name = "with_custom_values_expected_update_targets",
+    out = "with_custom_values_expected_update_targets.out",
+    content = [
+        "//diff_and_update_test/with_custom_values:my_update",
+        "",
+    ],
+)
+
+diff_test(
+    name = "with_custom_values_confirm_update_targets",
+    file1 = ":with_custom_values_update_query",
+    file2 = ":with_custom_values_expected_update_targets",
+)
