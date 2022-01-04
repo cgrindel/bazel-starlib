@@ -121,6 +121,5 @@ write_file_list(
 # MARK: - Generate Documentation from Providers
 
 doc_for_provs(
-    doc_path = _DOC_PATH,
     doc_provs = _ALL_DOC_PROVIDERS,
 )

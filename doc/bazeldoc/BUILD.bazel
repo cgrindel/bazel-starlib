@@ -15,6 +15,7 @@ bzlformat_pkg(name = "bzlformat")
 # MARK: - Documentation Declarations
 
 _API_SRCS = [
+    "doc_utilities",
     "providers",
 ]
 
@@ -23,8 +24,6 @@ _STARDOC_INPUT = "//bazeldoc:defs.bzl"
 _DOC_DEPS = [
     "//bazeldoc:defs",
 ]
-
-_DOC_PATH = "doc/bazeldoc"
 
 _API_DOC_PROVIDERS = [
     doc_providers.create(
@@ -40,9 +39,15 @@ _BUILD_RULES_PROV = doc_providers.create(
     name = "build_rules_overview",
     stardoc_input = _STARDOC_INPUT,
     symbols = [
+        "diff_test_for_prov",
+        "diff_test_for_provs",
         "doc_for_provs",
-        "write_header",
+        "stardoc_for_prov",
+        "stardoc_for_provs",
+        "update_doc",
+        "write_doc",
         "write_file_list",
+        "write_header",
     ],
     deps = _DOC_DEPS,
 )
@@ -62,7 +67,6 @@ _ALL_DOC_PROVIDERS = [
 write_file_list(
     name = "api_doc",
     out = "api.md_",
-    doc_path = _DOC_PATH,
     doc_provs = _API_DOC_PROVIDERS,
     header_content = [
         "# Documentation API",
@@ -101,6 +105,5 @@ write_header(
 ]
 
 doc_for_provs(
-    doc_path = _DOC_PATH,
     doc_provs = _ALL_DOC_PROVIDERS,
 )

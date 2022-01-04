@@ -45,6 +45,7 @@ bzl_library(
     name = "update_doc",
     srcs = ["update_doc.bzl"],
     deps = [
+        "//updatesrc:defs",
         "@bazel_skylib//rules:write_file",
     ],
 )
