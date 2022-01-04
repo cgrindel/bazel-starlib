@@ -25,14 +25,15 @@ srcs: {srcs_len}, outs: {outs_len}\
         content = """
 #!/usr/bin/env bash
 
-set -uo pipefail
+set -euo pipefail
 
 assert_different() {
   local src="${1}"
   local out="${2}"
-  diff  "${src}" "${out}" && \
+  diff  "${src}" "${out}" > /dev/null && \
     (echo >&2 "Expected files to differ. src: ${src}, out: ${out}" \
     && return -1)
+  return 0
 }
 
 assert_same() {
