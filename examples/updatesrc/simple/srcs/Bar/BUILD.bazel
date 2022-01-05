@@ -11,19 +11,6 @@ srcs = [
 outs = [f + "_modified" for f in srcs]
 
 [
-    # genrule(
-    #     name = "gen_" + outs[idx],
-    #     srcs = [srcs[idx]],
-    #     outs = [outs[idx]],
-    #     cmd = """\
-    # src_file=$(location {src})
-    # header="# Howdy"
-    # rm -f $@
-    # # [[ "$src_content" =~ "$header" ]] || echo "$header" > $@
-    # grep "$header" "$src_file" || echo "$header" > $@
-    # echo "$src_content" >> $@
-    # """.format(src = srcs[idx]),
-    # )
     genrule(
         name = "gen_" + outs[idx],
         srcs = [srcs[idx]],
@@ -40,35 +27,3 @@ updatesrc_diff_and_update(
     srcs = srcs,
     outs = outs,
 )
-
-# genrule(
-#     name = "c_modified",
-#     srcs = ["c.txt"],
-#     outs = ["c.txt_modified"],
-#     cmd = """\
-# echo "# Howdy" > $@
-# cat $(location c.txt) >> $@
-# """,
-# )
-
-# genrule(
-#     name = "d_modified",
-#     srcs = ["d.txt"],
-#     outs = ["d.txt_modified"],
-#     cmd = """\
-# echo "# Howdy" > $@
-# cat $(location d.txt) >> $@
-# """,
-# )
-
-# updatesrc_update(
-#     name = "update",
-#     srcs = [
-#         "c.txt",
-#         "d.txt",
-#     ],
-#     outs = [
-#         ":c_modified",
-#         ":d_modified",
-#     ],
-# )
