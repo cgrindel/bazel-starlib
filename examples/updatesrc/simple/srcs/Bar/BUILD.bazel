@@ -1,36 +1,29 @@
 load(
     "@cgrindel_bazel_starlib//updatesrc:defs.bzl",
-    "updatesrc_update",
+    "updatesrc_diff_and_update",
 )
 
-genrule(
-    name = "c_modified",
-    srcs = ["c.txt"],
-    outs = ["c.txt_modified"],
-    cmd = """\
-echo "# Howdy" > $@
-cat $(location c.txt) >> $@
-""",
-)
+srcs = [
+    "c.txt",
+    "d.txt",
+]
 
-genrule(
-    name = "d_modified",
-    srcs = ["d.txt"],
-    outs = ["d.txt_modified"],
-    cmd = """\
-echo "# Howdy" > $@
-cat $(location d.txt) >> $@
-""",
-)
+outs = [f + "_modified" for f in srcs]
 
-updatesrc_update(
-    name = "update",
-    srcs = [
-        "c.txt",
-        "d.txt",
-    ],
-    outs = [
-        ":c_modified",
-        ":d_modified",
-    ],
+[
+    genrule(
+        name = "gen_" + outs[idx],
+        srcs = [srcs[idx]],
+        outs = [outs[idx]],
+        cmd = """\
+$(location //header:add_header) $(location {src}) $@ "# Howdy"
+""".format(src = srcs[idx]),
+        tools = ["//header:add_header"],
+    )
+    for idx in range(len(srcs))
+]
+
+updatesrc_diff_and_update(
+    srcs = srcs,
+    outs = outs,
 )

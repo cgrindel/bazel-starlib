@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 src="$1"
 out="$2"
 header="$3"
