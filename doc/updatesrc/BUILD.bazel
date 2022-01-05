@@ -28,8 +28,10 @@ _RULES_AND_MACROS_DOC_PROVIDER = doc_providers.create(
     name = "rules_and_macros_overview",
     stardoc_input = _STARDOC_INPUT,
     symbols = [
+        "updatesrc_diff_and_update",
         "updatesrc_update",
         "updatesrc_update_all",
+        "updatesrc_update_and_test",
     ],
     deps = _DOC_DEPS,
 )

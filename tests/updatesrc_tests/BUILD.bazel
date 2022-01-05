@@ -1,8 +1,12 @@
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
-load("//updatesrc/private:updatesrc_update_test.bzl", "updatesrc_update_test")
-load("//updatesrc:defs.bzl", "updatesrc_update")
-load(":letters.bzl", "letters")
+load(
+    "@cgrindel_rules_bazel_integration_test//bazel_integration_test:bazel_integration_test.bzl",
+    "bazel_integration_tests",
+    "default_test_runner",
+    "integration_test_utils",
+)
+load("//:bazel_versions.bzl", "SUPPORTED_BAZEL_VERSIONS")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -15,57 +19,29 @@ build_test(
     ],
 )
 
-# MARK: - Update Tests
+# MARK: - Integration Tests
 
-_LETTERS = [
-    "a",
-    "b",
-    "c",
-]
-
-_LETTER_STRUCTS = [
-    letters.create(letter)
-    for letter in _LETTERS
-]
-
-_LETTER_SRCS = [ls.src for ls in _LETTER_STRUCTS]
-
-_LETTER_OUT_NAMES = [":" + ls.out_name for ls in _LETTER_STRUCTS]
-
-[
-    genrule(
-        name = ls.src_name,
-        srcs = [],
-        outs = [ls.src],
-        cmd = """\
-echo "This is {filename}." > $@
-""".format(filename = ls.src),
-    )
-    for ls in _LETTER_STRUCTS
-]
-
-[
-    genrule(
-        name = ls.out_name,
-        srcs = [ls.src],
-        outs = [ls.out],
-        cmd = """\
-echo "# Howdy" > $@
-cat $(location {filename}) >> $@
-""".format(filename = ls.src),
-    )
-    for ls in _LETTER_STRUCTS
-]
-
-updatesrc_update(
-    name = "src_out",
-    srcs = _LETTER_SRCS,
-    outs = _LETTER_OUT_NAMES,
+default_test_runner(
+    name = "updatesrc_test_runner",
 )
 
-updatesrc_update_test(
-    name = "src_out_test",
-    srcs = _LETTER_SRCS,
-    outs = _LETTER_OUT_NAMES,
-    update_target = ":src_out",
+bazel_integration_tests(
+    name = "updatesrc_test",
+    timeout = "eternal",
+    bazel_versions = SUPPORTED_BAZEL_VERSIONS,
+    test_runner = ":updatesrc_test_runner",
+    workspace_files = integration_test_utils.glob_workspace_files("workspace") + [
+        "//:workspace_integration_test_files",
+    ],
+    workspace_path = "workspace",
+)
+
+test_suite(
+    name = "integration_tests",
+    tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
+    tests = integration_test_utils.bazel_integration_test_names(
+        ":updatesrc_test",
+        SUPPORTED_BAZEL_VERSIONS,
+    ),
+    visibility = ["//:__subpackages__"],
 )

@@ -6,12 +6,9 @@ Starlark documentation.
 
 On this page:
 
-  * [diff_test_for_prov](#diff_test_for_prov)
-  * [diff_test_for_provs](#diff_test_for_provs)
   * [doc_for_provs](#doc_for_provs)
   * [stardoc_for_prov](#stardoc_for_prov)
   * [stardoc_for_provs](#stardoc_for_provs)
-  * [update_doc](#update_doc)
   * [write_doc](#write_doc)
   * [write_file_list](#write_file_list)
   * [write_header](#write_header)
@@ -33,10 +30,6 @@ Defines targets for generating documentation, testing that the generated doc mat
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
 | <a id="doc_for_provs-doc_provs"></a>doc_provs |  A <code>list</code> of document provider <code>struct</code> values as returned from <code>providers.create()</code>.   |  none |
-
-**RETURNS**
-
-None.
 
 
 <a id="#write_file_list"></a>

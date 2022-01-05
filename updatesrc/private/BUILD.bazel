@@ -31,6 +31,15 @@ bzl_library(
     srcs = ["updatesrc_update_all.bzl"],
 )
 
+bzl_library(
+    name = "updatesrc_diff_and_update",
+    srcs = ["updatesrc_diff_and_update.bzl"],
+    deps = [
+        ":updatesrc_update",
+        "@bazel_skylib//rules:diff_test",
+    ],
+)
+
 # MARK: - Collect Files for Integation Tests
 
 filegroup(
