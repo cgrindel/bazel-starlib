@@ -1,3 +1,2 @@
 # Howdy
-# Howdy
 This is c.txt.

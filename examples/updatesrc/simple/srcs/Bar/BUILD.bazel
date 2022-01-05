@@ -1,36 +1,66 @@
 load(
     "@cgrindel_bazel_starlib//updatesrc:defs.bzl",
-    "updatesrc_update",
+    "updatesrc_diff_and_update",
 )
 
-genrule(
-    name = "c_modified",
-    srcs = ["c.txt"],
-    outs = ["c.txt_modified"],
-    cmd = """\
-echo "# Howdy" > $@
-cat $(location c.txt) >> $@
+srcs = [
+    "c.txt",
+    "d.txt",
+]
+
+outs = [f + "_modified" for f in srcs]
+
+[
+    genrule(
+        name = "gen_" + outs[idx],
+        srcs = [srcs[idx]],
+        outs = [outs[idx]],
+        cmd = """\
+src_file=$(location {src})
+header="# Howdy"
+src_content="$(< "${src_file}")"
+rm -f $@
+[[ "${src_content}" =~ "${header}" ]] || echo "${header}" > $@
+echo "${src_content}" >> $@
 """,
-)
+    )
+    for idx in range(len(srcs))
+]
 
-genrule(
-    name = "d_modified",
-    srcs = ["d.txt"],
-    outs = ["d.txt_modified"],
-    cmd = """\
-echo "# Howdy" > $@
-cat $(location d.txt) >> $@
-""",
-)
-
-updatesrc_update(
+updatesrc_diff_update(
     name = "update",
-    srcs = [
-        "c.txt",
-        "d.txt",
-    ],
-    outs = [
-        ":c_modified",
-        ":d_modified",
-    ],
+    srcs = srcs,
+    outs = outs,
 )
+
+# genrule(
+#     name = "c_modified",
+#     srcs = ["c.txt"],
+#     outs = ["c.txt_modified"],
+#     cmd = """\
+# echo "# Howdy" > $@
+# cat $(location c.txt) >> $@
+# """,
+# )
+
+# genrule(
+#     name = "d_modified",
+#     srcs = ["d.txt"],
+#     outs = ["d.txt_modified"],
+#     cmd = """\
+# echo "# Howdy" > $@
+# cat $(location d.txt) >> $@
+# """,
+# )
+
+# updatesrc_update(
+#     name = "update",
+#     srcs = [
+#         "c.txt",
+#         "d.txt",
+#     ],
+#     outs = [
+#         ":c_modified",
+#         ":d_modified",
+#     ],
+# )
