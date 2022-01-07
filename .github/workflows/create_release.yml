@@ -34,7 +34,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: cgrindel/gha_set_up_bazel@main
+    - uses: cgrindel/gha_set_up_bazel@v1
       with:
         repo_name: bazel-starlib
     - uses: tibdex/github-app-token@v1
@@ -42,7 +42,7 @@ jobs:
       with:
         app_id: ${{ secrets.APP_ID }}
         private_key: ${{ secrets.APP_PRIVATE_KEY }}
-    - uses: cgrindel/gha_configure_git_user@main
+    - uses: cgrindel/gha_configure_git_user@v1
     - uses: cgrindel/gha_create_release@main
       with:
         release_tag: ${{  github.event.inputs.release_tag }}
