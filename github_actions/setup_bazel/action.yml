@@ -1,4 +1,5 @@
 name: Set up Bazel for CI
+description: Configures Bazel to run with the ci configuration values.
 runs:
   using: composite
   steps:

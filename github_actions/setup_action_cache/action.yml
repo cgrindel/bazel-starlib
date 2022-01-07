@@ -1,4 +1,5 @@
 name: Set up an Action Cache
+description: Configures the action cache using a defined set of restore keys.
 inputs:
   path:
     description: The path to map.

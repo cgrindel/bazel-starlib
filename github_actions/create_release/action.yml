@@ -1,0 +1,70 @@
+name: "Create Release"
+description: "Create a release tag, generate release notes, create a release, update the README.md and open a PR for the README.md update."
+
+inputs:
+  release_tag:
+    required: true
+    type: string
+  github_token:
+    description: The Github token to authenticate PR operations.
+    required: true
+  reset_tag:
+    type: boolean
+    default: false
+  release_notes_target:
+    type: string
+    default: "//release:generate_release_notes"
+  update_readme_target:
+    type: string
+    default: "//release:update_readme"
+  create_release_tag_target:
+    type: string
+    default: "@cgrindel_bazel_starlib//bzlrelease/tools:create_release_tag"
+  base_branch:
+    description: The branch being merged to.
+    type: string
+    default: main
+
+runs:
+  using: composite
+  steps:
+    - uses: cgrindel/bazel-github-actions/actions/configure_git_user
+
+    - name: Create Release Tag
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+        RELEASE_TAG: ${{ inputs.release_tag }}
+        RESET_TAG: ${{ inputs.reset_tag }}
+        CREATE_RELEASE_TAG_TARGET: ${{ inputs.create_release_tag_target }}
+      run: |
+        tag_args=()
+        [[ "${RESET_TAG:-}" == true ]] && tag_args+=( "--reset_tag" )
+        tag_args+=( "${RELEASE_TAG}" )
+        bazelisk run "${CREATE_RELEASE_TAG_TARGET}" -- "${tag_args[@]}"
+
+    - name: Generate Release Notes
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+        RELEASE_TAG: ${{ inputs.release_tag }}
+        RELEASE_NOTES_TARGET: ${{ inputs.release_notes_target }}
+      run: |
+        bazelisk run "${RELEASE_NOTES_TARGET}" -- \
+          --output release_notes.md \
+          "${RELEASE_TAG}"
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        name: Release ${{ inputs.release_tag }}
+        body_path: release_notes.md
+        tag_name: ${{ inputs.release_tag }}
+
+    - name: Update the README.md
+      uses: cgrindel/bazel-github-actions/actions/update_readme
+      with:
+        release_tag: ${{  inputs.release_tag }}
+        base_branch: ${{ inputs.base_branch }}
+        github_token: ${{ inputs.github_token }}
+        update_readme_target: ${{ inputs.update_readme_target }}

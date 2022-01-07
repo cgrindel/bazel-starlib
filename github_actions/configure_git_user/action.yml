@@ -1,4 +1,5 @@
 name: Configure the Git Repository User
+description: Configures the git user in preparation for performing commits.
 
 runs:
   using: composite
