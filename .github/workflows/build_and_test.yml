@@ -10,7 +10,7 @@ jobs:
     - uses: cgrindel/gha_set_up_bazel@main
       with:
         repo_name: bazel-starlib
-    - uses: ./github_actions/build_and_test
+    - uses: ./.github/actions/build_and_test
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -23,6 +23,6 @@ jobs:
     - uses: cgrindel/gha_set_up_bazel@main
       with:
         repo_name: bazel-starlib
-    - uses: ./github_actions/build_and_test
+    - uses: ./.github/actions/build_and_test
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
