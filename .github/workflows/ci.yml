@@ -3,9 +3,29 @@ name: CI for PR Merge
 on:
   pull_request:
     branches: [ main, test_main ]
+  workflow_call:
 
 jobs:
-  build_and_test:
-    # NOTE: Need to provide a valid ref (e.g. SHA, release tag, branch). Github is working to add
-    # local reference support. (https://github.community/t/ref-head-in-reusable-workflows/203690)
-    uses: cgrindel/bazel-starlib/.github/workflows/build_and_test.yml@150b38738b251175aa576f2964b0090d42e255ad
+  macos_build:
+    runs-on: macos-11.0
+    steps:
+    - uses: actions/checkout@v2
+    - uses: cgrindel/gha_set_up_bazel@v1
+      with:
+        repo_name: bazel-starlib
+    - uses: ./.github/actions/build_and_test
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  ubuntu_build:
+    runs-on: ubuntu-20.04
+    env:
+      CC: clang
+    steps:
+    - uses: actions/checkout@v2
+    - uses: cgrindel/gha_set_up_bazel@v1
+      with:
+        repo_name: bazel-starlib
+    - uses: ./.github/actions/build_and_test
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
