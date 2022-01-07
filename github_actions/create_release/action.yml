@@ -28,7 +28,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: cgrindel/bazel-github-actions/actions/configure_git_user
+    - uses: cgrindel/bazel-starlib/github_actions/configure_git_user
 
     - name: Create Release Tag
       shell: bash
@@ -62,7 +62,7 @@ runs:
         tag_name: ${{ inputs.release_tag }}
 
     - name: Update the README.md
-      uses: cgrindel/bazel-github-actions/actions/update_readme
+      uses: cgrindel/bazel-starlib/github_actions/update_readme
       with:
         release_tag: ${{  inputs.release_tag }}
         base_branch: ${{ inputs.base_branch }}
