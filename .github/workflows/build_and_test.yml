@@ -7,10 +7,9 @@ jobs:
     runs-on: macos-11.0
     steps:
     - uses: actions/checkout@v2
-    - uses: ./github_actions/setup_bazel_cache
+    - uses: cgrindel/gha_set_up_bazel@main
       with:
-        name: bazel_starlib
-    - uses: ./github_actions/setup_bazel
+        repo_name: bazel-starlib
     - uses: ./github_actions/build_and_test
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -21,10 +20,9 @@ jobs:
       CC: clang
     steps:
     - uses: actions/checkout@v2
-    - uses: ./github_actions/setup_bazel_cache
+    - uses: cgrindel/gha_set_up_bazel@main
       with:
-        name: bazel_starlib
-    - uses: ./github_actions/setup_bazel
+        repo_name: bazel-starlib
     - uses: ./github_actions/build_and_test
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}

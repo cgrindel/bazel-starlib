@@ -9,12 +9,6 @@ on:
       reset_tag:
         type: boolean
         default: false
-      release_notes_target:
-        type: string
-        default: "//release:generate_release_notes"
-      update_readme_target:
-        type: string
-        default: "//release:update_readme"
       base_branch:
         description: The branch being merged to.
         type: string
@@ -27,12 +21,6 @@ on:
       reset_tag:
         type: boolean
         default: false
-      release_notes_target:
-        type: string
-        default: "//release:generate_release_notes"
-      update_readme_target:
-        type: string
-        default: "//release:update_readme"
       base_branch:
         description: The branch being merged to.
         type: string
@@ -46,51 +34,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: ./github_actions/setup_bazel_cache
+    - uses: cgrindel/gha_set_up_bazel@main
       with:
-        name: bazel_starlib
-    - uses: ./github_actions/setup_bazel
+        repo_name: bazel-starlib
     - uses: tibdex/github-app-token@v1
       id: generate_token
       with:
         app_id: ${{ secrets.APP_ID }}
         private_key: ${{ secrets.APP_PRIVATE_KEY }}
-    - uses: ./github_actions/configure_git_user
-
-    - name: Create Release Tag
-      shell: bash
-      env:
-        GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
-        RELEASE_TAG: ${{ github.event.inputs.release_tag }}
-        RESET_TAG: ${{ github.event.inputs.reset_tag }}
-      run: |
-        tag_args=()
-        [[ "${RESET_TAG:-}" == true ]] && tag_args+=( "--reset_tag" )
-        tag_args+=( "${RELEASE_TAG}" )
-        bazelisk run //bzlrelease/tools:create_release_tag -- "${tag_args[@]}"
-
-    - name: Generate Release Notes
-      shell: bash
-      env:
-        GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
-        RELEASE_TAG: ${{ github.event.inputs.release_tag }}
-        RELEASE_NOTES_TARGET: ${{ github.event.inputs.release_notes_target }}
-      run: |
-        bazelisk run "${RELEASE_NOTES_TARGET}" -- \
-          --output release_notes.md \
-          "${RELEASE_TAG}"
-
-    - name: Create Release
-      uses: softprops/action-gh-release@v1
-      with:
-        name: Release ${{ github.event.inputs.release_tag }}
-        body_path: release_notes.md
-        tag_name: ${{ github.event.inputs.release_tag }}
-
-    - name: Update the README.md
-      uses: ./github_actions/update_readme
+    - uses: cgrindel/gha_configure_git_user@main
+    - uses: cgrindel/gha_create_release@main
       with:
         release_tag: ${{  github.event.inputs.release_tag }}
-        base_branch: ${{ github.event.inputs.base_branch }}
+        reset_tag: ${{  github.event.inputs.reset_tag }}
+        base_branch: ${{  github.event.inputs.base_branch }}
         github_token: ${{ steps.generate_token.outputs.token }}
-        update_readme_target: ${{ github.event.inputs.update_readme_target }}
