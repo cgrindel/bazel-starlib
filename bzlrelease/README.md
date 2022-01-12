@@ -93,9 +93,10 @@ stardoc_repositories()
 
 The [generate_workspace_snippet](/doc/bzlrelease/generate_workspace_snippet.md) macro defines a
 target that when executed generates a workspace snippet. The macro accepts a `template` argument
-that specifies the location of a text file that contains the workspace snippet code. The
-`http_archive` statement is replaced by a placeholder, `${http_archive_statement}`. The template for
-the above snippet looks like the following:
+that specifies the location of a text file that contains the workspace snippet code. Since the
+`http_archive` statement changes for each release, the `http_archive` statement in the template is
+replaced by a placeholder, `${http_archive_statement}`. The template for the above snippet looks
+like this:
 
 ```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
@@ -114,3 +115,6 @@ load("@io_bazel_stardoc//:setup.bzl", "stardoc_repositories")
 
 stardoc_repositories()
 ```
+
+To learn more about how the utility works, check out
+[generate_workspace_snippet.sh](bzlrelease/tools/generate_workspace_snippet.sh)
