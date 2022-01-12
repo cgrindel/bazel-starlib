@@ -358,7 +358,8 @@ a workflow that executes in a consistent and known state feels like a much bette
 
 ### Why not just create a release from the GitHub web application?
 
-I wanted the release notes to look include specific items. Also, the fewer manual steps the better.
+I wanted the release notes to include specific items, as mentioned above. Also, the fewer manual
+steps the better. 😀
 
 
 ### Do I need the `create_release` target?
