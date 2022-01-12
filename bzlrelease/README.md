@@ -204,3 +204,107 @@ stardoc_repositories()
 <!-- END WORKSPACE SNIPPET -->
 ```
 
+### Release Creation
+
+The [create_release](/doc/bzlrelease/create_release.md) macro defines an executable target that will
+launch a GitHub Actions workflow. Unlike the other targets mentioned above, this target is not used
+during the release creation process. It merely provides a convenient way to kick-off the release
+creation process.
+
+The macro accepts a `workflow_name` attribute which must match the name of the GitHub Actions
+workflow that executes your release process.
+
+```python
+create_release(
+    name = "create",
+    workflow_name = "Create Release",
+)
+```
+
+## Set Up a GitHub App to Generate Tokens
+
+Before we can implement the release creation workflow, we need to set up a GitHub App in your
+repository that has permission to create releases and pull requests.  The default Github token that
+is provided to GitHub Action workflows does not have permission to create releases and PRs. This
+[article from
+peter-evans/create-pull-request](https://github.com/peter-evans/create-pull-request/blob/master/docs/concepts-guidelines.md#authenticating-with-github-app-generated-tokens)
+explains how to create a GitHub application to generate tokens with the appropriate permissions.
+
+Once you have created the token generator application, you need to create two secrets in your
+repository. The first is named `APP_ID`. It's value is the `App ID: XXXX` value (e.g., `XXXX`) found
+on the token generator application's About page. The second secret is named `APP_PRIVATE_KEY`. It's
+value is the private key that you generated while creating the token generator application.
+
+
+## Implement the Create Release Workflow (GitHub Actions)
+
+The `Create Release` workflow using the
+[cgrindel/gha_create_release](https://github.com/cgrindel/gha_create_release) action coordinates the
+entire release process.
+
+In your repository, create a file at `.github/workflows/create_release.yml` with the following
+contents:
+
+```yaml
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        required: true
+        type: string
+      reset_tag:
+        type: boolean
+        default: false
+      base_branch:
+        description: The branch being merged to.
+        type: string
+        default: main
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    env:
+      CC: clang
+
+    steps:
+
+    # Check out your code
+    - uses: actions/checkout@v2
+
+    # Generate a token that has permssions to create a release and create PRs.
+    - uses: tibdex/github-app-token@v1
+      id: generate_token
+      with:
+        app_id: ${{ secrets.APP_ID }}
+        private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
+    # Configure the git user for the repository
+    - uses: cgrindel/gha_configure_git_user@v1
+
+    # Create the release
+    - uses: cgrindel/gha_create_release@v1
+      with:
+        release_tag: ${{  github.event.inputs.release_tag }}
+        reset_tag: ${{  github.event.inputs.reset_tag }}
+        base_branch: ${{  github.event.inputs.base_branch }}
+        github_token: ${{ steps.generate_token.outputs.token }}
+```
+
+Commit this file, the release targets, and merge all of it to your main branch.
+
+
+## Create a Release
+
+Once everything is merged to your main branch, you can create a release by running the following
+from your Bazel repository.
+
+```sh
+# Create a release with the tag v1.2.3
+$ bazel run //release:create -- v1.2.3
+```
+
+This utility will launch the `create_release.yml` workflow in GitHub Actions. After a few moments,
+you should see a new tag `v1.2.3`, the new release based upon the tag, and the automerge pull
+request that contains your `README.md` update. 
