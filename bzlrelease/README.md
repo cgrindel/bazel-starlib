@@ -308,3 +308,46 @@ $ bazel run //release:create -- v1.2.3
 This utility will launch the `create_release.yml` workflow in GitHub Actions. After a few moments,
 you should see a new tag `v1.2.3`, the new release based upon the tag, and the automerge pull
 request that contains your `README.md` update. 
+
+
+## Questions and Answers
+
+### Why not just use the `softprops/action-gh-release` action or any of the other release actions?
+
+The [cgrindel/gha_create_release](https://github.com/cgrindel/gha_create_release) action uses the
+following shared actions:
+
+- [softprops/action-gh-release](https://github.com/softprops/action-gh-release)
+- [peter-evans/create-pull-request](https://github.com/peter-evans/create-pull-request)
+- [peter-evans/enable-pull-request-automerge](https://github.com/peter-evans/enable-pull-request-automerge)
+
+The primary purpose of [cgrindel/gha_create_release](https://github.com/cgrindel/gha_create_release)
+is to generate the release artifacts and coordinate the different steps.
+
+When I started this project, I had two goals:
+
+1. Generate release notes that included the changes from the last release and included the workspace
+   snippet for the release.
+2. Update the `README.md` file to include the latest workspace snippet.
+
+Since the `bzlrelease` macros are targeted at release creation for Starlark repositories, I opted to
+incorporate the artifact generation in Bazel.
+
+
+### Why not trigger release creation on release tag pushes?
+
+Frankly, tagging and pushing directly to my main branch worries me. I have messed this up in the
+past, pushing changes that I had not intended to push. Wrapping the tagging and release creation in
+a workflow that executes in a consistent and known state feels like a much better choice to me.
+
+
+### Why not just create a release from the GitHub web application?
+
+I wanted the release notes to look include specific items. Also, the fewer manual steps the better.
+
+
+### Do I need the `create_release` target?
+
+No. If you don't want this helper, you can add everything else. Then, when it is time to create a
+release, you can [launch the release process
+manually](https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow).
