@@ -27,6 +27,8 @@ the following to your `WORKSPACE` file. These are dependencies for
 [Buildifier](https://github.com/bazelbuild/buildtools/tree/master/buildifier).
 
 ```python
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+
 go_rules_dependencies()
 
 go_register_toolchains(version = "1.17.2")
