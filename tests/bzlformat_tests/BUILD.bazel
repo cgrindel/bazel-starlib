@@ -4,7 +4,7 @@ load("@bazel_skylib//rules:write_file.bzl", "write_file")
 load("//bzllib:defs.bzl", "filter_srcs")
 load("//bzlformat:defs.bzl", "bzlformat_format")
 load(
-    "@cgrindel_rules_bazel_integration_test//bazel_integration_test:bazel_integration_test.bzl",
+    "@cgrindel_rules_bazel_integration_test//bazel_integration_test:defs.bzl",
     "integration_test_utils",
 )
 

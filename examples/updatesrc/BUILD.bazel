@@ -1,6 +1,6 @@
 load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
 load(
-    "@cgrindel_rules_bazel_integration_test//bazel_integration_test:bazel_integration_test.bzl",
+    "@cgrindel_rules_bazel_integration_test//bazel_integration_test:defs.bzl",
     "bazel_integration_tests",
     "default_test_runner",
     "integration_test_utils",
@@ -27,6 +27,7 @@ bazel_integration_tests(
     workspace_files = integration_test_utils.glob_workspace_files("simple") + [
         "//:workspace_integration_test_files",
     ],
+    workspace_path = "simple",
 )
 
 # MARK: - Test Suites
