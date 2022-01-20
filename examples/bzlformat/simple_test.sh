@@ -38,30 +38,20 @@ create_scratch_dir_sh="$(rlocation "${create_scratch_dir_sh_location}")" || \
 
 # MARK - Process Arguments
 
+bazel="${BIT_BAZEL_BINARY:-}"
+workspace_dir="${BIT_WORKSPACE_DIR:-}"
+
 # Process args
 while (("$#")); do
   case "${1}" in
-    "--bazel")
-      bazel_rel_path="${2}"
-      shift 2
-      ;;
-    "--workspace")
-      workspace_path="${2}"
-      shift 2
-      ;;
     *)
       shift 1
       ;;
   esac
 done
 
-[[ -n "${bazel_rel_path:-}" ]] || exit_with_msg "Must specify the location of the Bazel binary."
-[[ -n "${workspace_path:-}" ]] || exit_with_msg "Must specify the location of the workspace file."
-
-starting_path="$(pwd)"
-starting_path="${starting_path%%*( )}"
-bazel="$(normalize_path "${bazel_rel_path}")"
-workspace_dir="$(normalize_path "$(dirname "${workspace_path}")")"
+[[ -n "${bazel:-}" ]] || exit_with_msg "Must specify the location of the Bazel binary."
+[[ -n "${workspace_dir:-}" ]] || exit_with_msg "Must specify the location of the workspace directory."
 
 # MARK - Create Scratch Directory
 
