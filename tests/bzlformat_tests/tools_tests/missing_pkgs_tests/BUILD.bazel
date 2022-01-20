@@ -1,6 +1,6 @@
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load(
-    "@cgrindel_rules_bazel_integration_test//bazel_integration_test:bazel_integration_test.bzl",
+    "@cgrindel_rules_bazel_integration_test//bazel_integration_test:defs.bzl",
     "bazel_integration_tests",
     "integration_test_utils",
 )
