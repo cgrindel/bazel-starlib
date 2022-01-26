@@ -26,7 +26,11 @@ messages_sh="$(rlocation "${messages_sh_location}")" || \
   (echo >&2 "Failed to locate ${messages_sh_location}" && exit 1)
 source "${messages_sh}"
 
-buildozer_location=com_github_bazelbuild_buildtools/buildozer/buildozer_/buildozer
+# buildozer_location=com_github_bazelbuild_buildtools/buildozer/buildozer_/buildozer
+# buildozer="$(rlocation "${buildozer_location}")" || \
+#   (echo >&2 "Failed to locate ${buildozer_location}" && exit 1)
+
+buildozer_location=buildifier_prebuilt/buildozer/buildozer
 buildozer="$(rlocation "${buildozer_location}")" || \
   (echo >&2 "Failed to locate ${buildozer_location}" && exit 1)
 

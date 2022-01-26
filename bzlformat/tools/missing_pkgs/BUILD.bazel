@@ -28,7 +28,8 @@ sh_binary(
     srcs = ["fix.sh"],
     data = [
         ":find",
-        "@com_github_bazelbuild_buildtools//buildozer",
+        # "@com_github_bazelbuild_buildtools//buildozer",
+        "@buildifier_prebuilt//buildozer",
     ],
     visibility = ["//visibility:public"],
     deps = [
