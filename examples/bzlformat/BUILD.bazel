@@ -46,6 +46,7 @@ default_test_runner(
     name = "build_buildtools_test_runner",
     bazel_cmds = [
         "info",
+        "test //...",
         "run //:bzlformat_missing_pkgs_test",
     ],
 )
