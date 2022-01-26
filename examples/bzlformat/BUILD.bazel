@@ -18,7 +18,8 @@ sh_binary(
         "@cgrindel_rules_bazel_integration_test//tools:create_scratch_dir",
         # NOTE: The test runnder does not use buildozer. However, the child
         # workspace does not find it properly if we don't specify it here.
-        "@buildifier_prebuilt//buildozer",
+        "@bazel_starlib_buildtools//:buildozer",
+        # "@buildifier_prebuilt//buildozer",
     ],
     deps = [
         "//shlib/lib:assertions",

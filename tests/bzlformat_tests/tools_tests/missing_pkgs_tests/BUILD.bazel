@@ -17,7 +17,8 @@ sh_binary(
     data = [
         "@cgrindel_rules_bazel_integration_test//tools:create_scratch_dir",
         # "@com_github_bazelbuild_buildtools//buildozer",
-        "@buildifier_prebuilt//buildozer",
+        # "@buildifier_prebuilt//buildozer",
+        "@bazel_starlib_buildtools//:buildozer",
     ],
     deps = [
         "//shlib/lib:assertions",

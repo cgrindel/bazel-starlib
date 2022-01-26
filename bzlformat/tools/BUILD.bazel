@@ -6,7 +6,8 @@ sh_binary(
     name = "buildifier",
     srcs = ["buildifier.sh"],
     # data = ["@com_github_bazelbuild_buildtools//buildifier"],
-    data = ["@buildifier_prebuilt//buildifier"],
+    # data = ["@buildifier_prebuilt//buildifier"],
+    data = ["@bazel_starlib_buildtools//:buildifier"],
     visibility = ["//visibility:public"],
     deps = ["@bazel_tools//tools/bash/runfiles"],
 )

@@ -29,7 +29,8 @@ sh_binary(
     data = [
         ":find",
         # "@com_github_bazelbuild_buildtools//buildozer",
-        "@buildifier_prebuilt//buildozer",
+        # "@buildifier_prebuilt//buildozer",
+        "@bazel_starlib_buildtools//:buildozer",
     ],
     visibility = ["//visibility:public"],
     deps = [

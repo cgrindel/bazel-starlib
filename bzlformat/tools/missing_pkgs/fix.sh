@@ -23,7 +23,11 @@ source "${common_sh}"
 
 find_missing_pkgs_bin="$(rlocation cgrindel_bazel_starlib/bzlformat/tools/missing_pkgs/find.sh)"
 
-buildozer_location=buildifier_prebuilt/buildozer/buildozer
+# buildozer_location=buildifier_prebuilt/buildozer/buildozer
+# buildozer="$(rlocation "${buildozer_location}")" || \
+#   (echo >&2 "Failed to locate ${buildozer_location}" && exit 1)
+
+buildozer_location=bazel_starlib_buildtools/buildozer
 buildozer="$(rlocation "${buildozer_location}")" || \
   (echo >&2 "Failed to locate ${buildozer_location}" && exit 1)
 
