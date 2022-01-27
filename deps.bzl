@@ -1,18 +1,6 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
-# def _create_location_from_target(target):
-#     # If there is no target specified, add it.
-#     if target.find(":") < 0:
-#         _, _, pkg_name = target.rpartition("/")
-#         if pkg_name == target:
-#             fail("Could not find the package name. {}".format(target))
-#         target = "{target}:{pkg_name}".format(
-#             target = target,
-#             pkg_name = pkg_name,
-#         )
-#     return target.replace("@", "").replace("//", "/").replace(":", "/")
-
 def _generate_trampoline_content(repository_ctx, filename, exec_target, exec_location):
     content = """\
 #!/usr/bin/env bash
