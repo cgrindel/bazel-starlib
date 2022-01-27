@@ -1,19 +1,19 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
-def _create_location_from_target(target):
-    # If there is no target specified, add it.
-    if target.find(":") < 0:
-        _, _, pkg_name = target.rpartition("/")
-        if pkg_name == target:
-            fail("Could not find the package name. {}".format(target))
-        target = "{target}:{pkg_name}".format(
-            target = target,
-            pkg_name = pkg_name,
-        )
-    return target.replace("@", "").replace("//", "/").replace(":", "/")
+# def _create_location_from_target(target):
+#     # If there is no target specified, add it.
+#     if target.find(":") < 0:
+#         _, _, pkg_name = target.rpartition("/")
+#         if pkg_name == target:
+#             fail("Could not find the package name. {}".format(target))
+#         target = "{target}:{pkg_name}".format(
+#             target = target,
+#             pkg_name = pkg_name,
+#         )
+#     return target.replace("@", "").replace("//", "/").replace(":", "/")
 
-def _generate_trampoline_content(repository_ctx, filename, exec_target):
+def _generate_trampoline_content(repository_ctx, filename, exec_target, exec_location):
     content = """\
 #!/usr/bin/env bash
 
@@ -31,7 +31,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \\
 """ + """\
 executable_location={executable_location}
 """.format(
-        executable_location = _create_location_from_target(exec_target),
+        executable_location = exec_location,
     ) + """\
 executable="$(rlocation "${executable_location}")" || \\
   (echo >&2 "Failed to locate ${executable_location}" && exit 1)
@@ -43,8 +43,18 @@ cmd=( "${executable}" )
     repository_ctx.file(filename, content, True)
 
 def _bazel_starlib_buildtools(repository_ctx):
-    _generate_trampoline_content(repository_ctx, "buildifier.sh", repository_ctx.attr.buildifier)
-    _generate_trampoline_content(repository_ctx, "buildozer.sh", repository_ctx.attr.buildozer)
+    _generate_trampoline_content(
+        repository_ctx,
+        "buildifier.sh",
+        repository_ctx.attr.buildifier_target,
+        repository_ctx.attr.buildifier_location,
+    )
+    _generate_trampoline_content(
+        repository_ctx,
+        "buildozer.sh",
+        repository_ctx.attr.buildozer_target,
+        repository_ctx.attr.buildozer_location,
+    )
 
     build_content = """\
 package(default_visibility = ["//visibility:public"])
@@ -63,19 +73,27 @@ sh_binary(
     deps = ["@bazel_tools//tools/bash/runfiles"],
 )
 """.format(
-        buildifier = repository_ctx.attr.buildifier,
-        buildozer = repository_ctx.attr.buildozer,
+        buildifier = repository_ctx.attr.buildifier_target,
+        buildozer = repository_ctx.attr.buildozer_target,
     )
     repository_ctx.file("BUILD.bazel", build_content)
 
 bazel_starlib_buildtools = repository_rule(
     implementation = _bazel_starlib_buildtools,
     attrs = {
-        "buildifier": attr.string(
+        "buildifier_target": attr.string(
             mandatory = True,
             doc = "The `buildifier` target.",
         ),
-        "buildozer": attr.string(
+        "buildifier_location": attr.string(
+            mandatory = True,
+            doc = "The `buildifier` location in runfiles.",
+        ),
+        "buildozer_target": attr.string(
+            mandatory = True,
+            doc = "The `buildozer` target.",
+        ),
+        "buildozer_location": attr.string(
             mandatory = True,
             doc = "The `buildozer` target.",
         ),
@@ -126,7 +144,9 @@ def bazel_starlib_dependencies(use_prebuilt_buildtools = True):
             ],
         )
         buildozer_target = "@buildifier_prebuilt//buildozer"
+        buildozer_location = "buildifier_prebuilt/buildozer/buildozer"
         buildifier_target = "@buildifier_prebuilt//buildifier"
+        buildifier_location = "buildifier_prebuilt/buildifier/buildifier"
     else:
         maybe(
             http_archive,
@@ -169,10 +189,14 @@ def bazel_starlib_dependencies(use_prebuilt_buildtools = True):
         )
 
         buildozer_target = "@com_github_bazelbuild_buildtools//buildozer"
+        buildozer_location = "com_github_bazelbuild_buildtools/buildozer/buildozer_/buildozer"
         buildifier_target = "@com_github_bazelbuild_buildtools//buildifier"
+        buildifier_location = "com_github_bazelbuild_buildtools/buildifier/buildifier_/buildifier"
 
     bazel_starlib_buildtools(
         name = "bazel_starlib_buildtools",
-        buildifier = buildifier_target,
-        buildozer = buildozer_target,
+        buildifier_target = buildifier_target,
+        buildifier_location = buildifier_location,
+        buildozer_target = buildozer_target,
+        buildozer_location = buildozer_location,
     )
