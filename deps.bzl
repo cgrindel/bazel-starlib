@@ -20,11 +20,11 @@ def _generate_trampoline_content(repository_ctx, filename, exec_target):
 # --- begin runfiles.bash initialization v2 ---
 # Copy-pasted from the Bazel Bash runfiles library v2.
 set -uo pipefail; f=bazel_tools/tools/bash/runfiles/runfiles.bash
-source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
-  source "$(grep -sm1 "^$f " "${RUNFILES_MANIFEST_FILE:-/dev/null}" | cut -f2- -d' ')" 2>/dev/null || \
-  source "$0.runfiles/$f" 2>/dev/null || \
-  source "$(grep -sm1 "^$f " "$0.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \
-  source "$(grep -sm1 "^$f " "$0.exe.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \
+source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \\
+  source "$(grep -sm1 "^$f " "${RUNFILES_MANIFEST_FILE:-/dev/null}" | cut -f2- -d' ')" 2>/dev/null || \\
+  source "$0.runfiles/$f" 2>/dev/null || \\
+  source "$(grep -sm1 "^$f " "$0.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \\
+  source "$(grep -sm1 "^$f " "$0.exe.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \\
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v2 ---
 
@@ -33,7 +33,7 @@ executable_location={executable_location}
 """.format(
         executable_location = _create_location_from_target(exec_target),
     ) + """\
-executable="$(rlocation "${executable_location}")" || \
+executable="$(rlocation "${executable_location}")" || \\
   (echo >&2 "Failed to locate ${executable_location}" && exit 1)
 
 cmd=( "${executable}" )
