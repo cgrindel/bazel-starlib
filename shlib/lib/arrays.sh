@@ -40,11 +40,50 @@ print_by_line() {
 #   stdout: A string where the items are separated by the separator.
 #   stderr: None.
 join_by() {
-  # Lovingly inspired by https://dev.to/meleu/how-to-join-array-elements-in-a-bash-script-303a
-  local IFS="$1"
-  shift
-  echo "$*"
+  local delimiter="${1}"
+  shift 1
+  printf -v joined '%s'"${delimiter}" "${@}"
+  echo "${joined%${delimiter}}"
 }
+
+# GH076: Figure out how to handle returning items with spaces.
+# base64_encode_items() {
+#   [[ ${#} == 0 ]] && return
+#   items=()
+#   while (("$#")); do
+#     items+=( $( echo "${1}" | base64) )
+#     shift 1
+#   done 
+#   echo "${items[@]}"
+# }
+#
+# base64_decode_items() {
+#   [[ ${#} == 0 ]] && return
+#   items=()
+#   while (("$#")); do
+#     items+=( $( echo "${1}" | base64 --decode) )
+#     shift 1
+#   done 
+#   echo "${items[@]}"
+# }
+
+# Add double quotes around each of the arguments.
+#
+# Args:
+#   *: The items to be double quoted.
+#
+# Outputs:
+#   stdout: The double quoted items separated by spaces.
+#   stderr: None.
+double_quote_items() {
+  items=()
+  while (("$#")); do
+    items+=( "\"${1}\"" )
+    shift 1
+  done 
+  echo "${items[@]}"
+}
+
 
 # Searches for the expected value in the follow-on arguments. If your list is sorted and has
 # more than ~40 items, consider using 'contains_item_sorted'.

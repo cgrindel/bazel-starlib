@@ -22,5 +22,9 @@ args=(a c b)
 actual="$(join_by , "${args[@]}")"
 assert_equal "a,c,b" "${actual}"
 
+# Multiple character delimiter
+actual="$(join_by ", " "${args[@]}")"
+assert_equal "a, c, b" "${actual}"
+
 actual="$(join_by "|" "${args[@]}")"
 assert_equal "a|c|b" "${actual}"
