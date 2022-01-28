@@ -46,6 +46,26 @@ join_by() {
   echo "${joined%${delimiter}}"
 }
 
+
+# Add double quotes around each of the arguments.
+#
+# Args:
+#   *: The items to be double quoted.
+#
+# Outputs:
+#   stdout: The double quoted items separated by spaces.
+#   stderr: None.
+double_quote_items() {
+  items=()
+  while (("$#")); do
+    items+=( "\"${1}\"" )
+    shift 1
+  done 
+  echo "${items[@]}"
+}
+
+
+
 # Searches for the expected value in the follow-on arguments. If your list is sorted and has
 # more than ~40 items, consider using 'contains_item_sorted'.
 #
