@@ -33,6 +33,16 @@ sh_test(
 )
 
 sh_test(
+    name = "double_quote_items_test",
+    srcs = ["double_quote_items_test.sh"],
+    deps = [
+        "//shlib/lib:arrays",
+        "//shlib/lib:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_test(
     name = "contains_item_test",
     srcs = ["contains_item_test.sh"],
     deps = [
