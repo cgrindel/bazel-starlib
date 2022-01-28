@@ -40,10 +40,10 @@ print_by_line() {
 #   stdout: A string where the items are separated by the separator.
 #   stderr: None.
 join_by() {
-  # Lovingly inspired by https://dev.to/meleu/how-to-join-array-elements-in-a-bash-script-303a
-  local IFS="$1"
-  shift
-  echo "$*"
+  local delimiter="${1}"
+  shift 1
+  printf -v joined '%s'"${delimiter}" "${@}"
+  echo "${joined%${delimiter}}"
 }
 
 # Searches for the expected value in the follow-on arguments. If your list is sorted and has
