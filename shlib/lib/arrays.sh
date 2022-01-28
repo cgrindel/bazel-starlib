@@ -46,6 +46,26 @@ join_by() {
   echo "${joined%${delimiter}}"
 }
 
+# GH076: Figure out how to handle returning items with spaces.
+# base64_encode_items() {
+#   [[ ${#} == 0 ]] && return
+#   items=()
+#   while (("$#")); do
+#     items+=( $( echo "${1}" | base64) )
+#     shift 1
+#   done 
+#   echo "${items[@]}"
+# }
+#
+# base64_decode_items() {
+#   [[ ${#} == 0 ]] && return
+#   items=()
+#   while (("$#")); do
+#     items+=( $( echo "${1}" | base64 --decode) )
+#     shift 1
+#   done 
+#   echo "${items[@]}"
+# }
 
 # Add double quotes around each of the arguments.
 #
@@ -63,7 +83,6 @@ double_quote_items() {
   done 
   echo "${items[@]}"
 }
-
 
 
 # Searches for the expected value in the follow-on arguments. If your list is sorted and has

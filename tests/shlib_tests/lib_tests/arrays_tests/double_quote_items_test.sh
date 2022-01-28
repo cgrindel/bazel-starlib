@@ -26,4 +26,18 @@ source "${arrays_sh}"
 
 # MARK - Test
 
-fail "IMPLEMENT ME!"
+args=(a b c)
+actual=( $( double_quote_items "${args[@]}" ) )
+assert_equal 3 ${#actual[@]}
+assert_equal "\"a\"" "${actual[0]}"
+assert_equal "\"b\"" "${actual[1]}"
+assert_equal "\"c\"" "${actual[2]}"
+
+# GH076: Figure out how to handle returning items with spaces.
+# # Ensure args with spaces works properly.
+# args=("hello world" "chicken smidgen" "howdy, joe")
+# actual=( $( double_quote_items "${args[@]}" ) )
+# assert_equal 3 ${#actual[@]}
+# assert_equal "\"hello world\"" "${actual[0]}"
+# assert_equal "\"chicken smidgen\"" "${actual[1]}"
+# assert_equal "\"howdy, joe\"" "${actual[2]}"
