@@ -128,6 +128,7 @@ def bazel_starlib_dependencies(use_prebuilt_buildtools = True):
             sha256 = "00684fefed7804fa37fdf125da265528a48451dd4e5930d617575336623f26a8",
             strip_prefix = "buildifier-prebuilt-1aa751584efd9f52232254fc6c397135c0b4b4ff",
             urls = [
+                # Latest as of 2022-01-29
                 "http://github.com/cgrindel/buildifier-prebuilt/archive/1aa751584efd9f52232254fc6c397135c0b4b4ff.tar.gz",
             ],
         )
