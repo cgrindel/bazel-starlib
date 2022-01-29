@@ -20,15 +20,7 @@ buildifier_prebuilt_deps()
 
 load("@buildifier_prebuilt//:defs.bzl", "buildifier_prebuilt_register_toolchains", "buildtools_assets")
 
-buildifier_prebuilt_register_toolchains(
-    assets = buildtools_assets(
-        sha256_values = {
-            "buildozer_darwin_amd64": "3fe671620e6cb7d2386f9da09c1de8de88b02b9dd9275cdecd8b9e417f74df1b",
-            "buildifier_darwin_amd64": "757f246040aceb2c9550d02ef5d1f22d3ef1ff53405fe76ef4c6239ef1ea2cc1",
-        },
-        version = "4.2.5",
-    ),
-)
+buildifier_prebuilt_register_toolchains()
 
 # MARK: - Integration Testing
 

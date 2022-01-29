@@ -35,9 +35,7 @@ buildifier_prebuilt_deps()
 
 load("@buildifier_prebuilt//:defs.bzl", "buildifier_prebuilt_register_toolchains", "buildtools_assets")
 
-buildifier_prebuilt_register_toolchains(
-    assets = buildtools_assets(version = "4.2.5"),
-)
+buildifier_prebuilt_register_toolchains()
 ```
 
 ### 2. Update the `BUILD.bazel` at the root of your workspace

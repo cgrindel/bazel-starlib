@@ -125,10 +125,10 @@ def bazel_starlib_dependencies(use_prebuilt_buildtools = True):
         maybe(
             http_archive,
             name = "buildifier_prebuilt",
-            sha256 = "6f34c8d18d50d4b697bfe57061d3dfc305e9bb195f8cb66582b62b4a1f0d1ce6",
-            strip_prefix = "buildifier-prebuilt-d907e49acfa4655eafb089447af661e2dab95ac7",
+            sha256 = "00684fefed7804fa37fdf125da265528a48451dd4e5930d617575336623f26a8",
+            strip_prefix = "buildifier-prebuilt-1aa751584efd9f52232254fc6c397135c0b4b4ff",
             urls = [
-                "http://github.com/cgrindel/buildifier-prebuilt/archive/d907e49acfa4655eafb089447af661e2dab95ac7.tar.gz",
+                "http://github.com/cgrindel/buildifier-prebuilt/archive/1aa751584efd9f52232254fc6c397135c0b4b4ff.tar.gz",
             ],
         )
         buildozer_target = "@buildifier_prebuilt//buildozer"

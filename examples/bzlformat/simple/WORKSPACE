@@ -21,21 +21,4 @@ buildifier_prebuilt_deps()
 
 load("@buildifier_prebuilt//:defs.bzl", "buildifier_prebuilt_register_toolchains", "buildtools_assets")
 
-buildifier_prebuilt_register_toolchains(
-    assets = buildtools_assets(version = "4.2.5"),
-)
-
-# If you want to ensure that you are downloading the correct version of the
-# files, you can specify the sha256 values for the binaries that you will use.
-# The sha256_values attribute takes a dict where the key is a string in the
-# form <tool>_<platform>_<arch> and the value is the sha256 value.
-#
-# buildifier_prebuilt_register_toolchains(
-#     assets = buildtools_assets(
-#         sha256_values = {
-#             "buildozer_darwin_amd64": "3fe671620e6cb7d2386f9da09c1de8de88b02b9dd9275cdecd8b9e417f74df1b",
-#             "buildifier_darwin_amd64": "757f246040aceb2c9550d02ef5d1f22d3ef1ff53405fe76ef4c6239ef1ea2cc1",
-#         },
-#         version = "4.2.5",
-#     ),
-# )
+buildifier_prebuilt_register_toolchains()
