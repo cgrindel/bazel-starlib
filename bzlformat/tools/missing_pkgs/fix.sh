@@ -22,7 +22,10 @@ common_sh="$(rlocation "${common_sh_location}")" || \
 source "${common_sh}"
 
 find_missing_pkgs_bin="$(rlocation cgrindel_bazel_starlib/bzlformat/tools/missing_pkgs/find.sh)"
-buildozer="$(rlocation com_github_bazelbuild_buildtools/buildozer/buildozer_/buildozer)"
+
+buildozer_location=bazel_starlib_buildtools/buildozer
+buildozer="$(rlocation "${buildozer_location}")" || \
+  (echo >&2 "Failed to locate ${buildozer_location}" && exit 1)
 
 exclude_pkgs=()
 args=()

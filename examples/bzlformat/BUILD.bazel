@@ -1,10 +1,12 @@
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load(
     "@cgrindel_rules_bazel_integration_test//bazel_integration_test:defs.bzl",
+    "bazel_integration_test",
     "bazel_integration_tests",
+    "default_test_runner",
     "integration_test_utils",
 )
-load("//:bazel_versions.bzl", "SUPPORTED_BAZEL_VERSIONS")
+load("//:bazel_versions.bzl", "CURRENT_BAZEL_VERSION", "SUPPORTED_BAZEL_VERSIONS")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -16,7 +18,9 @@ sh_binary(
     srcs = ["simple_test.sh"],
     data = [
         "@cgrindel_rules_bazel_integration_test//tools:create_scratch_dir",
-        "@com_github_bazelbuild_buildtools//buildozer",
+        # NOTE: The test runnder does not use buildozer. However, the child
+        # workspace does not find it properly if we don't specify it here.
+        "@bazel_starlib_buildtools//:buildozer",
     ],
     deps = [
         "//shlib/lib:assertions",
@@ -37,12 +41,34 @@ bazel_integration_tests(
     workspace_path = "simple",
 )
 
+default_test_runner(
+    name = "build_buildtools_test_runner",
+    bazel_cmds = [
+        "info",
+        "test //...",
+        "run //:bzlformat_missing_pkgs_test",
+    ],
+)
+
+bazel_integration_test(
+    name = "build_buildtools_test",
+    timeout = "eternal",
+    bazel_version = CURRENT_BAZEL_VERSION,
+    test_runner = ":build_buildtools_test_runner",
+    workspace_files = integration_test_utils.glob_workspace_files("build_buildtools") + [
+        "//:workspace_integration_test_files",
+    ],
+    workspace_path = "build_buildtools",
+)
+
 test_suite(
     name = "integration_tests",
     tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
     tests = integration_test_utils.bazel_integration_test_names(
         ":simple_test",
         SUPPORTED_BAZEL_VERSIONS,
-    ),
+    ) + [
+        ":build_buildtools_test",
+    ],
     visibility = ["//:__subpackages__"],
 )

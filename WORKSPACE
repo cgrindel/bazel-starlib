@@ -12,19 +12,15 @@ load("@io_bazel_stardoc//:setup.bzl", "stardoc_repositories")
 
 stardoc_repositories()
 
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+# MARK: - Prebuilt Buildtools Deps
 
-go_rules_dependencies()
+load("@buildifier_prebuilt//:deps.bzl", "buildifier_prebuilt_deps")
 
-go_register_toolchains(version = "1.17.2")
+buildifier_prebuilt_deps()
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@buildifier_prebuilt//:defs.bzl", "buildifier_prebuilt_register_toolchains", "buildtools_assets")
 
-gazelle_dependencies()
-
-load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
-
-protobuf_deps()
+buildifier_prebuilt_register_toolchains()
 
 # MARK: - Integration Testing
 

@@ -28,7 +28,7 @@ sh_binary(
     srcs = ["fix.sh"],
     data = [
         ":find",
-        "@com_github_bazelbuild_buildtools//buildozer",
+        "@bazel_starlib_buildtools//:buildozer",
     ],
     visibility = ["//visibility:public"],
     deps = [

@@ -15,8 +15,8 @@ sh_binary(
     testonly = True,
     srcs = ["missing_pkgs_test.sh"],
     data = [
+        "@bazel_starlib_buildtools//:buildozer",
         "@cgrindel_rules_bazel_integration_test//tools:create_scratch_dir",
-        "@com_github_bazelbuild_buildtools//buildozer",
     ],
     deps = [
         "//shlib/lib:assertions",

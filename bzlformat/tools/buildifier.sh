@@ -11,7 +11,9 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v2 ---
 
-buildifier="$(rlocation com_github_bazelbuild_buildtools/buildifier/buildifier_/buildifier)"
+buildifier_location=bazel_starlib_buildtools/buildifier
+buildifier="$(rlocation "${buildifier_location}")" || \
+  (echo >&2 "Failed to locate ${buildifier_location}" && exit 1)
 
 bzl_path="${1}"
 out_path="${2}"

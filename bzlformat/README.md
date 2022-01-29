@@ -23,23 +23,19 @@ out [the documentation](/doc/bzlformat/) and [the examples](/examples/) for more
 ### 1. Configure your workspace to use `bzlformat`
 
 In addition to the [workspace snippet for the repository](/README.md#workspace-configuration), add
-the following to your `WORKSPACE` file. These are dependencies for
-[Buildifier](https://github.com/bazelbuild/buildtools/tree/master/buildifier).
+the following to your `WORKSPACE` file. This is the initialization logic for the [prebuilt
+buildtools](https://github.com/keith/buildifier-prebuilt).  If you would prefer to build the
+[buildtools](https://github.com/bazelbuild/buildtools) from source, check out the [build_buildtools
+example](/examples/bzlformat/build_buildtools)
 
 ```python
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@buildifier_prebuilt//:deps.bzl", "buildifier_prebuilt_deps")
 
-go_rules_dependencies()
+buildifier_prebuilt_deps()
 
-go_register_toolchains(version = "1.17.2")
+load("@buildifier_prebuilt//:defs.bzl", "buildifier_prebuilt_register_toolchains", "buildtools_assets")
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-
-gazelle_dependencies()
-
-load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
-
-protobuf_deps()
+buildifier_prebuilt_register_toolchains()
 ```
 
 ### 2. Update the `BUILD.bazel` at the root of your workspace
