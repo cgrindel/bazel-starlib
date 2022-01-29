@@ -129,7 +129,7 @@ def bazel_starlib_dependencies(use_prebuilt_buildtools = True):
             strip_prefix = "buildifier-prebuilt-1aa751584efd9f52232254fc6c397135c0b4b4ff",
             urls = [
                 # Latest as of 2022-01-29
-                "http://github.com/cgrindel/buildifier-prebuilt/archive/1aa751584efd9f52232254fc6c397135c0b4b4ff.tar.gz",
+                "http://github.com/keith/buildifier-prebuilt/archive/1aa751584efd9f52232254fc6c397135c0b4b4ff.tar.gz",
             ],
         )
         buildozer_target = "@buildifier_prebuilt//buildozer"
