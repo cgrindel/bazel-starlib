@@ -1,6 +1,6 @@
 # Bazel Starlib
 
-[![Build](https://github.com/cgrindel/bazel-starlib/actions/workflows/ci.yml/badge.svg)](https://github.com/cgrindel/bazel-starlib/actions/workflows/ci.yml)
+[![Build](https://github.com/cgrindel/bazel-starlib/actions/workflows/scheduled_builds.yml/badge.svg)](https://github.com/cgrindel/bazel-starlib/actions/workflows/scheduled_builds.yml)
 
 Bazel Starlib is a collection of projects that contain rulesets and libraries that are useful for
 the implementation of Bazel projects. 
