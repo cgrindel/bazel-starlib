@@ -1,7 +1,7 @@
 <!-- Generated with Stardoc, Do Not Edit! -->
 # Providers
 
-The providers described below are used by [the rules](/doc/rules_and_macros_overview.md) to
+The providers described below are used by [the rules](/doc/updatesrc/rules_and_macros_overview.md) to
 pass along information about the source files to be updated.
 
 On this page:
