@@ -10,7 +10,7 @@
       "replacement": "{{BASEURL}}/"
     },
     {
-      "pattern": "^(.*)/$",
+      "pattern": "^/(.*)/$",
       "replacement": "$1/README.md"
     }
   ]
