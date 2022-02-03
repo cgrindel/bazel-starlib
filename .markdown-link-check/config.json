@@ -1,4 +1,9 @@
 {
+  "ignorePatterns": [
+    {
+      "pattern": "^#"
+    }
+  ],
   "replacementPatterns": [
     {
       "pattern": "^/",
