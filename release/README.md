@@ -14,7 +14,7 @@ a release tagged with `v0.1.4`, one would run the following:
 # Launch release GitHub Actions release workflow for v0.1.4
 $ bazel run //release:create -- v0.1.4
 ```
-
+<!-- markdown-link-check-disable-next-line -->
 This will launch the [release workflow](.github/workflows/create_release.yml). The workflow performs
 the following steps:
 

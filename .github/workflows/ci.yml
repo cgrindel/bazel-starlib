@@ -32,9 +32,18 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
+  markdown_link_check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-verbose-mode: 'yes'
+        config-file: '.markdown-link-check/config.json'
+
   all_ci_tests:
     runs-on: ubuntu-20.04
-    needs: [macos_build, ubuntu_build]
+    needs: [macos_build, ubuntu_build, markdown_link_check]
     steps:
       - name: All is Well
         shell: bash

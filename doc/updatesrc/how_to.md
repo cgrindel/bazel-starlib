@@ -77,7 +77,7 @@ To copy the output files to the source directory, you execute the
 ```sh
 $ bazel run //path/to/pkg:update
 ```
-
+<!-- markdown-link-check-disable-next-line -->
 A [working example](/examples/simple/srcs/Bar/BUILD.bazel) is located in the examples directory.
 
 ### Option #2: Custom Rule Provides `UpdateSrcsInfo`
@@ -167,7 +167,7 @@ To copy the output files to the source directory, you execute the
 ```sh
 $ bazel run //path/to/pkg:update
 ```
-
+<!-- markdown-link-check-disable-next-line -->
 A [working example](/examples/simple/srcs/Foo/BUILD.bazel) is located in the examples directory.
 
 ## Execute All of Your `updatesrc_update` Targets using `updatesrc_update_all`

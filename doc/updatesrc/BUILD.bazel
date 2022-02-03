@@ -68,7 +68,7 @@ write_header(
     header_content = [
         "# Providers",
         "",
-        "The providers described below are used by [the rules](/doc/rules_and_macros_overview.md) to",
+        "The providers described below are used by [the rules](/doc/updatesrc/rules_and_macros_overview.md) to",
         "pass along information about the source files to be updated.",
     ],
     symbols = _PROVIDERS_DOC_PROVIDER.symbols,
