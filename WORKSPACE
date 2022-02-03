@@ -22,6 +22,17 @@ load("@buildifier_prebuilt//:defs.bzl", "buildifier_prebuilt_register_toolchains
 
 buildifier_prebuilt_register_toolchains()
 
+# MARK: - NodeJS Deps
+
+load("@build_bazel_rules_nodejs//:repositories.bzl", "build_bazel_rules_nodejs_dependencies")
+
+build_bazel_rules_nodejs_dependencies()
+
+# fetches nodejs, npm, and yarn
+load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
+
+node_repositories()
+
 # MARK: - Integration Testing
 
 load("@cgrindel_rules_bazel_integration_test//bazel_integration_test:deps.bzl", "bazel_integration_test_rules_dependencies")
