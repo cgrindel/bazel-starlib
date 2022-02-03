@@ -5,8 +5,6 @@
 Bazel Starlib is a collection of projects that contain rulesets and libraries that are useful for
 the implementation of Bazel projects. 
 
-[I AM BROKEN](/does-not-exist.md)
-
 | Project | Description | Documentation |
 | ------- | ----------- | ------------- |
 | bazeldoc | Generate Starlark documentation using [Bazel Stardoc](https://github.com/bazelbuild/stardoc). Formerly hosted as [bazel-doc](https://github.com/cgrindel/bazel-doc). | [API](/doc/bazeldoc/), [How-to](/bazeldoc/) |
