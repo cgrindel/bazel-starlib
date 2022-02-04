@@ -1,8 +1,6 @@
 load(
-    "//markdown/private:markdown_link_check.bzl",
-    _markdown_link_check = "markdown_link_check",
+    "//markdown/private:markdown_check_links_test.bzl",
+    _markdown_check_links_test = "markdown_check_links_test",
 )
 
-package(default_visibility = ["//visibility:public"])
-
-markdown_link_check = _markdown_link_check
+markdown_check_links_test = _markdown_check_links_test

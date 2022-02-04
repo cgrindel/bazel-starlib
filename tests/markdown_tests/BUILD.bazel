@@ -1,14 +1,16 @@
 load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
-load("//markdown:defs.bzl", "markdown_link_check")
+load("//markdown:defs.bzl", "markdown_check_links_test")
 
 bzlformat_pkg(name = "bzlformat")
 
-markdown_link_check(
+markdown_check_links_test(
     name = "test_md_link_check",
     src = "test.md",
+    data = ["//:local_repository_files"],
 )
 
-markdown_link_check(
+markdown_check_links_test(
     name = "links_md_link_check",
     src = "links.md",
+    data = ["//:local_repository_files"],
 )

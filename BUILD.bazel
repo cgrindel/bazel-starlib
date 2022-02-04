@@ -43,15 +43,19 @@ filegroup(
     srcs = glob(["*.bazelrc"]),
 )
 
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)
+
 # The example workspaces use local_repository to reference this workspace.
 # This target collects all of the files needed for rules_spm to work in the
 # child workspaces.
 filegroup(
     name = "local_repository_files",
     srcs = [
-        "BUILD.bazel",
-        "WORKSPACE",
-        ":deps.bzl",
+        ":all_files",
         "//bazeldoc:all_files",
         "//bazeldoc/private:all_files",
         "//bzlformat:all_files",
@@ -63,6 +67,8 @@ filegroup(
         "//bzlrelease:all_files",
         "//bzlrelease/private:all_files",
         "//bzlrelease/tools:all_files",
+        "//markdown:all_files",
+        "//markdown/private:all_files",
         "//shlib/lib:all_files",
         "//shlib/rules:all_files",
         "//shlib/rules/private:all_files",
@@ -70,6 +76,7 @@ filegroup(
         "//updatesrc:all_files",
         "//updatesrc/private:all_files",
     ],
+    visibility = [":integration_test_visibility"],
 )
 
 filegroup(

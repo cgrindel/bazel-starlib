@@ -6,6 +6,12 @@ package(default_visibility = ["//markdown:__subpackages__"])
 bzlformat_pkg(name = "bzlformat")
 
 bzl_library(
-    name = "markdown_link_check",
-    srcs = ["markdown_link_check.bzl"],
+    name = "markdown_check_links_test",
+    srcs = ["markdown_check_links_test.bzl"],
+)
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
 )
