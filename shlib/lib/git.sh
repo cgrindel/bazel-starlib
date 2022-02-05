@@ -34,7 +34,7 @@ fetch_latest_from_git_remote() {
 
 is_valid_release_tag() {
   local tag="${1}"
-  [[ "${tag}" =~ ^v ]] || return -1
+  [[ "${tag}" =~ ^v?[0-9]+[.][0-9]+[.][0-9]+ ]] || return -1
 }
 
 # Returns the commit hash for the provided branch or tag.
