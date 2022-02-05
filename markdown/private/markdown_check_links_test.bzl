@@ -1,25 +1,25 @@
 def _markdown_check_links_test_impl(ctx):
-    check_links_sh = ctx.actions.declare_file(
-        ctx.label.name + "_check_links.sh",
-    )
-    runfiles = ctx.runfiles(
-        files = [ctx.file.src, ctx.executable._link_checker] + ctx.files.data,
-    )
-    runfiles = runfiles.merge_all([
+    files = [ctx.file.src, ctx.executable._link_checker] + ctx.files.data
+    if ctx.file.config != None:
+        files.append(ctx.file.config)
+
+    runfiles = ctx.runfiles(files = files).merge_all([
         ctx.attr._link_checker[DefaultInfo].default_runfiles,
     ])
 
-    # DEBUG BEGIN
-    print("*** CHUCK runfiles.files.to_list(): ")
-    for idx, item in enumerate(runfiles.files.to_list()):
-        print("*** CHUCK", idx, ":", item)
-
-    # DEBUG END
+    # # DEBUG BEGIN
+    # print("*** CHUCK runfiles.files.to_list(): ")
+    # for idx, item in enumerate(runfiles.files.to_list()):
+    #     print("*** CHUCK", idx, ":", item)
+    # # DEBUG END
 
     config_file_path = ""
     if ctx.file.config != None:
         config_file_path = ctx.file.config.short_path
 
+    check_links_sh = ctx.actions.declare_file(
+        ctx.label.name + "_check_links.sh",
+    )
     ctx.actions.write(
         output = check_links_sh,
         is_executable = True,
@@ -38,8 +38,20 @@ md_file="{md_file}"
             md_file = ctx.file.src.short_path,
         ) + """
 
+# DEBUG BEGIN
+tree >&2 -d
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") PWD: ${PWD}" 
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") config_file: ${config_file}" 
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") md_link_check: ${md_link_check}" 
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") md_file: ${md_file}" 
+set -x
+# DEBUG END
+
 cmd=( "${md_link_check}" )
 [[ -n "${config_file:-}" ]] && cmd+=( -c "${config_file}" )
+# DEBUG BEGIN
+cmd+=( -v )
+# DEBUG END
 cmd+=( "${md_file}" )
 "${cmd[@]}"
 """,

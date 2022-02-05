@@ -13,3 +13,9 @@ sh_library(
     srcs = ["setup_git_repo.sh"],
     visibility = ["//:__subpackages__"],
 )
+
+filegroup(
+    name = "markdown_link_check_config",
+    srcs = ["markdown_link_check_config.json"],
+    visibility = ["//tests:__subpackages__"],
+)
