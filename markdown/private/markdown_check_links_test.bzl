@@ -39,12 +39,9 @@ md_file="{md_file}"
         ) + """
 
 # DEBUG BEGIN
-tree >&2 -d
-echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") PWD: ${PWD}" 
-echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") config_file: ${config_file}" 
-echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") md_link_check: ${md_link_check}" 
-echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") md_file: ${md_file}" 
-set -x
+# tree >&2 -d
+# echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") PWD: ${PWD}" 
+# set -x
 # DEBUG END
 
 cmd=( "${md_link_check}" )

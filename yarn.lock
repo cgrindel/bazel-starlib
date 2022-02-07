@@ -92,10 +92,9 @@ lodash@^4.17.21:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
-markdown-link-check@^3.9.3:
+"markdown-link-check@https://github.com/cgrindel/markdown-link-check.git#investigate_fail_when_used_in_bazel":
   version "3.9.3"
-  resolved "https://registry.yarnpkg.com/markdown-link-check/-/markdown-link-check-3.9.3.tgz#806fa80d34efe14f77fbe53f950f971b9635be84"
-  integrity sha512-eXW4jTs0z7MBnTnpgaM+jRNtEwBjKCW3yldNCE4v7kHqpm4BTGPaBbXqzt/Kdz1/fZl91hIXgBE/21yps1PtIQ==
+  resolved "https://github.com/cgrindel/markdown-link-check.git#fda46a778c362b9db4b6db82aaa796b73eb4a815"
   dependencies:
     async "^3.2.3"
     chalk "^4.1.2"
