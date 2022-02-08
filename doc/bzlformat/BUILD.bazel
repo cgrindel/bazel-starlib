@@ -11,7 +11,10 @@ bzlformat_pkg(name = "bzlformat")
 
 filegroup(
     name = "doc_files",
-    srcs = glob(["*.md"]),
+    srcs = glob(["*.md"]) + [
+        # A doc file has a reference to this file.
+        "BUILD.bazel",
+    ],
     visibility = ["//:markdown_test_visibility"],
 )
 

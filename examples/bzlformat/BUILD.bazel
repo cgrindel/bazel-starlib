@@ -12,7 +12,12 @@ bzlformat_pkg(name = "bzlformat")
 
 filegroup(
     name = "doc_files",
-    srcs = glob(["*.md"]),
+    srcs = glob(["*.md"]) + [
+        # The child workspaces do not appear as packages in the parent workspace.
+        # Hence, we reference the relevant doc files as files, not a target.
+        "build_buildtools/README.md",
+        "simple/README.md",
+    ],
     visibility = ["//:markdown_test_visibility"],
 )
 
