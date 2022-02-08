@@ -33,6 +33,7 @@ config_file="{config}"
 md_link_check="{md_link_check}"
 md_files={md_files}
 verbose="{verbose}"
+quiet="{quiet}"
 """.format(
             config = config_file_path,
             md_link_check = ctx.executable._link_checker.short_path,
@@ -41,11 +42,13 @@ verbose="{verbose}"
                 for src in ctx.files.srcs
             ]),
             verbose = ctx.attr.verbose,
+            quiet = ctx.attr.quiet,
         ) + """
 
 cmd=( "${md_link_check}" )
-[[ -n "${config_file:-}" ]] && cmd+=( -c "${config_file}" )
 [[ "${verbose}" == "True" ]] && cmd+=( -v )
+[[ "${quiet}" == "True" ]] && cmd+=( -q )
+[[ -n "${config_file:-}" ]] && cmd+=( -c "${config_file}" )
 cmd+=( "${md_files[@]}" )
 "${cmd[@]}"
 """,
@@ -75,6 +78,13 @@ Any data files that need to be present for the link check to succeed.\
         "verbose": attr.bool(
             doc = """\
 If set to true, the markdown-link-check will be configured for verbose output.\
+""",
+        ),
+        "quiet": attr.bool(
+            default = True,
+            doc = """\
+If set to true, the markdown-link-check will be configured to only display \
+errors.\
 """,
         ),
         "_link_checker": attr.label(
