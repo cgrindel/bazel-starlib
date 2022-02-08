@@ -68,6 +68,7 @@ markdown_check_links_test = rule(
         "config": attr.label(
             allow_single_file = True,
             doc = "A `markdown-link-check` JSON configuration file.",
+            default = "@cgrindel_bazel_starlib//markdown:default_markdown_link_check_config",
         ),
         "data": attr.label_list(
             allow_files = True,

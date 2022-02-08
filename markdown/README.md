@@ -29,3 +29,7 @@ load("@cgrindel_bazel_starlib//markdown:defs.bzl", "markdown_register_node_deps"
 
 markdown_register_node_deps()
 ```
+
+
+
+> TODO (grindel): Add section describing that default_markdown_link_check_config.json.
