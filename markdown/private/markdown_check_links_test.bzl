@@ -99,13 +99,3 @@ Using [`markdown-link-check`](https://github.com/tcort/markdown-link-check), \
 check the links in a markdown file to ensure that they are valid.\
 """,
 )
-
-# # TODO: Add doc comment
-# def markdown_check_links_tests(name, srcs, **kwargs):
-#     for src in srcs:
-#         test_name = src_utils.path_to_name(src, prefix = name)
-#         markdown_check_links_test(
-#             name = test_name,
-#             src = src,
-#             **kwargs
-#         )
