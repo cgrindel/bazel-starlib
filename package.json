@@ -6,6 +6,6 @@
   "author": "Chuck Grindel <chuck@chuckgrindel.com>",
   "license": "Apache 2.0",
   "dependencies": {
-    "markdown-link-check": "https://github.com/cgrindel/markdown-link-check.git#investigate_fail_when_used_in_bazel"
+    "markdown-link-check": "^3.9.3"
   }
 }
