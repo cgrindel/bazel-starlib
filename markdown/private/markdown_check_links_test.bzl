@@ -56,7 +56,7 @@ cmd+=( "${md_file}" )
 
     return [DefaultInfo(executable = check_links_sh, runfiles = runfiles)]
 
-_markdown_check_links_test = rule(
+markdown_check_links_test = rule(
     implementation = _markdown_check_links_test_impl,
     test = True,
     attrs = {
@@ -83,11 +83,11 @@ _markdown_check_links_test = rule(
     doc = "Check the links in a markdown file to ensure that they are valid.",
 )
 
-def markdown_check_links_test(name, src, config = None, **kwargs):
-    _markdown_check_links_test(
-        name = name,
-        src = src,
-        config = config,
-        local = True,
-        **kwargs
-    )
+# def markdown_check_links_test(name, src, config = None, **kwargs):
+#     _markdown_check_links_test(
+#         name = name,
+#         src = src,
+#         config = config,
+#         local = True,
+#         **kwargs
+#     )
