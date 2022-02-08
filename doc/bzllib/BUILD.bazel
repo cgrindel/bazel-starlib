@@ -9,6 +9,12 @@ load(
 
 bzlformat_pkg(name = "bzlformat")
 
+filegroup(
+    name = "doc_files",
+    srcs = glob(["*.md"]),
+    visibility = ["//:markdown_test_visibility"],
+)
+
 # MARK: - Documentation Providers
 
 _STARDOC_INPUT = "//bzllib:defs.bzl"
@@ -122,10 +128,4 @@ write_file_list(
 
 doc_for_provs(
     doc_provs = _ALL_DOC_PROVIDERS,
-)
-
-filegroup(
-    name = "all_files",
-    srcs = glob(["*"]),
-    visibility = ["//tests:__subpackages__"],
 )

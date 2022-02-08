@@ -11,9 +11,9 @@ load("//:bazel_versions.bzl", "CURRENT_BAZEL_VERSION", "SUPPORTED_BAZEL_VERSIONS
 bzlformat_pkg(name = "bzlformat")
 
 filegroup(
-    name = "all_files",
-    srcs = glob(["*"]),
-    visibility = ["//tests:__subpackages__"],
+    name = "doc_files",
+    srcs = glob(["*.md"]),
+    visibility = ["//:markdown_test_visibility"],
 )
 
 # MARK: - Integration Tests

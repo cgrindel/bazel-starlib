@@ -9,6 +9,12 @@ load(
 
 bzlformat_pkg(name = "bzlformat")
 
+filegroup(
+    name = "doc_files",
+    srcs = glob(["*.md"]),
+    visibility = ["//:markdown_test_visibility"],
+)
+
 # Lovingly inspired by
 # https://github.com/bazelbuild/rules_swift/blob/021c11b1d578ffba547140eb24854cdfe74c794f/doc/BUILD.bazel#L3
 
@@ -103,10 +109,4 @@ write_header(
 
 doc_for_provs(
     doc_provs = _ALL_DOC_PROVIDERS,
-)
-
-filegroup(
-    name = "all_files",
-    srcs = glob(["*"]),
-    visibility = ["//tests:__subpackages__"],
 )

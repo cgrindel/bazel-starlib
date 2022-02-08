@@ -29,6 +29,13 @@ filegroup(
     visibility = ["//tests/repo_markdown_tests:__subpackages__"],
 )
 
+package_group(
+    name = "markdown_test_visibility",
+    packages = [
+        "//tests/repo_markdown_tests/...",
+    ],
+)
+
 # MARK: - Integration Tests
 
 package_group(
@@ -43,6 +50,12 @@ bzl_library(
     name = "bazel_versions",
     srcs = ["bazel_versions.bzl"],
     visibility = [":integration_test_visibility"],
+)
+
+filegroup(
+    name = "doc_files",
+    srcs = glob(["*.md"]),
+    visibility = ["//:markdown_test_visibility"],
 )
 
 # Provides the *.bazlerc files for the example workspace integration tests.

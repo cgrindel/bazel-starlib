@@ -43,10 +43,6 @@ verbose="{verbose}"
             verbose = ctx.attr.verbose,
         ) + """
 
-# DEBUG BEGIN
-set -x
-# DEBUG END
-
 cmd=( "${md_link_check}" )
 [[ -n "${config_file:-}" ]] && cmd+=( -c "${config_file}" )
 [[ "${verbose}" == "True" ]] && cmd+=( -v )

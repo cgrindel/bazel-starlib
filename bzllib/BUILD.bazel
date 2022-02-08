@@ -5,6 +5,12 @@ bzlformat_pkg(name = "bzlformat")
 
 package(default_visibility = ["//visibility:public"])
 
+filegroup(
+    name = "doc_files",
+    srcs = glob(["*.md"]),
+    visibility = ["//:markdown_test_visibility"],
+)
+
 bzl_library(
     name = "defs",
     srcs = ["defs.bzl"],
