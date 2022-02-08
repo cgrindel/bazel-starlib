@@ -8,6 +8,9 @@ bzlformat_pkg(name = "bzlformat")
 bzl_library(
     name = "markdown_check_links_test",
     srcs = ["markdown_check_links_test.bzl"],
+    deps = [
+        "//bzllib:defs",
+    ],
 )
 
 filegroup(

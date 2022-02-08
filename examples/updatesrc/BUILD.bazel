@@ -9,6 +9,12 @@ load("//:bazel_versions.bzl", "SUPPORTED_BAZEL_VERSIONS")
 
 bzlformat_pkg(name = "bzlformat")
 
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//tests:__subpackages__"],
+)
+
 # MARK: - Integration Tests
 
 default_test_runner(

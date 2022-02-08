@@ -8,16 +8,23 @@ filegroup(
     srcs = glob(["*.md"]),
 )
 
-markdown_check_links_test(
-    name = "test_md_link_check",
-    src = "test.md",
-    config = "//tests:markdown_link_check_config",
-    data = [":markdown_files"],
-)
+# markdown_check_links_test(
+#     name = "test_md_link_check",
+#     srcs = "test.md",
+#     config = "//tests:markdown_link_check_config",
+#     data = [":markdown_files"],
+# )
+
+# markdown_check_links_test(
+#     name = "links_md_link_check",
+#     src = "links.md",
+#     config = "//tests:markdown_link_check_config",
+#     data = [":markdown_files"],
+# )
 
 markdown_check_links_test(
-    name = "links_md_link_check",
-    src = "links.md",
+    name = "check_links_test",
+    srcs = [":markdown_files"],
     config = "//tests:markdown_link_check_config",
     data = [":markdown_files"],
 )

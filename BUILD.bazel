@@ -21,6 +21,14 @@ updatesrc_update_all(
     ],
 )
 
+# MARK: - Markdown Files
+
+filegroup(
+    name = "markdown_files",
+    srcs = glob(["*.md"]),
+    visibility = ["//tests/repo_markdown_tests:__subpackages__"],
+)
+
 # MARK: - Integration Tests
 
 package_group(

@@ -1,5 +1,11 @@
+load("//bzllib:defs.bzl", "src_utils")
+load("@bazel_skylib//lib:shell.bzl", "shell")
+
 def _markdown_check_links_test_impl(ctx):
-    files = [ctx.file.src, ctx.executable._link_checker] + ctx.files.data
+    if ctx.files.srcs == []:
+        fail("Expected at least one markdown file to check.")
+
+    files = [ctx.executable._link_checker] + ctx.files.srcs + ctx.files.data
     if ctx.file.config != None:
         files.append(ctx.file.config)
 
@@ -25,19 +31,26 @@ set -euo pipefail
 """ + """
 config_file="{config}"
 md_link_check="{md_link_check}"
-md_file="{md_file}"
+md_files={md_files}
 verbose="{verbose}"
 """.format(
             config = config_file_path,
             md_link_check = ctx.executable._link_checker.short_path,
-            md_file = ctx.file.src.short_path,
+            md_files = shell.array_literal([
+                src.short_path
+                for src in ctx.files.srcs
+            ]),
             verbose = ctx.attr.verbose,
         ) + """
+
+# DEBUG BEGIN
+set -x
+# DEBUG END
 
 cmd=( "${md_link_check}" )
 [[ -n "${config_file:-}" ]] && cmd+=( -c "${config_file}" )
 [[ "${verbose}" == "True" ]] && cmd+=( -v )
-cmd+=( "${md_file}" )
+cmd+=( "${md_files[@]}" )
 "${cmd[@]}"
 """,
     )
@@ -48,10 +61,10 @@ markdown_check_links_test = rule(
     implementation = _markdown_check_links_test_impl,
     test = True,
     attrs = {
-        "src": attr.label(
-            allow_single_file = True,
+        "srcs": attr.label_list(
+            allow_files = [".md", ".markdown"],
             mandatory = True,
-            doc = "The markdown file that should be checked.",
+            doc = "The markdown files that should be checked.",
         ),
         "config": attr.label(
             allow_single_file = True,
@@ -75,15 +88,18 @@ If set to true, the markdown-link-check will be configured for verbose output.\
             doc = "The link checker utility.",
         ),
     },
-    doc = "Check the links in a markdown file to ensure that they are valid.",
+    doc = """\
+Using [`markdown-link-check`](https://github.com/tcort/markdown-link-check), \
+check the links in a markdown file to ensure that they are valid.\
+""",
 )
 
-# def markdown_check_links_test(name, srcs, config = None, **kwargs):
+# # TODO: Add doc comment
+# def markdown_check_links_tests(name, srcs, **kwargs):
 #     for src in srcs:
-#         # test_name = name "
-#         _markdown_check_links_test(
-#             name = name,
+#         test_name = src_utils.path_to_name(src, prefix = name)
+#         markdown_check_links_test(
+#             name = test_name,
 #             src = src,
-#             config = config,
 #             **kwargs
 #         )

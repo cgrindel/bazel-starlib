@@ -10,6 +10,12 @@ load("//shlib/rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 
 bzlformat_pkg(name = "bzlformat")
 
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//tests:__subpackages__"],
+)
+
 # MARK: - Release
 
 generate_workspace_snippet(

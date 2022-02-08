@@ -114,3 +114,9 @@ write_file_list(
 doc_for_provs(
     doc_provs = _ALL_DOC_PROVIDERS,
 )
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//tests:__subpackages__"],
+)
