@@ -5,6 +5,11 @@ package(default_visibility = ["//markdown:__subpackages__"])
 
 bzlformat_pkg(name = "bzlformat")
 
+exports_files([
+    "package.json",
+    "yarn.lock",
+])
+
 bzl_library(
     name = "markdown_check_links_test",
     srcs = ["markdown_check_links_test.bzl"],

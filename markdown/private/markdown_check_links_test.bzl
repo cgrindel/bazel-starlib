@@ -88,7 +88,7 @@ errors.\
 """,
         ),
         "_link_checker": attr.label(
-            default = "@npm//markdown-link-check/bin:markdown-link-check",
+            default = "@cgrindel_bazel_starlib_markdown_npm//markdown-link-check/bin:markdown-link-check",
             executable = True,
             cfg = "host",
             doc = "The link checker utility.",

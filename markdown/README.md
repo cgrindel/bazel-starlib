@@ -21,11 +21,7 @@ In addition to the [workspace snippet for the repository](/README.md#workspace-c
 the following to your `WORKSPACE` file. 
 
 ```python
-load("@buildifier_prebuilt//:deps.bzl", "buildifier_prebuilt_deps")
+load("@build_bazel_rules_nodejs//:repositories.bzl", "build_bazel_rules_nodejs_dependencies")
 
-buildifier_prebuilt_deps()
-
-load("@buildifier_prebuilt//:defs.bzl", "buildifier_prebuilt_register_toolchains", "buildtools_assets")
-
-buildifier_prebuilt_register_toolchains()
+build_bazel_rules_nodejs_dependencies()
 ```
