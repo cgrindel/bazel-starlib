@@ -110,33 +110,3 @@ Using [`markdown-link-check`](https://github.com/tcort/markdown-link-check), \
 check the links in a markdown file to ensure that they are valid.\
 """,
 )
-
-# def markdown_check_links_test(name, data, srcs = None, **kwargs):
-#     # If no srcs are provided, assume that they want to check all of the
-#     # markdown files in the data.
-#     if srcs == None:
-#         md_files_name = src_utils.path_to_name("md_files", prefix = name)
-#         filter_srcs(
-#             name = md_files_name,
-#             srcs = data,
-#             filename_ends_with = ".md",
-#         )
-#         markdown_files_name = src_utils.path_to_name("markdown_files", prefix = name)
-#         filter_srcs(
-#             name = markdown_files_name,
-#             srcs = data,
-#             filename_ends_with = ".markdown",
-#         )
-#         all_md_files_name = src_utils.path_to_name("all_md_files", prefix = name)
-#         native.filegroup(
-#             name = all_md_files_name,
-#             srcs = [md_files_name, markdown_files_name],
-#         )
-#         srcs = [all_md_files_name]
-
-#     _markdown_check_links_test(
-#         name = name,
-#         srcs = srcs,
-#         data = data,
-#         **kwargs
-#     )
