@@ -2,10 +2,21 @@ load("//bzllib:defs.bzl", "filter_srcs", "src_utils")
 load("@bazel_skylib//lib:shell.bzl", "shell")
 
 def _markdown_check_links_test_impl(ctx):
-    if ctx.files.srcs == []:
-        fail("Expected at least one markdown file to check.")
+    if ctx.files.srcs == [] and ctx.files.data == []:
+        fail("No files were specified in the srcs or the data.")
 
-    files = [ctx.executable._link_checker] + ctx.files.srcs + ctx.files.data
+    # If no srcs were provided, assume that we are testing every markdown file
+    # provided in the data.
+    if ctx.files.srcs == []:
+        srcs = [
+            d
+            for d in ctx.files.data
+            if d.extension == "md" or d.extension == "markdown"
+        ]
+    else:
+        srcs = ctx.files.srcs
+
+    files = [ctx.executable._link_checker] + srcs + ctx.files.data
     if ctx.file.config != None:
         files.append(ctx.file.config)
 
@@ -39,7 +50,7 @@ quiet="{quiet}"
             md_link_check = ctx.executable._link_checker.short_path,
             md_files = shell.array_literal([
                 src.short_path
-                for src in ctx.files.srcs
+                for src in srcs
             ]),
             verbose = ctx.attr.verbose,
             quiet = ctx.attr.quiet,
@@ -56,13 +67,12 @@ cmd+=( "${md_files[@]}" )
 
     return [DefaultInfo(executable = check_links_sh, runfiles = runfiles)]
 
-_markdown_check_links_test = rule(
+markdown_check_links_test = rule(
     implementation = _markdown_check_links_test_impl,
     test = True,
     attrs = {
         "srcs": attr.label_list(
             allow_files = [".md", ".markdown"],
-            mandatory = True,
             doc = "The markdown files that should be checked.",
         ),
         "config": attr.label(
@@ -101,32 +111,32 @@ check the links in a markdown file to ensure that they are valid.\
 """,
 )
 
-def markdown_check_links_test(name, data, srcs = None, **kwargs):
-    # If no srcs are provided, assume that they want to check all of the
-    # markdown files in the data.
-    if srcs == None:
-        md_files_name = src_utils.path_to_name("md_files", prefix = name)
-        filter_srcs(
-            name = md_files_name,
-            srcs = data,
-            filename_ends_with = ".md",
-        )
-        markdown_files_name = src_utils.path_to_name("markdown_files", prefix = name)
-        filter_srcs(
-            name = markdown_files_name,
-            srcs = data,
-            filename_ends_with = ".markdown",
-        )
-        all_md_files_name = src_utils.path_to_name("all_md_files", prefix = name)
-        native.filegroup(
-            name = all_md_files_name,
-            srcs = [md_files_name, markdown_files_name],
-        )
-        srcs = [all_md_files_name]
+# def markdown_check_links_test(name, data, srcs = None, **kwargs):
+#     # If no srcs are provided, assume that they want to check all of the
+#     # markdown files in the data.
+#     if srcs == None:
+#         md_files_name = src_utils.path_to_name("md_files", prefix = name)
+#         filter_srcs(
+#             name = md_files_name,
+#             srcs = data,
+#             filename_ends_with = ".md",
+#         )
+#         markdown_files_name = src_utils.path_to_name("markdown_files", prefix = name)
+#         filter_srcs(
+#             name = markdown_files_name,
+#             srcs = data,
+#             filename_ends_with = ".markdown",
+#         )
+#         all_md_files_name = src_utils.path_to_name("all_md_files", prefix = name)
+#         native.filegroup(
+#             name = all_md_files_name,
+#             srcs = [md_files_name, markdown_files_name],
+#         )
+#         srcs = [all_md_files_name]
 
-    _markdown_check_links_test(
-        name = name,
-        srcs = srcs,
-        data = data,
-        **kwargs
-    )
+#     _markdown_check_links_test(
+#         name = name,
+#         srcs = srcs,
+#         data = data,
+#         **kwargs
+#     )
