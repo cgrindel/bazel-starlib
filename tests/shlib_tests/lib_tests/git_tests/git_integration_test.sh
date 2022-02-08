@@ -44,6 +44,9 @@ is_installed git || fail "Could not find git."
 source "${setup_git_repo_sh}"
 cd "${repo_dir}"
 
+git config user.email "noone@example.org"
+git config user.name "No one"
+
 # MARK - Test
 
 is_valid_release_tag "v1.2.3" || fail "Expected v1.2.3 to be valid."
