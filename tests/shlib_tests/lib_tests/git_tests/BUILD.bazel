@@ -11,6 +11,7 @@ sh_test(
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
     deps = [
+        "//shlib/lib:arrays",
         "//shlib/lib:env",
         "//shlib/lib:fail",
         "//shlib/lib:git",
