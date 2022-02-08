@@ -32,6 +32,11 @@ git_sh="$(rlocation "${git_sh_location}")" || \
   (echo >&2 "Failed to locate ${git_sh_location}" && exit 1)
 source "${git_sh}"
 
+arrays_sh_location=cgrindel_bazel_starlib/shlib/lib/arrays.sh
+arrays_sh="$(rlocation "${arrays_sh_location}")" || \
+  (echo >&2 "Failed to locate ${arrays_sh_location}" && exit 1)
+source "${arrays_sh}"
+
 is_installed git || fail "Could not find git."
 
 # MARK - Setup
@@ -39,11 +44,16 @@ is_installed git || fail "Could not find git."
 source "${setup_git_repo_sh}"
 cd "${repo_dir}"
 
+git config user.email "noone@example.org"
+git config user.name "No one"
+
 # MARK - Test
 
 is_valid_release_tag "v1.2.3" || fail "Expected v1.2.3 to be valid."
 is_valid_release_tag "v1.2.3-rc" || fail "Expected v1.2.3-rc to be valid."
-is_valid_release_tag "1.2.3" && fail "Expected 1.2.3 to be invalid."
+is_valid_release_tag "1.2.3" || fail "Expected 1.2.3 to be valid."
+is_valid_release_tag "f1.2.3" && fail "Expected f1.2.3 to be invalid."
+is_valid_release_tag "foo-1.2.3" && fail "Expected foo-1.2.3 to be invalid."
 
 remote_url="$(get_git_remote_url)"
 [[ "${remote_url}" =~ "bazel-starlib" ]] || fail "Unexpected remote URL."
@@ -51,11 +61,14 @@ remote_url="$(get_git_remote_url)"
 # Make sure that fetch does not fail
 fetch_latest_from_git_remote
 
+# Create a release tag of 3.2.1
+create_git_release_tag "3.2.1"
+git_tag_exists "3.2.1" || fail "Expected tag '3.2.1' to exist."
+
 release_tags=( $(get_git_release_tags) )
 [[ ${#release_tags[@]} > 0 ]] || fail "Did not find any release tags."
-for tag in "${release_tags[@]}" ; do
-  [[ "${tag}" =~ ^v ]] || fail "Release tag is not properly formed. tag: ${tag}"
-done
+contains_item "v0.1.1" "${release_tags[@]}" || fail "Expected tag 'v0.1.1' to be found as a release tag."
+contains_item "3.2.1" "${release_tags[@]}" || fail "Expected tag '3.2.1' to be found as a release tag."
 
 git_tag_exists "v9999.0.0" && fail "Did not expect v9999.0.0 to exist."
 git_tag_exists "v0.1.1" || fail "Did expect v0.1.1 to exist."

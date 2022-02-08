@@ -34,7 +34,7 @@ fetch_latest_from_git_remote() {
 
 is_valid_release_tag() {
   local tag="${1}"
-  [[ "${tag}" =~ ^v ]] || return -1
+  [[ "${tag}" =~ ^v?[0-9]+[.][0-9]+[.][0-9]+ ]] || return -1
 }
 
 # Returns the commit hash for the provided branch or tag.
@@ -45,7 +45,14 @@ get_git_commit_hash() {
 
 # Returns the list of release tags sorted by most recent to oldest.
 get_git_release_tags() {
-  git tag --sort=refname -l "v*"
+  local tags=( $(git tag --sort=refname -l) )
+  [[ ${#tags[@]} == 0 ]] && return
+  local release_tags=()
+  for tag in "${tags[@]}" ; do
+    is_valid_release_tag "${tag}" && release_tags+=( "${tag}" )
+  done
+  [[ ${#release_tags[@]} == 0 ]] && return
+  echo "${release_tags[@]}"
 }
 
 git_tag_exists() {
@@ -61,7 +68,6 @@ git_tag_exists() {
 create_git_release_tag() {
   local tag="${1}"
   local commit="${2:-}"
-  [[ "${tag}" =~ ^v ]] || tag="v${tag}"
   msg="Release ${tag}"
   git_tag_cmd=(git tag -a -m "${msg}" "${tag}")
   [[ -z "${commit:-}" ]] || git_tag_cmd+=( "${commit}" )
