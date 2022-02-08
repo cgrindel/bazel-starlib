@@ -113,6 +113,7 @@ test_suite(
     tags = INTEGRATION_TEST_TAGS,
     tests = [
         "//examples/bzlformat:integration_tests",
+        "//examples/markdown:integration_tests",
         "//examples/updatesrc:integration_tests",
         "//tests/bzlformat_tests:all_integration_tests",
         "//tests/bzlrelease_tests:all_integration_tests",
