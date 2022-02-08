@@ -18,7 +18,8 @@ directory.
 ## Quickstart
 
 The following provides a quick introduction on how to use the rules in this repository. Also, check
-out [the documentation](/doc/bzlformat/) and [the examples](/examples/) for more information.
+out [the documentation](/doc/bzlformat/) and [the examples](/examples/bzlformat/) for more
+information.
 
 ### 1. Configure your workspace to use `bzlformat`
 
