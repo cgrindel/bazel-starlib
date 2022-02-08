@@ -27,9 +27,21 @@ def _is_path_test(ctx):
 
 is_path_test = unittest.make(_is_path_test)
 
+def _path_to_name_test(ctx):
+    env = unittest.begin(ctx)
+
+    asserts.equals(env, "chicken_foo_txt", src_utils.path_to_name("chicken/foo.txt"))
+    asserts.equals(env, "hello_chicken_foo_txt", src_utils.path_to_name("chicken/foo.txt", prefix = "hello"))
+    asserts.equals(env, "hello_chicken_foo_txt", src_utils.path_to_name("chicken/foo.txt", prefix = "hello_"))
+
+    return unittest.end(env)
+
+path_to_name_test = unittest.make(_path_to_name_test)
+
 def src_utils_test_suite():
     return unittest.suite(
         "src_utils_tests",
         is_label_test,
         is_path_test,
+        path_to_name_test,
     )

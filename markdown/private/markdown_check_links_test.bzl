@@ -78,11 +78,12 @@ If set to true, the markdown-link-check will be configured for verbose output.\
     doc = "Check the links in a markdown file to ensure that they are valid.",
 )
 
-# def markdown_check_links_test(name, src, config = None, **kwargs):
-#     _markdown_check_links_test(
-#         name = name,
-#         src = src,
-#         config = config,
-#         local = True,
-#         **kwargs
-#     )
+# def markdown_check_links_test(name, srcs, config = None, **kwargs):
+#     for src in srcs:
+#         # test_name = name "
+#         _markdown_check_links_test(
+#             name = name,
+#             src = src,
+#             config = config,
+#             **kwargs
+#         )
