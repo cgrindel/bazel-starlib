@@ -34,13 +34,6 @@ verbose="{verbose}"
             verbose = ctx.attr.verbose,
         ) + """
 
-# DEBUG BEGIN
-# tree >&2 -d
-# echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") PWD: ${PWD}" 
-# echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") verbose: ${verbose}" 
-# set -x
-# DEBUG END
-
 cmd=( "${md_link_check}" )
 [[ -n "${config_file:-}" ]] && cmd+=( -c "${config_file}" )
 [[ "${verbose}" == "True" ]] && cmd+=( -v )
