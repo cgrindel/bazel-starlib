@@ -7,12 +7,6 @@ def _markdown_check_links_test_impl(ctx):
         ctx.attr._link_checker[DefaultInfo].default_runfiles,
     ])
 
-    # # DEBUG BEGIN
-    # print("*** CHUCK runfiles.files.to_list(): ")
-    # for idx, item in enumerate(runfiles.files.to_list()):
-    #     print("*** CHUCK", idx, ":", item)
-    # # DEBUG END
-
     config_file_path = ""
     if ctx.file.config != None:
         config_file_path = ctx.file.config.short_path
@@ -32,23 +26,24 @@ set -euo pipefail
 config_file="{config}"
 md_link_check="{md_link_check}"
 md_file="{md_file}"
+verbose="{verbose}"
 """.format(
             config = config_file_path,
             md_link_check = ctx.executable._link_checker.short_path,
             md_file = ctx.file.src.short_path,
+            verbose = ctx.attr.verbose,
         ) + """
 
 # DEBUG BEGIN
 # tree >&2 -d
 # echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") PWD: ${PWD}" 
+# echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") verbose: ${verbose}" 
 # set -x
 # DEBUG END
 
 cmd=( "${md_link_check}" )
 [[ -n "${config_file:-}" ]] && cmd+=( -c "${config_file}" )
-# DEBUG BEGIN
-cmd+=( -v )
-# DEBUG END
+[[ "${verbose}" == "True" ]] && cmd+=( -v )
 cmd+=( "${md_file}" )
 "${cmd[@]}"
 """,
@@ -71,7 +66,14 @@ markdown_check_links_test = rule(
         ),
         "data": attr.label_list(
             allow_files = True,
-            doc = "Any data files that need to be present for the link check to succeed.",
+            doc = """\
+Any data files that need to be present for the link check to succeed.\
+""",
+        ),
+        "verbose": attr.bool(
+            doc = """\
+If set to true, the markdown-link-check will be configured for verbose output.\
+""",
         ),
         "_link_checker": attr.label(
             default = "@npm//markdown-link-check/bin:markdown-link-check",
