@@ -30,9 +30,16 @@ is_path_test = unittest.make(_is_path_test)
 def _path_to_name_test(ctx):
     env = unittest.begin(ctx)
 
-    asserts.equals(env, "chicken_foo_txt", src_utils.path_to_name("chicken/foo.txt"))
-    asserts.equals(env, "hello_chicken_foo_txt", src_utils.path_to_name("chicken/foo.txt", prefix = "hello"))
-    asserts.equals(env, "hello_chicken_foo_txt", src_utils.path_to_name("chicken/foo.txt", prefix = "hello_"))
+    actual = src_utils.path_to_name("chicken/foo.txt")
+    asserts.equals(env, "chicken_foo_txt", actual, "Simple path.")
+    actual = src_utils.path_to_name("chicken/foo.txt", prefix = "hello")
+    asserts.equals(env, "hello_chicken_foo_txt", actual, "Path with prefix, no underscore.")
+    actual = src_utils.path_to_name("chicken/foo.txt", prefix = "hello_")
+    asserts.equals(env, "hello_chicken_foo_txt", actual, "Path with prefix, with underscore.")
+    actual = src_utils.path_to_name("chicken/foo.txt", suffix = "goodbye")
+    asserts.equals(env, "chicken_foo_txt_goodbye", actual, "Path with suffix, no underscore.")
+    actual = src_utils.path_to_name("chicken/foo.txt", suffix = "_goodbye")
+    asserts.equals(env, "chicken_foo_txt_goodbye", actual, "Path with suffix, with underscore.")
 
     return unittest.end(env)
 

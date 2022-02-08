@@ -20,7 +20,7 @@ def _is_path(src):
     """
     return not _is_label(src)
 
-def _path_to_name(path, prefix = None):
+def _path_to_name(path, prefix = None, suffix = None):
     """Converts a path string to a name suitable for use as a label name.
 
     Args:
@@ -34,7 +34,10 @@ def _path_to_name(path, prefix = None):
     prefix_str = ""
     if prefix != None:
         prefix_str = prefix + "_" if not prefix.endswith("_") else prefix
-    return prefix_str + path.replace("/", "_").replace(".", "_")
+    suffix_str = ""
+    if suffix != None:
+        suffix_str = suffix + "_" if not suffix.startswith("_") else suffix
+    return prefix_str + path.replace("/", "_").replace(".", "_") + suffix_str
 
 src_utils = struct(
     is_path = _is_path,

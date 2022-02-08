@@ -51,7 +51,7 @@ A `bool` specifying whether the `string` value looks like a label.
 ## src_utils.path_to_name
 
 <pre>
-src_utils.path_to_name(<a href="#src_utils.path_to_name-path">path</a>, <a href="#src_utils.path_to_name-prefix">prefix</a>)
+src_utils.path_to_name(<a href="#src_utils.path_to_name-path">path</a>, <a href="#src_utils.path_to_name-prefix">prefix</a>, <a href="#src_utils.path_to_name-suffix">suffix</a>)
 </pre>
 
 Converts a path string to a name suitable for use as a label name.
@@ -63,6 +63,7 @@ Converts a path string to a name suitable for use as a label name.
 | :------------- | :------------- | :------------- |
 | <a id="src_utils.path_to_name-path"></a>path |  A path as a <code>string</code>.   |  none |
 | <a id="src_utils.path_to_name-prefix"></a>prefix |  Optional. A string which will be prefixed to the namefied path with an underscore separating the prefix.   |  <code>None</code> |
+| <a id="src_utils.path_to_name-suffix"></a>suffix |  <p align="center"> - </p>   |  <code>None</code> |
 
 **RETURNS**
 
