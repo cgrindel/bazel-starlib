@@ -36,7 +36,7 @@ def _path_to_name(path, prefix = None, suffix = None):
         prefix_str = prefix + "_" if not prefix.endswith("_") else prefix
     suffix_str = ""
     if suffix != None:
-        suffix_str = suffix + "_" if not suffix.startswith("_") else suffix
+        suffix_str = "_" + suffix if not suffix.startswith("_") else suffix
     return prefix_str + path.replace("/", "_").replace(".", "_") + suffix_str
 
 src_utils = struct(

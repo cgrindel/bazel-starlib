@@ -30,7 +30,7 @@ def bzlformat_pkg(name = "bzlformat", srcs = None, format_visibility = None, upd
     name_prefix = name + "_"
     format_names = []
     for src in src_paths:
-        src_name = src.replace("/", "_")
+        src_name = src_utils.path_to_name(src)
         format_name = name_prefix + src_name + "_fmt"
         format_names.append(":" + format_name)
 
