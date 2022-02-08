@@ -2,3 +2,4 @@
 
 - [External Link](https://bazel.build/)
 - [Internal Link, same package](foo.md)
+- [Link to bar package](/bar/)

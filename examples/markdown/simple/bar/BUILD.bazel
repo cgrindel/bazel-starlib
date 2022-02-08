@@ -1,0 +1,8 @@
+filegroup(
+    name = "doc_files",
+    srcs = glob(["*.md"]) + [
+        # The README.md in this package contains a link to hello.sh.
+        "hello.sh",
+    ],
+    visibility = ["//tests:__subpackages__"],
+)

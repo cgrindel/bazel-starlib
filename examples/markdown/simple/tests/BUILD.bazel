@@ -1,22 +1,14 @@
 load("@cgrindel_bazel_starlib//markdown:defs.bzl", "markdown_check_links_test")
-load("@cgrindel_bazel_starlib//bzllib:defs.bzl", "filter_srcs")
 
 filegroup(
     name = "all_doc_files",
     srcs = [
         "//:doc_files",
+        "//bar:doc_files",
     ],
-)
-
-filter_srcs(
-    name = "all_markdown_files",
-    srcs = [":all_doc_files"],
-    filename_ends_with = ".md",
 )
 
 markdown_check_links_test(
     name = "check_links",
-    srcs = [":all_markdown_files"],
-    config = "//tests:markdown_link_check_config",
     data = [":all_doc_files"],
 )
