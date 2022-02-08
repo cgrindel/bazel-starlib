@@ -32,14 +32,6 @@ load("//markdown:defs.bzl", "markdown_register_node_deps")
 
 markdown_register_node_deps()
 
-# load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
-
-# yarn_install(
-#     name = "npm",
-#     package_json = "//:package.json",
-#     yarn_lock = "//:yarn.lock",
-# )
-
 # MARK: - Integration Testing
 
 load("@cgrindel_rules_bazel_integration_test//bazel_integration_test:deps.bzl", "bazel_integration_test_rules_dependencies")

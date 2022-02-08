@@ -24,4 +24,8 @@ the following to your `WORKSPACE` file.
 load("@build_bazel_rules_nodejs//:repositories.bzl", "build_bazel_rules_nodejs_dependencies")
 
 build_bazel_rules_nodejs_dependencies()
+
+load("@cgrindel_bazel_starlib//markdown:defs.bzl", "markdown_register_node_deps")
+
+markdown_register_node_deps()
 ```
