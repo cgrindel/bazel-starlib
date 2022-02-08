@@ -1,4 +1,4 @@
-load("//bzllib:defs.bzl", "src_utils")
+load("//bzllib:defs.bzl", "filter_srcs", "src_utils")
 load("@bazel_skylib//lib:shell.bzl", "shell")
 
 def _markdown_check_links_test_impl(ctx):
@@ -56,7 +56,7 @@ cmd+=( "${md_files[@]}" )
 
     return [DefaultInfo(executable = check_links_sh, runfiles = runfiles)]
 
-markdown_check_links_test = rule(
+_markdown_check_links_test = rule(
     implementation = _markdown_check_links_test_impl,
     test = True,
     attrs = {
@@ -100,3 +100,20 @@ Using [`markdown-link-check`](https://github.com/tcort/markdown-link-check), \
 check the links in a markdown file to ensure that they are valid.\
 """,
 )
+
+def markdown_check_links_test(name, data, srcs = None, **kwargs):
+    if srcs == None:
+        md_files_name = src_utils.path_to_name("md_files", prefix = name)
+        filter_srcs(
+            name = md_files_name,
+            srcs = data,
+            filename_ends_with = ".md",
+        )
+        srcs = [md_files_name]
+
+    _markdown_check_links_test(
+        name = name,
+        srcs = srcs,
+        data = data,
+        **kwargs
+    )

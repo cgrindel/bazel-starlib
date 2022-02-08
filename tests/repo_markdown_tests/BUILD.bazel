@@ -30,14 +30,7 @@ filegroup(
     ],
 )
 
-filter_srcs(
-    name = "all_markdown_files",
-    srcs = [":all_doc_files"],
-    filename_ends_with = ".md",
-)
-
 markdown_check_links_test(
     name = "check_links",
-    srcs = [":all_markdown_files"],
     data = [":all_doc_files"],
 )

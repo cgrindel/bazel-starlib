@@ -10,6 +10,5 @@ filegroup(
 
 markdown_check_links_test(
     name = "check_links_test",
-    srcs = [":markdown_files"],
     data = [":markdown_files"],
 )

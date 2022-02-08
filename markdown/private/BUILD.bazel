@@ -15,6 +15,7 @@ bzl_library(
     srcs = ["markdown_check_links_test.bzl"],
     deps = [
         "//bzllib:defs",
+        "@bazel_skylib//lib:shell",
     ],
 )
 
