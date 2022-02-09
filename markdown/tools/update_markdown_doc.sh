@@ -67,20 +67,19 @@ out_path="${args[1]}"
 # Create a copy of the input file
 cp -f "${in_path}" "${out_path}"
 
-# TODO: FIX THE COMMENT
-
 # Update the output file replacing with the contents of update_path.
 # 
 # sed script explanation
 #
-# /BEGIN WORKSPACE SNIPPET/{      # Find the begin marker
-#   p                             # Print the begin marker
-#   r '"${snippet_path}"'         # Read in the snippet
-#   :a                            # Declare label 'a'
-#   n                             # Read the next line
-#   /END WORKSPACE SNIPPET/!b a   # If not the end marker, loop to 'a'
+# /<!-- '"${marker_begin}"' -->/{      # Find the begin marker
+#   p                                  # Print the begin marker
+#   r '"${update_path}"'               # Read in the snippet
+#   :a                                 # Declare label 'a'
+#   n                                  # Read the next line
+#   /<!-- '"${marker_end}"' -->/!b a   # If not the end marker, loop to 'a'
 # }
-# /BEGIN WORKSPACE SNIPPET/!p     # Print any line that is not begin marker
+# /<!-- '"${marker_begin}"' -->/!p     # Print any line that is not begin marker
+#
 sed -n -i.bak \
   -e '
 /<!-- '"${marker_begin}"' -->/{
