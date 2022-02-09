@@ -40,11 +40,18 @@ The markdown files that will be updated with a table of contents.\
             default = ".toc_updated",
             doc = "The suffix added to the output file with the updated TOC.",
         ),
+        # TODO: Replace with update_markdown_toc.
         "_toc_generator": attr.label(
             default = "@ekalinin_github_markdown_toc//:gh_md_toc",
             executable = True,
             cfg = "host",
             doc = "TOC generator utility.",
+        ),
+        "_md_updater": attr.label(
+            default = "@cgrindel_bazel_starlib//markdown/tools:update_markdown_doc",
+            executable = True,
+            cfg = "host",
+            doc = "Utility to update markdown documents.",
         ),
     },
     # TODO: Add documentation.
