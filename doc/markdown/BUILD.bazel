@@ -44,8 +44,8 @@ write_header(
     header_content = [
         "# Rules and Macros",
         "",
-        "The rules and macros described below are used to format, test and ",
-        "copy Starlark source files.",
+        "The rules and macros described below are used to maintain markdown",
+        "files.",
     ],
     symbols = _RULES_AND_MACROS_DOC_PROVIDER.symbols,
 )
