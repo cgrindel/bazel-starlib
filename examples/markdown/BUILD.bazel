@@ -11,7 +11,9 @@ bzlformat_pkg(name = "bzlformat")
 
 filegroup(
     name = "doc_files",
-    srcs = glob(["*.md"]),
+    srcs = glob(["*.md"]) + [
+        "simple/WORKSPACE",
+    ],
     visibility = ["//:markdown_test_visibility"],
 )
 
