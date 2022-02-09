@@ -21,6 +21,7 @@ sh_binary(
 sh_binary(
     name = "update_markdown_doc",
     srcs = ["update_markdown_doc.sh"],
+    visibility = ["//:__subpackages__"],
     deps = [
         "//shlib/lib:fail",
     ],

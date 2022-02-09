@@ -14,3 +14,15 @@ sh_test(
         "@cgrindel_bazel_starlib//shlib/lib:assertions",
     ],
 )
+
+sh_test(
+    name = "update_markdown_doc_test",
+    srcs = ["update_markdown_doc_test.sh"],
+    data = [
+        "//markdown/tools:update_markdown_doc",
+    ],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_starlib//shlib/lib:assertions",
+    ],
+)
