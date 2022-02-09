@@ -47,5 +47,6 @@ The markdown files that will be updated with a table of contents.\
             doc = "TOC generator utility.",
         ),
     },
+    # TODO: Add documentation.
     doc = "",
 )

@@ -41,3 +41,15 @@ bzl_library(
         "//updatesrc:defs",
     ],
 )
+
+bzl_library(
+    name = "markdown_pkg",
+    srcs = ["markdown_pkg.bzl"],
+    visibility = ["//markdown:__subpackages__"],
+    deps = [
+        ":markdown_generate_toc",
+        "//bzllib:defs",
+        "//updatesrc:defs",
+        "@bazel_skylib//rules:diff_test",
+    ],
+)

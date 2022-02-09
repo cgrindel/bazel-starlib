@@ -36,6 +36,7 @@ bzl_library(
     deps = [
         "//markdown/private:markdown_check_links_test",
         "//markdown/private:markdown_generate_toc",
+        "//markdown/private:markdown_pkg",
         "//markdown/private:markdown_register_node_deps",
     ],
 )
