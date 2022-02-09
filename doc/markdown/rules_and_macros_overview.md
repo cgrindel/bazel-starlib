@@ -41,13 +41,13 @@ Using [`markdown-link-check`](https://github.com/tcort/markdown-link-check), che
 markdown_register_node_deps(<a href="#markdown_register_node_deps-name">name</a>)
 </pre>
 
-
+Configures the installation of the Javascript node dependencies for the markdown functionality.
 
 **PARAMETERS**
 
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="markdown_register_node_deps-name"></a>name |  <p align="center"> - </p>   |  <code>"cgrindel_bazel_starlib_markdown_npm"</code> |
+| <a id="markdown_register_node_deps-name"></a>name |  Optional. The name of the <code>yarn</code> repository that will be defined.   |  <code>"cgrindel_bazel_starlib_markdown_npm"</code> |
 
 
