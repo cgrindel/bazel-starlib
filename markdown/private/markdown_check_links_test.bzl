@@ -1,4 +1,4 @@
-load("//bzllib:defs.bzl", "filter_srcs", "src_utils")
+load("//bzllib:defs.bzl", "src_utils")
 load("@bazel_skylib//lib:shell.bzl", "shell")
 
 def _markdown_check_links_test_impl(ctx):
@@ -73,7 +73,10 @@ markdown_check_links_test = rule(
     attrs = {
         "srcs": attr.label_list(
             allow_files = [".md", ".markdown"],
-            doc = "The markdown files that should be checked.",
+            doc = """\
+The markdown files that should be checked. If no srcs are provided, all of \
+the markdown files (.md, .markdown) in the `data` will be checked.\
+""",
         ),
         "config": attr.label(
             allow_single_file = True,
