@@ -22,32 +22,26 @@ update_markdown_doc_sh_location=cgrindel_bazel_starlib/markdown/tools/update_mar
 update_markdown_doc_sh="$(rlocation "${update_markdown_doc_sh_location}")" || \
   (echo >&2 "Failed to locate ${update_markdown_doc_sh_location}" && exit 1)
 
-gh_md_toc_location=ekalinin_github_markdown_toc/gh_md_toc
+gh_md_toc_location=ekalinin_github_markdown_toc/gh-md-toc
 gh_md_toc="$(rlocation "${gh_md_toc_location}")" || \
   (echo >&2 "Failed to locate ${gh_md_toc_location}" && exit 1)
 
 
 # MARK - Process args
 
-gh_md_toc_cmd=( "${gh_md_toc}" )
-
-# hide_header="false"
-# hide_footer="false"
-# start_depth=0
-# depth=0
-# indent=2
+gh_md_toc_cmd=( "${gh_md_toc}" --hide-header --hide-footer --start-depth=1 )
 
 args=()
 while (("$#")); do
   case "${1}" in
-    "--hide_header")
-      gh_md_toc_args+=( --hide-header )
-      shift 1
-      ;;
-    "--hide_footer")
-      gh_md_toc_args+=( --hide-footer )
-      shift 1
-      ;;
+    # "--hide_header")
+    #   gh_md_toc_args+=( --hide-header )
+    #   shift 1
+    #   ;;
+    # "--hide_footer")
+    #   gh_md_toc_args+=( --hide-footer )
+    #   shift 1
+    #   ;;
     "--no_escape")
       gh_md_toc_args+=( --no-escape )
       shift 1
@@ -83,7 +77,34 @@ out_path="${args[1]}"
 
 # MARK - Generate the TOC
 
+toc_path="$( mktemp )"
+cleanup() {
+  rm -f "${toc_path}"
+}
+trap cleanup EXIT
+
+# Generate the TOC 
 gh_md_toc_cmd+=( "${in_path}" )
-toc="$( "${gh_md_toc_cmd[@]}" )"
+"${gh_md_toc_cmd[@]}" > "${toc_path}"
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") TOC START" 
+cat >&2 "${toc_path}"
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") TOC END" 
+# DEBUG END
+
+# Write the TOC
+# toc_path="$( mktemp )"
+# cleanup() {
+#   rm -f "${toc_path}"
+# }
+# trap cleanup EXIT
+# echo "${toc}" > "${toc_path}"
 
 
+# MARK - Update the markdown file with the TOC
+
+"${update_markdown_doc_sh}" \
+  --marker "MARKDOWN TOC" \
+  --update "${toc_path}" \
+  "${in_path}" "${out_path}"

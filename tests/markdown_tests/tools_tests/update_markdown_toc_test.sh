@@ -18,6 +18,47 @@ assertions_sh="$(rlocation "${assertions_sh_location}")" || \
   (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
 source "${assertions_sh}"
 
-# MARK - Test
+update_markdown_toc_sh_location=cgrindel_bazel_starlib/markdown/tools/update_markdown_toc.sh
+update_markdown_toc_sh="$(rlocation "${update_markdown_toc_sh_location}")" || \
+  (echo >&2 "Failed to locate ${update_markdown_toc_sh_location}" && exit 1)
 
-fail "IMPLEMENT ME!"
+
+# MARK - Test with Defaults
+
+markdown_content="$(cat <<-'EOF'
+# Document Title
+
+## Table of Contents
+
+<!-- MARKDOWN TOC: BEGIN -->
+<!-- MARKDOWN TOC: END -->
+
+## Chicken
+
+### Smidgen
+EOF
+)"
+
+markdown_path="original.md"
+echo "${markdown_content}" > "${markdown_path}"
+
+output_path="output.md"
+"${update_markdown_toc_sh}" "${markdown_path}" "${output_path}"
+
+output_content="$( < "${output_path}" )"
+
+expected_content="$(cat <<-'EOF'
+# Document Title
+
+## Table of Contents
+
+<!-- MARKDOWN TOC: BEGIN -->
+FIX ME
+<!-- MARKDOWN TOC: END -->
+
+## Chicken
+
+### Smidgen
+EOF
+)"
+assert_equal "${expected_content}" "${output_content}" "With defaults"

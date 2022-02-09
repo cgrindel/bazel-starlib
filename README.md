@@ -16,6 +16,13 @@ the implementation of Bazel projects.
 | updatesrc | Copy files from the Bazel output directories to the workspace directory. Formerly hosted as [rules_updatesrc](https://github.com/cgrindel/rules_updatesrc) | [API](/doc/updatesrc/), [How-to](/updatesrc/), [Examples](/examples/updatesrc/) |
 
 
+## Table of Contents
+
+* [Quickstart](#quickstart)
+  * [Workspace Configuration](#workspace-configuration)
+* [Other Documentation](#other-documentation)
+
+
 ## Quickstart
 
 The following provides a quick introduction on how to load this repository into your workspace.  For
