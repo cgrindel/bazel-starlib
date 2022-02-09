@@ -20,9 +20,9 @@ def _markdown_check_links_test_impl(ctx):
     if ctx.file.config != None:
         files.append(ctx.file.config)
 
-    runfiles = ctx.runfiles(files = files).merge_all([
+    runfiles = ctx.runfiles(files = files).merge(
         ctx.attr._link_checker[DefaultInfo].default_runfiles,
-    ])
+    )
 
     config_file_path = ""
     if ctx.file.config != None:
