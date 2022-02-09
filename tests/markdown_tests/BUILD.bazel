@@ -1,0 +1,14 @@
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+load("//markdown:defs.bzl", "markdown_check_links_test")
+
+bzlformat_pkg(name = "bzlformat")
+
+filegroup(
+    name = "markdown_files",
+    srcs = glob(["*.md"]),
+)
+
+markdown_check_links_test(
+    name = "check_links_test",
+    data = [":markdown_files"],
+)

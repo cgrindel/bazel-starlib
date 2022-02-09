@@ -1,0 +1,14 @@
+load("@cgrindel_bazel_starlib//markdown:defs.bzl", "markdown_check_links_test")
+
+filegroup(
+    name = "all_doc_files",
+    srcs = [
+        "//:doc_files",
+        "//bar:doc_files",
+    ],
+)
+
+markdown_check_links_test(
+    name = "check_links",
+    data = [":all_doc_files"],
+)

@@ -1,0 +1,35 @@
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+load("//markdown:defs.bzl", "markdown_check_links_test")
+
+bzlformat_pkg(name = "bzlformat")
+
+filegroup(
+    name = "all_doc_files",
+    srcs = [
+        "//:doc_files",
+        "//bazeldoc:doc_files",
+        "//bzlformat:doc_files",
+        "//bzllib:doc_files",
+        "//bzlrelease:doc_files",
+        "//doc:doc_files",
+        "//doc/bazeldoc:doc_files",
+        "//doc/bzlformat:doc_files",
+        "//doc/bzllib:doc_files",
+        "//doc/bzlrelease:doc_files",
+        "//doc/markdown:doc_files",
+        "//doc/shlib:doc_files",
+        "//doc/updatesrc:doc_files",
+        "//examples/bzlformat:doc_files",
+        "//examples/markdown:doc_files",
+        "//examples/updatesrc:doc_files",
+        "//markdown:doc_files",
+        "//release:doc_files",
+        "//shlib:doc_files",
+        "//updatesrc:doc_files",
+    ],
+)
+
+markdown_check_links_test(
+    name = "check_links",
+    data = [":all_doc_files"],
+)

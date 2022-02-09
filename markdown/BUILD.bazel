@@ -1,9 +1,15 @@
-load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 package(default_visibility = ["//visibility:public"])
 
 bzlformat_pkg(name = "bzlformat")
+
+filegroup(
+    name = "default_markdown_link_check_config",
+    srcs = ["default_markdown_link_check_config.json"],
+    visibility = ["//visibility:public"],
+)
 
 filegroup(
     name = "doc_files",
@@ -14,15 +20,12 @@ filegroup(
 bzl_library(
     name = "defs",
     srcs = ["defs.bzl"],
+    visibility = ["//visibility:public"],
     deps = [
-        "//bazeldoc/private:doc_for_provs",
-        "//bazeldoc/private:providers",
-        "//bazeldoc/private:write_file_list",
-        "//bazeldoc/private:write_header",
+        "//markdown/private:markdown_check_links_test",
+        "//markdown/private:markdown_register_node_deps",
     ],
 )
-
-# MARK: - Collect Files for Integation Tests
 
 filegroup(
     name = "all_files",

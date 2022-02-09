@@ -12,9 +12,7 @@ bzlformat_pkg(name = "bzlformat")
 filegroup(
     name = "doc_files",
     srcs = glob(["*.md"]) + [
-        # The child workspaces do not appear as packages in the parent workspace.
-        # Hence, we reference the relevant doc files as files, not a target.
-        "simple/README.md",
+        "simple/WORKSPACE",
     ],
     visibility = ["//:markdown_test_visibility"],
 )
@@ -23,11 +21,6 @@ filegroup(
 
 default_test_runner(
     name = "simple_test_runner",
-    bazel_cmds = [
-        "info",
-        "build //...",
-        "run //:update_all",
-    ],
 )
 
 bazel_integration_tests(

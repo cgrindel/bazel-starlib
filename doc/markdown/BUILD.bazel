@@ -11,28 +11,24 @@ bzlformat_pkg(name = "bzlformat")
 
 filegroup(
     name = "doc_files",
-    srcs = glob(["*.md"]) + [
-        # A doc file has a reference to this file.
-        "BUILD.bazel",
-    ],
+    srcs = glob(["*.md"]),
     visibility = ["//:markdown_test_visibility"],
 )
 
 # MARK: - Documentation Providers
 
-_DOC_PATH = "doc/bzlformat"
+_DOC_PATH = "doc/markdown"
 
-_STARDOC_INPUT = "//bzlformat:defs.bzl"
+_STARDOC_INPUT = "//markdown:defs.bzl"
 
-_DOC_DEPS = ["//bzlformat:defs"]
+_DOC_DEPS = ["//markdown:defs"]
 
 _RULES_AND_MACROS_DOC_PROVIDER = doc_providers.create(
     name = "rules_and_macros_overview",
     stardoc_input = _STARDOC_INPUT,
     symbols = [
-        "bzlformat_format",
-        "bzlformat_pkg",
-        "bzlformat_missing_pkgs",
+        "markdown_check_links_test",
+        "markdown_register_node_deps",
     ],
     deps = _DOC_DEPS,
 )
@@ -48,8 +44,8 @@ write_header(
     header_content = [
         "# Rules and Macros",
         "",
-        "The rules and macros described below are used to format, test and ",
-        "copy Starlark source files.",
+        "The rules and macros described below are used to maintain markdown",
+        "files.",
     ],
     symbols = _RULES_AND_MACROS_DOC_PROVIDER.symbols,
 )

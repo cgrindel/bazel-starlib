@@ -10,6 +10,12 @@ load("//shlib/rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 
 bzlformat_pkg(name = "bzlformat")
 
+filegroup(
+    name = "doc_files",
+    srcs = glob(["*.md"]),
+    visibility = ["//:markdown_test_visibility"],
+)
+
 # MARK: - Release
 
 generate_workspace_snippet(

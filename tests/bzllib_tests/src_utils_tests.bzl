@@ -27,9 +27,28 @@ def _is_path_test(ctx):
 
 is_path_test = unittest.make(_is_path_test)
 
+def _path_to_name_test(ctx):
+    env = unittest.begin(ctx)
+
+    actual = src_utils.path_to_name("chicken/foo.txt")
+    asserts.equals(env, "chicken_foo_txt", actual, "Simple path.")
+    actual = src_utils.path_to_name("chicken/foo.txt", prefix = "hello")
+    asserts.equals(env, "hello_chicken_foo_txt", actual, "Path with prefix, no underscore.")
+    actual = src_utils.path_to_name("chicken/foo.txt", prefix = "hello_")
+    asserts.equals(env, "hello_chicken_foo_txt", actual, "Path with prefix, with underscore.")
+    actual = src_utils.path_to_name("chicken/foo.txt", suffix = "goodbye")
+    asserts.equals(env, "chicken_foo_txt_goodbye", actual, "Path with suffix, no underscore.")
+    actual = src_utils.path_to_name("chicken/foo.txt", suffix = "_goodbye")
+    asserts.equals(env, "chicken_foo_txt_goodbye", actual, "Path with suffix, with underscore.")
+
+    return unittest.end(env)
+
+path_to_name_test = unittest.make(_path_to_name_test)
+
 def src_utils_test_suite():
     return unittest.suite(
         "src_utils_tests",
         is_label_test,
         is_path_test,
+        path_to_name_test,
     )
