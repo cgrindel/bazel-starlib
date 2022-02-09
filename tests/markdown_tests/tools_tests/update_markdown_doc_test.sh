@@ -50,12 +50,17 @@ output_path="output.md"
   "${markdown_path}" "${output_path}"
 
 output_content="$(< "${output_path}" )"
-# DEBUG BEGIN
-echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") output_content:"$'\n'"${output_content}" 
-# DEBUG END
+expected_content="$(cat <<-'EOF'
+Text before snippet
+<!-- FOO BAR: BEGIN -->
+Here is some new text.
+This has 2 lines.
+<!-- FOO BAR: END -->
+Text after snippet
+EOF
+)"
+assert_equal "${expected_content}" "${output_content}" "Content assertion for --marker test."
 
-# TODO: ADD ASSERTION
-
 # DEBUG BEGIN
-fail "IMPLEMENT ME!"
+# fail "IMPLEMENT ME!"
 # DEBUG END
