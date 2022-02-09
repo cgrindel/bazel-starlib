@@ -29,7 +29,7 @@ while (("$#")); do
       shift 2
       ;;
     "--marker_end")
-      marker_begin="${2}"
+      marker_end="${2}"
       shift 2
       ;;
     "--marker")
@@ -83,13 +83,13 @@ cp -f "${in_path}" "${out_path}"
 # /BEGIN WORKSPACE SNIPPET/!p     # Print any line that is not begin marker
 sed -n -i.bak \
   -e '
-/'"${marker_begin}"'/{
+/<!-- '"${marker_begin}"' -->/{
   p
   r '"${update_path}"'
   :a
   n
-  /'"${marker_end}"'/!b a
+  /<!-- '"${marker_end}"' -->/!b a
 }
-/'"${marker_begin}"'/!p
+/<!-- '"${marker_begin}"' -->/!p
 ' \
   "${out_path}"

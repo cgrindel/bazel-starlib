@@ -61,6 +61,36 @@ EOF
 )"
 assert_equal "${expected_content}" "${output_content}" "Content assertion for --marker test."
 
-# DEBUG BEGIN
-# fail "IMPLEMENT ME!"
-# DEBUG END
+
+# MARK - Test Using --marker_begin and --marker_end Flags
+
+another_markdown_path="another.md"
+another_markdown_content="$(cat <<-EOF
+Text before snippet
+<!-- BEGIN FOO BAR -->
+Text should be replaced
+<!-- END FOO BAR -->
+Text after snippet
+EOF
+)"
+echo "${another_markdown_content}" > "${another_markdown_path}"
+
+another_output_path="another_output.md"
+"${update_markdown_doc_sh}" \
+  --marker_begin "BEGIN FOO BAR" \
+  --marker_end "END FOO BAR" \
+  --update "${update_path}" \
+  "${another_markdown_path}" "${another_output_path}"
+
+another_output_content="$(< "${another_output_path}" )"
+expected_content="$(cat <<-'EOF'
+Text before snippet
+<!-- BEGIN FOO BAR -->
+Here is some new text.
+This has 2 lines.
+<!-- END FOO BAR -->
+Text after snippet
+EOF
+)"
+assert_equal "${expected_content}" "${another_output_content}" \
+  "Content assertion for --marker_begin --marker_end test."
