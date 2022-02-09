@@ -1,8 +1,8 @@
 <!-- Generated with Stardoc, Do Not Edit! -->
 # Rules and Macros
 
-The rules and macros described below are used to format, test and 
-copy Starlark source files.
+The rules and macros described below are used to maintain markdown
+files.
 
 On this page:
 
