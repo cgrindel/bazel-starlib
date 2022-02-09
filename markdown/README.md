@@ -6,7 +6,12 @@ This project contains rules that aid in the maintenance of
 
 ## Table of Contents
 
-> TODO (grindel): ADD TOC
+* [Quickstart for Markdown Link Validation](#quickstart-for-markdown-link-validation)
+  * [1\. Configure your workspace to use markdown](#1-configure-your-workspace-to-use-markdown)
+  * [2\. Add filegroup targets to collect the documentation files](#2-add-filegroup-targets-to-collect-the-documentation-files)
+  * [3\. Create one or more markdown\_check\_links\_test targets](#3-create-one-or-more-markdown_check_links_test-targets)
+  * [3\. Execute your tests\.](#3-execute-your-tests)
+* [Configuring Markdown Link Validation](#configuring-markdown-link-validation)
 
 
 ## Quickstart for Markdown Link Validation
