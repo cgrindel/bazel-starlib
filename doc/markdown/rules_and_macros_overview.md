@@ -6,6 +6,7 @@ files.
 
 On this page:
 
+  * [markdown_generate_toc](#markdown_generate_toc)
   * [markdown_check_links_test](#markdown_check_links_test)
   * [markdown_register_node_deps](#markdown_register_node_deps)
 
@@ -32,6 +33,26 @@ Using [`markdown-link-check`](https://github.com/tcort/markdown-link-check), che
 | <a id="markdown_check_links_test-quiet"></a>quiet |  If set to true, the markdown-link-check will be configured to only display errors.   | Boolean | optional | True |
 | <a id="markdown_check_links_test-srcs"></a>srcs |  The markdown files that should be checked. If no srcs are provided, all of the markdown files (.md, .markdown) in the <code>data</code> will be checked.   | <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a> | optional | [] |
 | <a id="markdown_check_links_test-verbose"></a>verbose |  If set to true, the markdown-link-check will be configured for verbose output.   | Boolean | optional | False |
+
+
+<a id="#markdown_generate_toc"></a>
+
+## markdown_generate_toc
+
+<pre>
+markdown_generate_toc(<a href="#markdown_generate_toc-name">name</a>, <a href="#markdown_generate_toc-output_suffix">output_suffix</a>, <a href="#markdown_generate_toc-srcs">srcs</a>)
+</pre>
+
+
+
+**ATTRIBUTES**
+
+
+| Name  | Description | Type | Mandatory | Default |
+| :------------- | :------------- | :------------- | :------------- | :------------- |
+| <a id="markdown_generate_toc-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/docs/build-ref.html#name">Name</a> | required |  |
+| <a id="markdown_generate_toc-output_suffix"></a>output_suffix |  The suffix added to the output file with the updated TOC.   | String | optional | ".toc_updated" |
+| <a id="markdown_generate_toc-srcs"></a>srcs |  The markdown files that will be updated with a table of contents.   | <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a> | required |  |
 
 
 <a id="#markdown_register_node_deps"></a>

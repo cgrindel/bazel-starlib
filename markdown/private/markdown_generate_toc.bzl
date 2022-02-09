@@ -1,6 +1,9 @@
 load("//updatesrc:defs.bzl", "UpdateSrcsInfo", "update_srcs")
 
-def _bzlformat_format_impl(ctx):
+def _markdown_generate_toc_impl(ctx):
+    if ctx.files.srcs == []:
+        fail("No markdown files were specified.")
+
     updsrcs = []
     for src in ctx.files.srcs:
         out = ctx.actions.declare_file(src.basename + ctx.attr.output_suffix)
@@ -14,7 +17,7 @@ def _bzlformat_format_impl(ctx):
         ctx.actions.run(
             outputs = [out],
             inputs = [src],
-            executable = ctx.executable._buildifier,
+            executable = ctx.executable._toc_generator,
             arguments = [args],
         )
 
@@ -23,25 +26,26 @@ def _bzlformat_format_impl(ctx):
         UpdateSrcsInfo(update_srcs = depset(updsrcs)),
     ]
 
-bzlformat_format = rule(
-    implementation = _bzlformat_format_impl,
+markdown_generate_toc = rule(
+    implementation = _markdown_generate_toc_impl,
     attrs = {
         "srcs": attr.label_list(
-            allow_files = True,
             mandatory = True,
-            doc = "The Starlark source files to format.",
+            allow_files = [".md", ".markdown"],
+            doc = """\
+The markdown files that will be updated with a table of contents.\
+""",
         ),
         "output_suffix": attr.string(
-            default = ".formatted",
-            doc = "The suffix added to the formatted output filename.",
+            default = ".toc_updated",
+            doc = "The suffix added to the output file with the updated TOC.",
         ),
-        "_buildifier": attr.label(
-            default = "//bzlformat/tools:buildifier",
+        "_toc_generator": attr.label(
+            default = "@ekalinin_github_markdown_toc//:gh_md_toc",
             executable = True,
             cfg = "host",
-            allow_files = True,
-            doc = "The `buildifier` script that executes the formatting.",
+            doc = "TOC generator utility.",
         ),
     },
-    doc = "Formats Starlark source files using Buildifier.",
+    doc = "",
 )
