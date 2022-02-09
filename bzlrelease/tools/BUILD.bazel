@@ -84,6 +84,9 @@ sh_binary(
 sh_binary(
     name = "update_readme",
     srcs = ["update_readme.sh"],
+    data = [
+        "//markdown/tools:update_markdown_doc",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//shlib/lib:fail",

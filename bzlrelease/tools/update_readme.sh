@@ -18,6 +18,10 @@ fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
+update_markdown_doc_sh_location=cgrindel_bazel_starlib/markdown/tools/update_markdown_doc.sh
+update_markdown_doc_sh="$(rlocation "${update_markdown_doc_sh_location}")" || \
+  (echo >&2 "Failed to locate ${update_markdown_doc_sh_location}" && exit 1)
+
 
 # MARK - Process Arguments
 
@@ -83,27 +87,38 @@ trap 'cleanup $?' EXIT
 # Generate the snippet
 "${generate_workspace_snippet}" --tag "${tag_name}" --output "${snippet_path}"
 
-# Update the README.md inserting the workspace snippet
-# 
-# sed script explanation
-#
-# /BEGIN WORKSPACE SNIPPET/{      # Find the begin marker
-#   p                             # Print the begin marker
-#   r '"${snippet_path}"'         # Read in the snippet
-#   :a                            # Declare label 'a'
-#   n                             # Read the next line
-#   /END WORKSPACE SNIPPET/!b a   # If not the end marker, loop to 'a'
+# Copy the readme
+cp "${readme_path}" "${readme_backup}"
+
+# Update the original
+"${update_markdown_doc_sh}" \
+  --marker_begin "BEGIN WORKSPACE SNIPPET" \
+  --marker_end "END WORKSPACE SNIPPET" \
+  --update "${snippet_path}" \
+  "${readme_backup}" "${readme_path}"
+
+
+# # Update the README.md inserting the workspace snippet
+# # 
+# # sed script explanation
+# #
+# # /BEGIN WORKSPACE SNIPPET/{      # Find the begin marker
+# #   p                             # Print the begin marker
+# #   r '"${snippet_path}"'         # Read in the snippet
+# #   :a                            # Declare label 'a'
+# #   n                             # Read the next line
+# #   /END WORKSPACE SNIPPET/!b a   # If not the end marker, loop to 'a'
+# # }
+# # /BEGIN WORKSPACE SNIPPET/!p     # Print any line that is not begin marker
+# sed -n -i.bak \
+#   -e '
+# /BEGIN WORKSPACE SNIPPET/{
+#   p
+#   r '"${snippet_path}"'
+#   :a
+#   n
+#   /END WORKSPACE SNIPPET/!b a
 # }
-# /BEGIN WORKSPACE SNIPPET/!p     # Print any line that is not begin marker
-sed -n -i.bak \
-  -e '
-/BEGIN WORKSPACE SNIPPET/{
-  p
-  r '"${snippet_path}"'
-  :a
-  n
-  /END WORKSPACE SNIPPET/!b a
-}
-/BEGIN WORKSPACE SNIPPET/!p
-' \
-  "${readme_path}"
+# /BEGIN WORKSPACE SNIPPET/!p
+# ' \
+#   "${readme_path}"
