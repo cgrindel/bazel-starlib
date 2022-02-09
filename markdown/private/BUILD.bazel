@@ -1,8 +1,6 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
-package(default_visibility = ["//markdown:__subpackages__"])
-
 bzlformat_pkg(name = "bzlformat")
 
 exports_files([
@@ -13,9 +11,19 @@ exports_files([
 bzl_library(
     name = "markdown_check_links_test",
     srcs = ["markdown_check_links_test.bzl"],
+    visibility = ["//markdown:__subpackages__"],
     deps = [
         "//bzllib:defs",
         "@bazel_skylib//lib:shell",
+    ],
+)
+
+bzl_library(
+    name = "markdown_register_node_deps",
+    srcs = ["markdown_register_node_deps.bzl"],
+    visibility = ["//markdown:__subpackages__"],
+    deps = [
+        "@build_bazel_rules_nodejs//:bzl",
     ],
 )
 

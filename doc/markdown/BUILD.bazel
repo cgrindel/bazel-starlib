@@ -1,4 +1,11 @@
-load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
+load(
+    "//bazeldoc:defs.bzl",
+    "doc_for_provs",
+    "write_file_list",
+    "write_header",
+    doc_providers = "providers",
+)
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -6,4 +13,45 @@ filegroup(
     name = "doc_files",
     srcs = glob(["*.md"]),
     visibility = ["//:markdown_test_visibility"],
+)
+
+# MARK: - Documentation Providers
+
+_DOC_PATH = "doc/markdown"
+
+_STARDOC_INPUT = "//markdown:defs.bzl"
+
+_DOC_DEPS = ["//markdown:defs"]
+
+_RULES_AND_MACROS_DOC_PROVIDER = doc_providers.create(
+    name = "rules_and_macros_overview",
+    stardoc_input = _STARDOC_INPUT,
+    symbols = [
+        "markdown_check_links_test",
+        "markdown_register_node_deps",
+    ],
+    deps = _DOC_DEPS,
+)
+
+_ALL_DOC_PROVIDERS = [
+    _RULES_AND_MACROS_DOC_PROVIDER,
+]
+
+# MARK: - Headers
+
+write_header(
+    name = _RULES_AND_MACROS_DOC_PROVIDER.header_label,
+    header_content = [
+        "# Rules and Macros",
+        "",
+        "The rules and macros described below are used to format, test and ",
+        "copy Starlark source files.",
+    ],
+    symbols = _RULES_AND_MACROS_DOC_PROVIDER.symbols,
+)
+
+# MARK: - Generate Documentation from Providers
+
+doc_for_provs(
+    doc_provs = _ALL_DOC_PROVIDERS,
 )
