@@ -32,4 +32,5 @@ filegroup(
 markdown_check_links_test(
     name = "check_links",
     data = [":all_doc_files"],
+    verbose = True,
 )

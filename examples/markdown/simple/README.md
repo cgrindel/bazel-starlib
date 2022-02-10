@@ -8,5 +8,5 @@ starting with a `/`) will not work properly. However, they must remain as is for
 tests to work properly.
 
 - [External Link](https://bazel.build/)
-- [Internal Link, same package](foo.md)
+- [Internal Link, same package](/foo.md)
 - [Link to bar package](/bar/)
