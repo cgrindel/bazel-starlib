@@ -1,0 +1,36 @@
+name: Job Resolution Tests
+
+
+on:
+  workflow_dispatch:
+
+jobs:
+  macos_build:
+    runs-on: macos-11.0
+    steps:
+    - name: Debug
+      shell: bash
+      run: |
+        echo "MacOS Build"
+        exit 1
+
+  ubuntu_build:
+    runs-on: ubuntu-20.04
+    env:
+      CC: clang
+    steps:
+    - name: Debug
+      shell: bash
+      run: |
+        echo "Ubuntu Build"
+
+  all_ci_tests:
+    runs-on: ubuntu-20.04
+    needs: [macos_build, ubuntu_build]
+    if: ${{ always() }}
+    steps:
+      - name: Check Previous Jobs
+        shell: bash
+        run: |
+          echo "Start previous job check"
+
