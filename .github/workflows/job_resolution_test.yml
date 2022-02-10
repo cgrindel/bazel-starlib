@@ -38,5 +38,6 @@ jobs:
           echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
           echo "GITHUB_RUN_ID: ${GITHUB_RUN_ID}"
           echo "GITHUB_RUN_ATTEMPT: ${GITHUB_RUN_ATTEMPT}"
-          gh api "/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/attempts/${GITHUB_RUN_ATTEMPT}"
+          # Retrieve the jobs for the current run.
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/attempts/${GITHUB_RUN_ATTEMPT}/jobs"
 
