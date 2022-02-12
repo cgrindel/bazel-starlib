@@ -5,7 +5,9 @@ on:
     branches: [ main, test_main ]
   schedule:
     # Every day at 11:13 UTC.
-    - cron: '13 11 * * *'
+    #- cron: '13 11 * * *'
+    # DEBUG: Run every hour
+    - cron: '13 */1 * * *'
 
 jobs:
   macos_build:
