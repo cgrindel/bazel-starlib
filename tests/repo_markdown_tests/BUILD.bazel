@@ -34,4 +34,7 @@ markdown_check_links_test(
     size = "medium",
     data = [":all_doc_files"],
     verbose = True,
+    tags = [
+        "exclusive",
+    ],
 )
