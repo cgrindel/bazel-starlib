@@ -21,7 +21,7 @@ Without a template, the utility will output an `http_archive` declaration.     W
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
 | <a id="generate_workspace_snippet-name"></a>name |  The name of the executable target as a <code>string</code>.   |  none |
-| <a id="generate_workspace_snippet-template"></a>template |  The path to a template file  as a <code>string</code>.   |  <code>None</code> |
-| <a id="generate_workspace_snippet-workspace_name"></a>workspace_name |  <p align="center"> - </p>   |  <code>None</code> |
+| <a id="generate_workspace_snippet-template"></a>template |  Optional. The path to a template file  as a <code>string</code>.   |  <code>None</code> |
+| <a id="generate_workspace_snippet-workspace_name"></a>workspace_name |  Optional. The name of the workspace. If not provided, the workspace name is derived from the owner and repository name.   |  <code>None</code> |
 
 

@@ -10,7 +10,10 @@ def generate_workspace_snippet(name, template = None, workspace_name = None):
 
     Args:
         name: The name of the executable target as a `string`.
-        template: The path to a template file  as a `string`.
+        template: Optional. The path to a template file  as a `string`.
+        workspace_name: Optional. The name of the workspace. If not provided,
+                        the workspace name is derived from the owner and
+                        repository name.
     """
     file_arguments = {}
     arguments = []
