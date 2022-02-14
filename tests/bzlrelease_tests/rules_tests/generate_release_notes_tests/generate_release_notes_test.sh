@@ -18,10 +18,13 @@ setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
 setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" || \
   (echo >&2 "Failed to locate ${setup_git_repo_sh_location}" && exit 1)
 
-generate_release_notes_sh_location=cgrindel_bazel_starlib/tests/bzlrelease_tests/rules_tests/generate_release_notes_tests/generate_release_notes.sh
-generate_release_notes_sh="$(rlocation "${generate_release_notes_sh_location}")" || \
-  (echo >&2 "Failed to locate ${generate_release_notes_sh_location}" && exit 1)
+generate_release_notes_with_template_sh_location=cgrindel_bazel_starlib/tests/bzlrelease_tests/rules_tests/generate_release_notes_tests/generate_release_notes_with_template.sh
+generate_release_notes_with_template_sh="$(rlocation "${generate_release_notes_with_template_sh_location}")" || \
+  (echo >&2 "Failed to locate ${generate_release_notes_with_template_sh_location}" && exit 1)
 
+generate_release_notes_with_workspace_name_sh_location=cgrindel_bazel_starlib/tests/bzlrelease_tests/rules_tests/generate_release_notes_tests/generate_release_notes_with_workspace_name.sh
+generate_release_notes_with_workspace_name_sh="$(rlocation "${generate_release_notes_with_workspace_name_sh_location}")" || \
+  (echo >&2 "Failed to locate ${generate_release_notes_with_workspace_name_sh_location}" && exit 1)
 
 # MARK - Setup
 
@@ -32,6 +35,14 @@ source "${setup_git_repo_sh}"
 
 tag="v999.0.0"
 
-actual="$( "${generate_release_notes_sh}" "${tag}" )"
+# Test with template
+actual="$( "${generate_release_notes_with_template_sh}" "${tag}" )"
+assert_match "name = \"cgrindel_bazel_starlib\"" "${actual}" "Did not find workspace name."
+assert_match "## What's Changed" "${actual}" "Did not find release notes header."
+assert_match "bazel_starlib_dependencies()" "${actual}" "Did not find template content."
+
+# Test with workspace_name
+actual="$( "${generate_release_notes_with_workspace_name_sh}" "${tag}" )"
+assert_match "name = \"foo_bar\"" "${actual}" "Did not find workspace name."
 assert_match "## What's Changed" "${actual}" "Did not find release notes header."
 assert_match "bazel_starlib_dependencies()" "${actual}" "Did not find template content."

@@ -5,20 +5,32 @@ load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_
 bzlformat_pkg(name = "bzlformat")
 
 generate_workspace_snippet(
-    name = "generate_workspace_snippet",
+    name = "generate_snippet_with_template",
     template = "workspace_snippet.tmpl",
 )
 
 generate_release_notes(
-    name = "generate_release_notes",
-    generate_workspace_snippet = ":generate_workspace_snippet",
+    name = "generate_release_notes_with_template",
+    generate_workspace_snippet = ":generate_snippet_with_template",
+)
+
+generate_workspace_snippet(
+    name = "generate_snippet_with_workspace_name",
+    template = "workspace_snippet.tmpl",
+    workspace_name = "foo_bar",
+)
+
+generate_release_notes(
+    name = "generate_release_notes_with_workspace_name",
+    generate_workspace_snippet = ":generate_snippet_with_workspace_name",
 )
 
 sh_test(
     name = "generate_release_notes_test",
     srcs = ["generate_release_notes_test.sh"],
     data = [
-        ":generate_release_notes",
+        ":generate_release_notes_with_template",
+        ":generate_release_notes_with_workspace_name",
     ],
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
