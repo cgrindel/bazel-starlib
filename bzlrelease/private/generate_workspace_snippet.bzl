@@ -1,6 +1,6 @@
 load("//shlib/rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 
-def generate_workspace_snippet(name, template = None):
+def generate_workspace_snippet(name, template = None, workspace_name = None):
     """Defines an executable target that generates a workspace snippet suitable \
     for inclusion in a markdown document.
 
@@ -18,6 +18,8 @@ def generate_workspace_snippet(name, template = None):
         file_key = "template"
         arguments.extend(["--template", file_placeholder(file_key)])
         file_arguments[template] = file_key
+    if workspace_name != None:
+        arguments.extend(["--workspace_name", workspace_name])
 
     execute_binary(
         name = name,

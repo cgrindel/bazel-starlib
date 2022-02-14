@@ -134,6 +134,7 @@ strip_prefix_suffix="${tag}"
 [[ "${strip_prefix_suffix}" =~ ^v ]] && strip_prefix_suffix="${strip_prefix_suffix:1}"
 strip_prefix="${repo}-${strip_prefix_suffix}"
 
+
 if [[ -z "${workspace_name:-}" ]]; then
   workspace_name="${owner}_${repo}"
   # Replace hyphens with underscores
@@ -148,6 +149,7 @@ urls="$(
   done
 )"
 
+
 # Generate the workspace snippet
 http_archive_statement="$(cat  <<-EOF
 http_archive(
@@ -160,6 +162,7 @@ ${urls}
 )
 EOF
 )"
+
 
 if [[ -z "${template:-}" ]]; then
   snippet="${http_archive_statement}"
@@ -180,6 +183,8 @@ else
       "${template}"
   )"
 fi
+
+
 
 # Wrap the resulting snippet in a markdown codeblock.
 snippet="$(cat <<-EOF
