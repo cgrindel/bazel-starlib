@@ -63,9 +63,49 @@ EOF
 [[ "${actual_snippet}" == "${expected_snippet}" ]] || \
   fail $'Snippet with defaults did not match expected.  actual:\n'"${actual_snippet}"$'\nexpected:\n'"${expected_snippet}"
 
+# MARK - Test with custom workspace_name
+
+
+actual_snippet="$(
+"${generate_workspace_snippet_sh}" \
+  --workspace_name "foo_bar" \
+  --sha256 "${sha256}" \
+  --tag "${tag}"
+)"
+
+expected_snippet=$(cat <<-EOF
+\`\`\`python
+http_archive(
+    name = "foo_bar",
+    sha256 = "${sha256}",
+    strip_prefix = "${strip_prefix}",
+    urls = [
+        "http://github.com/cgrindel/bazel-starlib/archive/${tag}.tar.gz",
+    ],
+)
+\`\`\`
+EOF
+)
+[[ "${actual_snippet}" == "${expected_snippet}" ]] || \
+  fail $'Snippet with custom workspace_name did not match expected.  actual:\n'"${actual_snippet}"$'\nexpected:\n'"${expected_snippet}"
+
 # MARK - Test write to file
 
 output_path="snippet.bzl"
+
+expected_snippet=$(cat <<-EOF
+\`\`\`python
+http_archive(
+    name = "cgrindel_bazel_starlib",
+    sha256 = "${sha256}",
+    strip_prefix = "${strip_prefix}",
+    urls = [
+        "http://github.com/cgrindel/bazel-starlib/archive/${tag}.tar.gz",
+    ],
+)
+\`\`\`
+EOF
+)
 
 "${generate_workspace_snippet_sh}" \
   --sha256 "${sha256}" \
