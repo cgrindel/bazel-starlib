@@ -1,8 +1,5 @@
 filegroup(
     name = "doc_files",
     srcs = glob(["*.md"]),
-    tags = [
-        "exclusive",
-    ],
     visibility = ["//tests:__subpackages__"],
 )
