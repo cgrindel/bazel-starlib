@@ -18,6 +18,26 @@ assertions_sh="$(rlocation "${assertions_sh_location}")" || \
   (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
 source "${assertions_sh}"
 
-# MARK - Test
+check_links_sh_location=cgrindel_bazel_starlib/markdown/tools/check_links.sh
+check_links_sh="$(rlocation "${check_links_sh_location}")" || \
+  (echo >&2 "Failed to locate ${check_links_sh_location}" && exit 1)
 
-fail "IMPLEMENT ME!"
+
+# MARK - Test Successful Check
+
+bar_md_path="bar.md"
+touch "${bar_md_path}"
+
+foo_md_path="foo.md"
+foo_md_content="$(cat <<-'EOF'
+This is foo.md.
+- [Bar](bar.md)
+EOF
+)"
+echo "${foo_md_content}" > "${foo_md_path}"
+
+"${check_links_sh}" "${bar_md_path}" "${foo_md_path}"
+
+# DEBUG BEGIN
+fail "STOP"
+# DEBUG END
