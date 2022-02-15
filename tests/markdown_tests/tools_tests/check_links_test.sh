@@ -112,9 +112,70 @@ echo "${foo_md_content}" > "${foo_md_path}"
 export ECONNRESET_FAILURE_COUNT=0
 do_cmd --markdown_link_check_sh check_with_one_econnreset || \
   (dump_out_files ; fail "Expected link checks to succeed with one ECONNRESET error.")
-  # fail "Expected link checks to succeed with one ECONNRESET error."
 
 stderr_contents="$(< "${stderr_path}")"
 assert_match "An ECONNRESET error occurred. attempts: 0" "${stderr_contents}" "Did not find ECONNRESET retry message."
 assert_no_match "An ECONNRESET error occurred. attempts: 1" "${stderr_contents}" "Found too many retries."
 
+
+# MARK - Test ECONNRESET Retries Failed with max_econnreset_retry_count set to 1
+
+check_with_two_econnreset() {
+  do_econnreset_error 2
+}
+export -f check_with_two_econnreset
+
+# Bar content
+echo "" > "${bar_md_path}"
+
+# Foo content
+foo_md_content="$(cat <<-'EOF'
+This is foo.md.
+- [Bar](bar.md)
+EOF
+)"
+echo "${foo_md_content}" > "${foo_md_path}"
+
+# Execute command
+export ECONNRESET_FAILURE_COUNT=0
+do_cmd \
+  --markdown_link_check_sh check_with_two_econnreset \
+  --max_econnreset_retry_count 1 \
+  && \
+  (dump_out_files ; fail "Expected link checks to fail with two ECONNRESET errors and max_econnreset_retry_count = 1.")
+
+stderr_contents="$(< "${stderr_path}")"
+assert_match "An ECONNRESET error occurred. attempts: 0" "${stderr_contents}" "Did not find ECONNRESET retry message."
+assert_no_match "An ECONNRESET error occurred. attempts: 1" "${stderr_contents}" "Found too many retries."
+
+
+# MARK - Test ECONNRESET Retries Failed with default max_econnreset_retry_count
+
+check_with_four_econnreset() {
+  do_econnreset_error 4
+}
+export -f check_with_four_econnreset
+
+# Bar content
+echo "" > "${bar_md_path}"
+
+# Foo content
+foo_md_content="$(cat <<-'EOF'
+This is foo.md.
+- [Bar](bar.md)
+EOF
+)"
+echo "${foo_md_content}" > "${foo_md_path}"
+
+# Execute command
+export ECONNRESET_FAILURE_COUNT=0
+do_cmd \
+  --markdown_link_check_sh check_with_four_econnreset \
+  && \
+  (dump_out_files ; fail "Expected link checks to fail with two ECONNRESET errors and max_econnreset_retry_count = 1.")
+
+stderr_contents="$(< "${stderr_path}")"
+assert_match "An ECONNRESET error occurred. attempts: 0" "${stderr_contents}" "Did not find first ECONNRESET retry message."
+assert_match "An ECONNRESET error occurred. attempts: 1" "${stderr_contents}" "Did not find second ECONNRESET retry message."
+assert_match "An ECONNRESET error occurred. attempts: 2" "${stderr_contents}" "Did not find third ECONNRESET retry message."
+assert_no_match "An ECONNRESET error occurred. attempts: 3" "${stderr_contents}" "Found too many retries."
