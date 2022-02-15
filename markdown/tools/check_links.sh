@@ -96,7 +96,6 @@ cmd=( "${markdown_link_check_sh}" )
 [[ -n "${config_path:-}" ]] && cmd+=( -c "${config_path}" )
 cmd+=( "${md_paths[@]}" )
 
-
 # Collect stderr b/c we may need to execute multiple times.
 stderr_file="$( mktemp )"
 cleanup() {
@@ -104,19 +103,10 @@ cleanup() {
 }
 trap cleanup EXIT
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") cmd[@]: ${cmd[@]}" 
-# DEBUG END
-
 # Execute markdown_link_check
 success=false
 attempts=0
 while [[ ${attempts} < ${max_econnreset_retry_count} ]]; do
-  # DEBUG BEGIN
-  echo >&2 "*** CHUCK loop attempts: ${attempts}" 
-  echo >&2 "*** CHUCK loop max_econnreset_retry_count: ${max_econnreset_retry_count}" 
-  # [[ ${attempts} > 0 ]] && fail "MADE IT PAST FIRST LOOP. attempts: ${attempts}"
-  # DEBUG END
   # Execute the command directing stderr to a file.
   if "${cmd[@]}" 2> "${stderr_file}"; then
     success=true

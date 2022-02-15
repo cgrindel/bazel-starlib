@@ -37,9 +37,6 @@ dump_out_files() {
 }
 
 do_cmd() {
-  # DEBUG BEGIN
-  echo >&2 "*** CHUCK do_cmd START" 
-  # DEBUG END
   cmd=( "${check_links_sh}" "${bar_md_path}" "${foo_md_path}" )
   [[ ${#} > 0 ]] && cmd+=( "${@}" )
   "${cmd[@]}" > "${stdout_path}" 2> "${stderr_path}"
@@ -86,11 +83,6 @@ assert_match "does_not_exist.md → Status: 400" "${stdout_contents}" "Did not f
 
 export ECONNRESET_FAILURE_COUNT=0
 do_econnreset_error() {
-  # DEBUG BEGIN
-  echo "*** CHUCK do_econnreset_error START" 
-  echo "*** CHUCK do_econnreset_error ECONNRESET_FAILURE_COUNT: ${ECONNRESET_FAILURE_COUNT}" 
-  # [[ ${ECONNRESET_FAILURE_COUNT} > 0 ]] && (echo "DIE"; exit 1)
-  # DEBUG END
   local total_econnreset_failures=${1}
   if [[ ${ECONNRESET_FAILURE_COUNT} < ${total_econnreset_failures} ]]; then
     export ECONNRESET_FAILURE_COUNT=$(( ${ECONNRESET_FAILURE_COUNT} + 1 ))
@@ -101,10 +93,6 @@ do_econnreset_error() {
 export -f do_econnreset_error
 
 check_with_one_econnreset() {
-  # DEBUG BEGIN
-  # echo >&2 "*** CHUCK check_with_one_econnreset START" 
-  echo "*** CHUCK check_with_one_econnreset START" 
-  # DEBUG END
   do_econnreset_error 1
 }
 export -f check_with_one_econnreset
@@ -120,20 +108,13 @@ EOF
 )"
 echo "${foo_md_content}" > "${foo_md_path}"
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") START" 
-# DEBUG END
-
 # Execute command
 export ECONNRESET_FAILURE_COUNT=0
 do_cmd --markdown_link_check_sh check_with_one_econnreset || \
   (dump_out_files ; fail "Expected link checks to succeed with one ECONNRESET error.")
   # fail "Expected link checks to succeed with one ECONNRESET error."
 
-# stderr_contents="$(< "${stderr_path}")"
-# assert_match "An ECONNRESET error occurred. attempts: 0" "${stderr_contents}" "Did not find ECONNRESET retry message."
+stderr_contents="$(< "${stderr_path}")"
+assert_match "An ECONNRESET error occurred. attempts: 0" "${stderr_contents}" "Did not find ECONNRESET retry message."
+assert_no_match "An ECONNRESET error occurred. attempts: 1" "${stderr_contents}" "Found too many retries."
 
-# DEBUG BEGIN
-dump_out_files
-fail "STOP"
-# DEBUG END
