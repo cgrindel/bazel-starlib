@@ -27,9 +27,22 @@ stderr_path="stderr.txt"
 bar_md_path="bar.md"
 foo_md_path="foo.md"
 
+dump_out_files() {
+  echo >&2 "*** $(basename "${BASH_SOURCE[0]}") stdout BEGIN:" 
+  cat >&2 "${stdout_path}"
+  echo >&2 "*** $(basename "${BASH_SOURCE[0]}") stdout END:" 
+  echo >&2 "*** $(basename "${BASH_SOURCE[0]}") stderr BEGIN:" 
+  cat >&2 "${stderr_path}"
+  echo >&2 "*** $(basename "${BASH_SOURCE[0]}") stderr END:" 
+}
+
 do_cmd() {
-  "${check_links_sh}" "${bar_md_path}" "${foo_md_path}" \
-    > "${stdout_path}" 2> "${stderr_path}"
+  # DEBUG BEGIN
+  echo >&2 "*** CHUCK do_cmd START" 
+  # DEBUG END
+  cmd=( "${check_links_sh}" "${bar_md_path}" "${foo_md_path}" )
+  [[ ${#} > 0 ]] && cmd+=( "${@}" )
+  "${cmd[@]}" > "${stdout_path}" 2> "${stderr_path}"
 }
 
 # MARK - Test Successful Check
@@ -69,20 +82,58 @@ stdout_contents="$(< "${stdout_path}")"
 assert_match "does_not_exist.md → Status: 400" "${stdout_contents}" "Did not find expected failed link."
 
 
-# # MARK - Test ECONNRESET Error Retry
+# MARK - Test ECONNRESET Error Retry
 
-# # Bar content
-# echo "" > "${bar_md_path}"
+export ECONNRESET_FAILURE_COUNT=0
+do_econnreset_error() {
+  # DEBUG BEGIN
+  echo "*** CHUCK do_econnreset_error START" 
+  echo "*** CHUCK do_econnreset_error ECONNRESET_FAILURE_COUNT: ${ECONNRESET_FAILURE_COUNT}" 
+  # [[ ${ECONNRESET_FAILURE_COUNT} > 0 ]] && (echo "DIE"; exit 1)
+  # DEBUG END
+  local total_econnreset_failures=${1}
+  if [[ ${ECONNRESET_FAILURE_COUNT} < ${total_econnreset_failures} ]]; then
+    export ECONNRESET_FAILURE_COUNT=$(( ${ECONNRESET_FAILURE_COUNT} + 1 ))
+    echo >&2 "Error: read ECONNRESET"
+    return 1
+  fi
+}
+export -f do_econnreset_error
 
-# # Foo content
-# foo_md_content="$(cat <<-'EOF'
-# This is foo.md.
-# - [Bar](bar.md)
-# EOF
-# )"
-# echo "${foo_md_content}" > "${foo_md_path}"
+check_with_one_econnreset() {
+  # DEBUG BEGIN
+  # echo >&2 "*** CHUCK check_with_one_econnreset START" 
+  echo "*** CHUCK check_with_one_econnreset START" 
+  # DEBUG END
+  do_econnreset_error 1
+}
+export -f check_with_one_econnreset
 
-# # Execute command
-# "${check_links_sh}" "${bar_md_path}" "${foo_md_path}" \
-#   > "${stdout_path}" 2> "${stderr_path}" || \
-#   fail "Expected link checks to succeed."
+# Bar content
+echo "" > "${bar_md_path}"
+
+# Foo content
+foo_md_content="$(cat <<-'EOF'
+This is foo.md.
+- [Bar](bar.md)
+EOF
+)"
+echo "${foo_md_content}" > "${foo_md_path}"
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") START" 
+# DEBUG END
+
+# Execute command
+export ECONNRESET_FAILURE_COUNT=0
+do_cmd --markdown_link_check_sh check_with_one_econnreset || \
+  (dump_out_files ; fail "Expected link checks to succeed with one ECONNRESET error.")
+  # fail "Expected link checks to succeed with one ECONNRESET error."
+
+# stderr_contents="$(< "${stderr_path}")"
+# assert_match "An ECONNRESET error occurred. attempts: 0" "${stderr_contents}" "Did not find ECONNRESET retry message."
+
+# DEBUG BEGIN
+dump_out_files
+fail "STOP"
+# DEBUG END

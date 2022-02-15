@@ -69,6 +69,11 @@ while (("$#")); do
       max_econnreset_retry_count=${2}
       shift 2
       ;;
+    "--markdown_link_check_sh")
+      # This is for testing purposes only.
+      markdown_link_check_sh=${2}
+      shift 2
+      ;;
     --*)
       usage_error "Unrecognized flag. ${1}"
       ;;
@@ -91,6 +96,7 @@ cmd=( "${markdown_link_check_sh}" )
 [[ -n "${config_path:-}" ]] && cmd+=( -c "${config_path}" )
 cmd+=( "${md_paths[@]}" )
 
+
 # Collect stderr b/c we may need to execute multiple times.
 stderr_file="$( mktemp )"
 cleanup() {
@@ -98,10 +104,19 @@ cleanup() {
 }
 trap cleanup EXIT
 
+# DEBUG BEGIN
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") cmd[@]: ${cmd[@]}" 
+# DEBUG END
+
 # Execute markdown_link_check
 success=false
 attempts=0
 while [[ ${attempts} < ${max_econnreset_retry_count} ]]; do
+  # DEBUG BEGIN
+  echo >&2 "*** CHUCK loop attempts: ${attempts}" 
+  echo >&2 "*** CHUCK loop max_econnreset_retry_count: ${max_econnreset_retry_count}" 
+  # [[ ${attempts} > 0 ]] && fail "MADE IT PAST FIRST LOOP. attempts: ${attempts}"
+  # DEBUG END
   # Execute the command directing stderr to a file.
   if "${cmd[@]}" 2> "${stderr_file}"; then
     success=true
@@ -109,7 +124,7 @@ while [[ ${attempts} < ${max_econnreset_retry_count} ]]; do
   # If the error was an ECONNRESET, the increment counter and loop to try again.
   elif cat "${stderr_file}" | grep 'Error: read ECONNRESET'; then
     echo >&2 "An ECONNRESET error occurred. attempts: ${attempts}"
-    attempts+=1
+    attempts=$(( ${attempts} + 1 ))
   # Else the utility failed.
   else
     success=false
