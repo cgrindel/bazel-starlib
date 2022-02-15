@@ -24,11 +24,15 @@ check_links_sh="$(rlocation "${check_links_sh_location}")" || \
 
 
 # MARK - Test Successful Check
-
+stdout_path="stdout.txt"
+stderr_path="stderr.txt"
 bar_md_path="bar.md"
-touch "${bar_md_path}"
-
 foo_md_path="foo.md"
+
+# Bar content
+echo "" > "${bar_md_path}"
+
+# Foo content
 foo_md_content="$(cat <<-'EOF'
 This is foo.md.
 - [Bar](bar.md)
@@ -36,7 +40,32 @@ EOF
 )"
 echo "${foo_md_content}" > "${foo_md_path}"
 
-"${check_links_sh}" "${bar_md_path}" "${foo_md_path}"
+# Execute command
+"${check_links_sh}" "${bar_md_path}" "${foo_md_path}" \
+  > "${stdout_path}" 2> "${stderr_path}" || \
+  fail "Expected link checks to succeed."
+
+
+# MARK - Test Failed Link Check
+
+bar_md_path="bar.md"
+echo "" > "${bar_md_path}"
+
+foo_md_path="foo.md"
+foo_md_content="$(cat <<-'EOF'
+This is foo.md.
+- [Bar](bar.md)
+- [Bad](does_not_exist.md)
+EOF
+)"
+echo "${foo_md_content}" > "${foo_md_path}"
+
+"${check_links_sh}" "${bar_md_path}" "${foo_md_path}" \
+  > "${stdout_path}" 2> "${stderr_path}" && \
+  fail "Expected bad link check to fail."
+
+stdout_contents="$(< "${stdout_path}")"
+assert_match "does_not_exist.md → Status: 400" "${stdout_contents}" "Did not find expected failed link."
 
 # DEBUG BEGIN
 fail "STOP"
