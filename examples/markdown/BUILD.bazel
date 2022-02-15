@@ -21,11 +21,6 @@ filegroup(
 
 default_test_runner(
     name = "simple_test_runner",
-    # GH107: Do not execute the markdown tests for now.
-    bazel_cmds = [
-        "info",
-        "build //...",
-    ],
 )
 
 bazel_integration_tests(
