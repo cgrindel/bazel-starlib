@@ -2,6 +2,9 @@
   "ignorePatterns": [
     {
       "pattern": "^#"
+    },
+    {
+      "pattern": "^http"
     }
   ],
   "replacementPatterns": [
