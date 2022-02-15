@@ -45,6 +45,7 @@ md_link_check="{md_link_check}"
 md_files={md_files}
 verbose="{verbose}"
 quiet="{quiet}"
+max_econnreset_retry_count=3
 """.format(
             config = config_file_path,
             md_link_check = ctx.executable._link_checker.short_path,
@@ -61,7 +62,27 @@ cmd=( "${md_link_check}" )
 [[ "${quiet}" == "True" ]] && cmd+=( -q )
 [[ -n "${config_file:-}" ]] && cmd+=( -c "${config_file}" )
 cmd+=( "${md_files[@]}" )
-"${cmd[@]}"
+
+stderr_file="$( mktemp )"
+cleanup() {
+  rm -rf "${stderr_file}"
+}
+trap cleanup EXIT
+
+attempts=0
+while [[ ${attempts} < ${max_econnreset_retry_count} ]]; do
+  if "${cmd[@]}" 2> "${stderr_file}"; then
+    break
+  else
+    if cat "${stderr_file}" | grep 'Error: read ECONNRESET'; then
+      attempts+=1
+    else
+       # The failure is not an ECONNRESET
+       cat >&2 "${stderr_file}"
+       exit 1
+    fi
+  fi
+done
 """,
     )
 
