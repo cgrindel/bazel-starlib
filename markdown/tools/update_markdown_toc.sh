@@ -77,15 +77,20 @@ out_path="${args[1]}"
 
 # MARK - Generate the TOC
 
-toc_path="$( mktemp )"
+toc_dir_path="$( mktemp -d )"
+toc_path="${toc_dir_path}/toc.md"
+
 cleanup() {
-  rm -f "${toc_path}"
+  rm -rf "${toc_dir_path}"
 }
 trap cleanup EXIT
 
 # Generate the TOC 
 gh_md_toc_cmd+=( "${in_path}" )
 "${gh_md_toc_cmd[@]}" > "${toc_path}"
+
+# Remove unwanted stuff from the TOC
+sed -i.bak -E -e '/^[*] \[Table of Contents\]/d' "${toc_path}"
 
 # DEBUG BEGIN
 echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") TOC START" 

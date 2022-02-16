@@ -53,7 +53,8 @@ expected_content="$(cat <<-'EOF'
 ## Table of Contents
 
 <!-- MARKDOWN TOC: BEGIN -->
-FIX ME
+* [Chicken](#chicken)
+  * [Smidgen](#smidgen)
 <!-- MARKDOWN TOC: END -->
 
 ## Chicken
