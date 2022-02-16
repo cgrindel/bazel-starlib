@@ -18,12 +18,6 @@ sh_binary(
     deps = [
         "//shlib/lib:fail",
         "@bazel_tools//tools/bash/runfiles",
-sh_binary(
-    name = "update_markdown_doc",
-    srcs = ["update_markdown_doc.sh"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//shlib/lib:fail",
     ],
 )
 
