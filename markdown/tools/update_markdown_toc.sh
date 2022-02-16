@@ -90,7 +90,7 @@ gh_md_toc_cmd+=( "${in_path}" )
 "${gh_md_toc_cmd[@]}" > "${toc_path}"
 
 # Remove unwanted stuff from the TOC
-sed -i.bak -E -e '/^[*] \[Table of Contents\]/d' "${toc_path}"
+sed -i.bak -E -e '/^[*] \[Table of Contents\]/d' -e '/^\s*$/d' "${toc_path}"
 
 # DEBUG BEGIN
 echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") TOC START" 
