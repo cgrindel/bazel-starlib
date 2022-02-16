@@ -1,0 +1,22 @@
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)
+
+sh_binary(
+    name = "check_links",
+    srcs = ["check_links.sh"],
+    data = [
+        "@cgrindel_bazel_starlib_markdown_npm//markdown-link-check/bin:markdown-link-check",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//shlib/lib:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)

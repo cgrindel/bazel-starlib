@@ -1,9 +1,12 @@
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 
+bzlformat_pkg(name = "bzlformat")
+
 filegroup(
-    name = "doc_files",
-    srcs = glob(["*.md"]),
-    visibility = ["//tests:__subpackages__"],
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
 )
 
 string_flag(
@@ -17,12 +20,9 @@ string_flag(
 )
 
 config_setting(
-    name = "ci_on_macos",
-    constraint_values = [
-        "@platforms//os:macos",
-    ],
+    name = "ci",
     flag_values = {
-        "//:execution_env": "ci",
+        ":execution_env": "ci",
     },
     visibility = ["//:__subpackages__"],
 )

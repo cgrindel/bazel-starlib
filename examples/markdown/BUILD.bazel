@@ -6,6 +6,7 @@ load(
     "integration_test_utils",
 )
 load("//:bazel_versions.bzl", "SUPPORTED_BAZEL_VERSIONS")
+load("@cgrindel_bazel_starlib//shlib/rules:execute_binary.bzl", "execute_binary")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -19,13 +20,46 @@ filegroup(
 
 # MARK: - Integration Tests
 
-default_test_runner(
-    name = "simple_test_runner",
-    # GH107: Do not execute the markdown tests for now.
-    bazel_cmds = [
-        "info",
-        "build //...",
+# NOTE: We cannot use the default_test_runner macro because we are using select
+# to specify the args.  The select function can only be used with rules. For
+# more information, see
+# https://github.com/bazelbuild/bazel/issues/8419
+# https://github.com/bazelbuild/bazel/issues/14157
+
+_COMMON_ARGS = [
+    "--bazel_cmd",
+    "info",
+]
+
+_ARGS_SELECT_DICT = {
+    "//build:ci": [
+        "--bazel_cmd",
+        "test //... --//:execution_env=ci",
     ],
+    "//conditions:default": [
+        "--bazel_cmd",
+        "test //... --//:execution_env=normal",
+    ],
+}
+
+# Define the shell binary
+sh_binary(
+    name = "simple_test_runner_binary",
+    srcs = [
+        "@cgrindel_rules_bazel_integration_test//bazel_integration_test/private:default_test_runner.sh",
+    ],
+    args = _COMMON_ARGS + select(_ARGS_SELECT_DICT),
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_starlib//shlib/lib:messages",
+    ],
+)
+
+# Wrap the arguments with the binary.
+execute_binary(
+    name = "simple_test_runner",
+    arguments = _COMMON_ARGS + select(_ARGS_SELECT_DICT),
+    binary = ":simple_test_runner_binary",
 )
 
 bazel_integration_tests(

@@ -12,6 +12,11 @@ import %workspace%/shared.bazelrc
 # Import CI settings.
 import %workspace%/ci.bazelrc
 
+# Set the execution_env flag to ci
+# This needs to be set here instead of in ci.yml, because the child workspaces 
+# import ci.bazelrc and they do not have a //build:execution_env flag.
+build:ci --//build:execution_env=ci
+
 # Try to import a local.rc file; typically, written by CI
 try-import %workspace%/local.bazelrc
 
