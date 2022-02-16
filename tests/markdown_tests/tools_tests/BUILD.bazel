@@ -6,6 +6,7 @@ sh_test(
     name = "check_links_test",
     srcs = ["check_links_test.sh"],
     data = [
+        "//markdown:default_markdown_link_check_config",
         "//markdown/tools:check_links",
     ],
     deps = [

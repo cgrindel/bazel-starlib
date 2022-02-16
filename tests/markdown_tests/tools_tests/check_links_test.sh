@@ -18,9 +18,16 @@ assertions_sh="$(rlocation "${assertions_sh_location}")" || \
   (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
 source "${assertions_sh}"
 
+default_markdown_link_check_config_json_location=cgrindel_bazel_starlib/markdown/default_markdown_link_check_config.json
+default_markdown_link_check_config_json="$(rlocation "${default_markdown_link_check_config_json_location}")" || \
+  (echo >&2 "Failed to locate ${default_markdown_link_check_config_json_location}" && exit 1)
+
 check_links_sh_location=cgrindel_bazel_starlib/markdown/tools/check_links.sh
 check_links_sh="$(rlocation "${check_links_sh_location}")" || \
   (echo >&2 "Failed to locate ${check_links_sh_location}" && exit 1)
+
+
+# MARK - Constants and Functions
 
 stdout_path="stdout.txt"
 stderr_path="stderr.txt"
@@ -179,3 +186,49 @@ assert_match "An ECONNRESET error occurred. attempts: 0" "${stderr_contents}" "D
 assert_match "An ECONNRESET error occurred. attempts: 1" "${stderr_contents}" "Did not find second ECONNRESET retry message."
 assert_match "An ECONNRESET error occurred. attempts: 2" "${stderr_contents}" "Did not find third ECONNRESET retry message."
 assert_no_match "An ECONNRESET error occurred. attempts: 3" "${stderr_contents}" "Found too many retries."
+
+
+# MARK - Test Supported Options
+
+# Bar content
+echo "" > "${bar_md_path}"
+
+# Foo content
+foo_md_content="$(cat <<-'EOF'
+This is foo.md.
+- [Bar](bar.md)
+EOF
+)"
+echo "${foo_md_content}" > "${foo_md_path}"
+
+# Execute command
+do_cmd \
+  --config "${default_markdown_link_check_config_json}" \
+  --verbose \
+  --quiet \
+  --max_econnreset_retry_count 10 \
+  || \
+  (dump_out_files ; fail "Expected args test to succeed.")
+
+
+# MARK - Test Unsupported Options
+
+# Bar content
+echo "" > "${bar_md_path}"
+
+# Foo content
+foo_md_content="$(cat <<-'EOF'
+This is foo.md.
+- [Bar](bar.md)
+EOF
+)"
+echo "${foo_md_content}" > "${foo_md_path}"
+
+# Execute command
+do_cmd --not_valid_options  && \
+  (dump_out_files ; fail "Expected unsupported option to fail.")
+
+
+
+# End on a positive note
+echo "All is well!"
