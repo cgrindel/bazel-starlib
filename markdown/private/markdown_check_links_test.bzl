@@ -5,6 +5,9 @@ def _markdown_check_links_test_impl(ctx):
     if ctx.files.srcs == [] and ctx.files.data == []:
         fail("No files were specified in the srcs or the data.")
 
+    if ctx.attr.max_econnreset_retry_count < 0:
+        fail("The `max_econnreset_retry_count` must be greater than or equal to 0.")
+
     # If no srcs were provided, assume that we are testing every markdown file
     # provided in the data.
     if ctx.files.srcs == []:
@@ -41,48 +44,30 @@ set -euo pipefail
 
 """ + """
 config_file="{config}"
-md_link_check="{md_link_check}"
+link_checker="{link_checker}"
 md_files={md_files}
 verbose="{verbose}"
 quiet="{quiet}"
-max_econnreset_retry_count=3
+max_econnreset_retry_count={max_econnreset_retry_count}
 """.format(
             config = config_file_path,
-            md_link_check = ctx.executable._link_checker.short_path,
+            link_checker = ctx.executable._link_checker.short_path,
             md_files = shell.array_literal([
                 src.short_path
                 for src in srcs
             ]),
             verbose = ctx.attr.verbose,
             quiet = ctx.attr.quiet,
+            max_econnreset_retry_count = ctx.attr.max_econnreset_retry_count,
         ) + """
 
-cmd=( "${md_link_check}" )
-[[ "${verbose}" == "True" ]] && cmd+=( -v )
-[[ "${quiet}" == "True" ]] && cmd+=( -q )
-[[ -n "${config_file:-}" ]] && cmd+=( -c "${config_file}" )
+cmd=( "${link_checker}" --max_econnreset_retry_count ${max_econnreset_retry_count} )
+[[ "${verbose}" == "True" ]] && cmd+=( --verbose )
+[[ "${quiet}" == "True" ]] && cmd+=( --quiet )
+[[ -n "${config_file:-}" ]] && cmd+=( --config "${config_file}" )
 cmd+=( "${md_files[@]}" )
 
-stderr_file="$( mktemp )"
-cleanup() {
-  rm -rf "${stderr_file}"
-}
-trap cleanup EXIT
-
-attempts=0
-while [[ ${attempts} < ${max_econnreset_retry_count} ]]; do
-  if "${cmd[@]}" 2> "${stderr_file}"; then
-    break
-  else
-    if cat "${stderr_file}" | grep 'Error: read ECONNRESET'; then
-      attempts+=1
-    else
-       # The failure is not an ECONNRESET
-       cat >&2 "${stderr_file}"
-       exit 1
-    fi
-  fi
-done
+"${cmd[@]}"
 """,
     )
 
@@ -122,8 +107,12 @@ If set to true, the markdown-link-check will be configured to only display \
 errors.\
 """,
         ),
+        "max_econnreset_retry_count": attr.int(
+            default = 3,
+            doc = "The maximum number of times to retry on an ECONNRESET error.",
+        ),
         "_link_checker": attr.label(
-            default = "@cgrindel_bazel_starlib_markdown_npm//markdown-link-check/bin:markdown-link-check",
+            default = "@cgrindel_bazel_starlib//markdown/tools:check_links",
             executable = True,
             cfg = "host",
             doc = "The link checker utility.",
