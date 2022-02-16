@@ -109,6 +109,9 @@ cleanup() {
 }
 trap cleanup EXIT
 
+# For more information on the ECONNRESET error, check out
+# https://github.com/cgrindel/bazel-starlib/issues/108.
+
 # Execute markdown_link_check
 success=false
 attempts=0
