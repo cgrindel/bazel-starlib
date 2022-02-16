@@ -16,15 +16,13 @@ string_flag(
         "normal",
         "ci",
     ],
+    visibility = ["//:__subpackages__"],
 )
 
 config_setting(
-    name = "ci_on_macos",
-    constraint_values = [
-        "@platforms//os:macos",
-    ],
+    name = "ci",
     flag_values = {
-        "//build:execution_env": "ci",
+        ":execution_env": "ci",
     },
-    visibility = ["//visibility:public"],
+    visibility = ["//:__subpackages__"],
 )

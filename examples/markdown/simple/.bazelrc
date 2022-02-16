@@ -6,3 +6,7 @@ import %workspace%/../../../ci.bazelrc
 
 # Try to import a local.rc file; typically, written by CI
 try-import %workspace%/../../../local.bazelrc
+
+
+# Set the custom execute_env flag to CI
+build:ci --//:execution_env=ci
