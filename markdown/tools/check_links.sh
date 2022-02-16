@@ -25,8 +25,6 @@ markdown_link_check_sh="$(rlocation "${markdown_link_check_sh_location}")" || \
 
 # MARK - Process Args
 
-# TODO: Add real usage.
-
 verbose=false
 quiet=false
 max_econnreset_retry_count=3
@@ -34,14 +32,22 @@ max_econnreset_retry_count=3
 get_usage() {
   local utility="$(basename "${BASH_SOURCE[0]}")"
   echo "$(cat <<-EOF
-One line description of the utility.
+Checks links in the provided markdown files using markdown-link-check.
 
 Usage:
-${utility} --flag <flag_value> [OPTION]... <arg0>
+${utility} [OPTION]... <md_file>...
 
 Options:
-  --flag <flag_value>  Describe flag
-  <arg0>               Describe arg0
+  --config <config>    The markdown-link-check config file.
+  --verbose            Enables verbose output in markdown-link-check.
+  --quiet              Enables quiet output in markdown-link-check.
+  --max_econnreset_retry_count <count>
+                       Sets the maximum retries when ECONNRESET errors occur.
+  --markdown_link_check_sh <function>
+                       For testing only. Calls to markdown-link-check are
+                       sent to this function.
+  --help               Show this usage message.
+  <md_file>            One or more markdown files.
 EOF
   )"
 }
