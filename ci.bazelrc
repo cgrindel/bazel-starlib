@@ -18,3 +18,6 @@ build:ci --disk_cache=~/.cache/bazel_disk
 
 # Repository Cache
 build:ci --repository_cache=~/.cache/bazel_repo
+
+# Set the execution_env flag to ci
+build:ci --//build:execution_env=ci
