@@ -11,9 +11,11 @@ filegroup(
 markdown_check_links_test(
     name = "check_links",
     size = "medium",
+    # When run on a GitHub-hosted MacOS runner, the checks for external links often fails with
+    # ECONNRESET. This skips external link checks when executed there.
     config = select({
-        "@cgrindel_bazel_starlib//build:ci_on_macos": "",
-        "//conditions:default": "",
+        "//:ci_on_macos": "@cgrindel_bazel_starlib//markdown:skip_external_link_checks_config",
+        "//conditions:default": "@cgrindel_bazel_starlib//markdown:default_markdown_link_check_config",
     }),
     data = [":all_doc_files"],
     verbose = True,

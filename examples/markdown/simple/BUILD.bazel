@@ -1,5 +1,28 @@
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+
 filegroup(
     name = "doc_files",
     srcs = glob(["*.md"]),
     visibility = ["//tests:__subpackages__"],
+)
+
+string_flag(
+    name = "execution_env",
+    build_setting_default = "normal",
+    values = [
+        "normal",
+        "ci",
+    ],
+    visibility = ["//:__subpackages__"],
+)
+
+config_setting(
+    name = "ci_on_macos",
+    constraint_values = [
+        "@platforms//os:macos",
+    ],
+    flag_values = {
+        "//:execution_env": "ci",
+    },
+    visibility = ["//:__subpackages__"],
 )

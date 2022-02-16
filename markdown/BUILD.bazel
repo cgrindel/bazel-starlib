@@ -12,6 +12,12 @@ filegroup(
 )
 
 filegroup(
+    name = "skip_external_link_checks_config",
+    srcs = ["skip_external_link_checks_config.json"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
     name = "doc_files",
     srcs = glob(["*.md"]),
     visibility = ["//:markdown_test_visibility"],

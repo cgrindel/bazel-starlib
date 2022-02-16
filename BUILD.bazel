@@ -73,6 +73,7 @@ filegroup(
         ":all_files",
         "//bazeldoc:all_files",
         "//bazeldoc/private:all_files",
+        "//build:all_files",
         "//bzlformat:all_files",
         "//bzlformat/private:all_files",
         "//bzlformat/tools:all_files",

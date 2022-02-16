@@ -1,26 +1,22 @@
 load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
-# load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 
 bzlformat_pkg(name = "bzlformat")
 
-# bool_flag(
-#     name = "skip_external_link_checks",
-#     build_setting_default = False,
-# )
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)
 
-# config_setting(
-#     name = "check_external_links",
-#     flag_values = {
-#         ":skip_external_link_checks": "False",
-#     },
-# )
-
-# config_setting(
-#     name = "do_not_check_external_links",
-#     flag_values = {
-#         ":skip_external_link_checks": "True",
-#     },
-# )
+string_flag(
+    name = "execution_env",
+    build_setting_default = "normal",
+    values = [
+        "normal",
+        "ci",
+    ],
+)
 
 config_setting(
     name = "ci_on_macos",
@@ -28,7 +24,8 @@ config_setting(
         "@platforms//os:macos",
     ],
     values = {
-        "config": "ci",
+        # "config": "ci",
+        "//build:execution_env": "ci",
     },
     visibility = ["//visibility:public"],
 )
