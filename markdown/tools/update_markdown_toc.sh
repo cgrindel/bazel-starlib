@@ -29,6 +29,9 @@ gh_md_toc="$(rlocation "${gh_md_toc_location}")" || \
 
 # MARK - Process args
 
+remove_toc_header_entry=true
+toc_header="Table of Contents"
+
 gh_md_toc_cmd=( "${gh_md_toc}" --hide-header --hide-footer --start-depth=1 )
 
 args=()
@@ -89,22 +92,33 @@ trap cleanup EXIT
 gh_md_toc_cmd+=( "${in_path}" )
 "${gh_md_toc_cmd[@]}" > "${toc_path}"
 
-# Remove unwanted stuff from the TOC
-sed -i.bak -E -e '/^[*] \[Table of Contents\]/d' -e '/^\s*$/d' "${toc_path}"
+
+# MARK - Clean up the TOC
+
+# sed -i.bak -E -e '/^[*] \[Table of Contents\]/d' -e '/^\s*$/d' "${toc_path}"
+
+# Set up the sed command
+sed_cmd=( sed -i.bak -E )
+
+# Remove blank linkes
+sed_cmd+=( -e '/^\s*$/d' ) 
+
+# Remove the TOC header entry
+[[ "${remove_toc_header_entry}" == true ]] && \
+  sed_cmd+=( -e '/^[*] \['"${toc_header}"'\]/d' )
+  # sed_cmd+=( -e '/^[*] \[Table of Contents\]/d' )
+
+# Specify the path to the TOC.
+sed_cmd+=( "${toc_path}" ) 
+
+# Execute the sed command
+"${sed_cmd[@]}"
 
 # DEBUG BEGIN
 echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") TOC START" 
 cat >&2 "${toc_path}"
 echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") TOC END" 
 # DEBUG END
-
-# Write the TOC
-# toc_path="$( mktemp )"
-# cleanup() {
-#   rm -f "${toc_path}"
-# }
-# trap cleanup EXIT
-# echo "${toc}" > "${toc_path}"
 
 
 # MARK - Update the markdown file with the TOC
