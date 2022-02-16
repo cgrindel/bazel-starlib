@@ -23,8 +23,7 @@ config_setting(
     constraint_values = [
         "@platforms//os:macos",
     ],
-    values = {
-        # "config": "ci",
+    flag_values = {
         "//build:execution_env": "ci",
     },
     visibility = ["//visibility:public"],
