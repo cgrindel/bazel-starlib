@@ -35,19 +35,16 @@ markdown_register_node_deps()
 # MARK: - Golang Deps (gh-md-toc)
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("//markdown:deps.bzl", "bazel_starlib_markdown_dependencies")
+
+bazel_starlib_markdown_dependencies()
 
 go_rules_dependencies()
 
 go_register_toolchains(version = "1.17.6")
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
-
-go_repository(
-    name = "org_golang_x_net",
-    importpath = "golang.org/x/net",
-    sum = "h1:zK/HqS5bZxDptfPJNq8v7vJfXtkU7r9TLIoSr1bXaP4=",
-    version = "v0.0.0-20200813134508-3edf25e44fcc",
-)
+gazelle_dependencies()
 
 # MARK: - Integration Testing
 

@@ -40,3 +40,8 @@ bzl_library(
         "//markdown/private:markdown_register_node_deps",
     ],
 )
+
+bzl_library(
+    name = "deps",
+    srcs = ["deps.bzl"],
+)
