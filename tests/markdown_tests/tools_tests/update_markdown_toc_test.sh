@@ -63,3 +63,7 @@ expected_content="$(cat <<-'EOF'
 EOF
 )"
 assert_equal "${expected_content}" "${output_content}" "With defaults"
+
+
+# TODO: Add tests for --no_remove_toc_header_entry.
+# TODO: Add tests for --toc_header

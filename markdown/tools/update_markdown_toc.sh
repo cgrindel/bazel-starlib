@@ -37,14 +37,6 @@ gh_md_toc_cmd=( "${gh_md_toc}" --hide-header --hide-footer --start-depth=1 )
 args=()
 while (("$#")); do
   case "${1}" in
-    # "--hide_header")
-    #   gh_md_toc_args+=( --hide-header )
-    #   shift 1
-    #   ;;
-    # "--hide_footer")
-    #   gh_md_toc_args+=( --hide-footer )
-    #   shift 1
-    #   ;;
     "--no_escape")
       gh_md_toc_args+=( --no-escape )
       shift 1
@@ -63,6 +55,14 @@ while (("$#")); do
       ;;
     "--indent")
       gh_md_toc_args+=( "--indent=${2}" )
+      shift 2
+      ;;
+    "--no_remove_toc_header_entry")
+      remove_toc_header_entry=false
+      shift 1
+      ;;
+    "--toc_header")
+      toc_header="${2}"
       shift 2
       ;;
     *)
@@ -95,8 +95,6 @@ gh_md_toc_cmd+=( "${in_path}" )
 
 # MARK - Clean up the TOC
 
-# sed -i.bak -E -e '/^[*] \[Table of Contents\]/d' -e '/^\s*$/d' "${toc_path}"
-
 # Set up the sed command
 sed_cmd=( sed -i.bak -E )
 
@@ -106,7 +104,6 @@ sed_cmd+=( -e '/^\s*$/d' )
 # Remove the TOC header entry
 [[ "${remove_toc_header_entry}" == true ]] && \
   sed_cmd+=( -e '/^[*] \['"${toc_header}"'\]/d' )
-  # sed_cmd+=( -e '/^[*] \[Table of Contents\]/d' )
 
 # Specify the path to the TOC.
 sed_cmd+=( "${toc_path}" ) 
