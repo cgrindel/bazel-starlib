@@ -11,6 +11,10 @@ filegroup(
 markdown_check_links_test(
     name = "check_links",
     size = "medium",
+    config = select({
+        "@cgrindel_bazel_starlib//build:ci_on_macos": "",
+        "//conditions:default": "",
+    }),
     data = [":all_doc_files"],
     verbose = True,
 )
