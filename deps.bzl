@@ -167,38 +167,6 @@ def bazel_starlib_dependencies(use_prebuilt_buildtools = True):
         sha256 = "6bfeab2b28e5c7ad1d5bee9aa6923882a01f56a7f2d0f260f01acde2111f65af",
         strip_prefix = "github-markdown-toc.go-1.2.0",
         urls = ["https://github.com/ekalinin/github-markdown-toc.go/archive/refs/tags/1.2.0.tar.gz"],
-        # build_file_content = """\
-        # load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
-
-        # go_library(
-        # name = "github-markdown-toc_go",
-        # srcs = [
-        # "ghdoc.go",
-        # "internals.go",
-        # ],
-        # importpath = "github.com/ekalinin/github-markdown-toc.go",
-        # visibility = ["//visibility:public"],
-        # )
-
-        # go_library(
-        # name = "gh-md-toc_lib",
-        # srcs = [
-        # "cmd/gh-md-toc/main.go",
-        # ],
-        # importpath = "github.com/ekalinin/github-markdown-toc.go/cmd/gh-md-toc",
-        # visibility = ["//visibility:private"],
-        # deps = [
-        # ":github-markdown-toc_go",
-        # "@in_gopkg_alecthomas_kingpin_v2//:go_default_library",
-        # ],
-        # )
-
-        # go_binary(
-        # name = "gh_md_toc",
-        # embed = [":gh-md-toc_lib"],
-        # visibility = ["//visibility:public"],
-        # )
-        # """,
         build_file_content = """\
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 
@@ -210,40 +178,6 @@ go_binary(
     ],
     visibility = ["//visibility:public"],
 )
-
-# go_library(
-#     name = "internals",
-#     importpath = "main",
-#     srcs = glob(["*.go"], exclude = ["*_test.go"]),
-#     deps = [
-#         "@in_gopkg_alecthomas_kingpin_v2//:go_default_library",
-#     ],
-# )
-# 
-# go_binary(
-#     name = "gh_md_toc",
-#     deps = [
-#         ":internals",
-#     ],
-#     visibility = ["//visibility:public"],
-# )
-
-# go_library(
-#     name = "internals",
-#     importpath = "github.com/ekalinin/github-markdown-toc.go",
-#     srcs = glob(["*.go"], exclude = ["*_test.go"]),
-#     deps = [
-#         "@in_gopkg_alecthomas_kingpin_v2//:go_default_library",
-#     ],
-# )
-# 
-# go_binary(
-#     name = "gh_md_toc",
-#     deps = [
-#         ":internals",
-#     ],
-#     visibility = ["//visibility:public"],
-# )
 """,
     )
 
