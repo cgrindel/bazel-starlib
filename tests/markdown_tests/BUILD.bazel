@@ -1,14 +1,22 @@
 load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
-load("//markdown:defs.bzl", "markdown_check_links_test")
+load("//markdown:defs.bzl", "markdown_check_links_test", "markdown_pkg")
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
 
 bzlformat_pkg(name = "bzlformat")
 
-filegroup(
-    name = "markdown_files",
-    srcs = glob(["*.md"]),
+markdown_pkg(
+    name = "markdown",
 )
 
-markdown_check_links_test(
-    name = "check_links_test",
-    data = [":markdown_files"],
+# Confirm that these targets are created by markdown_pkg and build.
+build_test(
+    name = "markdown_pkg_expansion_test",
+    targets = [
+        ":markdown_check_links",
+        ":markdown_links_md_toc",
+        ":markdown_links_md_toctest",
+        ":markdown_test_md_toc",
+        ":markdown_test_md_toctest",
+        ":markdown_update",
+    ],
 )
