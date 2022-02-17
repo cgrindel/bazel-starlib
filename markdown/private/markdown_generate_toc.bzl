@@ -12,6 +12,8 @@ def _markdown_generate_toc_impl(ctx):
         args = ctx.actions.args()
         if not ctx.attr.remove_toc_header_entry:
             args.add("--no_remove_toc_header_entry")
+        if ctx.attr.toc_header != "":
+            args.add_all(["--toc_header", ctx.attr.toc_header])
 
         args.add_all([
             src,
@@ -44,6 +46,10 @@ The markdown files that will be updated with a table of contents.\
             doc = """\
 Specifies whether the header for the TOC should be removed from the TOC.\
 """,
+        ),
+        "toc_header": attr.string(
+            default = "Table of Contents",
+            doc = "The header that leads the TOC.",
         ),
         "output_suffix": attr.string(
             default = ".toc_updated",
