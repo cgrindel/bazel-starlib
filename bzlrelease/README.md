@@ -10,7 +10,6 @@ process and then coordinate the execution of these targets using a GitHub Action
 
 ## Table of Contents
 
-* [Table of Contents](#table-of-contents)
 * [Define the Release Targets](#define-the-release-targets)
   * [Workspace Snippet Generation](#workspace-snippet-generation)
   * [Release Notes Generation](#release-notes-generation)
