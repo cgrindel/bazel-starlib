@@ -35,6 +35,26 @@ Using [`markdown-link-check`](https://github.com/tcort/markdown-link-check), che
 | <a id="markdown_check_links_test-verbose"></a>verbose |  If set to true, the markdown-link-check will be configured for verbose output.   | Boolean | optional | False |
 
 
+<a id="#markdown_generate_toc"></a>
+
+## markdown_generate_toc
+
+<pre>
+markdown_generate_toc(<a href="#markdown_generate_toc-name">name</a>, <a href="#markdown_generate_toc-output_suffix">output_suffix</a>, <a href="#markdown_generate_toc-srcs">srcs</a>)
+</pre>
+
+
+
+**ATTRIBUTES**
+
+
+| Name  | Description | Type | Mandatory | Default |
+| :------------- | :------------- | :------------- | :------------- | :------------- |
+| <a id="markdown_generate_toc-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/docs/build-ref.html#name">Name</a> | required |  |
+| <a id="markdown_generate_toc-output_suffix"></a>output_suffix |  The suffix added to the output file with the updated TOC.   | String | optional | ".toc_updated" |
+| <a id="markdown_generate_toc-srcs"></a>srcs |  The markdown files that will be updated with a table of contents.   | <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a> | required |  |
+
+
 <a id="#markdown_register_node_deps"></a>
 
 ## markdown_register_node_deps
