@@ -10,11 +10,15 @@ process and then coordinate the execution of these targets using a GitHub Action
 
 ## Table of Contents
 
+* [Table of Contents](#table-of-contents)
 * [Define the Release Targets](#define-the-release-targets)
   * [Workspace Snippet Generation](#workspace-snippet-generation)
   * [Release Notes Generation](#release-notes-generation)
   * [README\.md Update](#readmemd-update)
-* [Set Up a GitHub App to Generate Tokens](#set-up-a-github-app-to-generate-tokens)
+  * [Release Creation](#release-creation)
+* [GitHub Repository Configuration](#github-repository-configuration)
+  * [Set Up a GitHub App to Generate Tokens](#set-up-a-github-app-to-generate-tokens)
+  * [Repository Configuration for the README\.md Update Pull Request](#repository-configuration-for-the-readmemd-update-pull-request)
 * [Implement the Create Release Workflow (GitHub Actions)](#implement-the-create-release-workflow-github-actions)
 * [Create a Release](#create-a-release)
 * [Questions and Answers](#questions-and-answers)
@@ -238,7 +242,9 @@ create_release(
 )
 ```
 
-## Set Up a GitHub App to Generate Tokens
+## GitHub Repository Configuration
+
+### Set Up a GitHub App to Generate Tokens
 
 Before we can implement the release creation workflow, we need to set up a GitHub App in your
 repository that has permission to create releases and pull requests.  The default Github token that
@@ -252,6 +258,16 @@ repository. The first is named `APP_ID`. It's value is the `App ID: XXXX` value 
 on the token generator application's About page. The second secret is named `APP_PRIVATE_KEY`. It's
 value is the private key that you generated while creating the token generator application.
 
+### Repository Configuration for the `README.md` Update Pull Request
+
+The release process can update the `README.md` file at the root of the repository with the latest
+workspace snippet. To ensure that the pull request that is created during this process
+automatically merges to the main branch, we need to enable the `Allow auto-merge` option in your
+repository's Settings > General page.
+
+While you are on this page, you may want to enable `Automatically delete head branches`, as well.
+When enabled, the branch for a merged pull request will be deleted. This bit of housekeeping keeps
+the number of remote branches in your repository to a minimum.
 
 ## Implement the Create Release Workflow (GitHub Actions)
 
