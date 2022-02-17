@@ -3,8 +3,8 @@ load("@cgrindel_bazel_starlib//markdown:defs.bzl", "markdown_check_links_test")
 filegroup(
     name = "all_doc_files",
     srcs = [
-        "//:doc_files",
-        "//bar:doc_files",
+        "//:markdown_doc_files",
+        "//bar:markdown_doc_files",
     ],
 )
 

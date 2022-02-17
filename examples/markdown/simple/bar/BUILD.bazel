@@ -1,14 +1,10 @@
 load("@cgrindel_bazel_starlib//markdown:defs.bzl", "markdown_pkg")
 
-filegroup(
-    name = "doc_files",
-    srcs = glob(["*.md"]) + [
+markdown_pkg(
+    name = "markdown",
+    additional_doc_files = [
         # The README.md in this package contains a link to hello.sh.
         "hello.sh",
     ],
-    visibility = ["//tests:__subpackages__"],
-)
-
-markdown_pkg(
-    name = "markdown",
+    doc_files_visibility = ["//tests:__subpackages__"],
 )
