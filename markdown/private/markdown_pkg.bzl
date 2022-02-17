@@ -7,13 +7,17 @@ def markdown_pkg(
         name = "markdown",
         srcs = None,
         toc_visibility = None,
-        update_visibility = None):
+        update_visibility = None,
+        define_doc_files = True,
+        doc_files_visibility = ["@//:__subpackages__"],
+        additional_doc_files = []):
     if srcs == None:
         srcs = native.glob(["*.md", "*.markdown"])
 
     # Only process paths; ignore labels
     src_paths = [src for src in srcs if src_utils.is_path(src)]
 
+    # Add targets to maintain the TOC
     name_prefix = name + "_"
     toc_names = []
     for src in src_paths:
@@ -37,3 +41,10 @@ def markdown_pkg(
         deps = toc_names,
         visibility = update_visibility,
     )
+
+    if define_doc_files:
+        native.filegroup(
+            name = name + "_doc_files",
+            srcs = srcs + additional_doc_files,
+            visibility = doc_files_visibility,
+        )

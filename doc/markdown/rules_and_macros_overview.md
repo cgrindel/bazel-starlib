@@ -63,7 +63,8 @@ markdown_generate_toc(<a href="#markdown_generate_toc-name">name</a>, <a href="#
 ## markdown_pkg
 
 <pre>
-markdown_pkg(<a href="#markdown_pkg-name">name</a>, <a href="#markdown_pkg-srcs">srcs</a>, <a href="#markdown_pkg-toc_visibility">toc_visibility</a>, <a href="#markdown_pkg-update_visibility">update_visibility</a>)
+markdown_pkg(<a href="#markdown_pkg-name">name</a>, <a href="#markdown_pkg-srcs">srcs</a>, <a href="#markdown_pkg-toc_visibility">toc_visibility</a>, <a href="#markdown_pkg-update_visibility">update_visibility</a>, <a href="#markdown_pkg-define_doc_files">define_doc_files</a>, <a href="#markdown_pkg-doc_files_visibility">doc_files_visibility</a>,
+             <a href="#markdown_pkg-additional_doc_files">additional_doc_files</a>)
 </pre>
 
 
@@ -77,6 +78,9 @@ markdown_pkg(<a href="#markdown_pkg-name">name</a>, <a href="#markdown_pkg-srcs"
 | <a id="markdown_pkg-srcs"></a>srcs |  <p align="center"> - </p>   |  <code>None</code> |
 | <a id="markdown_pkg-toc_visibility"></a>toc_visibility |  <p align="center"> - </p>   |  <code>None</code> |
 | <a id="markdown_pkg-update_visibility"></a>update_visibility |  <p align="center"> - </p>   |  <code>None</code> |
+| <a id="markdown_pkg-define_doc_files"></a>define_doc_files |  <p align="center"> - </p>   |  <code>True</code> |
+| <a id="markdown_pkg-doc_files_visibility"></a>doc_files_visibility |  <p align="center"> - </p>   |  <code>["@//:__subpackages__"]</code> |
+| <a id="markdown_pkg-additional_doc_files"></a>additional_doc_files |  <p align="center"> - </p>   |  <code>[]</code> |
 
 
 <a id="#markdown_register_node_deps"></a>
