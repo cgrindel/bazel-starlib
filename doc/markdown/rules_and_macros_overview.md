@@ -40,7 +40,7 @@ Using [`markdown-link-check`](https://github.com/tcort/markdown-link-check), che
 ## markdown_generate_toc
 
 <pre>
-markdown_generate_toc(<a href="#markdown_generate_toc-name">name</a>, <a href="#markdown_generate_toc-output_suffix">output_suffix</a>, <a href="#markdown_generate_toc-srcs">srcs</a>)
+markdown_generate_toc(<a href="#markdown_generate_toc-name">name</a>, <a href="#markdown_generate_toc-output_suffix">output_suffix</a>, <a href="#markdown_generate_toc-remove_toc_header_entry">remove_toc_header_entry</a>, <a href="#markdown_generate_toc-srcs">srcs</a>)
 </pre>
 
 
@@ -52,6 +52,7 @@ markdown_generate_toc(<a href="#markdown_generate_toc-name">name</a>, <a href="#
 | :------------- | :------------- | :------------- | :------------- | :------------- |
 | <a id="markdown_generate_toc-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/docs/build-ref.html#name">Name</a> | required |  |
 | <a id="markdown_generate_toc-output_suffix"></a>output_suffix |  The suffix added to the output file with the updated TOC.   | String | optional | ".toc_updated" |
+| <a id="markdown_generate_toc-remove_toc_header_entry"></a>remove_toc_header_entry |  Specifies whether the header for the TOC should be removed from the TOC.   | Boolean | optional | True |
 | <a id="markdown_generate_toc-srcs"></a>srcs |  The markdown files that will be updated with a table of contents.   | <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a> | required |  |
 
 

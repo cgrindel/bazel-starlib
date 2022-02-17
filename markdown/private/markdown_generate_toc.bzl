@@ -6,10 +6,13 @@ def _markdown_generate_toc_impl(ctx):
 
     updsrcs = []
     for src in ctx.files.srcs:
-        out = ctx.actions.declare_file(src.basename + ctx.attr.output_suffix)
+        out = ctx.actions.declare_file(ctx.label.name + "_" + src.basename + ctx.attr.output_suffix)
         updsrcs.append(update_srcs.create(src = src, out = out))
 
         args = ctx.actions.args()
+        if not ctx.attr.remove_toc_header_entry:
+            args.add("--no_remove_toc_header_entry")
+
         args.add_all([
             src,
             out,
@@ -34,6 +37,12 @@ markdown_generate_toc = rule(
             allow_files = [".md", ".markdown"],
             doc = """\
 The markdown files that will be updated with a table of contents.\
+""",
+        ),
+        "remove_toc_header_entry": attr.bool(
+            default = True,
+            doc = """\
+Specifies whether the header for the TOC should be removed from the TOC.\
 """,
         ),
         "output_suffix": attr.string(

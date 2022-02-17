@@ -14,3 +14,15 @@ diff_test(
     file1 = ":structured_toc",
     file2 = "expected_structured.md",
 )
+
+markdown_generate_toc(
+    name = "structured_keep_toc_header_entry",
+    srcs = ["structured.md"],
+    remove_toc_header_entry = False,
+)
+
+diff_test(
+    name = "structured_keep_toc_header_entry_test",
+    file1 = ":structured_keep_toc_header_entry",
+    file2 = "expected_structured_keep_toc_header_entry.md",
+)
