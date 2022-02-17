@@ -65,5 +65,48 @@ EOF
 assert_equal "${expected_content}" "${output_content}" "With defaults"
 
 
+# MARK - Test --no_remove_toc_header_entry
+
+markdown_content="$(cat <<-'EOF'
+# Document Title
+
+## Table of Contents
+
+<!-- MARKDOWN TOC: BEGIN -->
+<!-- MARKDOWN TOC: END -->
+
+## Chicken
+
+### Smidgen
+EOF
+)"
+
+markdown_path="original.md"
+echo "${markdown_content}" > "${markdown_path}"
+
+output_path="output.md"
+"${update_markdown_toc_sh}" --no_remove_toc_header_entry "${markdown_path}" "${output_path}"
+
+output_content="$( < "${output_path}" )"
+
+expected_content="$(cat <<-'EOF'
+# Document Title
+
+## Table of Contents
+
+<!-- MARKDOWN TOC: BEGIN -->
+* [Table of Contents](#table-of-contents)
+* [Chicken](#chicken)
+  * [Smidgen](#smidgen)
+<!-- MARKDOWN TOC: END -->
+
+## Chicken
+
+### Smidgen
+EOF
+)"
+assert_equal "${expected_content}" "${output_content}" "With --no_remove_toc_header_entry"
+
+
 # TODO: Add tests for --no_remove_toc_header_entry.
 # TODO: Add tests for --toc_header

@@ -111,11 +111,11 @@ sed_cmd+=( "${toc_path}" )
 # Execute the sed command
 "${sed_cmd[@]}"
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") TOC START" 
-cat >&2 "${toc_path}"
-echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") TOC END" 
-# DEBUG END
+# # DEBUG BEGIN
+# echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") TOC START" 
+# cat >&2 "${toc_path}"
+# echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") TOC END" 
+# # DEBUG END
 
 
 # MARK - Update the markdown file with the TOC
