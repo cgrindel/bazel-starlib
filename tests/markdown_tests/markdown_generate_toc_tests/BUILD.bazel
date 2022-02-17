@@ -4,6 +4,8 @@ load("//markdown:defs.bzl", "markdown_generate_toc")
 
 bzlformat_pkg(name = "bzlformat")
 
+# MARK: - Test with standard TOC header and defaults
+
 markdown_generate_toc(
     name = "structured_toc",
     srcs = ["structured.md"],
@@ -14,6 +16,8 @@ diff_test(
     file1 = ":structured_toc",
     file2 = "expected_structured.md",
 )
+
+# MARK: - Test with standard TOC header, do not remove header entry
 
 markdown_generate_toc(
     name = "structured_keep_toc_header_entry",
@@ -27,6 +31,8 @@ diff_test(
     file2 = "expected_structured_keep_toc_header_entry.md",
 )
 
+# MARK: - Test with custom TOC header
+
 markdown_generate_toc(
     name = "structured_custom_toc_header",
     srcs = ["structured_custom_toc_header.md"],
@@ -37,4 +43,17 @@ diff_test(
     name = "structured_custom_toc_header_test",
     file1 = ":structured_custom_toc_header",
     file2 = "expected_structured_custom_toc_header.md",
+)
+
+# MARK: - Test with no TOC header
+
+markdown_generate_toc(
+    name = "structured_no_toc_header",
+    srcs = ["structured_no_toc_header.md"],
+)
+
+diff_test(
+    name = "structured_no_toc_header_test",
+    file1 = ":structured_no_toc_header",
+    file2 = "expected_structured_no_toc_header.md",
 )
