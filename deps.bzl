@@ -126,21 +126,6 @@ def bazel_starlib_dependencies(use_prebuilt_buildtools = True):
         urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.1.0/rules_nodejs-5.1.0.tar.gz"],
     )
 
-    # maybe(
-    #     http_archive,
-    #     name = "ekalinin_github_markdown_toc",
-    #     sha256 = "7f6079026a32c03d6e7254e5921b94f6802c2d52c9d74d85a1f8015d864b58d0",
-    #     strip_prefix = "github-markdown-toc-0.8.0",
-    #     urls = ["https://github.com/ekalinin/github-markdown-toc/archive/refs/tags/0.8.0.tar.gz"],
-    #     build_file_content = """\
-    # sh_binary(
-    # name = "gh_md_toc",
-    # srcs = ["gh-md-toc"],
-    # visibility = ["//visibility:public"],
-    # )
-    # """,
-    # )
-
     maybe(
         http_archive,
         name = "io_bazel_rules_go",
