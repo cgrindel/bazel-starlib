@@ -6,7 +6,7 @@ bzlformat_pkg(name = "bzlformat")
 filegroup(
     name = "all_doc_files",
     srcs = [
-        "//:doc_files",
+        "//:markdown_doc_files",
         "//bazeldoc:doc_files",
         "//bzlformat:doc_files",
         "//bzllib:doc_files",

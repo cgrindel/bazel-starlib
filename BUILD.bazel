@@ -31,14 +31,9 @@ package_group(
     ],
 )
 
-filegroup(
-    name = "doc_files",
-    srcs = glob(["*.md"]),
-    visibility = ["//:markdown_test_visibility"],
-)
-
 markdown_pkg(
     name = "markdown",
+    doc_files_visibility = ["//:markdown_test_visibility"],
 )
 
 # MARK: - Integration Tests
