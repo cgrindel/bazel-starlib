@@ -10,18 +10,13 @@ load(
     "//markdown/private:markdown_generate_toc.bzl",
     _markdown_generate_toc = "markdown_generate_toc",
 )
-
-# GH086: Finish markdown_pkg  and markdown_generate_toc implementation.
-
-# load(
-#     "//markdown/private:markdown_pkg.bzl",
-#     _markdown_pkg = "markdown_pkg",
-# )
+load(
+    "//markdown/private:markdown_pkg.bzl",
+    _markdown_pkg = "markdown_pkg",
+)
 
 markdown_check_links_test = _markdown_check_links_test
 markdown_register_node_deps = _markdown_register_node_deps
 
 markdown_generate_toc = _markdown_generate_toc
-
-# GH086: Finish markdown_pkg  and markdown_generate_toc implementation.
-# markdown_pkg = _markdown_pkg
+markdown_pkg = _markdown_pkg
