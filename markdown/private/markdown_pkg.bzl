@@ -2,7 +2,6 @@ load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load("//bzllib:defs.bzl", "src_utils")
 load("//updatesrc:defs.bzl", "updatesrc_update")
 load(":markdown_generate_toc.bzl", "markdown_generate_toc")
-load(":markdown_check_links_test.bzl", "markdown_check_links_test")
 
 def markdown_pkg(
         name = "markdown",
@@ -37,9 +36,4 @@ def markdown_pkg(
         name = name + "_update",
         deps = toc_names,
         visibility = update_visibility,
-    )
-
-    markdown_check_links_test(
-        name = name + "_check_links",
-        srcs = srcs,
     )

@@ -18,9 +18,11 @@ the implementation of Bazel projects.
 
 ## Table of Contents
 
+<!-- MARKDOWN TOC: BEGIN -->
 * [Quickstart](#quickstart)
   * [Workspace Configuration](#workspace-configuration)
 * [Other Documentation](#other-documentation)
+<!-- MARKDOWN TOC: END -->
 
 
 ## Quickstart

@@ -12,7 +12,6 @@ markdown_pkg(
 build_test(
     name = "markdown_pkg_expansion_test",
     targets = [
-        ":markdown_check_links",
         ":markdown_links_md_toc",
         ":markdown_links_md_toctest",
         ":markdown_test_md_toc",
