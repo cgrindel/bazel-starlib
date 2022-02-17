@@ -5,10 +5,7 @@ on:
     branches: [ main, test_main ]
   schedule:
     # Every day at 11:13 UTC.
-    # - cron: '13 11 * * *'
-    # GH108: Temporarily increase frequency of CI.
-    # Every hour
-    - cron: '13 */1 * * *'
+    - cron: '13 11 * * *'
 
 jobs:
   macos_build:
