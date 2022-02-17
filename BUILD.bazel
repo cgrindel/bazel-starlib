@@ -5,8 +5,11 @@ load(
 )
 load("//updatesrc:defs.bzl", "updatesrc_update_all")
 load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
-load("//markdown:defs.bzl", "markdown_pkg")
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
+# GH086: Finish markdown_pkg  and markdown_generate_toc implementation.
+
+# load("//markdown:defs.bzl", "markdown_pkg")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -37,7 +40,7 @@ filegroup(
     visibility = ["//:markdown_test_visibility"],
 )
 
-# TODO: Enable me.
+# GH086: Finish markdown_pkg  and markdown_generate_toc implementation.
 
 # markdown_pkg(
 #     name = "markdown",
