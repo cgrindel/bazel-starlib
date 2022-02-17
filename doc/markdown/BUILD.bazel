@@ -27,8 +27,9 @@ _RULES_AND_MACROS_DOC_PROVIDER = doc_providers.create(
     name = "rules_and_macros_overview",
     stardoc_input = _STARDOC_INPUT,
     symbols = [
-        "markdown_generate_toc",
         "markdown_check_links_test",
+        "markdown_generate_toc",
+        "markdown_pkg",
         "markdown_register_node_deps",
     ],
     deps = _DOC_DEPS,

@@ -6,8 +6,9 @@ files.
 
 On this page:
 
-  * [markdown_generate_toc](#markdown_generate_toc)
   * [markdown_check_links_test](#markdown_check_links_test)
+  * [markdown_generate_toc](#markdown_generate_toc)
+  * [markdown_pkg](#markdown_pkg)
   * [markdown_register_node_deps](#markdown_register_node_deps)
 
 
@@ -55,6 +56,27 @@ markdown_generate_toc(<a href="#markdown_generate_toc-name">name</a>, <a href="#
 | <a id="markdown_generate_toc-remove_toc_header_entry"></a>remove_toc_header_entry |  Specifies whether the header for the TOC should be removed from the TOC.   | Boolean | optional | True |
 | <a id="markdown_generate_toc-srcs"></a>srcs |  The markdown files that will be updated with a table of contents.   | <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a> | required |  |
 | <a id="markdown_generate_toc-toc_header"></a>toc_header |  The header that leads the TOC.   | String | optional | "Table of Contents" |
+
+
+<a id="#markdown_pkg"></a>
+
+## markdown_pkg
+
+<pre>
+markdown_pkg(<a href="#markdown_pkg-name">name</a>, <a href="#markdown_pkg-srcs">srcs</a>, <a href="#markdown_pkg-toc_visibility">toc_visibility</a>, <a href="#markdown_pkg-update_visibility">update_visibility</a>)
+</pre>
+
+
+
+**PARAMETERS**
+
+
+| Name  | Description | Default Value |
+| :------------- | :------------- | :------------- |
+| <a id="markdown_pkg-name"></a>name |  <p align="center"> - </p>   |  <code>"markdown"</code> |
+| <a id="markdown_pkg-srcs"></a>srcs |  <p align="center"> - </p>   |  <code>None</code> |
+| <a id="markdown_pkg-toc_visibility"></a>toc_visibility |  <p align="center"> - </p>   |  <code>None</code> |
+| <a id="markdown_pkg-update_visibility"></a>update_visibility |  <p align="center"> - </p>   |  <code>None</code> |
 
 
 <a id="#markdown_register_node_deps"></a>
