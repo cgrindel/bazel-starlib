@@ -3,6 +3,12 @@ load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 bzlformat_pkg(name = "bzlformat")
 
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)
+
 exports_files([
     "package.json",
     "yarn.lock",
@@ -27,8 +33,23 @@ bzl_library(
     ],
 )
 
-filegroup(
-    name = "all_files",
-    srcs = glob(["*"]),
-    visibility = ["//:__subpackages__"],
+bzl_library(
+    name = "markdown_generate_toc",
+    srcs = ["markdown_generate_toc.bzl"],
+    visibility = ["//markdown:__subpackages__"],
+    deps = [
+        "//updatesrc:defs",
+    ],
+)
+
+bzl_library(
+    name = "markdown_pkg",
+    srcs = ["markdown_pkg.bzl"],
+    visibility = ["//markdown:__subpackages__"],
+    deps = [
+        ":markdown_generate_toc",
+        "//bzllib:defs",
+        "//updatesrc:defs",
+        "@bazel_skylib//rules:diff_test",
+    ],
 )

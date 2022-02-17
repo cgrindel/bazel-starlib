@@ -10,7 +10,6 @@ bzl_library(
     srcs = ["bzlformat_format.bzl"],
     deps = [
         "//updatesrc:defs",
-        "@bazel_skylib//lib:paths",
     ],
 )
 

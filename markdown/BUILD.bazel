@@ -6,6 +6,12 @@ package(default_visibility = ["//visibility:public"])
 bzlformat_pkg(name = "bzlformat")
 
 filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)
+
+filegroup(
     name = "default_markdown_link_check_config",
     srcs = ["default_markdown_link_check_config.json"],
     visibility = ["//visibility:public"],
@@ -29,12 +35,13 @@ bzl_library(
     visibility = ["//visibility:public"],
     deps = [
         "//markdown/private:markdown_check_links_test",
+        "//markdown/private:markdown_generate_toc",
+        "//markdown/private:markdown_pkg",
         "//markdown/private:markdown_register_node_deps",
     ],
 )
 
-filegroup(
-    name = "all_files",
-    srcs = glob(["*"]),
-    visibility = ["//:__subpackages__"],
+bzl_library(
+    name = "deps",
+    srcs = ["deps.bzl"],
 )

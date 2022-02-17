@@ -20,3 +20,27 @@ sh_binary(
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
+
+sh_binary(
+    name = "update_markdown_doc",
+    srcs = ["update_markdown_doc.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//shlib/lib:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_binary(
+    name = "update_markdown_toc",
+    srcs = ["update_markdown_toc.sh"],
+    data = [
+        ":update_markdown_doc",
+        "@ekalinin_github_markdown_toc//:gh_md_toc",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//shlib/lib:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)

@@ -126,6 +126,46 @@ def bazel_starlib_dependencies(use_prebuilt_buildtools = True):
         urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.1.0/rules_nodejs-5.1.0.tar.gz"],
     )
 
+    maybe(
+        http_archive,
+        name = "io_bazel_rules_go",
+        sha256 = "d6b2513456fe2229811da7eb67a444be7785f5323c6708b38d851d2b51e54d83",
+        urls = [
+            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.30.0/rules_go-v0.30.0.zip",
+            "https://github.com/bazelbuild/rules_go/releases/download/v0.30.0/rules_go-v0.30.0.zip",
+        ],
+    )
+
+    maybe(
+        http_archive,
+        name = "bazel_gazelle",
+        sha256 = "de69a09dc70417580aabf20a28619bb3ef60d038470c7cf8442fafcf627c21cb",
+        urls = [
+            "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.24.0/bazel-gazelle-v0.24.0.tar.gz",
+            "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.24.0/bazel-gazelle-v0.24.0.tar.gz",
+        ],
+    )
+
+    maybe(
+        http_archive,
+        name = "ekalinin_github_markdown_toc",
+        sha256 = "6bfeab2b28e5c7ad1d5bee9aa6923882a01f56a7f2d0f260f01acde2111f65af",
+        strip_prefix = "github-markdown-toc.go-1.2.0",
+        urls = ["https://github.com/ekalinin/github-markdown-toc.go/archive/refs/tags/1.2.0.tar.gz"],
+        build_file_content = """\
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_binary(
+    name = "gh_md_toc",
+    srcs = glob(["*.go"], exclude = ["*_test.go"]),
+    deps = [
+        "@in_gopkg_alecthomas_kingpin_v2//:go_default_library",
+    ],
+    visibility = ["//visibility:public"],
+)
+""",
+    )
+
     # Buildifier Deps
 
     if use_prebuilt_buildtools:

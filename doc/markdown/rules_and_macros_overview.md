@@ -6,6 +6,7 @@ files.
 
 On this page:
 
+  * [markdown_generate_toc](#markdown_generate_toc)
   * [markdown_check_links_test](#markdown_check_links_test)
   * [markdown_register_node_deps](#markdown_register_node_deps)
 

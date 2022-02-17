@@ -1,4 +1,3 @@
-load("@bazel_skylib//lib:paths.bzl", "paths")
 load("//updatesrc:defs.bzl", "UpdateSrcsInfo", "update_srcs")
 
 def _bzlformat_format_impl(ctx):
