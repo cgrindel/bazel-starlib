@@ -67,6 +67,9 @@ markdown_pkg(<a href="#markdown_pkg-name">name</a>, <a href="#markdown_pkg-srcs"
              <a href="#markdown_pkg-additional_doc_files">additional_doc_files</a>)
 </pre>
 
+Adds targets to maintain markdown files in the package.
+
+This macro adds targets to generate a table of contents (TOC) for markdown     files (`markdown_generate_toc`), adds `diff_test` targets to confirm that     the markdown files are up-to-date with the latest TOC, adds a target to     update the markdown files with the generated files (`updatesrc_update`)     and defines a `filegroup` that is useful to collecting documentation files     for confirming that a markdown files links are valid     (`markdown_check_links_test`)
 
 
 **PARAMETERS**
@@ -74,13 +77,13 @@ markdown_pkg(<a href="#markdown_pkg-name">name</a>, <a href="#markdown_pkg-srcs"
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="markdown_pkg-name"></a>name |  <p align="center"> - </p>   |  <code>"markdown"</code> |
-| <a id="markdown_pkg-srcs"></a>srcs |  <p align="center"> - </p>   |  <code>None</code> |
-| <a id="markdown_pkg-toc_visibility"></a>toc_visibility |  <p align="center"> - </p>   |  <code>None</code> |
-| <a id="markdown_pkg-update_visibility"></a>update_visibility |  <p align="center"> - </p>   |  <code>None</code> |
-| <a id="markdown_pkg-define_doc_files"></a>define_doc_files |  <p align="center"> - </p>   |  <code>True</code> |
-| <a id="markdown_pkg-doc_files_visibility"></a>doc_files_visibility |  <p align="center"> - </p>   |  <code>["@//:__subpackages__"]</code> |
-| <a id="markdown_pkg-additional_doc_files"></a>additional_doc_files |  <p align="center"> - </p>   |  <code>[]</code> |
+| <a id="markdown_pkg-name"></a>name |  A prefix <code>string</code> that will be added to all of the targets defined by this macro.   |  <code>"markdown"</code> |
+| <a id="markdown_pkg-srcs"></a>srcs |  Optional. The markdown sources to be used by the macro. If none are specified, all of the <code>.md</code> and <code>.markdown</code> files are used.   |  <code>None</code> |
+| <a id="markdown_pkg-toc_visibility"></a>toc_visibility |  Optional. The visibility for the TOC generation targets.   |  <code>None</code> |
+| <a id="markdown_pkg-update_visibility"></a>update_visibility |  Optional. The visibility for the update target.   |  <code>None</code> |
+| <a id="markdown_pkg-define_doc_files"></a>define_doc_files |  Optional. A <code>bool</code> that specifies whether to define a <code>filegroup</code> that can be used for documentation validity tests.   |  <code>True</code> |
+| <a id="markdown_pkg-doc_files_visibility"></a>doc_files_visibility |  Optional. The visibility for the documentation <code>filegroup</code> target.   |  <code>["@//:__subpackages__"]</code> |
+| <a id="markdown_pkg-additional_doc_files"></a>additional_doc_files |  Optional. Additional files that should be included in the documentation <code>filegroup</code>.   |  <code>[]</code> |
 
 
 <a id="#markdown_register_node_deps"></a>
