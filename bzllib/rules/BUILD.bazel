@@ -15,8 +15,8 @@ bzl_library(
     name = "defs",
     srcs = ["defs.bzl"],
     deps = [
-        "//bzllib/private:filter_srcs",
-        "//bzllib/private:src_utils",
+        "//bzllib/rules/private:filter_srcs",
+        "//bzllib/rules/private:src_utils",
     ],
 )
 

@@ -1,7 +1,7 @@
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
-load("//bzllib:defs.bzl", "filter_srcs")
+load("//bzllib/rules:defs.bzl", "filter_srcs")
 load("//bzlformat:defs.bzl", "bzlformat_format")
 load(
     "@cgrindel_rules_bazel_integration_test//bazel_integration_test:defs.bzl",

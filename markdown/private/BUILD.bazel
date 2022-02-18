@@ -19,7 +19,7 @@ bzl_library(
     srcs = ["markdown_check_links_test.bzl"],
     visibility = ["//markdown:__subpackages__"],
     deps = [
-        "//bzllib:defs",
+        "//bzllib/rules:defs",
         "@bazel_skylib//lib:shell",
     ],
 )
@@ -48,7 +48,7 @@ bzl_library(
     visibility = ["//markdown:__subpackages__"],
     deps = [
         ":markdown_generate_toc",
-        "//bzllib:defs",
+        "//bzllib/rules:defs",
         "//updatesrc:defs",
         "@bazel_skylib//rules:diff_test",
     ],
