@@ -9,7 +9,7 @@ filegroup(
         "//:markdown_doc_files",
         "//bazeldoc:doc_files",
         "//bzlformat:doc_files",
-        "//bzllib:doc_files",
+        "//bzllib/rules:doc_files",
         "//bzlrelease:doc_files",
         "//doc:doc_files",
         "//doc/bazeldoc:doc_files",

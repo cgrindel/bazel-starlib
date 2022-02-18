@@ -1,4 +1,4 @@
-load("//bzllib:defs.bzl", "src_utils")
+load("//bzllib/rules:defs.bzl", "src_utils")
 load("@bazel_skylib//lib:shell.bzl", "shell")
 
 def _markdown_check_links_test_impl(ctx):

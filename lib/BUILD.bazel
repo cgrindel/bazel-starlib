@@ -7,6 +7,6 @@ bzl_library(
     name = "src_utils",
     srcs = ["src_utils.bzl"],
     deps = [
-        "//bzllib:defs",
+        "//bzllib/rules:defs",
     ],
 )
