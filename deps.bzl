@@ -172,10 +172,10 @@ go_binary(
         maybe(
             http_archive,
             name = "buildifier_prebuilt",
-            sha256 = "49b7edf3490c13eae5b4b8aa98ed051fdd4f1b8dd60276d818e4f559614bf083",
-            strip_prefix = "buildifier-prebuilt-0.2.0",
+            sha256 = "ee172ca10ffd39d2d6d1cc67ab5b7b4804fa000bc92211be111f05825766806c",
+            strip_prefix = "buildifier-prebuilt-0.3.1",
             urls = [
-                "http://github.com/keith/buildifier-prebuilt/archive/0.2.0.tar.gz",
+                "http://github.com/keith/buildifier-prebuilt/archive/0.3.1.tar.gz",
             ],
         )
         buildozer_target = "@buildifier_prebuilt//buildozer"
@@ -216,10 +216,10 @@ go_binary(
         maybe(
             http_archive,
             name = "com_github_bazelbuild_buildtools",
-            sha256 = "ae34c344514e08c23e90da0e2d6cb700fcd28e80c02e23e4d5715dddcb42f7b3",
-            strip_prefix = "buildtools-4.2.2",
+            sha256 = "7f43df3cca7bb4ea443b4159edd7a204c8d771890a69a50a190dc9543760ca21",
+            strip_prefix = "buildtools-5.0.1",
             urls = [
-                "https://github.com/bazelbuild/buildtools/archive/refs/tags/4.2.2.tar.gz",
+                "https://github.com/bazelbuild/buildtools/archive/refs/tags/5.0.1.tar.gz",
             ],
         )
 
