@@ -38,7 +38,6 @@ lint_modes=( off warn fix )
 lint_mode="off"
 
 warnings="all"
-fail_on_lint_warnings=true
 
 # TODO: Update usage.
 
@@ -71,10 +70,6 @@ while (("$#")); do
     "--warnings")
       warnings="${2}"
       shift 2
-      ;;
-    "--no_fail_on_lint_warnings")
-      fail_on_lint_warnings=false
-      shift 1
       ;;
     --*)
       usage_error "Unexpected option. ${1}"
