@@ -29,18 +29,23 @@ buildifier_sh="$(rlocation "${buildifier_sh_location}")" || \
 out_path=result.bzl
 bzl_path=foo.bzl
 
-# MARK - Test With Defaults (format: fix, lint: off)
-
-# TODO: Add unsorted load statement
-
 cat >"${bzl_path}" <<-'EOF'
+load("@zzz//:deps.bzl", "go_rules_dependencies")
+load("@aaaa//:deps.bzl", "gazelle_dependencies")
+
 FOO_LIST = [
 "first",
 "second"
 ]
 EOF
 
+
+# MARK - Test With Defaults (format: fix, lint: off)
+
 expected="$(cat <<-'EOF'
+load("@zzz//:deps.bzl", "go_rules_dependencies")
+load("@aaaa//:deps.bzl", "gazelle_dependencies")
+
 FOO_LIST = [
     "first",
     "second",
@@ -55,16 +60,10 @@ assert_equal "${expected}" "${actual}" "With defaults"
 
 # MARK - Test Format
 
-# TODO: Add unsorted load statement
-
-cat >"${bzl_path}" <<-'EOF'
-FOO_LIST = [
-"first",
-"second"
-]
-EOF
-
 expected="$(cat <<-'EOF'
+load("@zzz//:deps.bzl", "go_rules_dependencies")
+load("@aaaa//:deps.bzl", "gazelle_dependencies")
+
 FOO_LIST = [
     "first",
     "second",
