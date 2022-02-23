@@ -101,17 +101,17 @@ exec_buildifier() {
 
 cat_cmd=( cat "${bzl_path}" ) 
 
-lint_cmd=( exec_buildifier "${bzl_path}" "--warnings=${warnings}" )
+buildifier_cmd=( exec_buildifier "${bzl_path}" "--warnings=${warnings}" )
 case "${lint_mode}" in
   "fix")
-    lint_cmd+=( "--lint=fix" )
+    buildifier_cmd+=( "--lint=fix" )
     ;;
   "warn")
-    lint_cmd+=( "--lint=warn" )
+    buildifier_cmd+=( "--lint=warn" )
     ;;
   "off")
-    lint_cmd+=( "--lint=off" )
+    buildifier_cmd+=( "--lint=off" )
     ;;
 esac
 
-"${cat_cmd[@]}" | "${lint_cmd[@]}" > "${out_path}"
+"${cat_cmd[@]}" | "${buildifier_cmd[@]}" > "${out_path}"
