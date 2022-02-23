@@ -7,10 +7,11 @@ def _bzlformat_format_impl(ctx):
         updsrcs.append(update_srcs.create(src = src, out = out))
 
         args = ctx.actions.args()
-        args.add_all([
-            src,
-            out,
-        ])
+        lint_mode = "fix" if ctx.attr.fix_lint_warnings else "off"
+        args.add_all(["--lint_mode", lint_mode])
+        args.add_all(["--warnings", ctx.attr.warnings])
+        args.add_all([src, out])
+
         ctx.actions.run(
             outputs = [out],
             inputs = [src],
@@ -26,14 +27,22 @@ def _bzlformat_format_impl(ctx):
 bzlformat_format = rule(
     implementation = _bzlformat_format_impl,
     attrs = {
+        "fix_lint_warnings": attr.bool(
+            default = True,
+            doc = "Should lint warnings be fixed, if possible.",
+        ),
+        "output_suffix": attr.string(
+            default = ".formatted",
+            doc = "The suffix added to the formatted output filename.",
+        ),
         "srcs": attr.label_list(
             allow_files = True,
             mandatory = True,
             doc = "The Starlark source files to format.",
         ),
-        "output_suffix": attr.string(
-            default = ".formatted",
-            doc = "The suffix added to the formatted output filename.",
+        "warnings": attr.string(
+            doc = "The warnings that should be fixed if lint fix is enabled.",
+            default = "all",
         ),
         "_buildifier": attr.label(
             default = "//bzlformat/tools:buildifier",
