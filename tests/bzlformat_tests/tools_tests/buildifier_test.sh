@@ -158,5 +158,7 @@ actual="$(< "${out_path}")"
 assert_equal "${expected}" "${actual}" "Format and lint (warn) with good file."
 
 
+# MARK - Test Help
 
-
+output="$( "${buildifier_sh}" --help )"
+assert_match "Executes buildifier for a Starlark file" "${output}" "Confirm help output."

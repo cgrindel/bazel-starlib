@@ -39,19 +39,19 @@ lint_mode="off"
 
 warnings="all"
 
-# TODO: Update usage.
-
 get_usage() {
   local utility="$(basename "${BASH_SOURCE[0]}")"
   echo "$(cat <<-EOF
-One line description of the utility.
+Executes buildifier for a Starlark file and writes the resulting output to a file.
 
 Usage:
-${utility} --flag <flag_value> [OPTION]... <arg0>
+${utility} [OPTION]... <input> <output>
 
 Options:
-  --flag <flag_value>  Describe flag
-  <arg0>               Describe arg0
+  --lint_mode <lint_mode>  The buildifier lint mode: $( join_by ", " "${lint_modes[@]}" ) (default: ${lint_mode})
+  --warnings <warnings>    A comma-separated warnings used in the lint mode or "all" (default: ${warnings})
+  <input>                  A path to a Starlark file
+  <output>                 A path where to write the output from buildifier
 EOF
   )"
 }
