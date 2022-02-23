@@ -29,16 +29,33 @@ buildifier_sh="$(rlocation "${buildifier_sh_location}")" || \
 out_path=result.bzl
 bzl_path=foo.bzl
 
+# MARK - Test With Defaults (format: fix, lint: off)
+
+# TODO: Add unsorted load statement
+
+cat >"${bzl_path}" <<-'EOF'
+FOO_LIST = [
+"first",
+"second"
+]
+EOF
+
+expected="$(cat <<-'EOF'
+FOO_LIST = [
+    "first",
+    "second",
+]
+EOF
+)"
+
+"${buildifier_sh}" "${bzl_path}" "${out_path}"
+actual="$(< "${out_path}")"
+assert_equal "${expected}" "${actual}" "With defaults"
+
 
 # MARK - Test Format
 
-# bzl_content="$(cat <<-'EOF'
-# FOO_LIST = [
-# "first",
-# "second"
-# ]
-# EOF
-# )"
+# TODO: Add unsorted load statement
 
 cat >"${bzl_path}" <<-'EOF'
 FOO_LIST = [
