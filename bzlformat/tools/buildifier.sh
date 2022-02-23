@@ -62,7 +62,6 @@ EOF
   )"
 }
 
-
 args=()
 while (("$#")); do
   case "${1}" in
@@ -101,4 +100,41 @@ contains_item "${lint_mode}" "${lint_modes[@]}" || \
 
 # MARK - Execute Buildifier
 
-cat "${bzl_path}" | "${buildifier}" "--path=${bzl_path}" > "${out_path}"
+# cat "${bzl_path}" | "${buildifier}" "--path=${bzl_path}" > "${out_path}"
+
+exec_buildifier() {
+  local bzl_path="${1}"
+  shift 1
+  local buildifier_cmd=( "${buildifier}" "--path=${bzl_path}" )
+  [[ ${#} > 0 ]] && buildifier_cmd+=( "${@}" )
+  # cat "${bzl_path}" | "${buildifier_cmd[@]}"
+  "${buildifier_cmd[@]}"
+}
+
+cat_cmd=( cat "${bzl_path}" ) 
+
+format_cmd=()
+if [[ "${format_mode}" == fix ]]; then
+  format_cmd+=( exec_buildifier "${bzl_path}" )
+fi
+
+lint_cmd=()
+case "${lint_mode}" in
+  "fix")
+    lint_cmd=( exec_buildifier "${bzl_path}" "--lint=fix" )
+    ;;
+  "warn")
+    lint_cmd=( exec_buildifier "${bzl_path}" "--lint=warn" )
+    ;;
+esac
+
+
+if [[ ${#format_cmd[@]} > 0 && ${#lint_cmd[@]} > 0 ]]; then
+  "${cat_cmd[@]}" | "${format_cmd[@]}" | "${lint_cmd[@]}" > "${out_path}"
+elif [[ ${#format_cmd[@]} > 0 ]]; then
+  "${cat_cmd[@]}" | "${format_cmd[@]}" > "${out_path}"
+elif [[ ${#lint_cmd[@]} > 0 ]]; then
+  "${cat_cmd[@]}" | "${lint_cmd[@]}" > "${out_path}"
+else
+  "${tat_cmd[@]}" > "${out_path}"
+fi
