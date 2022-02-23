@@ -7,7 +7,11 @@ sh_binary(
     srcs = ["buildifier.sh"],
     data = ["@bazel_starlib_buildtools//:buildifier"],
     visibility = ["//visibility:public"],
-    deps = ["@bazel_tools//tools/bash/runfiles"],
+    deps = [
+        "//shlib/lib:arrays",
+        "//shlib/lib:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
 )
 
 bzlformat_pkg(name = "bzlformat")

@@ -1,4 +1,3 @@
-load("//bzllib/rules:defs.bzl", "src_utils")
 load("@bazel_skylib//lib:shell.bzl", "shell")
 
 def _markdown_check_links_test_impl(ctx):
@@ -77,13 +76,6 @@ markdown_check_links_test = rule(
     implementation = _markdown_check_links_test_impl,
     test = True,
     attrs = {
-        "srcs": attr.label_list(
-            allow_files = [".md", ".markdown"],
-            doc = """\
-The markdown files that should be checked. If no srcs are provided, all of \
-the markdown files (.md, .markdown) in the `data` will be checked.\
-""",
-        ),
         "config": attr.label(
             allow_single_file = True,
             doc = "A `markdown-link-check` JSON configuration file.",
@@ -95,10 +87,9 @@ the markdown files (.md, .markdown) in the `data` will be checked.\
 Any data files that need to be present for the link check to succeed.\
 """,
         ),
-        "verbose": attr.bool(
-            doc = """\
-If set to true, the markdown-link-check will be configured for verbose output.\
-""",
+        "max_econnreset_retry_count": attr.int(
+            default = 3,
+            doc = "The maximum number of times to retry on an ECONNRESET error.",
         ),
         "quiet": attr.bool(
             default = True,
@@ -107,9 +98,17 @@ If set to true, the markdown-link-check will be configured to only display \
 errors.\
 """,
         ),
-        "max_econnreset_retry_count": attr.int(
-            default = 3,
-            doc = "The maximum number of times to retry on an ECONNRESET error.",
+        "srcs": attr.label_list(
+            allow_files = [".md", ".markdown"],
+            doc = """\
+The markdown files that should be checked. If no srcs are provided, all of \
+the markdown files (.md, .markdown) in the `data` will be checked.\
+""",
+        ),
+        "verbose": attr.bool(
+            doc = """\
+If set to true, the markdown-link-check will be configured for verbose output.\
+""",
         ),
         "_link_checker": attr.label(
             default = "@cgrindel_bazel_starlib//markdown/tools:check_links",

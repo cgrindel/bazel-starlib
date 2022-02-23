@@ -23,17 +23,17 @@ def _filter_srcs_impl(ctx):
 filter_srcs = rule(
     implementation = _filter_srcs_impl,
     attrs = {
-        "srcs": attr.label_list(
-            allow_files = True,
-            mandatory = True,
-            doc = "The inputs that will be evaluated by the filter.",
+        "expected_count": attr.int(
+            default = -1,
+            doc = "The expected number of results.",
         ),
         "filename_ends_with": attr.string(
             doc = "The suffix of the path will be compared to this value.",
         ),
-        "expected_count": attr.int(
-            default = -1,
-            doc = "The expected number of results.",
+        "srcs": attr.label_list(
+            allow_files = True,
+            mandatory = True,
+            doc = "The inputs that will be evaluated by the filter.",
         ),
     },
     doc = "Filters the provided inputs using the specified criteria.",

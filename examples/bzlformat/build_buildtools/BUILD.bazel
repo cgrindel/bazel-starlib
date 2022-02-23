@@ -1,11 +1,11 @@
 load(
-    "@cgrindel_bazel_starlib//updatesrc:defs.bzl",
-    "updatesrc_update_all",
-)
-load(
     "@cgrindel_bazel_starlib//bzlformat:defs.bzl",
     "bzlformat_missing_pkgs",
     "bzlformat_pkg",
+)
+load(
+    "@cgrindel_bazel_starlib//updatesrc:defs.bzl",
+    "updatesrc_update_all",
 )
 
 # Ensures that the Starlark files in this package are formatted properly.

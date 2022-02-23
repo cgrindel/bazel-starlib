@@ -1,4 +1,8 @@
 load(
+    "//bzlrelease/private:create_release.bzl",
+    _create_release = "create_release",
+)
+load(
     "//bzlrelease/private:generate_release_notes.bzl",
     _generate_release_notes = "generate_release_notes",
 )
@@ -10,10 +14,6 @@ load("//bzlrelease/private:hash_sha256.bzl", _hash_sha256 = "hash_sha256")
 load(
     "//bzlrelease/private:update_readme.bzl",
     _update_readme = "update_readme",
-)
-load(
-    "//bzlrelease/private:create_release.bzl",
-    _create_release = "create_release",
 )
 
 create_release = _create_release

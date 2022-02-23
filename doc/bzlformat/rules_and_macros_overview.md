@@ -16,7 +16,7 @@ On this page:
 ## bzlformat_format
 
 <pre>
-bzlformat_format(<a href="#bzlformat_format-name">name</a>, <a href="#bzlformat_format-output_suffix">output_suffix</a>, <a href="#bzlformat_format-srcs">srcs</a>)
+bzlformat_format(<a href="#bzlformat_format-name">name</a>, <a href="#bzlformat_format-fix_lint_warnings">fix_lint_warnings</a>, <a href="#bzlformat_format-output_suffix">output_suffix</a>, <a href="#bzlformat_format-srcs">srcs</a>, <a href="#bzlformat_format-warnings">warnings</a>)
 </pre>
 
 Formats Starlark source files using Buildifier.
@@ -27,8 +27,10 @@ Formats Starlark source files using Buildifier.
 | Name  | Description | Type | Mandatory | Default |
 | :------------- | :------------- | :------------- | :------------- | :------------- |
 | <a id="bzlformat_format-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/docs/build-ref.html#name">Name</a> | required |  |
+| <a id="bzlformat_format-fix_lint_warnings"></a>fix_lint_warnings |  Should lint warnings be fixed, if possible.   | Boolean | optional | True |
 | <a id="bzlformat_format-output_suffix"></a>output_suffix |  The suffix added to the formatted output filename.   | String | optional | ".formatted" |
 | <a id="bzlformat_format-srcs"></a>srcs |  The Starlark source files to format.   | <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a> | required |  |
+| <a id="bzlformat_format-warnings"></a>warnings |  The warnings that should be fixed if lint fix is enabled.   | String | optional | "all" |
 
 
 <a id="#bzlformat_missing_pkgs"></a>

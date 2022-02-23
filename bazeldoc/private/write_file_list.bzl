@@ -1,5 +1,5 @@
-load(":write_doc.bzl", "write_doc")
 load(":doc_utilities.bzl", "doc_utilities")
+load(":write_doc.bzl", "write_doc")
 
 def write_file_list(
         name,

@@ -6,7 +6,6 @@ load(
     "generate_workspace_snippet",
     "update_readme",
 )
-load("//shlib/rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 
 bzlformat_pkg(name = "bzlformat")
 

@@ -1,5 +1,5 @@
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
-load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
+load("//tests:integration_test_common.bzl", "INTEGRATION_TEST_TAGS")
 
 bzlformat_pkg(name = "bzlformat")
 

@@ -34,12 +34,9 @@ def _markdown_generate_toc_impl(ctx):
 markdown_generate_toc = rule(
     implementation = _markdown_generate_toc_impl,
     attrs = {
-        "srcs": attr.label_list(
-            mandatory = True,
-            allow_files = [".md", ".markdown"],
-            doc = """\
-The markdown files that will be updated with a table of contents.\
-""",
+        "output_suffix": attr.string(
+            default = ".toc_updated",
+            doc = "The suffix added to the output file with the updated TOC.",
         ),
         "remove_toc_header_entry": attr.bool(
             default = True,
@@ -47,13 +44,16 @@ The markdown files that will be updated with a table of contents.\
 Specifies whether the header for the TOC should be removed from the TOC.\
 """,
         ),
+        "srcs": attr.label_list(
+            mandatory = True,
+            allow_files = [".md", ".markdown"],
+            doc = """\
+The markdown files that will be updated with a table of contents.\
+""",
+        ),
         "toc_header": attr.string(
             default = "Table of Contents",
             doc = "The header that leads the TOC.",
-        ),
-        "output_suffix": attr.string(
-            default = ".toc_updated",
-            doc = "The suffix added to the output file with the updated TOC.",
         ),
         "_toc_generator": attr.label(
             default = "@cgrindel_bazel_starlib//markdown/tools:update_markdown_toc",

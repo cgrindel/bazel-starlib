@@ -69,19 +69,19 @@ sh_binary(
 bazel_starlib_buildtools = repository_rule(
     implementation = _bazel_starlib_buildtools,
     attrs = {
-        "buildifier_target": attr.string(
-            mandatory = True,
-            doc = "The `buildifier` target.",
-        ),
         "buildifier_location": attr.string(
             mandatory = True,
             doc = "The `buildifier` location in runfiles.",
         ),
-        "buildozer_target": attr.string(
+        "buildifier_target": attr.string(
+            mandatory = True,
+            doc = "The `buildifier` target.",
+        ),
+        "buildozer_location": attr.string(
             mandatory = True,
             doc = "The `buildozer` target.",
         ),
-        "buildozer_location": attr.string(
+        "buildozer_target": attr.string(
             mandatory = True,
             doc = "The `buildozer` target.",
         ),
