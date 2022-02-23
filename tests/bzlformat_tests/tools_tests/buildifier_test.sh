@@ -27,53 +27,137 @@ buildifier_sh="$(rlocation "${buildifier_sh_location}")" || \
 # MARK - Constants
 
 out_path=result.bzl
-bzl_path=foo.bzl
+bad_bzl_path=bad.bzl
+good_bzl_path=good.bzl
+dep_a_path=aaa.bzl
+dep_z_path=zzz.bzl
 
-cat >"${bzl_path}" <<-'EOF'
-load("@zzz//:deps.bzl", "go_rules_dependencies")
-load("@aaaa//:deps.bzl", "gazelle_dependencies")
+cat >"${dep_a_path}" <<-'EOF'
+AAA_LIST = []
+EOF
+
+cat >"${dep_z_path}" <<-'EOF'
+ZZZ_LIST = []
+EOF
+
+
+cat >"${bad_bzl_path}" <<-'EOF'
+load(":zzz.bzl", "ZZZ_LIST")
+load(":aaa.bzl", "AAA_LIST")
 
 FOO_LIST = [
 "first",
 "second"
-]
+] + AAA_LIST + ZZZ_LIST
 EOF
 
 
-# MARK - Test With Defaults (format: fix, lint: off)
+# MARK - Test With Defaults 
 
 expected="$(cat <<-'EOF'
-load("@zzz//:deps.bzl", "go_rules_dependencies")
-load("@aaaa//:deps.bzl", "gazelle_dependencies")
+load(":zzz.bzl", "ZZZ_LIST")
+load(":aaa.bzl", "AAA_LIST")
 
 FOO_LIST = [
     "first",
     "second",
-]
+] + AAA_LIST + ZZZ_LIST
 EOF
 )"
 
-"${buildifier_sh}" "${bzl_path}" "${out_path}"
+"${buildifier_sh}" "${bad_bzl_path}" "${out_path}"
 actual="$(< "${out_path}")"
 assert_equal "${expected}" "${actual}" "With defaults"
 
 
-# MARK - Test Format
+# MARK - Test Format Only (lint: off)
 
 expected="$(cat <<-'EOF'
-load("@zzz//:deps.bzl", "go_rules_dependencies")
-load("@aaaa//:deps.bzl", "gazelle_dependencies")
+load(":zzz.bzl", "ZZZ_LIST")
+load(":aaa.bzl", "AAA_LIST")
 
 FOO_LIST = [
     "first",
     "second",
-]
+] + AAA_LIST + ZZZ_LIST
 EOF
 )"
 
-"${buildifier_sh}" --format_mode fix --lint_mode off "${bzl_path}" "${out_path}"
+"${buildifier_sh}" --lint_mode off "${bad_bzl_path}" "${out_path}"
 actual="$(< "${out_path}")"
-assert_equal "${expected}" "${actual}" "Format fix, lint off."
+assert_equal "${expected}" "${actual}" "Format only."
+
+
+# MARK - Test Lint Fix (lint: fix)
+
+expected="$(cat <<-'EOF'
+load(":aaa.bzl", "AAA_LIST")
+load(":zzz.bzl", "ZZZ_LIST")
+
+FOO_LIST = [
+    "first",
+    "second",
+] + AAA_LIST + ZZZ_LIST
+EOF
+)"
+
+"${buildifier_sh}" --lint_mode fix "${bad_bzl_path}" "${out_path}"
+actual="$(< "${out_path}")"
+assert_equal "${expected}" "${actual}" "Format and lint fix."
+
+
+# MARK - Test Lint Warn (lint: warn) With Bad File
+
+expected="$(cat <<-'EOF'
+load(":zzz.bzl", "ZZZ_LIST")
+load(":aaa.bzl", "AAA_LIST")
+
+FOO_LIST = [
+    "first",
+    "second",
+] + AAA_LIST + ZZZ_LIST
+EOF
+)"
+
+exit_code=0
+"${buildifier_sh}" --lint_mode warn "${bad_bzl_path}" "${out_path}" || exit_code=$?
+assert_equal 4 ${exit_code} "Expected check mode failure (4)."
+actual="$(< "${out_path}")"
+assert_equal "${expected}" "${actual}" "Format and lint (warn) with bad file."
+
+
+# MARK - Test Lint Warn (lint: warn) With Good File
+
+cat >"${good_bzl_path}" <<-'EOF'
+"""Module doc comment."""
+
+load(":aaa.bzl", "AAA_LIST")
+load(":zzz.bzl", "ZZZ_LIST")
+
+FOO_LIST = [
+    "first",
+    "second",
+] + AAA_LIST + ZZZ_LIST
+EOF
+
+expected="$(cat <<-'EOF'
+"""Module doc comment."""
+
+load(":aaa.bzl", "AAA_LIST")
+load(":zzz.bzl", "ZZZ_LIST")
+
+FOO_LIST = [
+    "first",
+    "second",
+] + AAA_LIST + ZZZ_LIST
+EOF
+)"
+
+"${buildifier_sh}" --lint_mode warn "${good_bzl_path}" "${out_path}"
+actual="$(< "${out_path}")"
+assert_equal "${expected}" "${actual}" "Format and lint (warn) with good file."
+
+
 
 
 # DEBUG BEGIN

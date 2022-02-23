@@ -30,11 +30,11 @@ buildifier="$(rlocation "${buildifier_location}")" || \
 
 # MARK - Process Args
 
-# Format Mode
-# off - Do not format
-# fix - Format the file.
-format_modes=( off fix )
-format_mode="fix"
+# # Format Mode
+# # off - Do not format
+# # fix - Format the file.
+# format_modes=( off fix )
+# format_mode="fix"
 
 # Lint Mode
 # off - Do not lint
@@ -43,6 +43,7 @@ format_mode="fix"
 lint_modes=( off warn fix )
 lint_mode="off"
 
+warnings="all"
 fail_on_lint_warnings=true
 
 # TODO: Update usage.
@@ -69,17 +70,24 @@ while (("$#")); do
       show_usage
       exit 0
       ;;
-    "--format_mode")
-      format_mode="${2}"
-      shift 2
-      ;;
+    # "--format_mode")
+    #   format_mode="${2}"
+    #   shift 2
+    #   ;;
     "--lint_mode")
       lint_mode="${2}"
+      shift 2
+      ;;
+    "--warnings")
+      warnings="${2}"
       shift 2
       ;;
     "--no_fail_on_lint_warnings")
       fail_on_lint_warnings=false
       shift 1
+      ;;
+    --*)
+      usage_error "Unexpected option. ${1}"
       ;;
     *)
       args+=("${1}")
@@ -92,8 +100,9 @@ done
 bzl_path="${args[0]}"
 out_path="${args[1]}"
 
-contains_item "${format_mode}" "${format_modes[@]}" || \
-  usage_error "Invalid format_mode (${format_mode}). Expected to be one of the following: $( join_by ", " "${format_modes[@]}" )."
+# contains_item "${format_mode}" "${format_modes[@]}" || \
+#   usage_error "Invalid format_mode (${format_mode}). Expected to be one of the following: $( join_by ", " "${format_modes[@]}" )."
+
 contains_item "${lint_mode}" "${lint_modes[@]}" || \
   usage_error "Invalid lint_mode (${lint_mode}). Expected to be one of the following: $( join_by ", " "${lint_modes[@]}" )."
 
@@ -107,34 +116,51 @@ exec_buildifier() {
   shift 1
   local buildifier_cmd=( "${buildifier}" "--path=${bzl_path}" )
   [[ ${#} > 0 ]] && buildifier_cmd+=( "${@}" )
-  # cat "${bzl_path}" | "${buildifier_cmd[@]}"
   "${buildifier_cmd[@]}"
 }
 
 cat_cmd=( cat "${bzl_path}" ) 
 
-format_cmd=()
-if [[ "${format_mode}" == fix ]]; then
-  format_cmd+=( exec_buildifier "${bzl_path}" )
-fi
+# format_cmd=()
+# if [[ "${format_mode}" == fix ]]; then
+#   format_cmd+=( exec_buildifier "${bzl_path}" )
+# fi
 
-lint_cmd=()
+lint_cmd=( exec_buildifier "${bzl_path}" "--warnings=${warnings}" )
 case "${lint_mode}" in
   "fix")
-    lint_cmd=( exec_buildifier "${bzl_path}" "--lint=fix" )
+    lint_cmd+=( "--lint=fix" )
     ;;
   "warn")
-    lint_cmd=( exec_buildifier "${bzl_path}" "--lint=warn" )
+    lint_cmd+=( "--lint=warn" )
+    ;;
+  "off")
+    lint_cmd+=( "--lint=off" )
     ;;
 esac
 
 
-if [[ ${#format_cmd[@]} > 0 && ${#lint_cmd[@]} > 0 ]]; then
-  "${cat_cmd[@]}" | "${format_cmd[@]}" | "${lint_cmd[@]}" > "${out_path}"
-elif [[ ${#format_cmd[@]} > 0 ]]; then
-  "${cat_cmd[@]}" | "${format_cmd[@]}" > "${out_path}"
-elif [[ ${#lint_cmd[@]} > 0 ]]; then
-  "${cat_cmd[@]}" | "${lint_cmd[@]}" > "${out_path}"
-else
-  "${tat_cmd[@]}" > "${out_path}"
-fi
+"${cat_cmd[@]}" | "${lint_cmd[@]}" > "${out_path}"
+
+
+# if [[ ${#format_cmd[@]} > 0 && ${#lint_cmd[@]} > 0 ]]; then
+#   # DEBUG BEGIN
+#   echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") FORMAT AND LINT" 
+#   # DEBUG END
+#   "${cat_cmd[@]}" | "${format_cmd[@]}" | "${lint_cmd[@]}" > "${out_path}"
+# elif [[ ${#format_cmd[@]} > 0 ]]; then
+#   # DEBUG BEGIN
+#   echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") FORMAT ONLY" 
+#   # DEBUG END
+#   "${cat_cmd[@]}" | "${format_cmd[@]}" > "${out_path}"
+# elif [[ ${#lint_cmd[@]} > 0 ]]; then
+#   # DEBUG BEGIN
+#   echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") LINT ONLY" 
+#   # DEBUG END
+#   "${cat_cmd[@]}" | "${lint_cmd[@]}" > "${out_path}"
+# else
+#   # DEBUG BEGIN
+#   echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") CAT ONLY" 
+#   # DEBUG END
+#   "${cat_cmd[@]}" > "${out_path}"
+# fi
