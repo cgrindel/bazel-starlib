@@ -30,12 +30,6 @@ buildifier="$(rlocation "${buildifier_location}")" || \
 
 # MARK - Process Args
 
-# # Format Mode
-# # off - Do not format
-# # fix - Format the file.
-# format_modes=( off fix )
-# format_mode="fix"
-
 # Lint Mode
 # off - Do not lint
 # warn - Report lint issues.
@@ -70,10 +64,6 @@ while (("$#")); do
       show_usage
       exit 0
       ;;
-    # "--format_mode")
-    #   format_mode="${2}"
-    #   shift 2
-    #   ;;
     "--lint_mode")
       lint_mode="${2}"
       shift 2
@@ -100,16 +90,11 @@ done
 bzl_path="${args[0]}"
 out_path="${args[1]}"
 
-# contains_item "${format_mode}" "${format_modes[@]}" || \
-#   usage_error "Invalid format_mode (${format_mode}). Expected to be one of the following: $( join_by ", " "${format_modes[@]}" )."
-
 contains_item "${lint_mode}" "${lint_modes[@]}" || \
   usage_error "Invalid lint_mode (${lint_mode}). Expected to be one of the following: $( join_by ", " "${lint_modes[@]}" )."
 
 
 # MARK - Execute Buildifier
-
-# cat "${bzl_path}" | "${buildifier}" "--path=${bzl_path}" > "${out_path}"
 
 exec_buildifier() {
   local bzl_path="${1}"
@@ -120,11 +105,6 @@ exec_buildifier() {
 }
 
 cat_cmd=( cat "${bzl_path}" ) 
-
-# format_cmd=()
-# if [[ "${format_mode}" == fix ]]; then
-#   format_cmd+=( exec_buildifier "${bzl_path}" )
-# fi
 
 lint_cmd=( exec_buildifier "${bzl_path}" "--warnings=${warnings}" )
 case "${lint_mode}" in
@@ -139,28 +119,4 @@ case "${lint_mode}" in
     ;;
 esac
 
-
 "${cat_cmd[@]}" | "${lint_cmd[@]}" > "${out_path}"
-
-
-# if [[ ${#format_cmd[@]} > 0 && ${#lint_cmd[@]} > 0 ]]; then
-#   # DEBUG BEGIN
-#   echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") FORMAT AND LINT" 
-#   # DEBUG END
-#   "${cat_cmd[@]}" | "${format_cmd[@]}" | "${lint_cmd[@]}" > "${out_path}"
-# elif [[ ${#format_cmd[@]} > 0 ]]; then
-#   # DEBUG BEGIN
-#   echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") FORMAT ONLY" 
-#   # DEBUG END
-#   "${cat_cmd[@]}" | "${format_cmd[@]}" > "${out_path}"
-# elif [[ ${#lint_cmd[@]} > 0 ]]; then
-#   # DEBUG BEGIN
-#   echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") LINT ONLY" 
-#   # DEBUG END
-#   "${cat_cmd[@]}" | "${lint_cmd[@]}" > "${out_path}"
-# else
-#   # DEBUG BEGIN
-#   echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") CAT ONLY" 
-#   # DEBUG END
-#   "${cat_cmd[@]}" > "${out_path}"
-# fi

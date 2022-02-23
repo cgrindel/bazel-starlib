@@ -160,6 +160,3 @@ assert_equal "${expected}" "${actual}" "Format and lint (warn) with good file."
 
 
 
-# DEBUG BEGIN
-fail "STOP"
-# DEBUG END
