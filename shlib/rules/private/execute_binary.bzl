@@ -104,12 +104,6 @@ cmd=( "${binary}" )
 execute_binary = rule(
     implementation = _execute_binary_impl,
     attrs = {
-        "binary": attr.label(
-            executable = True,
-            mandatory = True,
-            cfg = "target",
-            doc = "The binary to be executed.",
-        ),
         "arguments": attr.string_list(
             doc = """\
 The list of arguments that will be embedded into the resulting executable. 
@@ -117,6 +111,12 @@ The list of arguments that will be embedded into the resulting executable.
 NOTE: Use this attribute instead of `args`. The `args` attribute is not \
 processed for file arguments and is not preserved in the resulting script. 
 """,
+        ),
+        "binary": attr.label(
+            executable = True,
+            mandatory = True,
+            cfg = "target",
+            doc = "The binary to be executed.",
         ),
         "data": attr.label_list(
             allow_files = True,

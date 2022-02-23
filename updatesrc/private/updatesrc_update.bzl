@@ -63,13 +63,9 @@ fi
 updatesrc_update = rule(
     implementation = _updatesrc_update_impl,
     attrs = {
-        "srcs": attr.label_list(
-            doc = """\
-Source files that will be updated by the files listed in the `outs` attribute. \
-Every file listed in the `srcs` attribute must have a corresponding output \
-file listed in the `outs` attribute.\
-""",
-            allow_files = True,
+        "deps": attr.label_list(
+            providers = [[UpdateSrcsInfo]],
+            doc = "Build targets that output `UpdateSrcsInfo`.",
         ),
         "outs": attr.label_list(
             doc = """\
@@ -79,9 +75,13 @@ source file list in the `srcs` attribute.\
 """,
             allow_files = True,
         ),
-        "deps": attr.label_list(
-            providers = [[UpdateSrcsInfo]],
-            doc = "Build targets that output `UpdateSrcsInfo`.",
+        "srcs": attr.label_list(
+            doc = """\
+Source files that will be updated by the files listed in the `outs` attribute. \
+Every file listed in the `srcs` attribute must have a corresponding output \
+file listed in the `outs` attribute.\
+""",
+            allow_files = True,
         ),
     },
     executable = True,

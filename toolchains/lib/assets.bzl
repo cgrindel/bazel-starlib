@@ -1,5 +1,4 @@
 load("@bazel_skylib//lib:types.bzl", "types")
-load("@bazel_skylib//lib:new_sets.bzl", "sets")
 
 _TYPICAL_PLATFORMS = ["darwin", "linux"]
 _TYPICAL_ARCHES = ["amd64", "arm64"]

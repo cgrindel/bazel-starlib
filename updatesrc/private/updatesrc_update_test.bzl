@@ -73,18 +73,18 @@ assert_same() {
 updatesrc_update_test = rule(
     implementation = _updatesrc_update_test_impl,
     attrs = {
-        "update_target": attr.label(
-            allow_single_file = True,
-            executable = True,
-            cfg = "host",
+        "outs": attr.label_list(
+            allow_files = True,
+            mandatory = True,
         ),
         "srcs": attr.label_list(
             allow_files = True,
             mandatory = True,
         ),
-        "outs": attr.label_list(
-            allow_files = True,
-            mandatory = True,
+        "update_target": attr.label(
+            allow_single_file = True,
+            executable = True,
+            cfg = "host",
         ),
     },
     test = True,

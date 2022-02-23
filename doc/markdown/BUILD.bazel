@@ -1,11 +1,10 @@
-load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load(
     "//bazeldoc:defs.bzl",
     "doc_for_provs",
-    "write_file_list",
     "write_header",
     doc_providers = "providers",
 )
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 bzlformat_pkg(name = "bzlformat")
 

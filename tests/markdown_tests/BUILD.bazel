@@ -1,6 +1,6 @@
-load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
-load("//markdown:defs.bzl", "markdown_check_links_test", "markdown_pkg")
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+load("//markdown:defs.bzl", "markdown_pkg")
 
 bzlformat_pkg(name = "bzlformat")
 
