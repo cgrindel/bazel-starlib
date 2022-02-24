@@ -34,8 +34,8 @@ markdown_register_node_deps()
 
 # MARK: - Golang Deps (gh-md-toc)
 
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 load("//markdown:deps.bzl", "bazel_starlib_markdown_dependencies")
 
 bazel_starlib_markdown_dependencies()
@@ -52,7 +52,7 @@ load("@cgrindel_rules_bazel_integration_test//bazel_integration_test:deps.bzl", 
 
 bazel_integration_test_rules_dependencies()
 
-load("//:bazel_versions.bzl", "SUPPORTED_BAZEL_VERSIONS")
 load("@cgrindel_rules_bazel_integration_test//bazel_integration_test:defs.bzl", "bazel_binaries")
+load("//:bazel_versions.bzl", "SUPPORTED_BAZEL_VERSIONS")
 
 bazel_binaries(versions = SUPPORTED_BAZEL_VERSIONS)
