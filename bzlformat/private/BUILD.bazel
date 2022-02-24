@@ -32,6 +32,15 @@ bzl_library(
     ],
 )
 
+bzl_library(
+    name = "bzlformat_lint_test",
+    srcs = ["bzlformat_lint_test.bzl"],
+    deps = [
+        "//shlib/rules:execute_binary",
+        "@bazel_skylib//lib:shell",
+    ],
+)
+
 # MARK: - Collect Files for Integation Tests
 
 filegroup(

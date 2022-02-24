@@ -45,8 +45,8 @@ def _write_execute_binary_script(
         out,
         bin_path,
         arguments,
-        placeholder_dict,
-        workspace_name):
+        workspace_name,
+        placeholder_dict = {}):
     quoted_args = _prepare_arguments(arguments, workspace_name, placeholder_dict)
     write_file(
         output = out,
@@ -113,6 +113,6 @@ def _collect_runfiles(runfiles, targets):
 
 execute_binary_utils = struct(
     file_placeholder = _file_placeholder,
-    write_execute_binary = _write_execute_binary_script,
+    write_execute_binary_script = _write_execute_binary_script,
     collect_runfiles = _collect_runfiles,
 )

@@ -13,7 +13,7 @@ The args attribute is not supported for execute_binary. Use the arguments instea
 
     placeholder_dict = _create_file_args_placeholder_dict(ctx)
     out = ctx.actions.declare_file(ctx.label.name + ".sh")
-    execute_binary_utils.write_execute_binary(
+    execute_binary_utils.write_execute_binary_script(
         write_file = ctx.actions.write,
         out = out,
         bin_path = ctx.executable.binary.short_path,

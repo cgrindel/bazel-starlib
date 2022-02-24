@@ -16,6 +16,7 @@ bzl_library(
     srcs = ["defs.bzl"],
     deps = [
         "//bzlformat/private:bzlformat_format",
+        "//bzlformat/private:bzlformat_lint_test",
         "//bzlformat/private:bzlformat_missing_pkgs",
         "//bzlformat/private:bzlformat_pkg",
     ],
