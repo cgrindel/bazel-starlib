@@ -34,26 +34,12 @@ set -euo pipefail
 lint_tests={lint_tests}
 """.format(lint_tests = shell.array_literal(lint_test_names)) + """\
 
-# # DEBUG BEGIN
-# echo >&2 "*** CHUCK  lint_tests:"
-# for (( i = 0; i < ${#lint_tests[@]}; i++ )); do
-#   echo >&2 "*** CHUCK   ${i}: ${lint_tests[${i}]}"
-# done
-# tree >&2
-# # DEBUG END
-
 failure_count=0
 for lint_test in "${lint_tests[@]}"; do
     exit_code=0
-    # "${lint_test}" || (exit_code=$? ; failure_count=$(( ${failure_count} + 1 )) ; echo "${lint_test} failed with ${exit_code}." )
-    # "${lint_test}" || failure_count=$(( ${failure_count} + 1 ))
     "${lint_test}" || exit_code=$?
     [[ ${exit_code} != 0 ]] && failure_count=$(( ${failure_count} + 1 )) ; echo >&2 "${lint_test} failed with ${exit_code}."
 done
-
-# DEBUG BEGIN
-# echo >&2 "STOP" ; exit 1
-# DEBUG END
 
 [[ ${failure_count} > 0 ]] && echo >&2 "${failure_count} lint tests failed." && exit 1
 echo "All tests succeeded!"
