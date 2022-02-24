@@ -23,6 +23,9 @@ def _substitute_placehodlers(ctx, placeholder_dict, value):
         new_value = new_value.replace(p_str, path)
     return new_value
 
+# def write_execute_binary(actions, out, binary_executable, binary_default_info, workspace_name):
+#     pass
+
 def _execute_binary_impl(ctx):
     if len(ctx.attr.args) > 0:
         fail("""\
