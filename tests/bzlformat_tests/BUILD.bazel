@@ -1,10 +1,6 @@
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
-load(
-    "@cgrindel_rules_bazel_integration_test//bazel_integration_test:defs.bzl",
-    "integration_test_utils",
-)
 load("//bzlformat:defs.bzl", "bzlformat_format")
 load("//bzllib/rules:defs.bzl", "filter_srcs")
 
@@ -94,14 +90,3 @@ bzlformat_format(
     )
     for fi in _FORMAT_INFOS
 ]
-
-# MARK: - Integration Tests
-
-test_suite(
-    name = "all_integration_tests",
-    tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
-    tests = [
-        "//tests/bzlformat_tests/tools_tests/missing_pkgs_tests:integration_tests",
-    ],
-    visibility = ["//:__subpackages__"],
-)
