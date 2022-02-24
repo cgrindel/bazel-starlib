@@ -8,10 +8,18 @@ bzlformat_pkg(name = "bzlformat")
 exports_files(["decompress.sh.tmpl"])
 
 bzl_library(
+    name = "execute_binary_utils",
+    srcs = ["execute_binary_utils.bzl"],
+    deps = [
+        "@bazel_skylib//lib:paths",
+    ],
+)
+
+bzl_library(
     name = "execute_binary",
     srcs = ["execute_binary.bzl"],
     deps = [
-        "@bazel_skylib//lib:paths",
+        ":execute_binary_utils",
     ],
 )
 
