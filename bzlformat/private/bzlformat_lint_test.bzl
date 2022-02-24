@@ -84,9 +84,3 @@ bzlformat_lint_test = rule(
     },
     doc = "Lints the specified Starlark files using Buildifier.",
 )
-
-# def bzlformat_lint_test(name, srcs, warnings = None):
-#     for src in srcs:
-#         exec_buildifier_name =
-#         execute_binary(
-#         )
