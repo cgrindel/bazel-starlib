@@ -73,6 +73,18 @@ bazel_integration_test(
 )
 
 test_suite(
+    name = "smoke_integration_tests",
+    tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
+    tests = [
+        integration_test_utils.bazel_integration_test_name(
+            ":simple_test",
+            CURRENT_BAZEL_VERSION,
+        ),
+    ],
+    visibility = ["//:__subpackages__"],
+)
+
+test_suite(
     name = "integration_tests",
     tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
     tests = integration_test_utils.bazel_integration_test_names(
