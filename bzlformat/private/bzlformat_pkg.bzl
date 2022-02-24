@@ -2,8 +2,15 @@ load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load("//bzllib/rules:defs.bzl", "src_utils")
 load("//updatesrc:defs.bzl", "updatesrc_update")
 load(":bzlformat_format.bzl", "bzlformat_format")
+load(":bzlformat_lint_test.bzl", "bzlformat_lint_test")
 
-def bzlformat_pkg(name = "bzlformat", srcs = None, format_visibility = None, update_visibility = None):
+def bzlformat_pkg(
+        name = "bzlformat",
+        srcs = None,
+        lint_test = True,
+        format_visibility = None,
+        update_visibility = None,
+        lint_test_visibility = None):
     """Defines targets that format, test, and update the specified Starlark source files.
 
     NOTE: Any labels detected in the `srcs` will be ignored.
@@ -17,6 +24,8 @@ def bzlformat_pkg(name = "bzlformat", srcs = None, format_visibility = None, upd
                            for the format targets.
         update_visibility: Optional. A `list` of Bazel visibility declarations
                            for the update target.
+        lint_test_visibility: Optional. A `list` of Bazel visibility declarations
+                              for the lint test target.
 
     Returns:
         None.
@@ -43,6 +52,12 @@ def bzlformat_pkg(name = "bzlformat", srcs = None, format_visibility = None, upd
             name = name_prefix + src_name + "_fmttest",
             file1 = src,
             file2 = ":" + format_name,
+        )
+
+    if lint_test:
+        bzlformat_lint_test(
+            name = name + "_lint_test",
+            srcs = srcs,
         )
 
     updatesrc_update(

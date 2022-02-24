@@ -3,7 +3,7 @@ load(":bzlformat_pkg.bzl", "bzlformat_pkg")
 
 package(default_visibility = ["//bzlformat:__subpackages__"])
 
-bzlformat_pkg(name = "bzlformat")
+bzlformat_pkg(name = "bzlformat_no_conflict")
 
 bzl_library(
     name = "bzlformat_format",
