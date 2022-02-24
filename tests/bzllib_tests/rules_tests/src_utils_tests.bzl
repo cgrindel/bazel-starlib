@@ -1,3 +1,5 @@
+"""Tests for src_utils Utilities"""
+
 load("@bazel_skylib//lib:unittest.bzl", "asserts", "unittest")
 load("//bzllib/rules:defs.bzl", "src_utils")
 

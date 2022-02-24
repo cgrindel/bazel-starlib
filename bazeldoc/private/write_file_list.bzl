@@ -1,3 +1,5 @@
+"""Definition for write_file_list macro."""
+
 load(":doc_utilities.bzl", "doc_utilities")
 load(":write_doc.bzl", "write_doc")
 

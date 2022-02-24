@@ -1,3 +1,5 @@
+"""Definition for create_release macro."""
+
 load("//shlib/rules:execute_binary.bzl", "execute_binary")
 
 def create_release(name, workflow_name):

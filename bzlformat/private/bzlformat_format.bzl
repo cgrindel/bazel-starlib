@@ -1,3 +1,5 @@
+"""Definition for bzlformat_format rule"""
+
 load("//updatesrc:defs.bzl", "UpdateSrcsInfo", "update_srcs")
 
 def _bzlformat_format_impl(ctx):

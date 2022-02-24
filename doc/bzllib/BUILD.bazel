@@ -23,8 +23,6 @@ _DOC_DEPS = [
     "//bzllib/rules:defs",
 ]
 
-_DOC_PATH = "doc/bzllib"
-
 _RULE_NAMES = [
     "filter_srcs",
 ]

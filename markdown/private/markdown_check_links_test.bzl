@@ -1,3 +1,5 @@
+"""Definition for markdown_check_links_test rule."""
+
 load("@bazel_skylib//lib:shell.bzl", "shell")
 
 def _markdown_check_links_test_impl(ctx):

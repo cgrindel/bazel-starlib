@@ -1,3 +1,5 @@
+"""Definition for updatesrc_update_test rule."""
+
 def _updatesrc_update_test_impl(ctx):
     srcs_len = len(ctx.files.srcs)
     outs_len = len(ctx.files.outs)

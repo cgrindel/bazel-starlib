@@ -1,3 +1,5 @@
+"""Definition for hash_sha256 rule."""
+
 def _hash_sha256_impl(ctx):
     out = ctx.actions.declare_file(ctx.label.name)
     args = ctx.actions.args()

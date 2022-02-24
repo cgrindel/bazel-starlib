@@ -1,3 +1,5 @@
+"""Definition for binary_pkg rule."""
+
 load("@bazel_skylib//lib:paths.bzl", "paths")
 
 # Lovingly inspired by https://www.linuxjournal.com/node/1005818.

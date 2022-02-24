@@ -1,3 +1,5 @@
+"""Constants for Integration Tests"""
+
 INTEGRATION_TEST_TAGS = [
     "exclusive",
     "manual",

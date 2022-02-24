@@ -1,3 +1,5 @@
+"""Definition for updatesrc_diff_and_update macro."""
+
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load(":updatesrc_update.bzl", "updatesrc_update")
 

@@ -1,3 +1,5 @@
+"""Definition for bzlformat_lint_test rule."""
+
 load("@bazel_skylib//lib:shell.bzl", "shell")
 load("//shlib/rules:execute_binary.bzl", "execute_binary_utils")
 
@@ -38,7 +40,10 @@ failure_count=0
 for lint_test in "${lint_tests[@]}"; do
     exit_code=0
     "${lint_test}" || exit_code=$?
-    [[ ${exit_code} != 0 ]] && failure_count=$(( ${failure_count} + 1 )) ; echo >&2 "${lint_test} failed with ${exit_code}."
+    if [[ ${exit_code} != 0 ]]; then
+      failure_count=$(( ${failure_count} + 1 )) 
+      echo >&2 "${lint_test} failed with ${exit_code}."
+    fi
 done
 
 [[ ${failure_count} > 0 ]] && echo >&2 "${failure_count} lint tests failed." && exit 1

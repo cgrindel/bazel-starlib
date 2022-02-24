@@ -1,3 +1,5 @@
+"""Definition for bzlformat_pkg macro."""
+
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load("//bzllib/rules:defs.bzl", "src_utils")
 load("//updatesrc:defs.bzl", "updatesrc_update")
@@ -20,6 +22,8 @@ def bzlformat_pkg(
         srcs: Optional. A `list` of Starlark source files. If no value is
               provided, any files that match `*.bzl`, `BUILD` or `BUILD.bazel`
               are used.
+        lint_test: Optional. A `bool` specifying whether a lint test should be
+                             defined.
         format_visibility: Optional. A `list` of Bazel visibility declarations
                            for the format targets.
         update_visibility: Optional. A `list` of Bazel visibility declarations
@@ -58,6 +62,7 @@ def bzlformat_pkg(
         bzlformat_lint_test(
             name = name + "_lint_test",
             srcs = srcs,
+            visibility = lint_test_visibility,
         )
 
     updatesrc_update(

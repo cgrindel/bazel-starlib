@@ -1,3 +1,5 @@
+"""Public API for bazeldoc."""
+
 load("//bazeldoc/private:doc_for_provs.bzl", _doc_for_provs = "doc_for_provs")
 load("//bazeldoc/private:providers.bzl", _providers = "providers")
 load("//bazeldoc/private:write_file_list.bzl", _write_file_list = "write_file_list")

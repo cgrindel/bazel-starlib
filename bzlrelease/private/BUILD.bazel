@@ -1,9 +1,9 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
-bzlformat_pkg(name = "bzlformat")
-
 package(default_visibility = ["//bzlrelease:__subpackages__"])
+
+bzlformat_pkg(name = "bzlformat")
 
 bzl_library(
     name = "hash_sha256",

@@ -1,3 +1,5 @@
+"""Definittion for execute_binary rule."""
+
 load(":execute_binary_utils.bzl", "execute_binary_utils")
 
 file_placeholder = execute_binary_utils.file_placeholder

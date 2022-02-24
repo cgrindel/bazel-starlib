@@ -1,3 +1,5 @@
+"""Tests for filter_srcs Rule"""
+
 load("@bazel_skylib//lib:unittest.bzl", "analysistest", "asserts")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
 load("//bzllib/rules:defs.bzl", "filter_srcs")
@@ -140,7 +142,9 @@ def _test_expected_count_failure():
 
 # MARK: - Test Suite
 
+# buildifier: disable=unnamed-macro
 def filter_srcs_test_suite():
+    """Test Suite for filter_srcs tests"""
     _setup_src_file_targets()
     _test_filename_ends_with()
     _test_fail_if_no_criteria()

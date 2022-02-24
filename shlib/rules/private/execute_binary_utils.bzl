@@ -1,3 +1,5 @@
+"""Utilties to aid in the writing of scripts that encapsualte the arguments to call a binary."""
+
 load("@bazel_skylib//lib:paths.bzl", "paths")
 
 def _file_placeholder(key):

@@ -16,8 +16,6 @@ filegroup(
 
 # MARK: - Documentation Providers
 
-_DOC_PATH = "doc/markdown"
-
 _STARDOC_INPUT = "//markdown:defs.bzl"
 
 _DOC_DEPS = ["//markdown:defs"]

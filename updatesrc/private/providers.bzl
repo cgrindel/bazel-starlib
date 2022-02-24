@@ -1,3 +1,5 @@
+"""Providers for updatesrc."""
+
 UpdateSrcsInfo = provider(
     doc = """\
 Information about files that should be copied from the output to the workspace.\

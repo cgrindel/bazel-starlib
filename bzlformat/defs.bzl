@@ -1,3 +1,5 @@
+"""Public API for bzlformat"""
+
 load(
     "//bzlformat/private:bzlformat_format.bzl",
     _bzlformat_format = "bzlformat_format",

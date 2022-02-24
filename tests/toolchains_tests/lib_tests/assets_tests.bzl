@@ -1,3 +1,5 @@
+"""Tests for assets utilities."""
+
 load("@bazel_skylib//lib:new_sets.bzl", "sets")
 load("@bazel_skylib//lib:unittest.bzl", "asserts", "unittest")
 load("//toolchains/lib:assets.bzl", "assets")

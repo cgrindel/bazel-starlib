@@ -1,3 +1,5 @@
+"""Configures the node dependencies for the markdown functionality."""
+
 load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories", "yarn_install")
 
 def markdown_register_node_deps(name = "cgrindel_bazel_starlib_markdown_npm"):

@@ -19,8 +19,6 @@ filegroup(
 
 # MARK: - Documentation Providers
 
-_DOC_PATH = "doc/bzlformat"
-
 _STARDOC_INPUT = "//bzlformat:defs.bzl"
 
 _DOC_DEPS = ["//bzlformat:defs"]
