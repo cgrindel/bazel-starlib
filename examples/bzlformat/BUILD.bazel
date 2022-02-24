@@ -80,7 +80,6 @@ test_suite(
             ":simple_test",
             CURRENT_BAZEL_VERSION,
         ),
-        ":build_buildtools_test",
     ],
     visibility = ["//:__subpackages__"],
 )
