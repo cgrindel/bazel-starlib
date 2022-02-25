@@ -1,5 +1,5 @@
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
-load("//bzllib/rules:defs.bzl", "src_utils")
+load("//bzllib:defs.bzl", "src_utils")
 load("//updatesrc:defs.bzl", "updatesrc_update")
 load(":markdown_generate_toc.bzl", "markdown_generate_toc")
 

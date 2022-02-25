@@ -2,7 +2,7 @@ load("@bazel_skylib//rules:build_test.bzl", "build_test")
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
 load("//bzlformat:defs.bzl", "bzlformat_format")
-load("//bzllib/rules:defs.bzl", "filter_srcs")
+load("//bzllib:defs.bzl", "filter_srcs")
 
 build_test(
     name = "public_api",
