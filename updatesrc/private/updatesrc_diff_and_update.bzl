@@ -6,7 +6,7 @@ load(":updatesrc_update.bzl", "updatesrc_update")
 def updatesrc_diff_and_update(
         srcs,
         outs,
-        update_name = "update",
+        name = "update",
         diff_test_prefix = "",
         diff_test_suffix = "_difftest",
         update_visibility = None,
@@ -21,7 +21,7 @@ def updatesrc_diff_and_update(
         outs: Output files that will be used to update the files listed in the
               `srcs` attribute. Every file listed in the `outs` attribute must
               have a corresponding source file list in the `srcs` attribute.
-        update_name: Optional. The name of the `updatesrc_update` target.
+        name: Optional. The name of the `updatesrc_update` target.
         diff_test_prefix: Optional. The prefix to be used for the `diff_test`
                           target names.
         diff_test_suffix: Optional. The suffix to be used for the `diff_test`
@@ -50,7 +50,7 @@ def updatesrc_diff_and_update(
 
     # Define the update target
     updatesrc_update(
-        name = update_name,
+        name = name,
         srcs = srcs,
         outs = outs,
         visibility = update_visibility,
