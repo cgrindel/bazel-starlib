@@ -24,6 +24,7 @@ cat $(location {src}) > $@
 ]
 
 updatesrc_diff_and_update(
+    name = "update",
     srcs = srcs,
     outs = outs,
     diff_test_visibility = ["//diff_and_update_test:__pkg__"],

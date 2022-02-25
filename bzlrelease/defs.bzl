@@ -1,3 +1,5 @@
+"""Public API for bzlrelease."""
+
 load(
     "//bzlrelease/private:create_release.bzl",
     _create_release = "create_release",

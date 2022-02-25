@@ -35,8 +35,6 @@ _RULE_DOC_PROVIDERS = [
     for rule in _RULE_NAMES
 ]
 
-_API_SRCS = []
-
 _API_DOC_PROVIDERS = []
 
 _ALL_DOC_PROVIDERS = [

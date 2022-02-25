@@ -1,3 +1,5 @@
+"""Public API for updatesrc."""
+
 load(
     "//updatesrc/private:providers.bzl",
     _UpdateSrcsInfo = "UpdateSrcsInfo",

@@ -1,9 +1,18 @@
+"""Definition for bzlformat_pkg macro."""
+
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load("//bzllib:defs.bzl", "src_utils")
 load("//updatesrc:defs.bzl", "updatesrc_update")
 load(":bzlformat_format.bzl", "bzlformat_format")
+load(":bzlformat_lint_test.bzl", "bzlformat_lint_test")
 
-def bzlformat_pkg(name = "bzlformat", srcs = None, format_visibility = None, update_visibility = None):
+def bzlformat_pkg(
+        name = "bzlformat",
+        srcs = None,
+        lint_test = True,
+        format_visibility = None,
+        update_visibility = None,
+        lint_test_visibility = None):
     """Defines targets that format, test, and update the specified Starlark source files.
 
     NOTE: Any labels detected in the `srcs` will be ignored.
@@ -13,10 +22,14 @@ def bzlformat_pkg(name = "bzlformat", srcs = None, format_visibility = None, upd
         srcs: Optional. A `list` of Starlark source files. If no value is
               provided, any files that match `*.bzl`, `BUILD` or `BUILD.bazel`
               are used.
+        lint_test: Optional. A `bool` specifying whether a lint test should be
+                             defined.
         format_visibility: Optional. A `list` of Bazel visibility declarations
                            for the format targets.
         update_visibility: Optional. A `list` of Bazel visibility declarations
                            for the update target.
+        lint_test_visibility: Optional. A `list` of Bazel visibility declarations
+                              for the lint test target.
 
     Returns:
         None.
@@ -43,6 +56,13 @@ def bzlformat_pkg(name = "bzlformat", srcs = None, format_visibility = None, upd
             name = name_prefix + src_name + "_fmttest",
             file1 = src,
             file2 = ":" + format_name,
+        )
+
+    if lint_test:
+        bzlformat_lint_test(
+            name = name + "_lint_test",
+            srcs = srcs,
+            visibility = lint_test_visibility,
         )
 
     updatesrc_update(

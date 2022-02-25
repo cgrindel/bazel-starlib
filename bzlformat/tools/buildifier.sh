@@ -81,9 +81,9 @@ while (("$#")); do
   esac
 done
 
-[[ ${#args[@]} < 2 ]] && usage_error "Expected an input path and an output path."
+[[ ${#args[@]} < 1 ]] && usage_error "Expected a path to a Starlark file."
 bzl_path="${args[0]}"
-out_path="${args[1]}"
+[[ ${#args[@]} > 1 ]] && out_path="${args[1]}"
 
 contains_item "${lint_mode}" "${lint_modes[@]}" || \
   usage_error "Invalid lint_mode (${lint_mode}). Expected to be one of the following: $( join_by ", " "${lint_modes[@]}" )."
@@ -114,4 +114,8 @@ case "${lint_mode}" in
     ;;
 esac
 
-"${cat_cmd[@]}" | "${buildifier_cmd[@]}" > "${out_path}"
+if [[ -n "${out_path:-}" ]]; then
+  "${cat_cmd[@]}" | "${buildifier_cmd[@]}" > "${out_path}"
+else
+  "${cat_cmd[@]}" | "${buildifier_cmd[@]}" > /dev/null
+fi

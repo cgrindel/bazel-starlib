@@ -1,9 +1,12 @@
+"""Definition for updatesrc_diff_and_update macro."""
+
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load(":updatesrc_update.bzl", "updatesrc_update")
 
 def updatesrc_diff_and_update(
         srcs,
         outs,
+        name = None,
         update_name = "update",
         diff_test_prefix = "",
         diff_test_suffix = "_difftest",
@@ -19,7 +22,8 @@ def updatesrc_diff_and_update(
         outs: Output files that will be used to update the files listed in the
               `srcs` attribute. Every file listed in the `outs` attribute must
               have a corresponding source file list in the `srcs` attribute.
-        update_name: Optional. The name of the `updatesrc_update` target.
+        name: Optional. The name of the `updatesrc_update` target.
+        update_name: Deprecated. The name of the `updatesrc_update` target.
         diff_test_prefix: Optional. The prefix to be used for the `diff_test`
                           target names.
         diff_test_suffix: Optional. The suffix to be used for the `diff_test`
@@ -46,9 +50,15 @@ def updatesrc_diff_and_update(
             visibility = diff_test_visibility,
         )
 
+    if name == None:
+        if update_name == None:
+            fail("Please specify a value for the name attribute.")
+        else:
+            name = update_name
+
     # Define the update target
     updatesrc_update(
-        name = update_name,
+        name = name,
         srcs = srcs,
         outs = outs,
         visibility = update_visibility,

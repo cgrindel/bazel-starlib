@@ -1,3 +1,5 @@
+"""Definition for update_readme macro."""
+
 load("//shlib/rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 
 def update_readme(name, generate_workspace_snippet, readme = None):

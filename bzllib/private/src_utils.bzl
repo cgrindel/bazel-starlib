@@ -1,3 +1,5 @@
+"""Utilities for Bazel Starlark Rules and Functions"""
+
 def _is_label(src):
     """Determines whether the provided string is a label.
 
@@ -25,8 +27,10 @@ def _path_to_name(path, prefix = None, suffix = None):
 
     Args:
         path: A path as a `string`.
-        prefix: Optional. A string which will be prefixed to the namefied
+        prefix: Optional. A string which will be prefixed to the namified
                 path with an underscore separating the prefix.
+        suffix: Optional. A `string` which will be appended to the namified
+                path with an underscore separating the suffix.
 
     Returns:
         A `string` suitable for use as a label name.

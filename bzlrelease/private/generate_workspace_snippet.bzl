@@ -1,3 +1,5 @@
+"""Definition for generate_workspace_snippet macro."""
+
 load("//shlib/rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 
 def generate_workspace_snippet(name, template = None, workspace_name = None):

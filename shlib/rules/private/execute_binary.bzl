@@ -1,27 +1,11 @@
-load("@bazel_skylib//lib:paths.bzl", "paths")
+"""Definittion for execute_binary rule."""
 
-def file_placeholder(key):
-    """Returns a placeholder string that is suitable for inclusion in the args for `execute_binary`.
+load(":execute_binary_utils.bzl", "execute_binary_utils")
 
-    Args:
-        key: The name for the placeholder as a `string`.
-
-    Returns:
-        A `string` that can be added to the arguments of `execute_binary`.
-    """
-    return "{%s}" % (key)
+file_placeholder = execute_binary_utils.file_placeholder
 
 def _create_file_args_placeholder_dict(ctx):
     return {p: fa.files.to_list()[0] for fa, p in ctx.attr.file_arguments.items()}
-
-def _substitute_placehodlers(ctx, placeholder_dict, value):
-    new_value = value
-    for key, file in placeholder_dict.items():
-        p_str = file_placeholder(key)
-
-        path = paths.join("${RUNFILES_DIR}", ctx.workspace_name, file.short_path)
-        new_value = new_value.replace(p_str, path)
-    return new_value
 
 def _execute_binary_impl(ctx):
     if len(ctx.attr.args) > 0:
@@ -29,75 +13,24 @@ def _execute_binary_impl(ctx):
 The args attribute is not supported for execute_binary. Use the arguments instead.\
 """)
 
-    bin_path = ctx.executable.binary.short_path
-    bin_runfiles = ctx.attr.binary[DefaultInfo].default_runfiles
-
     placeholder_dict = _create_file_args_placeholder_dict(ctx)
-    quoted_args = []
-    for arg in ctx.attr.arguments:
-        arg = _substitute_placehodlers(ctx, placeholder_dict, arg)
-        if arg.startswith("\"") and arg.endswith("\""):
-            quoted_args.append(arg)
-        else:
-            quoted_args.append("\"%s\"" % (arg))
-
     out = ctx.actions.declare_file(ctx.label.name + ".sh")
-    ctx.actions.write(
-        output = out,
-        is_executable = True,
-        content = """\
-#!/usr/bin/env bash
-
-set -euo pipefail
-
-# Set the RUNFILES_DIR. If an embedded binary is a sh_binary, it has trouble 
-# finding the runfiles directory. So, we help.
-[[ -z "${RUNFILES_DIR:-}" ]] && \
-  [[ -f "${PWD}/../MANIFEST" ]] && \
-  export RUNFILES_DIR="${PWD}/.."
-
-[[ -z "${RUNFILES_DIR:-}" ]] && \
-  echo >&2 "The RUNFILES_DIR for $(basename "${BASH_SOURCE[0]}") could not be found."
-
-""" + """\
-workspace_name="{workspace_name}"
-bin_path="{bin_path}"
-""".format(bin_path = bin_path, workspace_name = ctx.workspace_name) + """\
-
-# If the bin_path can be found relative to the current directory, use it.
-# Otherwise, look for it under the runfiles directory.
-if [[ -f "${bin_path}" ]]; then
-  binary="${bin_path}"
-else
-  binary="${RUNFILES_DIR}/${workspace_name}/${bin_path}"
-fi
-
-# Construct the command (binary plus args).
-cmd=( "${binary}" )
-""" + "\n".join([
-            # Do not quote the {arg}. The values are already quoted. Adding the
-            # quotes here will ruin the Bash substitution.
-            """cmd+=( {arg} )""".format(arg = arg)
-            for arg in quoted_args
-        ]) + """
-
-# Add any args that were passed to this invocation
-[[ $# > 0 ]] && cmd+=( "${@}" )
-
-# Execute the binary with its args
-"${cmd[@]}"
-""",
+    execute_binary_utils.write_execute_binary_script(
+        write_file = ctx.actions.write,
+        out = out,
+        bin_path = ctx.executable.binary.short_path,
+        arguments = ctx.attr.arguments,
+        placeholder_dict = placeholder_dict,
+        workspace_name = ctx.workspace_name,
     )
 
     # The file_arguments attribute shows up as a dict under ctx.attr.file_arguments and
     # as a list under ctx.files.file_arguments
     runfiles = ctx.runfiles(files = ctx.files.data + ctx.files.file_arguments)
-    runfiles = runfiles.merge(bin_runfiles)
-
-    # Check if any of the file_arguments have runfiles and add them as well.
-    for target in ctx.attr.file_arguments:
-        if DefaultInfo in target:
-            runfiles = runfiles.merge(target[DefaultInfo].default_runfiles)
+    runfiles = execute_binary_utils.collect_runfiles(
+        runfiles,
+        [ctx.attr.binary] + ctx.attr.file_arguments.keys(),
+    )
 
     return DefaultInfo(executable = out, runfiles = runfiles)
 

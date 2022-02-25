@@ -1,3 +1,5 @@
+"""Definition for doc_for_provs macro."""
+
 load("//updatesrc:defs.bzl", "updatesrc_diff_and_update")
 load(":stardoc_for_prov.bzl", "stardoc_for_provs")
 

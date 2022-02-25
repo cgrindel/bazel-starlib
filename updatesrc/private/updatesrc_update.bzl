@@ -1,9 +1,7 @@
+"""Definition for updatesrc_update rule."""
+
 load(":providers.bzl", "UpdateSrcsInfo")
 load(":update_srcs.bzl", "update_srcs")
-
-"""A binary rule that updates the specified source files using the specified \
-output files.\
-"""
 
 def _updatesrc_update_impl(ctx):
     srcs_len = len(ctx.files.srcs)

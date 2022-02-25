@@ -1,6 +1,9 @@
+"""Go repository dependencies for github-markdown-toc-go."""
+
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
 def github_markdown_toc_go_repositories():
+    """Declares the Golang repository dependencies for github-markdown-toc-go."""
     go_repository(
         name = "com_github_alecthomas_assert",
         importpath = "github.com/alecthomas/assert",
