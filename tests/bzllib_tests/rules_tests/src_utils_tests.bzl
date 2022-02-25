@@ -1,7 +1,7 @@
 """Tests for src_utils Utilities"""
 
 load("@bazel_skylib//lib:unittest.bzl", "asserts", "unittest")
-load("//bzllib/rules:defs.bzl", "src_utils")
+load("//bzllib:defs.bzl", "src_utils")
 
 def _is_label_test(ctx):
     env = unittest.begin(ctx)

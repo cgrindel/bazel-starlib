@@ -8,11 +8,15 @@ load("//markdown:defs.bzl", "markdown_pkg")
 load("//tests:integration_test_common.bzl", "INTEGRATION_TEST_TAGS")
 load("//updatesrc:defs.bzl", "updatesrc_update_all")
 
+# MARK: - Bazel Starlark Lint and Formatting
+
 bzlformat_pkg(name = "bzlformat")
 
 bzlformat_missing_pkgs(
     name = "bzlformat_missing_pkgs",
 )
+
+# MARK: - Update Source Files
 
 updatesrc_update_all(
     name = "update_all",
@@ -78,8 +82,8 @@ filegroup(
         "//bzlformat/private:all_files",
         "//bzlformat/tools:all_files",
         "//bzlformat/tools/missing_pkgs:all_files",
-        "//bzllib/rules:all_files",
-        "//bzllib/rules/private:all_files",
+        "//bzllib:all_files",
+        "//bzllib/private:all_files",
         "//bzlrelease:all_files",
         "//bzlrelease/private:all_files",
         "//bzlrelease/tools:all_files",

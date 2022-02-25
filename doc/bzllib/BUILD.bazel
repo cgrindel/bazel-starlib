@@ -17,10 +17,10 @@ filegroup(
 
 # MARK: - Documentation Providers
 
-_STARDOC_INPUT = "//bzllib/rules:defs.bzl"
+_STARDOC_INPUT = "//bzllib:defs.bzl"
 
 _DOC_DEPS = [
-    "//bzllib/rules:defs",
+    "//bzllib:defs",
 ]
 
 _RULE_NAMES = [
