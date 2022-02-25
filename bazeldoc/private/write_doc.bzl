@@ -1,3 +1,5 @@
+"""Definition for write_doc macro."""
+
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
 
 def write_doc(name, out, content = [], do_not_edit_warning = True):

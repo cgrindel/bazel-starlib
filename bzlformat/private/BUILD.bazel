@@ -3,7 +3,7 @@ load(":bzlformat_pkg.bzl", "bzlformat_pkg")
 
 package(default_visibility = ["//bzlformat:__subpackages__"])
 
-bzlformat_pkg(name = "bzlformat")
+bzlformat_pkg(name = "bzlformat_no_conflict")
 
 bzl_library(
     name = "bzlformat_format",
@@ -29,6 +29,15 @@ bzl_library(
     srcs = ["bzlformat_missing_pkgs.bzl"],
     deps = [
         "//shlib/rules:execute_binary",
+    ],
+)
+
+bzl_library(
+    name = "bzlformat_lint_test",
+    srcs = ["bzlformat_lint_test.bzl"],
+    deps = [
+        "//shlib/rules:execute_binary",
+        "@bazel_skylib//lib:shell",
     ],
 )
 

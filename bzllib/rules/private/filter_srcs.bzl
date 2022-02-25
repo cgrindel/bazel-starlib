@@ -1,3 +1,5 @@
+"""filter_srcs Rule"""
+
 def _do_filename_ends_with(ctx, files):
     suffix = ctx.attr.filename_ends_with
     return [f for f in files if f.path.endswith(suffix)]

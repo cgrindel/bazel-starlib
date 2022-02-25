@@ -1,3 +1,5 @@
+"""Utility functions for managing asset structs."""
+
 load("@bazel_skylib//lib:types.bzl", "types")
 
 _TYPICAL_PLATFORMS = ["darwin", "linux"]
@@ -5,6 +7,7 @@ _TYPICAL_ARCHES = ["amd64", "arm64"]
 
 def _create(name, platform, arch, version, sha256 = None):
     """Create a `struct` representing a buildtools asset.
+
     Args:
         name: The name of the asset (e.g. `buildifier`, `buildozer`) as a
               `string`.
@@ -12,6 +15,7 @@ def _create(name, platform, arch, version, sha256 = None):
         arch: The arch as a `string`. (e.g. `amd64`, `arm64`)
         version: The version as a `string`. (e.g. `4.2.3`)
         sha256: Optional. The sha256 as a `string`.
+
     Returns:
         A `struct` representing the asset to be downloaded.
     """
@@ -34,11 +38,13 @@ def _create(name, platform, arch, version, sha256 = None):
 
 def _create_unique_name(asset = None, name = None, platform = None, arch = None):
     """Create a unique name from an asset or from a name/platform/arch.
+
     Args:
         asset: An asset `struct` as returned by `buildtools.create_asset`.
         name: A tool name (e.g. buildifier) as `string`.
         platform: A platform as `string`.
         arch: An arch as `string`.
+
     Returns:
         A `string` suitable for use as identifying an asset.
     """
@@ -57,8 +63,10 @@ def _create_unique_name(asset = None, name = None, platform = None, arch = None)
 
 def _to_json(asset):
     """Returns the JSON representation for an asset `struct` or a `list` of asset `struct` values.
+
     Args:
         asset: An asset `struct` as returned by `buildtools.create_asset`.
+
     Returns:
         Returns a JSON `string` representation of the provided value.
     """
@@ -66,8 +74,10 @@ def _to_json(asset):
 
 def _from_json(json_str):
     """Returns an asset `struct` or a `list` of asset `struct` values as represented by the JSON `string`.
+
     Args:
         json_str: A JSON `string` representing an asset or a list of assets.
+
     Returns:
         An asset `struct` or a `list` of asset `struct` values.
     """
@@ -80,11 +90,14 @@ def _from_json(json_str):
 
 def _create_assets(version, names, platforms = _TYPICAL_PLATFORMS, arches = _TYPICAL_ARCHES, sha256_values = {}):
     """Create a `list` of asset `struct` values.
+
     Args:
         version: The buildtools version string.
         names: Optional. A `list` of tools to include.
         platforms: Optional. A `list` of platforms to include.
         arches: Optional. A `list` of arches to include.
+        sha256_values: Optional. A `dict` mapping asset name to SHA256 value.
+
     Returns:
         A `list` of buildtools assets.
     """

@@ -1,3 +1,5 @@
+"""Definition for markdown_pkg macro."""
+
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load("//bzllib/rules:defs.bzl", "src_utils")
 load("//updatesrc:defs.bzl", "updatesrc_update")

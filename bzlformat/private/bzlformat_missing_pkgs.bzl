@@ -1,3 +1,5 @@
+"""Definition for bzlformat_missing_pkgs macro."""
+
 load("//shlib/rules:execute_binary.bzl", "execute_binary")
 
 def bzlformat_missing_pkgs(name, exclude = []):

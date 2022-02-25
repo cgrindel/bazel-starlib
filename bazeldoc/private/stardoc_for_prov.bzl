@@ -1,3 +1,5 @@
+"""Defintion for stardoc_for_prov and stardoc_for_provs macros."""
+
 load("@io_bazel_stardoc//stardoc:stardoc.bzl", "stardoc")
 
 def stardoc_for_prov(doc_prov):
@@ -24,14 +26,9 @@ def stardoc_for_provs(doc_provs):
     Args:
         doc_provs: A `list` of document provider `struct` values as returned
                    from `providers.create()`.
-
-    Returns:
-        None.
     """
-    [
-        stardoc_for_prov(
-            doc_prov = doc_prov,
-        )
-        for doc_prov in doc_provs
-        if doc_prov.is_stardoc
-    ]
+    for doc_prov in doc_provs:
+        if doc_prov.is_stardoc:
+            stardoc_for_prov(
+                doc_prov = doc_prov,
+            )

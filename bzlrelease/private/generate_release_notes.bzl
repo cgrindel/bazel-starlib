@@ -1,3 +1,5 @@
+"""Definition for generate_release_notes macro."""
+
 load("//shlib/rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 
 def generate_release_notes(name, generate_workspace_snippet):

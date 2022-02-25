@@ -19,8 +19,6 @@ filegroup(
 
 # MARK: - Documentation Providers
 
-_DOC_PATH = "doc/bzlformat"
-
 _STARDOC_INPUT = "//bzlformat:defs.bzl"
 
 _DOC_DEPS = ["//bzlformat:defs"]
@@ -32,6 +30,7 @@ _RULES_AND_MACROS_DOC_PROVIDER = doc_providers.create(
         "bzlformat_format",
         "bzlformat_pkg",
         "bzlformat_missing_pkgs",
+        "bzlformat_lint_test",
     ],
     deps = _DOC_DEPS,
 )

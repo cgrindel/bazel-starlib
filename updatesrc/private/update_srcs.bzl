@@ -1,3 +1,5 @@
+"""Utilities related to udpatesrc project."""
+
 def _create(src, out):
     """Creates a `struct` specifying a source file and an output file that should be used to update it.
 

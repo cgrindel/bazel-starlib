@@ -1,7 +1,9 @@
+"""Dependencies for bazel-starlib"""
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
-def _generate_trampoline_content(repository_ctx, filename, exec_target, exec_location):
+def _generate_trampoline_content(repository_ctx, filename, exec_location):
     content = """\
 #!/usr/bin/env bash
 
@@ -34,13 +36,11 @@ def _bazel_starlib_buildtools(repository_ctx):
     _generate_trampoline_content(
         repository_ctx,
         "buildifier.sh",
-        repository_ctx.attr.buildifier_target,
         repository_ctx.attr.buildifier_location,
     )
     _generate_trampoline_content(
         repository_ctx,
         "buildozer.sh",
-        repository_ctx.attr.buildozer_target,
         repository_ctx.attr.buildozer_location,
     )
 
@@ -89,6 +89,12 @@ bazel_starlib_buildtools = repository_rule(
 )
 
 def bazel_starlib_dependencies(use_prebuilt_buildtools = True):
+    """Declares the dependencies for bazel-starlib.
+
+    Args:
+        use_prebuilt_buildtools: A `bool` specifying whether to use a prebuilt
+                                 version of `bazelbuild/buildtools`.
+    """
     maybe(
         http_archive,
         name = "bazel_skylib",

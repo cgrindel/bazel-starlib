@@ -1,3 +1,5 @@
+"""Definition for markdown_generate_toc rule."""
+
 load("//updatesrc:defs.bzl", "UpdateSrcsInfo", "update_srcs")
 
 def _markdown_generate_toc_impl(ctx):

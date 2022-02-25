@@ -1,8 +1,11 @@
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
-load("//bzlformat:defs.bzl", "bzlformat_format")
+load("//bzlformat:defs.bzl", "bzlformat_format", "bzlformat_lint_test")
 load("//bzllib/rules:defs.bzl", "filter_srcs")
+
+# NOTE: We are purposefully not using bzlformat_pkg in this package. We want to
+# test the bundled functionality separately.
 
 build_test(
     name = "public_api",
@@ -90,3 +93,10 @@ bzlformat_format(
     )
     for fi in _FORMAT_INFOS
 ]
+
+# MARK: - bzlformat_lint_test Tests
+
+bzlformat_lint_test(
+    name = "bzlformat_lint_test",
+    srcs = ["BUILD.bazel"],
+)

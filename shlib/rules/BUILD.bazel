@@ -18,6 +18,7 @@ bzl_library(
     srcs = ["execute_binary.bzl"],
     deps = [
         "//shlib/rules/private:execute_binary",
+        "//shlib/rules/private:execute_binary_utils",
     ],
 )
 
