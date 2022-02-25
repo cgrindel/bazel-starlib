@@ -45,8 +45,8 @@ Option #2: Rules that provide `UpdateSrcsInfo` can be specified in the `deps` at
 ## updatesrc_diff_and_update
 
 <pre>
-updatesrc_diff_and_update(<a href="#updatesrc_diff_and_update-srcs">srcs</a>, <a href="#updatesrc_diff_and_update-outs">outs</a>, <a href="#updatesrc_diff_and_update-name">name</a>, <a href="#updatesrc_diff_and_update-diff_test_prefix">diff_test_prefix</a>, <a href="#updatesrc_diff_and_update-diff_test_suffix">diff_test_suffix</a>, <a href="#updatesrc_diff_and_update-update_visibility">update_visibility</a>,
-                          <a href="#updatesrc_diff_and_update-diff_test_visibility">diff_test_visibility</a>)
+updatesrc_diff_and_update(<a href="#updatesrc_diff_and_update-srcs">srcs</a>, <a href="#updatesrc_diff_and_update-outs">outs</a>, <a href="#updatesrc_diff_and_update-name">name</a>, <a href="#updatesrc_diff_and_update-update_name">update_name</a>, <a href="#updatesrc_diff_and_update-diff_test_prefix">diff_test_prefix</a>, <a href="#updatesrc_diff_and_update-diff_test_suffix">diff_test_suffix</a>,
+                          <a href="#updatesrc_diff_and_update-update_visibility">update_visibility</a>, <a href="#updatesrc_diff_and_update-diff_test_visibility">diff_test_visibility</a>)
 </pre>
 
 Defines an `updatesrc_update` for the package and `diff_test` targets for each src-out pair.
@@ -58,7 +58,8 @@ Defines an `updatesrc_update` for the package and `diff_test` targets for each s
 | :------------- | :------------- | :------------- |
 | <a id="updatesrc_diff_and_update-srcs"></a>srcs |  Source files that will be updated by the files listed in the <code>outs</code> attribute.  Every file listed in the <code>srcs</code> attribute must have a corresponding output file listed in the <code>outs</code> attribute.   |  none |
 | <a id="updatesrc_diff_and_update-outs"></a>outs |  Output files that will be used to update the files listed in the <code>srcs</code> attribute. Every file listed in the <code>outs</code> attribute must have a corresponding source file list in the <code>srcs</code> attribute.   |  none |
-| <a id="updatesrc_diff_and_update-name"></a>name |  Optional. The name of the <code>updatesrc_update</code> target.   |  <code>"update"</code> |
+| <a id="updatesrc_diff_and_update-name"></a>name |  Optional. The name of the <code>updatesrc_update</code> target.   |  <code>None</code> |
+| <a id="updatesrc_diff_and_update-update_name"></a>update_name |  Deprecated. The name of the <code>updatesrc_update</code> target.   |  <code>"update"</code> |
 | <a id="updatesrc_diff_and_update-diff_test_prefix"></a>diff_test_prefix |  Optional. The prefix to be used for the <code>diff_test</code> target names.   |  <code>""</code> |
 | <a id="updatesrc_diff_and_update-diff_test_suffix"></a>diff_test_suffix |  Optional. The suffix to be used for the <code>diff_test</code> target names.   |  <code>"_difftest"</code> |
 | <a id="updatesrc_diff_and_update-update_visibility"></a>update_visibility |  Optional. The visibility declarations for the <code>updatesrc_update</code> target.   |  <code>None</code> |
