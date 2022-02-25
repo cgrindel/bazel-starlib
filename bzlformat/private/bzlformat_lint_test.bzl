@@ -36,6 +36,10 @@ set -euo pipefail
 lint_tests={lint_tests}
 """.format(lint_tests = shell.array_literal(lint_test_names)) + """\
 
+# Buildifier tries to find the workspace root. Since we are running in a
+# sandbox, we need to provide a WORKSPACE file for it to find.
+[[ ! -e WORKSPACE ]] && touch WORKSPACE
+
 failure_count=0
 for lint_test in "${lint_tests[@]}"; do
     exit_code=0
