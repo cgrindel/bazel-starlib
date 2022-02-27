@@ -61,6 +61,10 @@ remote_url="$(get_git_remote_url)"
 # Make sure that fetch does not fail
 fetch_latest_from_git_remote
 
+# Create a non-release tag
+create_git_tag "howdy" "Message for howdy"
+git_tag_exists "howdy" || fail "Expected tag 'howdy' to exist."
+
 # Create a release tag of 3.2.1
 create_git_release_tag "3.2.1"
 git_tag_exists "3.2.1" || fail "Expected tag '3.2.1' to exist."

@@ -65,13 +65,21 @@ git_tag_exists() {
   return -1
 }
 
+create_git_tag() {
+  local tag="${1}"
+  local msg="${2}"
+  local commit="${3:-}"
+  git_tag_cmd=(git tag -a -m "${msg}" "${tag}")
+  [[ -z "${commit:-}" ]] || git_tag_cmd+=( "${commit}" )
+  "${git_tag_cmd[@]}"
+}
+
 create_git_release_tag() {
   local tag="${1}"
   local commit="${2:-}"
   msg="Release ${tag}"
-  git_tag_cmd=(git tag -a -m "${msg}" "${tag}")
+  git_tag_cmd=( create_git_tag "${commit}" "${msg}" )
   [[ -z "${commit:-}" ]] || git_tag_cmd+=( "${commit}" )
-  "${git_tag_cmd[@]}"
 }
 
 git_tag_exists_on_remote() {
