@@ -57,7 +57,7 @@ get_git_release_tags() {
 
 git_tag_exists() {
   local target_tag="${1}"
-  local tags=( $(get_git_release_tags) )
+  local tags=( $(git tag) )
   # Make sure that the for loop variable is not tag or something else common.
   for cur_tag in "${tags[@]}" ; do
     [[ "${cur_tag}" == "${target_tag}" ]] && return
@@ -78,8 +78,9 @@ create_git_release_tag() {
   local tag="${1}"
   local commit="${2:-}"
   msg="Release ${tag}"
-  git_tag_cmd=( create_git_tag "${commit}" "${msg}" )
+  git_tag_cmd=( create_git_tag "${tag}" "${msg}" )
   [[ -z "${commit:-}" ]] || git_tag_cmd+=( "${commit}" )
+  "${git_tag_cmd[@]}"
 }
 
 git_tag_exists_on_remote() {
