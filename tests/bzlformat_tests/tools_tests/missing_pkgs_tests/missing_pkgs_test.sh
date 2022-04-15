@@ -30,7 +30,7 @@ buildozer_location=bazel_starlib_buildtools/buildozer
 buildozer="$(rlocation "${buildozer_location}")" || \
   (echo >&2 "Failed to locate ${buildozer_location}" && exit 1)
 
-create_scratch_dir_sh_location=cgrindel_rules_bazel_integration_test/tools/create_scratch_dir.sh
+create_scratch_dir_sh_location=contrib_rules_bazel_integration_test/tools/create_scratch_dir.sh
 create_scratch_dir_sh="$(rlocation "${create_scratch_dir_sh_location}")" || \
   (echo >&2 "Failed to locate ${create_scratch_dir_sh_location}" && exit 1)
 

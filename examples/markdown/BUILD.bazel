@@ -1,7 +1,7 @@
 load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
 load("@cgrindel_bazel_starlib//shlib/rules:execute_binary.bzl", "execute_binary")
 load(
-    "@cgrindel_rules_bazel_integration_test//bazel_integration_test:defs.bzl",
+    "@contrib_rules_bazel_integration_test//bazel_integration_test:defs.bzl",
     "bazel_integration_tests",
     "integration_test_utils",
 )
@@ -45,7 +45,7 @@ _ARGS_SELECT_DICT = {
 sh_binary(
     name = "simple_test_runner_binary",
     srcs = [
-        "@cgrindel_rules_bazel_integration_test//bazel_integration_test/private:default_test_runner.sh",
+        "@contrib_rules_bazel_integration_test//bazel_integration_test/private:default_test_runner.sh",
     ],
     args = _COMMON_ARGS + select(_ARGS_SELECT_DICT),
     deps = [
