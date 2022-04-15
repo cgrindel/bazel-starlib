@@ -48,11 +48,22 @@ gazelle_dependencies()
 
 # MARK: - Integration Testing
 
-load("@cgrindel_rules_bazel_integration_test//bazel_integration_test:deps.bzl", "bazel_integration_test_rules_dependencies")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "contrib_rules_bazel_integration_test",
+    sha256 = "6057e4ae6d1c80c129877d11c61b1fee1c05bb24334d0ab1810ce3ecdf24abf4",
+    strip_prefix = "rules_bazel_integration_test-0.6.1",
+    urls = [
+        "http://github.com/bazel-contrib/rules_bazel_integration_test/archive/v0.6.1.tar.gz",
+    ],
+)
+
+load("@contrib_rules_bazel_integration_test//bazel_integration_test:deps.bzl", "bazel_integration_test_rules_dependencies")
 
 bazel_integration_test_rules_dependencies()
 
-load("@cgrindel_rules_bazel_integration_test//bazel_integration_test:defs.bzl", "bazel_binaries")
+load("@contrib_rules_bazel_integration_test//bazel_integration_test:defs.bzl", "bazel_binaries")
 load("//:bazel_versions.bzl", "SUPPORTED_BAZEL_VERSIONS")
 
 bazel_binaries(versions = SUPPORTED_BAZEL_VERSIONS)

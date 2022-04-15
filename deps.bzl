@@ -117,16 +117,6 @@ def bazel_starlib_dependencies(use_prebuilt_buildtools = True):
 
     maybe(
         http_archive,
-        name = "cgrindel_rules_bazel_integration_test",
-        sha256 = "39071d2ec8e3be74c8c4a6c395247182b987cdb78d3a3955b39e343ece624982",
-        strip_prefix = "rules_bazel_integration_test-0.5.0",
-        urls = [
-            "http://github.com/cgrindel/rules_bazel_integration_test/archive/v0.5.0.tar.gz",
-        ],
-    )
-
-    maybe(
-        http_archive,
         name = "build_bazel_rules_nodejs",
         sha256 = "c077680a307eb88f3e62b0b662c2e9c6315319385bc8c637a861ffdbed8ca247",
         urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.1.0/rules_nodejs-5.1.0.tar.gz"],

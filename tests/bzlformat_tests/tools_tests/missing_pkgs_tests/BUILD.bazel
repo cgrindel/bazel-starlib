@@ -1,5 +1,5 @@
 load(
-    "@cgrindel_rules_bazel_integration_test//bazel_integration_test:defs.bzl",
+    "@contrib_rules_bazel_integration_test//bazel_integration_test:defs.bzl",
     "bazel_integration_tests",
     "integration_test_utils",
 )
@@ -16,7 +16,7 @@ sh_binary(
     srcs = ["missing_pkgs_test.sh"],
     data = [
         "@bazel_starlib_buildtools//:buildozer",
-        "@cgrindel_rules_bazel_integration_test//tools:create_scratch_dir",
+        "@contrib_rules_bazel_integration_test//tools:create_scratch_dir",
     ],
     deps = [
         "//shlib/lib:assertions",

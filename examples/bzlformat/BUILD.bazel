@@ -1,5 +1,5 @@
 load(
-    "@cgrindel_rules_bazel_integration_test//bazel_integration_test:defs.bzl",
+    "@contrib_rules_bazel_integration_test//bazel_integration_test:defs.bzl",
     "bazel_integration_test",
     "bazel_integration_tests",
     "default_test_runner",
@@ -28,7 +28,7 @@ sh_binary(
     testonly = True,
     srcs = ["simple_test.sh"],
     data = [
-        "@cgrindel_rules_bazel_integration_test//tools:create_scratch_dir",
+        "@contrib_rules_bazel_integration_test//tools:create_scratch_dir",
         # NOTE: The test runnder does not use buildozer. However, the child
         # workspace does not find it properly if we don't specify it here.
         "@bazel_starlib_buildtools//:buildozer",
