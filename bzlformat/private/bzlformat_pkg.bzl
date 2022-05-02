@@ -35,7 +35,10 @@ def bzlformat_pkg(
         None.
     """
     if srcs == None:
-        srcs = native.glob(["*.bzl", "BUILD", "BUILD.bazel", "WORKSPACE"])
+        srcs = native.glob(
+            ["*.bzl", "BUILD", "BUILD.bazel", "WORKSPACE"],
+            allow_empty = True,
+        )
 
     # Only process paths; ignore labels
     src_paths = [src for src in srcs if src_utils.is_path(src)]

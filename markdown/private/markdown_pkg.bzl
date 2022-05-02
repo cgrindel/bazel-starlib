@@ -39,7 +39,10 @@ def markdown_pkg(
                               included in the documentation `filegroup`.
     """
     if srcs == None:
-        srcs = native.glob(["*.md", "*.markdown"])
+        srcs = native.glob(
+            ["*.md", "*.markdown"],
+            allow_empty = True,
+        )
 
     # Only process paths; ignore labels
     src_paths = [src for src in srcs if src_utils.is_path(src)]
