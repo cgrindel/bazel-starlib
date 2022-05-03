@@ -32,7 +32,7 @@ cmd=( "${executable}" )
 """
     repository_ctx.file(filename, content, True)
 
-def _bazel_starlib_buildtools(repository_ctx):
+def _bazel_starlib_buildtools_impl(repository_ctx):
     _generate_trampoline_content(
         repository_ctx,
         "buildifier.sh",
@@ -67,7 +67,7 @@ sh_binary(
     repository_ctx.file("BUILD.bazel", build_content)
 
 bazel_starlib_buildtools = repository_rule(
-    implementation = _bazel_starlib_buildtools,
+    implementation = _bazel_starlib_buildtools_impl,
     attrs = {
         "buildifier_location": attr.string(
             mandatory = True,
@@ -99,10 +99,10 @@ def bazel_starlib_dependencies(use_prebuilt_buildtools = True):
         http_archive,
         name = "bazel_skylib",
         urls = [
-            "https://github.com/bazelbuild/bazel-skylib/releases/download/1.1.1/bazel-skylib-1.1.1.tar.gz",
-            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.1.1/bazel-skylib-1.1.1.tar.gz",
+            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.2.1/bazel-skylib-1.2.1.tar.gz",
+            "https://github.com/bazelbuild/bazel-skylib/releases/download/1.2.1/bazel-skylib-1.2.1.tar.gz",
         ],
-        sha256 = "c6966ec828da198c5d9adbaa94c05e3a1c7f21bd012a0b29ba8ddbccb2c93b0d",
+        sha256 = "f7be3474d42aae265405a592bb7da8e171919d74c16f082a5457840f06054728",
     )
 
     maybe(
@@ -118,8 +118,8 @@ def bazel_starlib_dependencies(use_prebuilt_buildtools = True):
     maybe(
         http_archive,
         name = "build_bazel_rules_nodejs",
-        sha256 = "c077680a307eb88f3e62b0b662c2e9c6315319385bc8c637a861ffdbed8ca247",
-        urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.1.0/rules_nodejs-5.1.0.tar.gz"],
+        sha256 = "e328cb2c9401be495fa7d79c306f5ee3040e8a03b2ebb79b022e15ca03770096",
+        urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.4.2/rules_nodejs-5.4.2.tar.gz"],
     )
 
     maybe(
