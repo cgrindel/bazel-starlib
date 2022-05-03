@@ -1,10 +1,10 @@
 """Bazel Version Declarations"""
 
-CURRENT_BAZEL_VERSION = "5.0.0"
+CURRENT_BAZEL_VERSION = "5.1.1"
 
 OTHER_BAZEL_VERSIONS = [
     "4.2.2",
-    "6.0.0-pre.20220112.2",
+    "6.0.0-pre.20220421.3",
 ]
 
 SUPPORTED_BAZEL_VERSIONS = [
