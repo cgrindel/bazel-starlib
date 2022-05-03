@@ -4,5 +4,6 @@ build --verbose_failures
 # Strict PATH. Helps prevent build cache invalidation due to PATH differences.
 build --incompatible_strict_action_env=true
 
-# Don't allow empty glob patterns by default
-build --incompatible_disallow_empty_glob
+# TODO: ENABLE ME!
+# # Don't allow empty glob patterns by default
+# build --incompatible_disallow_empty_glob
