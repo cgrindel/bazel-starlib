@@ -4,7 +4,6 @@ load(
     "bzlformat_missing_pkgs",
     "bzlformat_pkg",
 )
-load("//markdown:defs.bzl", "markdown_pkg")
 load("//tests:integration_test_common.bzl", "INTEGRATION_TEST_TAGS")
 load("//updatesrc:defs.bzl", "updatesrc_update_all")
 
@@ -35,10 +34,15 @@ package_group(
     ],
 )
 
-markdown_pkg(
-    name = "markdown",
-    doc_files_visibility = ["//:markdown_test_visibility"],
-)
+# GH140: Temporarily disable markdown while adding support for
+# --incompatible_disallow_empty_glob.
+
+# load("//markdown:defs.bzl", "markdown_pkg")
+
+# markdown_pkg(
+#     name = "markdown",
+#     doc_files_visibility = ["//:markdown_test_visibility"],
+# )
 
 # MARK: - Integration Tests
 

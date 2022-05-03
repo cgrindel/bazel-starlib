@@ -1,21 +1,25 @@
-load("@bazel_skylib//rules:build_test.bzl", "build_test")
 load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
-load("//markdown:defs.bzl", "markdown_pkg")
 
 bzlformat_pkg(name = "bzlformat")
 
-markdown_pkg(
-    name = "markdown",
-)
+# GH140: Temporarily disable markdown while adding support for
+# --incompatible_disallow_empty_glob.
 
-# Confirm that these targets are created by markdown_pkg and build.
-build_test(
-    name = "markdown_pkg_expansion_test",
-    targets = [
-        ":markdown_links_md_toc",
-        ":markdown_links_md_toctest",
-        ":markdown_test_md_toc",
-        ":markdown_test_md_toctest",
-        ":markdown_update",
-    ],
-)
+# load("@bazel_skylib//rules:build_test.bzl", "build_test")
+# load("//markdown:defs.bzl", "markdown_pkg")
+
+# markdown_pkg(
+#     name = "markdown",
+# )
+
+# # Confirm that these targets are created by markdown_pkg and build.
+# build_test(
+#     name = "markdown_pkg_expansion_test",
+#     targets = [
+#         ":markdown_links_md_toc",
+#         ":markdown_links_md_toctest",
+#         ":markdown_test_md_toc",
+#         ":markdown_test_md_toctest",
+#         ":markdown_update",
+#     ],
+# )

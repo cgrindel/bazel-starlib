@@ -16,12 +16,15 @@ def _bazeldoc_dependencies():
     )
 
 def _markdown_dependencies():
-    maybe(
-        http_archive,
-        name = "build_bazel_rules_nodejs",
-        sha256 = "e328cb2c9401be495fa7d79c306f5ee3040e8a03b2ebb79b022e15ca03770096",
-        urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.4.2/rules_nodejs-5.4.2.tar.gz"],
-    )
+    # GH140: Temporarily disable markdown while adding support for
+    # --incompatible_disallow_empty_glob.
+
+    # maybe(
+    #     http_archive,
+    #     name = "build_bazel_rules_nodejs",
+    #     sha256 = "e328cb2c9401be495fa7d79c306f5ee3040e8a03b2ebb79b022e15ca03770096",
+    #     urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.4.2/rules_nodejs-5.4.2.tar.gz"],
+    # )
 
     maybe(
         http_archive,
