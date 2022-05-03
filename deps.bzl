@@ -131,12 +131,19 @@ def _compile_from_source_buildtools_dependencies():
         buildifier_location = "com_github_bazelbuild_buildtools/buildifier/buildifier_/buildifier",
     )
 
-def bazel_starlib_dependencies(use_prebuilt_buildtools = True):
+def bazel_starlib_dependencies(
+        use_prebuilt_buildtools = True,
+        use_bazeldoc = True,
+        use_markdown = True):
     """Declares the dependencies for bazel-starlib.
 
     Args:
         use_prebuilt_buildtools: A `bool` specifying whether to use a prebuilt
                                  version of `bazelbuild/buildtools`.
+        use_bazeldoc: A `bool` specifying whether the `bazeldoc` dependencies
+                      should be loaded.
+        use_markdown: A `bool` specifying whether the `markdown` depdendencies
+                      should be loaded.
     """
     maybe(
         http_archive,
@@ -148,9 +155,11 @@ def bazel_starlib_dependencies(use_prebuilt_buildtools = True):
         sha256 = "f7be3474d42aae265405a592bb7da8e171919d74c16f082a5457840f06054728",
     )
 
-    _bazeldoc_dependencies()
+    if use_bazeldoc:
+        _bazeldoc_dependencies()
 
-    _markdown_dependencies()
+    if use_markdown:
+        _markdown_dependencies()
 
     # Buildifier Deps
 
