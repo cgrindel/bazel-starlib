@@ -161,8 +161,6 @@ def bazel_starlib_dependencies(
     if use_markdown:
         _markdown_dependencies()
 
-    # Buildifier Deps
-
     if use_prebuilt_buildtools:
         _prebuilt_buildtools_dependencies()
     else:
