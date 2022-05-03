@@ -22,15 +22,18 @@ load("@buildifier_prebuilt//:defs.bzl", "buildifier_prebuilt_register_toolchains
 
 buildifier_prebuilt_register_toolchains()
 
-# MARK: - NodeJS Deps
+# GH140: Temporarily disable markdown while adding support for
+# --incompatible_disallow_empty_glob.
 
-load("@build_bazel_rules_nodejs//:repositories.bzl", "build_bazel_rules_nodejs_dependencies")
+# # MARK: - NodeJS Deps
 
-build_bazel_rules_nodejs_dependencies()
+# load("@build_bazel_rules_nodejs//:repositories.bzl", "build_bazel_rules_nodejs_dependencies")
 
-load("//markdown:defs.bzl", "markdown_register_node_deps")
+# build_bazel_rules_nodejs_dependencies()
 
-markdown_register_node_deps()
+# load("//markdown:defs.bzl", "markdown_register_node_deps")
+
+# markdown_register_node_deps()
 
 # MARK: - Golang Deps (gh-md-toc)
 

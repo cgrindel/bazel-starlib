@@ -9,29 +9,32 @@ filegroup(
     visibility = ["//:__subpackages__"],
 )
 
-exports_files([
-    "package.json",
-    "yarn.lock",
-])
+# GH140: Temporarily disable markdown while adding support for
+# --incompatible_disallow_empty_glob.
 
-bzl_library(
-    name = "markdown_check_links_test",
-    srcs = ["markdown_check_links_test.bzl"],
-    visibility = ["//markdown:__subpackages__"],
-    deps = [
-        "//bzllib:defs",
-        "@bazel_skylib//lib:shell",
-    ],
-)
+# exports_files([
+#     "package.json",
+#     "yarn.lock",
+# ])
 
-bzl_library(
-    name = "markdown_register_node_deps",
-    srcs = ["markdown_register_node_deps.bzl"],
-    visibility = ["//markdown:__subpackages__"],
-    deps = [
-        "@build_bazel_rules_nodejs//:bzl",
-    ],
-)
+# bzl_library(
+#     name = "markdown_check_links_test",
+#     srcs = ["markdown_check_links_test.bzl"],
+#     visibility = ["//markdown:__subpackages__"],
+#     deps = [
+#         "//bzllib:defs",
+#         "@bazel_skylib//lib:shell",
+#     ],
+# )
+
+# bzl_library(
+#     name = "markdown_register_node_deps",
+#     srcs = ["markdown_register_node_deps.bzl"],
+#     visibility = ["//markdown:__subpackages__"],
+#     deps = [
+#         "@build_bazel_rules_nodejs//:bzl",
+#     ],
+# )
 
 bzl_library(
     name = "markdown_generate_toc",

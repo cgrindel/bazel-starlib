@@ -1,56 +1,60 @@
-load(
-    "//bazeldoc:defs.bzl",
-    "doc_for_provs",
-    "write_header",
-    doc_providers = "providers",
-)
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 bzlformat_pkg(name = "bzlformat")
 
-filegroup(
-    name = "doc_files",
-    srcs = glob(["*.md"]),
-    visibility = ["//:markdown_test_visibility"],
-)
+# GH140: Temporarily disable markdown while adding support for
+# --incompatible_disallow_empty_glob.
 
-# MARK: - Documentation Providers
+# load(
+#     "//bazeldoc:defs.bzl",
+#     "doc_for_provs",
+#     "write_header",
+#     doc_providers = "providers",
+# )
 
-_STARDOC_INPUT = "//markdown:defs.bzl"
+# filegroup(
+#     name = "doc_files",
+#     srcs = glob(["*.md"]),
+#     visibility = ["//:markdown_test_visibility"],
+# )
 
-_DOC_DEPS = ["//markdown:defs"]
+# # MARK: - Documentation Providers
 
-_RULES_AND_MACROS_DOC_PROVIDER = doc_providers.create(
-    name = "rules_and_macros_overview",
-    stardoc_input = _STARDOC_INPUT,
-    symbols = [
-        "markdown_check_links_test",
-        "markdown_generate_toc",
-        "markdown_pkg",
-        "markdown_register_node_deps",
-    ],
-    deps = _DOC_DEPS,
-)
+# _STARDOC_INPUT = "//markdown:defs.bzl"
 
-_ALL_DOC_PROVIDERS = [
-    _RULES_AND_MACROS_DOC_PROVIDER,
-]
+# _DOC_DEPS = ["//markdown:defs"]
 
-# MARK: - Headers
+# _RULES_AND_MACROS_DOC_PROVIDER = doc_providers.create(
+#     name = "rules_and_macros_overview",
+#     stardoc_input = _STARDOC_INPUT,
+#     symbols = [
+#         "markdown_check_links_test",
+#         "markdown_generate_toc",
+#         "markdown_pkg",
+#         "markdown_register_node_deps",
+#     ],
+#     deps = _DOC_DEPS,
+# )
 
-write_header(
-    name = _RULES_AND_MACROS_DOC_PROVIDER.header_label,
-    header_content = [
-        "# Rules and Macros",
-        "",
-        "The rules and macros described below are used to maintain markdown",
-        "files.",
-    ],
-    symbols = _RULES_AND_MACROS_DOC_PROVIDER.symbols,
-)
+# _ALL_DOC_PROVIDERS = [
+#     _RULES_AND_MACROS_DOC_PROVIDER,
+# ]
 
-# MARK: - Generate Documentation from Providers
+# # MARK: - Headers
 
-doc_for_provs(
-    doc_provs = _ALL_DOC_PROVIDERS,
-)
+# write_header(
+#     name = _RULES_AND_MACROS_DOC_PROVIDER.header_label,
+#     header_content = [
+#         "# Rules and Macros",
+#         "",
+#         "The rules and macros described below are used to maintain markdown",
+#         "files.",
+#     ],
+#     symbols = _RULES_AND_MACROS_DOC_PROVIDER.symbols,
+# )
+
+# # MARK: - Generate Documentation from Providers
+
+# doc_for_provs(
+#     doc_provs = _ALL_DOC_PROVIDERS,
+# )
