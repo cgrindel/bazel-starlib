@@ -49,7 +49,7 @@ bzlformat_format = rule(
         "_buildifier": attr.label(
             default = "//bzlformat/tools:buildifier",
             executable = True,
-            cfg = "host",
+            cfg = "exec",
             allow_files = True,
             doc = "The `buildifier` script that executes the formatting.",
         ),

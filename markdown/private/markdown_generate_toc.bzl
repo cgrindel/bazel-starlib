@@ -60,7 +60,7 @@ The markdown files that will be updated with a table of contents.\
         "_toc_generator": attr.label(
             default = "@cgrindel_bazel_starlib//markdown/tools:update_markdown_toc",
             executable = True,
-            cfg = "host",
+            cfg = "exec",
             doc = "Utility that generates a TOC and updates the markdown document.",
         ),
     },
