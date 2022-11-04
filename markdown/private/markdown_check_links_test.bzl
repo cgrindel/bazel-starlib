@@ -115,7 +115,7 @@ If set to true, the markdown-link-check will be configured for verbose output.\
         "_link_checker": attr.label(
             default = "@cgrindel_bazel_starlib//markdown/tools:check_links",
             executable = True,
-            cfg = "host",
+            cfg = "exec",
             doc = "The link checker utility.",
         ),
     },

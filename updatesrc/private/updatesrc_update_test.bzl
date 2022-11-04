@@ -86,7 +86,7 @@ updatesrc_update_test = rule(
         "update_target": attr.label(
             allow_single_file = True,
             executable = True,
-            cfg = "host",
+            cfg = "exec",
         ),
     },
     test = True,
