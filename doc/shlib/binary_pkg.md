@@ -2,7 +2,7 @@
 # `binary_pkg` Rule
 
 
-<a id="#binary_pkg"></a>
+<a id="binary_pkg"></a>
 
 ## binary_pkg
 
@@ -20,7 +20,7 @@ This rule was created to mitigate issues with runtime (i.e., runfiles) not being
 
 | Name  | Description | Type | Mandatory | Default |
 | :------------- | :------------- | :------------- | :------------- | :------------- |
-| <a id="binary_pkg-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/docs/build-ref.html#name">Name</a> | required |  |
-| <a id="binary_pkg-binary"></a>binary |  The binary to be executed.   | <a href="https://bazel.build/docs/build-ref.html#labels">Label</a> | required |  |
+| <a id="binary_pkg-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/concepts/labels#target-names">Name</a> | required |  |
+| <a id="binary_pkg-binary"></a>binary |  The binary to be executed.   | <a href="https://bazel.build/concepts/labels">Label</a> | required |  |
 
 

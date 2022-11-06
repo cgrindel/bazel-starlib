@@ -2,7 +2,7 @@
 # `create_release` Rule
 
 
-<a id="#create_release"></a>
+<a id="create_release"></a>
 
 ## create_release
 

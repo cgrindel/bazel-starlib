@@ -12,7 +12,7 @@ On this page:
   * [updatesrc_update_and_test](#updatesrc_update_and_test)
 
 
-<a id="#updatesrc_update"></a>
+<a id="updatesrc_update"></a>
 
 ## updatesrc_update
 
@@ -34,13 +34,13 @@ Option #2: Rules that provide `UpdateSrcsInfo` can be specified in the `deps` at
 
 | Name  | Description | Type | Mandatory | Default |
 | :------------- | :------------- | :------------- | :------------- | :------------- |
-| <a id="updatesrc_update-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/docs/build-ref.html#name">Name</a> | required |  |
-| <a id="updatesrc_update-deps"></a>deps |  Build targets that output <code>UpdateSrcsInfo</code>.   | <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a> | optional | [] |
-| <a id="updatesrc_update-outs"></a>outs |  Output files that will be used to update the files listed in the <code>srcs</code> attribute. Every file listed in the <code>outs</code> attribute must have a corresponding source file list in the <code>srcs</code> attribute.   | <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a> | optional | [] |
-| <a id="updatesrc_update-srcs"></a>srcs |  Source files that will be updated by the files listed in the <code>outs</code> attribute. Every file listed in the <code>srcs</code> attribute must have a corresponding output file listed in the <code>outs</code> attribute.   | <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a> | optional | [] |
+| <a id="updatesrc_update-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/concepts/labels#target-names">Name</a> | required |  |
+| <a id="updatesrc_update-deps"></a>deps |  Build targets that output <code>UpdateSrcsInfo</code>.   | <a href="https://bazel.build/concepts/labels">List of labels</a> | optional | <code>[]</code> |
+| <a id="updatesrc_update-outs"></a>outs |  Output files that will be used to update the files listed in the <code>srcs</code> attribute. Every file listed in the <code>outs</code> attribute must have a corresponding source file list in the <code>srcs</code> attribute.   | <a href="https://bazel.build/concepts/labels">List of labels</a> | optional | <code>[]</code> |
+| <a id="updatesrc_update-srcs"></a>srcs |  Source files that will be updated by the files listed in the <code>outs</code> attribute. Every file listed in the <code>srcs</code> attribute must have a corresponding output file listed in the <code>outs</code> attribute.   | <a href="https://bazel.build/concepts/labels">List of labels</a> | optional | <code>[]</code> |
 
 
-<a id="#updatesrc_diff_and_update"></a>
+<a id="updatesrc_diff_and_update"></a>
 
 ## updatesrc_diff_and_update
 
@@ -66,7 +66,7 @@ Defines an `updatesrc_update` for the package and `diff_test` targets for each s
 | <a id="updatesrc_diff_and_update-diff_test_visibility"></a>diff_test_visibility |  Optional. The visibility declarations for the <code>diff_test</code> targets.   |  <code>None</code> |
 
 
-<a id="#updatesrc_update_all"></a>
+<a id="updatesrc_update_all"></a>
 
 ## updatesrc_update_all
 

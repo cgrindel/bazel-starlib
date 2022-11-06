@@ -2,7 +2,7 @@
 # `providers` API
 
 
-<a id="#providers.create"></a>
+<a id="providers.create"></a>
 
 ## providers.create
 

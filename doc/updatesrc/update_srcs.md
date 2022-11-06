@@ -2,7 +2,7 @@
 # `update_srcs` API
 
 
-<a id="#update_srcs.create"></a>
+<a id="update_srcs.create"></a>
 
 ## update_srcs.create
 

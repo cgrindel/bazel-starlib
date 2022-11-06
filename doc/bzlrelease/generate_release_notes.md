@@ -2,7 +2,7 @@
 # `generate_release_notes` Rule
 
 
-<a id="#generate_release_notes"></a>
+<a id="generate_release_notes"></a>
 
 ## generate_release_notes
 

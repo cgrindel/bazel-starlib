@@ -2,7 +2,7 @@
 # `update_readme` Rule
 
 
-<a id="#update_readme"></a>
+<a id="update_readme"></a>
 
 ## update_readme
 
@@ -12,7 +12,7 @@ update_readme(<a href="#update_readme-name">name</a>, <a href="#update_readme-ge
 
 Declares an executable target that updates a README.md with an updated workspace snippet.
 
-The utility will replace the lines between `<!-- BEGIN WORKSPACE SNIPPET -->` and     `<!-- END WORKSPACE SNIPPET -->` with the workspace snippet provided by the     `generate_workspace_snippet` utility that is provided.
+The utility will replace the lines between `&lt;!-- BEGIN WORKSPACE SNIPPET --&gt;` and     `&lt;!-- END WORKSPACE SNIPPET --&gt;` with the workspace snippet provided by the     `generate_workspace_snippet` utility that is provided.
 
 
 **PARAMETERS**

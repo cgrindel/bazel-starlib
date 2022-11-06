@@ -9,7 +9,7 @@ On this page:
   * [UpdateSrcsInfo](#UpdateSrcsInfo)
 
 
-<a id="#UpdateSrcsInfo"></a>
+<a id="UpdateSrcsInfo"></a>
 
 ## UpdateSrcsInfo
 

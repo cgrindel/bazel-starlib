@@ -2,7 +2,7 @@
 # `execute_binary` Rule
 
 
-<a id="#execute_binary"></a>
+<a id="execute_binary"></a>
 
 ## execute_binary
 
@@ -26,10 +26,10 @@ You can use a macro which encapsulates the details of the xxx_binary declaration
 
 | Name  | Description | Type | Mandatory | Default |
 | :------------- | :------------- | :------------- | :------------- | :------------- |
-| <a id="execute_binary-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/docs/build-ref.html#name">Name</a> | required |  |
-| <a id="execute_binary-arguments"></a>arguments |  The list of arguments that will be embedded into the resulting executable. <br><br>NOTE: Use this attribute instead of <code>args</code>. The <code>args</code> attribute is not processed for file arguments and is not preserved in the resulting script.   | List of strings | optional | [] |
-| <a id="execute_binary-binary"></a>binary |  The binary to be executed.   | <a href="https://bazel.build/docs/build-ref.html#labels">Label</a> | required |  |
-| <a id="execute_binary-data"></a>data |  Files needed by the binary at runtime.   | <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a> | optional | [] |
-| <a id="execute_binary-file_arguments"></a>file_arguments |  A <code>dict</code> mapping of file labels to placeholder names. If any of the specified <code>arguments</code> for <code>execute_binary</code> are paths to files, add an entry in this attribute where the key is the filename or label referencing the file and the value is a placeholder name. Use the <code>file_placeholder</code> function to create a suitable placeholder string for the arguments.<br><br>Example<br><br><pre><code> execute_binary(     name = "do_something",     arguments = [         "--input",         file_placeholder("foo"),         "--input",         file_placeholder("bar"),     ],     file_arguments = {         # The key is the path          "foo.txt": "foo",         ":bar":  "bar",     }, ) </code></pre>   | <a href="https://bazel.build/docs/skylark/lib/dict.html">Dictionary: Label -> String</a> | optional | {} |
+| <a id="execute_binary-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/concepts/labels#target-names">Name</a> | required |  |
+| <a id="execute_binary-arguments"></a>arguments |  The list of arguments that will be embedded into the resulting executable. <br><br>NOTE: Use this attribute instead of <code>args</code>. The <code>args</code> attribute is not processed for file arguments and is not preserved in the resulting script.   | List of strings | optional | <code>[]</code> |
+| <a id="execute_binary-binary"></a>binary |  The binary to be executed.   | <a href="https://bazel.build/concepts/labels">Label</a> | required |  |
+| <a id="execute_binary-data"></a>data |  Files needed by the binary at runtime.   | <a href="https://bazel.build/concepts/labels">List of labels</a> | optional | <code>[]</code> |
+| <a id="execute_binary-file_arguments"></a>file_arguments |  A <code>dict</code> mapping of file labels to placeholder names. If any of the specified <code>arguments</code> for <code>execute_binary</code> are paths to files, add an entry in this attribute where the key is the filename or label referencing the file and the value is a placeholder name. Use the <code>file_placeholder</code> function to create a suitable placeholder string for the arguments.<br><br>Example<br><br><pre><code> execute_binary(     name = "do_something",     arguments = [         "--input",         file_placeholder("foo"),         "--input",         file_placeholder("bar"),     ],     file_arguments = {         # The key is the path          "foo.txt": "foo",         ":bar":  "bar",     }, ) </code></pre>   | <a href="https://bazel.build/rules/lib/dict">Dictionary: Label -> String</a> | optional | <code>{}</code> |
 
 

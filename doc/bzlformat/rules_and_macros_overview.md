@@ -12,7 +12,7 @@ On this page:
   * [bzlformat_lint_test](#bzlformat_lint_test)
 
 
-<a id="#bzlformat_format"></a>
+<a id="bzlformat_format"></a>
 
 ## bzlformat_format
 
@@ -27,14 +27,14 @@ Formats Starlark source files using Buildifier.
 
 | Name  | Description | Type | Mandatory | Default |
 | :------------- | :------------- | :------------- | :------------- | :------------- |
-| <a id="bzlformat_format-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/docs/build-ref.html#name">Name</a> | required |  |
-| <a id="bzlformat_format-fix_lint_warnings"></a>fix_lint_warnings |  Should lint warnings be fixed, if possible.   | Boolean | optional | True |
-| <a id="bzlformat_format-output_suffix"></a>output_suffix |  The suffix added to the formatted output filename.   | String | optional | ".formatted" |
-| <a id="bzlformat_format-srcs"></a>srcs |  The Starlark source files to format.   | <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a> | required |  |
-| <a id="bzlformat_format-warnings"></a>warnings |  The warnings that should be fixed if lint fix is enabled.   | String | optional | "all" |
+| <a id="bzlformat_format-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/concepts/labels#target-names">Name</a> | required |  |
+| <a id="bzlformat_format-fix_lint_warnings"></a>fix_lint_warnings |  Should lint warnings be fixed, if possible.   | Boolean | optional | <code>True</code> |
+| <a id="bzlformat_format-output_suffix"></a>output_suffix |  The suffix added to the formatted output filename.   | String | optional | <code>".formatted"</code> |
+| <a id="bzlformat_format-srcs"></a>srcs |  The Starlark source files to format.   | <a href="https://bazel.build/concepts/labels">List of labels</a> | required |  |
+| <a id="bzlformat_format-warnings"></a>warnings |  The warnings that should be fixed if lint fix is enabled.   | String | optional | <code>"all"</code> |
 
 
-<a id="#bzlformat_lint_test"></a>
+<a id="bzlformat_lint_test"></a>
 
 ## bzlformat_lint_test
 
@@ -49,12 +49,12 @@ Lints the specified Starlark files using Buildifier.
 
 | Name  | Description | Type | Mandatory | Default |
 | :------------- | :------------- | :------------- | :------------- | :------------- |
-| <a id="bzlformat_lint_test-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/docs/build-ref.html#name">Name</a> | required |  |
-| <a id="bzlformat_lint_test-srcs"></a>srcs |  The Starlark source files to lint.   | <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a> | required |  |
-| <a id="bzlformat_lint_test-warnings"></a>warnings |  The warnings that should be fixed if lint fix is enabled.   | String | optional | "all" |
+| <a id="bzlformat_lint_test-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/concepts/labels#target-names">Name</a> | required |  |
+| <a id="bzlformat_lint_test-srcs"></a>srcs |  The Starlark source files to lint.   | <a href="https://bazel.build/concepts/labels">List of labels</a> | required |  |
+| <a id="bzlformat_lint_test-warnings"></a>warnings |  The warnings that should be fixed if lint fix is enabled.   | String | optional | <code>"all"</code> |
 
 
-<a id="#bzlformat_missing_pkgs"></a>
+<a id="bzlformat_missing_pkgs"></a>
 
 ## bzlformat_missing_pkgs
 
@@ -92,7 +92,7 @@ following targets are defined:
 None.
 
 
-<a id="#bzlformat_pkg"></a>
+<a id="bzlformat_pkg"></a>
 
 ## bzlformat_pkg
 
