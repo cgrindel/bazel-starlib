@@ -14,7 +14,7 @@ On this page:
   * [write_header](#write_header)
 
 
-<a id="#doc_for_provs"></a>
+<a id="doc_for_provs"></a>
 
 ## doc_for_provs
 
@@ -32,7 +32,7 @@ Defines targets for generating documentation, testing that the generated doc mat
 | <a id="doc_for_provs-doc_provs"></a>doc_provs |  A <code>list</code> of document provider <code>struct</code> values as returned from <code>providers.create()</code>.   |  none |
 
 
-<a id="#write_file_list"></a>
+<a id="write_file_list"></a>
 
 ## write_file_list
 
@@ -58,7 +58,7 @@ Defines a target that writes a documentation file that contains a header and a l
 None.
 
 
-<a id="#write_header"></a>
+<a id="write_header"></a>
 
 ## write_header
 

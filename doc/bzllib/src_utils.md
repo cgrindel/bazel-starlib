@@ -2,7 +2,7 @@
 # `src_utils` API
 
 
-<a id="#src_utils.is_path"></a>
+<a id="src_utils.is_path"></a>
 
 ## src_utils.is_path
 
@@ -24,7 +24,7 @@ Determines whether the provided string is a path.
 A `bool` specifying whether the `string` value looks like a path.
 
 
-<a id="#src_utils.is_label"></a>
+<a id="src_utils.is_label"></a>
 
 ## src_utils.is_label
 
@@ -46,7 +46,7 @@ Determines whether the provided string is a label.
 A `bool` specifying whether the `string` value looks like a label.
 
 
-<a id="#src_utils.path_to_name"></a>
+<a id="src_utils.path_to_name"></a>
 
 ## src_utils.path_to_name
 

@@ -2,7 +2,7 @@
 # `hash_sha256` Rule
 
 
-<a id="#hash_sha256"></a>
+<a id="hash_sha256"></a>
 
 ## hash_sha256
 
@@ -17,7 +17,7 @@ Generates a SHA256 hash for the specified file and writes it to a file with the 
 
 | Name  | Description | Type | Mandatory | Default |
 | :------------- | :------------- | :------------- | :------------- | :------------- |
-| <a id="hash_sha256-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/docs/build-ref.html#name">Name</a> | required |  |
-| <a id="hash_sha256-src"></a>src |  The file whose contents should be hashed.   | <a href="https://bazel.build/docs/build-ref.html#labels">Label</a> | required |  |
+| <a id="hash_sha256-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/concepts/labels#target-names">Name</a> | required |  |
+| <a id="hash_sha256-src"></a>src |  The file whose contents should be hashed.   | <a href="https://bazel.build/concepts/labels">Label</a> | required |  |
 
 

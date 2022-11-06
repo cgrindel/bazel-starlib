@@ -2,7 +2,7 @@
 # `generate_workspace_snippet` Rule
 
 
-<a id="#generate_workspace_snippet"></a>
+<a id="generate_workspace_snippet"></a>
 
 ## generate_workspace_snippet
 
