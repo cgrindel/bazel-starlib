@@ -4,6 +4,23 @@ load("//:deps.bzl", "bazel_starlib_dependencies")
 
 bazel_starlib_dependencies()
 
+# gazelle:repo bazel_gazelle
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("//markdown:deps.bzl", "bazel_starlib_markdown_dependencies")
+
+bazel_starlib_markdown_dependencies()
+
+# load("//:markdown/github_markdown_toc_go_repositories.bzl", "github_markdown_toc_go_repositories")
+# # gazelle:repository_macro markdown/github_markdown_toc_go_repositories.bzl%github_markdown_toc_go_repositories
+# github_markdown_toc_go_repositories()
+
+go_rules_dependencies()
+
+go_register_toolchains(version = "1.19.1")
+
+gazelle_dependencies()
+
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 
 bazel_skylib_workspace()
@@ -34,20 +51,6 @@ buildifier_prebuilt_register_toolchains()
 # load("//markdown:defs.bzl", "markdown_register_node_deps")
 
 # markdown_register_node_deps()
-
-# MARK: - Golang Deps (gh-md-toc)
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-load("//markdown:deps.bzl", "bazel_starlib_markdown_dependencies")
-
-bazel_starlib_markdown_dependencies()
-
-go_rules_dependencies()
-
-go_register_toolchains(version = "1.17.6")
-
-gazelle_dependencies()
 
 # MARK: - Integration Testing
 
