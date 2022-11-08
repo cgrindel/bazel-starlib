@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "go_deps_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/cgrindel/bazel-starlib/cmd/go_deps",
+    visibility = ["//visibility:private"],
+    deps = ["@com_github_ekalinin_github_markdown_toc_go//:github-markdown-toc_go"],
+)
+
+go_binary(
+    name = "go_deps",
+    embed = [":go_deps_lib"],
+    visibility = ["//visibility:public"],
+)

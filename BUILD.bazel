@@ -11,14 +11,14 @@ load("//updatesrc:defs.bzl", "updatesrc_update_all")
 # gazelle:prefix github.com/cgrindel/bazel-starlib
 gazelle(name = "gazelle")
 
-# gazelle(
-#     name = "gazelle_update_repos_for_github_markdown_toc",
-#     args = [
-#         "github.com/ekalinin/github-markdown-toc.go",
-#         "-to_macro=markdown/deps.bzl%bazel_starlib_markdown_go_dependencies",
-#     ],
-#     command = "update-repos",
-# )
+gazelle(
+    name = "gazelle_update_repos",
+    args = [
+        "-from_file=go.mod",
+        "-to_macro=go_deps.bzl%bazel_starlib_go_dependencies",
+    ],
+    command = "update-repos",
+)
 
 # MARK: - Bazel Starlark Lint and Formatting
 

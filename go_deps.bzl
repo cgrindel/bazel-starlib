@@ -1,8 +1,11 @@
-"""Go repository dependencies for github-markdown-toc-go."""
+"""Module that contains functions specifying the Golang dependencies for the \
+bazel-starlib repository.
+"""
 
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
-def github_markdown_toc_go_repositories():
+def bazel_starlib_go_dependencies():
+    """Specifies the Golang dependencies for the bazel-starlib repository."""
     go_repository(
         name = "com_github_alecthomas_assert",
         importpath = "github.com/alecthomas/assert",
@@ -40,21 +43,16 @@ def github_markdown_toc_go_repositories():
         version = "v1.1.1",
     )
     go_repository(
+        name = "com_github_ekalinin_github_markdown_toc_go",
+        importpath = "github.com/ekalinin/github-markdown-toc.go",
+        replace = "github.com/cgrindel/github-markdown-toc.go",
+        sum = "h1:rcvDLDuGAd6QT59liW//eYli+PyhyPlrqc+jt2qdezQ=",
+        version = "v0.0.0-20221108150410-563f2322eacc",
+    )
+    go_repository(
         name = "com_github_kr_pretty",
         importpath = "github.com/kr/pretty",
         sum = "h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=",
-        version = "v0.1.0",
-    )
-    go_repository(
-        name = "com_github_kr_pty",
-        importpath = "github.com/kr/pty",
-        sum = "h1:VkoXIwSboBpnk99O/KFauAEILuNHv5DVFKZMBN/gUgw=",
-        version = "v1.1.1",
-    )
-    go_repository(
-        name = "com_github_kr_text",
-        importpath = "github.com/kr/text",
-        sum = "h1:45sCR5RtlFHMR4UwH9sdQ5TC8v0qDQCHnXt+kaKSTVE=",
         version = "v0.1.0",
     )
     go_repository(
@@ -76,12 +74,6 @@ def github_markdown_toc_go_repositories():
         version = "v1.2.0",
     )
     go_repository(
-        name = "com_github_stretchr_objx",
-        importpath = "github.com/stretchr/objx",
-        sum = "h1:4G4v2dO3VZwixGIRoQ5Lfboy6nUhCyYzaqnIAPPhYs4=",
-        version = "v0.1.0",
-    )
-    go_repository(
         name = "com_github_stretchr_testify",
         importpath = "github.com/stretchr/testify",
         sum = "h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=",
@@ -98,12 +90,6 @@ def github_markdown_toc_go_repositories():
         importpath = "gopkg.in/check.v1",
         sum = "h1:YR8cESwS4TdDjEe65xsg0ogRM/Nc3DYOhEAlW+xobZo=",
         version = "v1.0.0-20190902080502-41f04d3bba15",
-    )
-    go_repository(
-        name = "in_gopkg_yaml_v2",
-        importpath = "gopkg.in/yaml.v2",
-        sum = "h1:/eiJrUcujPVeJ3xlSWaiNi3uSVmDGBK1pDHUHAnao1I=",
-        version = "v2.2.4",
     )
     go_repository(
         name = "in_gopkg_yaml_v3",
