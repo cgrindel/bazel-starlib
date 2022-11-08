@@ -1,3 +1,4 @@
+load("@bazel_gazelle//:def.bzl", "gazelle")
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load(
     "//bzlformat:defs.bzl",
@@ -6,6 +7,18 @@ load(
 )
 load("//tests:integration_test_common.bzl", "INTEGRATION_TEST_TAGS")
 load("//updatesrc:defs.bzl", "updatesrc_update_all")
+
+# gazelle:prefix github.com/cgrindel/bazel-starlib
+gazelle(name = "gazelle")
+
+gazelle(
+    name = "gazelle_update_repos",
+    args = [
+        "-from_file=go.mod",
+        "-to_macro=go_deps.bzl%bazel_starlib_go_dependencies",
+    ],
+    command = "update-repos",
+)
 
 # MARK: - Bazel Starlark Lint and Formatting
 
@@ -22,7 +35,14 @@ updatesrc_update_all(
     targets_to_run = [
         "@contrib_rules_bazel_integration_test//tools:update_deleted_packages",
         ":bzlformat_missing_pkgs_fix",
+        ":gazelle_update_repos",
+        ":gazelle",
     ],
+)
+
+alias(
+    name = "tidy",
+    actual = ":update_all",
 )
 
 # MARK: - Markdown Files

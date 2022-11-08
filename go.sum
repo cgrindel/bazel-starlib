@@ -1,0 +1,8 @@
+github.com/cgrindel/github-markdown-toc.go v0.0.0-20221108150410-563f2322eacc h1:rcvDLDuGAd6QT59liW//eYli+PyhyPlrqc+jt2qdezQ=
+github.com/cgrindel/github-markdown-toc.go v0.0.0-20221108150410-563f2322eacc/go.mod h1:27aWizpGXJ9pIZgnGY5NBH7S7y4Qri3dUcPRA9nAD8g=
+github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
+github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
+github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=
+golang.org/x/net v0.1.0 h1:hZ/3BUoy5aId7sCpA/Tc5lt8DkFgdVS2onTpJsZ/fl0=
+golang.org/x/net v0.1.0/go.mod h1:Cx3nUiGt4eDBEyega/BKRp+/AlGL8hYe7U9odMt2Cco=
+gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c h1:dUUwHk2QECo/6vqA44rthZ8ie2QXMNeKRTHCNY2nXvo=

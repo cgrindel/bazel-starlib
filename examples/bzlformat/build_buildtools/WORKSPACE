@@ -10,7 +10,6 @@ load("@cgrindel_bazel_starlib//:deps.bzl", "bazel_starlib_dependencies")
 # Be sure to specify that you do not want to use the prebuilt tools
 bazel_starlib_dependencies(
     use_bazeldoc = False,
-    use_markdown = False,
     use_prebuilt_buildtools = False,
 )
 

@@ -7,10 +7,7 @@ local_repository(
 
 load("@cgrindel_bazel_starlib//:deps.bzl", "bazel_starlib_dependencies")
 
-bazel_starlib_dependencies(
-    use_bazeldoc = False,
-    use_markdown = True,
-)
+bazel_starlib_dependencies(use_bazeldoc = False)
 
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 

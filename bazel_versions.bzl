@@ -1,6 +1,6 @@
 """Bazel Version Declarations"""
 
-CURRENT_BAZEL_VERSION = "5.1.1"
+CURRENT_BAZEL_VERSION = "//:.bazelversion"
 
 OTHER_BAZEL_VERSIONS = [
     "4.2.2",

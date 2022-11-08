@@ -1,9 +1,11 @@
-"""Go repository dependencies for github-markdown-toc-go."""
+"""Module that contains functions specifying the Golang dependencies for the \
+bazel-starlib repository.
+"""
 
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
-def github_markdown_toc_go_repositories():
-    """Declares the Golang repository dependencies for github-markdown-toc-go."""
+def bazel_starlib_go_dependencies():
+    """Specifies the Golang dependencies for the bazel-starlib repository."""
     go_repository(
         name = "com_github_alecthomas_assert",
         importpath = "github.com/alecthomas/assert",
@@ -41,21 +43,16 @@ def github_markdown_toc_go_repositories():
         version = "v1.1.1",
     )
     go_repository(
+        name = "com_github_ekalinin_github_markdown_toc_go",
+        importpath = "github.com/ekalinin/github-markdown-toc.go",
+        replace = "github.com/cgrindel/github-markdown-toc.go",
+        sum = "h1:rcvDLDuGAd6QT59liW//eYli+PyhyPlrqc+jt2qdezQ=",
+        version = "v0.0.0-20221108150410-563f2322eacc",
+    )
+    go_repository(
         name = "com_github_kr_pretty",
         importpath = "github.com/kr/pretty",
         sum = "h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=",
-        version = "v0.1.0",
-    )
-    go_repository(
-        name = "com_github_kr_pty",
-        importpath = "github.com/kr/pty",
-        sum = "h1:VkoXIwSboBpnk99O/KFauAEILuNHv5DVFKZMBN/gUgw=",
-        version = "v1.1.1",
-    )
-    go_repository(
-        name = "com_github_kr_text",
-        importpath = "github.com/kr/text",
-        sum = "h1:45sCR5RtlFHMR4UwH9sdQ5TC8v0qDQCHnXt+kaKSTVE=",
         version = "v0.1.0",
     )
     go_repository(
@@ -77,12 +74,6 @@ def github_markdown_toc_go_repositories():
         version = "v1.2.0",
     )
     go_repository(
-        name = "com_github_stretchr_objx",
-        importpath = "github.com/stretchr/objx",
-        sum = "h1:4G4v2dO3VZwixGIRoQ5Lfboy6nUhCyYzaqnIAPPhYs4=",
-        version = "v0.1.0",
-    )
-    go_repository(
         name = "com_github_stretchr_testify",
         importpath = "github.com/stretchr/testify",
         sum = "h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=",
@@ -101,20 +92,32 @@ def github_markdown_toc_go_repositories():
         version = "v1.0.0-20190902080502-41f04d3bba15",
     )
     go_repository(
-        name = "in_gopkg_yaml_v2",
-        importpath = "gopkg.in/yaml.v2",
-        sum = "h1:/eiJrUcujPVeJ3xlSWaiNi3uSVmDGBK1pDHUHAnao1I=",
-        version = "v2.2.4",
-    )
-    go_repository(
         name = "in_gopkg_yaml_v3",
         importpath = "gopkg.in/yaml.v3",
         sum = "h1:dUUwHk2QECo/6vqA44rthZ8ie2QXMNeKRTHCNY2nXvo=",
         version = "v3.0.0-20200313102051-9f266ea9e77c",
     )
     go_repository(
+        name = "org_golang_x_net",
+        importpath = "golang.org/x/net",
+        sum = "h1:hZ/3BUoy5aId7sCpA/Tc5lt8DkFgdVS2onTpJsZ/fl0=",
+        version = "v0.1.0",
+    )
+    go_repository(
         name = "org_golang_x_sys",
         importpath = "golang.org/x/sys",
-        sum = "h1:F1jZWGFhYfh0Ci55sIpILtKKK8p3i2/krTr0H1rg74I=",
-        version = "v0.0.0-20210630005230-0f9fa26af87c",
+        sum = "h1:kunALQeHf1/185U1i0GOB/fy1IPRDDpuoOOqRReG57U=",
+        version = "v0.1.0",
+    )
+    go_repository(
+        name = "org_golang_x_term",
+        importpath = "golang.org/x/term",
+        sum = "h1:g6Z6vPFA9dYBAF7DWcH6sCcOntplXsDKcliusYijMlw=",
+        version = "v0.1.0",
+    )
+    go_repository(
+        name = "org_golang_x_text",
+        importpath = "golang.org/x/text",
+        sum = "h1:BrVqGRd7+k1DiOgtnFvAkoQEWQvBc25ouMJM6429SFg=",
+        version = "v0.4.0",
     )

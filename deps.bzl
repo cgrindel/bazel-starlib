@@ -15,57 +15,6 @@ def _bazeldoc_dependencies():
         ],
     )
 
-def _markdown_dependencies():
-    # GH140: Temporarily disable markdown while adding support for
-    # --incompatible_disallow_empty_glob.
-
-    # maybe(
-    #     http_archive,
-    #     name = "build_bazel_rules_nodejs",
-    #     sha256 = "e328cb2c9401be495fa7d79c306f5ee3040e8a03b2ebb79b022e15ca03770096",
-    #     urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.4.2/rules_nodejs-5.4.2.tar.gz"],
-    # )
-
-    maybe(
-        http_archive,
-        name = "io_bazel_rules_go",
-        sha256 = "099a9fb96a376ccbbb7d291ed4ecbdfd42f6bc822ab77ae6f1b5cb9e914e94fa",
-        urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.35.0/rules_go-v0.35.0.zip",
-            "https://github.com/bazelbuild/rules_go/releases/download/v0.35.0/rules_go-v0.35.0.zip",
-        ],
-    )
-
-    maybe(
-        http_archive,
-        name = "bazel_gazelle",
-        sha256 = "de69a09dc70417580aabf20a28619bb3ef60d038470c7cf8442fafcf627c21cb",
-        urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.24.0/bazel-gazelle-v0.24.0.tar.gz",
-            "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.24.0/bazel-gazelle-v0.24.0.tar.gz",
-        ],
-    )
-
-    maybe(
-        http_archive,
-        name = "ekalinin_github_markdown_toc",
-        sha256 = "6bfeab2b28e5c7ad1d5bee9aa6923882a01f56a7f2d0f260f01acde2111f65af",
-        strip_prefix = "github-markdown-toc.go-1.2.0",
-        urls = ["https://github.com/ekalinin/github-markdown-toc.go/archive/refs/tags/1.2.0.tar.gz"],
-        build_file_content = """\
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
-
-go_binary(
-    name = "gh_md_toc",
-    srcs = glob(["*.go"], exclude = ["*_test.go"]),
-    deps = [
-        "@in_gopkg_alecthomas_kingpin_v2//:go_default_library",
-    ],
-    visibility = ["//visibility:public"],
-)
-""",
-    )
-
 def _prebuilt_buildtools_dependencies():
     maybe(
         http_archive,
@@ -86,26 +35,6 @@ def _prebuilt_buildtools_dependencies():
     )
 
 def _compile_from_source_buildtools_dependencies():
-    maybe(
-        http_archive,
-        name = "io_bazel_rules_go",
-        sha256 = "099a9fb96a376ccbbb7d291ed4ecbdfd42f6bc822ab77ae6f1b5cb9e914e94fa",
-        urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.35.0/rules_go-v0.35.0.zip",
-            "https://github.com/bazelbuild/rules_go/releases/download/v0.35.0/rules_go-v0.35.0.zip",
-        ],
-    )
-
-    maybe(
-        http_archive,
-        name = "bazel_gazelle",
-        sha256 = "de69a09dc70417580aabf20a28619bb3ef60d038470c7cf8442fafcf627c21cb",
-        urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.24.0/bazel-gazelle-v0.24.0.tar.gz",
-            "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.24.0/bazel-gazelle-v0.24.0.tar.gz",
-        ],
-    )
-
     maybe(
         http_archive,
         name = "com_google_protobuf",
@@ -136,16 +65,13 @@ def _compile_from_source_buildtools_dependencies():
 
 def bazel_starlib_dependencies(
         use_prebuilt_buildtools = True,
-        use_bazeldoc = True,
-        use_markdown = True):
+        use_bazeldoc = True):
     """Declares the dependencies for bazel-starlib.
 
     Args:
         use_prebuilt_buildtools: A `bool` specifying whether to use a prebuilt
                                  version of `bazelbuild/buildtools`.
         use_bazeldoc: A `bool` specifying whether the `bazeldoc` dependencies
-                      should be loaded.
-        use_markdown: A `bool` specifying whether the `markdown` depdendencies
                       should be loaded.
     """
     maybe(
@@ -158,11 +84,28 @@ def bazel_starlib_dependencies(
         sha256 = "74d544d96f4a5bb630d465ca8bbcfe231e3594e5aae57e1edbf17a6eb3ca2506",
     )
 
+    maybe(
+        http_archive,
+        name = "io_bazel_rules_go",
+        sha256 = "099a9fb96a376ccbbb7d291ed4ecbdfd42f6bc822ab77ae6f1b5cb9e914e94fa",
+        urls = [
+            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.35.0/rules_go-v0.35.0.zip",
+            "https://github.com/bazelbuild/rules_go/releases/download/v0.35.0/rules_go-v0.35.0.zip",
+        ],
+    )
+
+    maybe(
+        http_archive,
+        name = "bazel_gazelle",
+        sha256 = "efbbba6ac1a4fd342d5122cbdfdb82aeb2cf2862e35022c752eaddffada7c3f3",
+        urls = [
+            "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.27.0/bazel-gazelle-v0.27.0.tar.gz",
+            "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.27.0/bazel-gazelle-v0.27.0.tar.gz",
+        ],
+    )
+
     if use_bazeldoc:
         _bazeldoc_dependencies()
-
-    if use_markdown:
-        _markdown_dependencies()
 
     if use_prebuilt_buildtools:
         _prebuilt_buildtools_dependencies()
