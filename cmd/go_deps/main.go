@@ -14,20 +14,9 @@ func main() {
 	fmt.Printf("TOC:\n%s", ghtoc)
 }
 
+// Use the markdown package so that it is a dependency.
 func generateToc() string {
-	doc := &gmt.GHDoc{
-		html: `
-	<h1>
-		<a id="user-content-readme-in-another-language" class="anchor" href="#readme-in-another-language" aria-hidden="true">
-			<span class="octicon octicon-link"></span>
-		</a>
-		README in another language
-	</h1>
-	`, AbsPaths: false,
-		Depth:  0,
-		Escape: true,
-		Indent: 2,
-	}
+	doc := gmt.NewGHDoc("", false, 0, 0, true, "", 2, false)
 	toc := *doc.GrabToc()
 	return strings.Join(toc, "\n")
 }
