@@ -26,6 +26,28 @@ load("@io_bazel_stardoc//:setup.bzl", "stardoc_repositories")
 
 stardoc_repositories()
 
+# Starlark Gazelle Extension
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# http_archive(
+#     name = "bazel_skylib_gazelle_plugin",
+#     sha256 = "3b620033ca48fcd6f5ef2ac85e0f6ec5639605fa2f627968490e52fc91a9932f",
+#     # strip_prefix = "bazel-skylib-1.3.0/gazelle",
+#     strip_prefix = "bazel-skylib-1.3.0",
+#     urls = [
+#         "https://github.com/bazelbuild/bazel-skylib/archive/1.3.0.tar.gz",
+#     ],
+# )
+
+# load("@bazel_skylib_gazelle_plugin//:workspace.bzl", "bazel_skylib_gazelle_plugin_workspace")
+
+# bazel_skylib_gazelle_plugin_workspace()
+
+# load("@bazel_skylib_gazelle_plugin//:setup.bzl", "bazel_skylib_gazelle_plugin_setup")
+
+# bazel_skylib_gazelle_plugin_setup()
+
 # MARK: - Prebuilt Buildtools Deps
 
 load("@buildifier_prebuilt//:deps.bzl", "buildifier_prebuilt_deps")
@@ -37,8 +59,6 @@ load("@buildifier_prebuilt//:defs.bzl", "buildifier_prebuilt_register_toolchains
 buildifier_prebuilt_register_toolchains()
 
 # MARK: - Integration Testing
-
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "contrib_rules_bazel_integration_test",
