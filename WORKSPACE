@@ -12,13 +12,6 @@ load("//:go_deps.bzl", "bazel_starlib_go_dependencies")
 # gazelle:repository_macro go_deps.bzl%bazel_starlib_go_dependencies
 bazel_starlib_go_dependencies()
 
-# load("//markdown:deps.bzl", "bazel_starlib_markdown_dependencies")
-# bazel_starlib_markdown_dependencies()
-
-# load("//:markdown/github_markdown_toc_go_repositories.bzl", "github_markdown_toc_go_repositories")
-# # gazelle:repository_macro markdown/github_markdown_toc_go_repositories.bzl%github_markdown_toc_go_repositories
-# github_markdown_toc_go_repositories()
-
 go_rules_dependencies()
 
 go_register_toolchains(version = "1.19.1")
