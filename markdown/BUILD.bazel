@@ -42,8 +42,3 @@ bzl_library(
         "//markdown/private:markdown_pkg",
     ],
 )
-
-bzl_library(
-    name = "deps",
-    srcs = ["deps.bzl"],
-)
