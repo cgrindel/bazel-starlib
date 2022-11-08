@@ -10,10 +10,11 @@ then used to identify the transitive dependencies and saves them to `go_deps.bzl
 Update the `main.go` in this directory to depend upon the desired Golang package. Be sure to use the
 package in some way. Otherwise, `go mod tidy` will remove it.
 
-Execute `//:tidy` to update the `go_deps.bzl` and ensure that the build files are updated properly.
+Execute the following to update the go module files, resolve the Golang dependencies and update the
+Bazel build files.
 
 ```sh
-$ go mod tidy
+# bazel run @go_sdk//:bin/go -- mod tidy
 $ bazel run //:gazelle_update_repos
 $ bazel run //:gazelle
 ```
