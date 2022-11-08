@@ -1,3 +1,5 @@
+github.com/cgrindel/github-markdown-toc.go v0.0.0-20220910061337-2d4fdaaf52fa h1:dZs62KcQYL8/J+WjZJo40Qx88T3aQnG1W8RZiM5g1Ns=
+github.com/cgrindel/github-markdown-toc.go v0.0.0-20220910061337-2d4fdaaf52fa/go.mod h1:jo6dTN2y9WC5B1JUlJxjFQdK/YknT186Q1qeFc38pW8=
 github.com/cgrindel/github-markdown-toc.go v0.0.0-20221108150410-563f2322eacc h1:rcvDLDuGAd6QT59liW//eYli+PyhyPlrqc+jt2qdezQ=
 github.com/cgrindel/github-markdown-toc.go v0.0.0-20221108150410-563f2322eacc/go.mod h1:27aWizpGXJ9pIZgnGY5NBH7S7y4Qri3dUcPRA9nAD8g=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
