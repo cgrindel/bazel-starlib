@@ -4,12 +4,13 @@ package(default_visibility = ["//visibility:public"])
 
 exports_files(["header.sh"])
 
-bzl_library(
-    name = "header",
-    srcs = ["header.bzl"],
-)
-
 sh_binary(
     name = "add_header",
     srcs = ["header.sh"],
+)
+
+bzl_library(
+    name = "header",
+    srcs = ["header.bzl"],
+    deps = ["@cgrindel_bazel_starlib//updatesrc:defs"],
 )

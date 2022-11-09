@@ -1,3 +1,4 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("@cgrindel_bazel_starlib//updatesrc/private:updatesrc_update_test.bzl", "updatesrc_update_test")
 load("@cgrindel_bazel_starlib//updatesrc:defs.bzl", "updatesrc_update")
 load(":letters.bzl", "letters")
@@ -55,4 +56,10 @@ updatesrc_update_test(
     srcs = _LETTER_SRCS,
     outs = _LETTER_OUT_NAMES,
     update_target = ":src_out",
+)
+
+bzl_library(
+    name = "letters",
+    srcs = ["letters.bzl"],
+    visibility = ["//visibility:public"],
 )

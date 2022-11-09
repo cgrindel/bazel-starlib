@@ -6,6 +6,7 @@ bzlformat_pkg(name = "bzlformat")
 bzl_library(
     name = "src_utils",
     srcs = ["src_utils.bzl"],
+    visibility = ["//visibility:public"],
     deps = [
         "//bzllib:defs",
     ],

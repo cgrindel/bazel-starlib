@@ -1,4 +1,4 @@
-load("@bazel_gazelle//:def.bzl", "gazelle")
+load("@bazel_gazelle//:def.bzl", "DEFAULT_LANGUAGES", "gazelle", "gazelle_binary")
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load(
     "//bzlformat:defs.bzl",
@@ -8,8 +8,20 @@ load(
 load("//tests:integration_test_common.bzl", "INTEGRATION_TEST_TAGS")
 load("//updatesrc:defs.bzl", "updatesrc_update_all")
 
+# MARK: - Gazelle
+
+gazelle_binary(
+    name = "gazelle_bin",
+    languages = DEFAULT_LANGUAGES + [
+        "@bazel_skylib//gazelle/bzl",
+    ],
+)
+
 # gazelle:prefix github.com/cgrindel/bazel-starlib
-gazelle(name = "gazelle")
+gazelle(
+    name = "gazelle",
+    gazelle = ":gazelle_bin",
+)
 
 gazelle(
     name = "gazelle_update_repos",
@@ -74,12 +86,6 @@ package_group(
         "//examples/...",
         "//tests/...",
     ],
-)
-
-bzl_library(
-    name = "bazel_versions",
-    srcs = ["bazel_versions.bzl"],
-    visibility = [":integration_test_visibility"],
 )
 
 # Provides the *.bazlerc files for the example workspace integration tests.
@@ -170,4 +176,34 @@ test_suite(
         "//tests/updatesrc_tests:integration_tests",
     ],
     visibility = ["//:__subpackages__"],
+)
+
+bzl_library(
+    name = "deps",
+    srcs = ["deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":bazel_starlib_buildtools",
+        "@bazel_tools//tools/build_defs/repo:http.bzl",
+        "@bazel_tools//tools/build_defs/repo:utils.bzl",
+    ],
+)
+
+bzl_library(
+    name = "go_deps",
+    srcs = ["go_deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_gazelle//:deps"],
+)
+
+bzl_library(
+    name = "bazel_starlib_buildtools",
+    srcs = ["bazel_starlib_buildtools.bzl"],
+    visibility = ["//visibility:public"],
+)
+
+bzl_library(
+    name = "bazel_versions",
+    srcs = ["bazel_versions.bzl"],
+    visibility = ["//visibility:public"],
 )
