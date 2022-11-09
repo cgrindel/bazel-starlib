@@ -34,10 +34,6 @@ bzl_library(
     srcs = ["defs.bzl"],
     visibility = ["//visibility:public"],
     deps = [
-        # GH140: Temporarily disable markdown while adding support for
-        # --incompatible_disallow_empty_glob.
-        # "//markdown/private:markdown_check_links_test",
-        # "//markdown/private:markdown_register_node_deps",
         "//markdown/private:markdown_generate_toc",
         "//markdown/private:markdown_pkg",
     ],

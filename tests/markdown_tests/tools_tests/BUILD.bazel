@@ -2,22 +2,6 @@ load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
 
 bzlformat_pkg(name = "bzlformat")
 
-# GH140: Temporarily disable markdown while adding support for
-# --incompatible_disallow_empty_glob.
-
-# sh_test(
-#     name = "check_links_test",
-#     srcs = ["check_links_test.sh"],
-#     data = [
-#         "//markdown:default_markdown_link_check_config",
-#         "//markdown/tools:check_links",
-#     ],
-#     deps = [
-#         "@bazel_tools//tools/bash/runfiles",
-#         "@cgrindel_bazel_starlib//shlib/lib:assertions",
-#     ],
-# )
-
 sh_test(
     name = "update_markdown_doc_test",
     srcs = ["update_markdown_doc_test.sh"],

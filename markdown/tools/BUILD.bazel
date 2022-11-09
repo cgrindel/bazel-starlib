@@ -8,22 +8,6 @@ filegroup(
     visibility = ["//:__subpackages__"],
 )
 
-# GH140: Temporarily disable markdown while adding support for
-# --incompatible_disallow_empty_glob.
-
-# sh_binary(
-#     name = "check_links",
-#     srcs = ["check_links.sh"],
-#     data = [
-#         "@cgrindel_bazel_starlib_markdown_npm//markdown-link-check/bin:markdown-link-check",
-#     ],
-#     visibility = ["//visibility:public"],
-#     deps = [
-#         "//shlib/lib:fail",
-#         "@bazel_tools//tools/bash/runfiles",
-#     ],
-# )
-
 sh_binary(
     name = "update_markdown_doc",
     srcs = ["update_markdown_doc.sh"],
