@@ -22,11 +22,12 @@ The args attribute is not supported for execute_binary. Use the arguments instea
         arguments = ctx.attr.arguments,
         placeholder_dict = placeholder_dict,
         workspace_name = ctx.workspace_name,
+        execute_in_workspace = ctx.attr.execute_in_workspace,
     )
 
     # The file_arguments attribute shows up as a dict under ctx.attr.file_arguments and
     # as a list under ctx.files.file_arguments
-    runfiles = ctx.runfiles(files = ctx.files.data + ctx.files.file_arguments)
+    runfiles = ctx.runfiles(files = ctx.files.data + ctx.files.file_arguments + ctx.files.binary)
     runfiles = execute_binary_utils.collect_runfiles(
         runfiles,
         [ctx.attr.binary] + ctx.attr.file_arguments.keys(),
@@ -46,6 +47,7 @@ processed for file arguments and is not preserved in the resulting script.
 """,
         ),
         "binary": attr.label(
+            allow_files = True,
             executable = True,
             mandatory = True,
             cfg = "target",
@@ -54,6 +56,11 @@ processed for file arguments and is not preserved in the resulting script.
         "data": attr.label_list(
             allow_files = True,
             doc = "Files needed by the binary at runtime.",
+        ),
+        "execute_in_workspace": attr.bool(
+            doc = """\
+If true, the binary will be executed in the Bazel workspace (i.e., source) directory.\
+""",
         ),
         "file_arguments": attr.label_keyed_string_dict(
             allow_files = True,

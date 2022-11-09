@@ -48,6 +48,7 @@ def _write_execute_binary_script(
         bin_path,
         arguments,
         workspace_name,
+        execute_in_workspace = False,
         placeholder_dict = {}):
     quoted_args = _prepare_arguments(arguments, workspace_name, placeholder_dict)
     write_file(
@@ -70,12 +71,17 @@ set -euo pipefail
 """ + """\
 workspace_name="{workspace_name}"
 bin_path="{bin_path}"
-""".format(bin_path = bin_path, workspace_name = workspace_name) + """\
+execute_in_workspace="{execute_in_workspace}"
+""".format(
+            bin_path = bin_path,
+            workspace_name = workspace_name,
+            execute_in_workspace = "true" if execute_in_workspace else "false",
+        ) + """\
 
 # If the bin_path can be found relative to the current directory, use it.
 # Otherwise, look for it under the runfiles directory.
 if [[ -f "${bin_path}" ]]; then
-  binary="${bin_path}"
+  binary="${PWD}/${bin_path}"
 else
   binary="${RUNFILES_DIR}/${workspace_name}/${bin_path}"
 fi
@@ -91,6 +97,11 @@ cmd=( "${binary}" )
 
 # Add any args that were passed to this invocation
 [[ $# > 0 ]] && cmd+=( "${@}" )
+
+# Change to the workspace directory if configured to do so
+if [[ "${execute_in_workspace}" == "true" ]]; then
+  cd "${BUILD_WORKSPACE_DIRECTORY}"
+fi
 
 # Execute the binary with its args
 "${cmd[@]}"
