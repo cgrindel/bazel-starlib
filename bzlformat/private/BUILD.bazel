@@ -34,7 +34,9 @@ bzl_library(
 
 bzl_library(
     name = "bzlformat_lint_test",
-    # keep - The Skylib gazelle plugin ignores _test.bzl files (https://github.com/bazelbuild/bazel-skylib/blob/main/gazelle/bzl/gazelle.go#L49-L52)
+    # The Skylib gazelle plugin ignores _test.bzl files.
+    # https://github.com/bazelbuild/bazel-skylib/blob/main/gazelle/bzl/gazelle.go#L49-L52
+    # keep
     srcs = ["bzlformat_lint_test.bzl"],
     deps = [
         "//shlib/rules:execute_binary",
