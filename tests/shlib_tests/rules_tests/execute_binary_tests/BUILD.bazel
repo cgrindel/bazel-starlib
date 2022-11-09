@@ -139,3 +139,28 @@ sh_test(
         "@bazel_tools//tools/bash/runfiles",
     ],
 )
+
+# MARK: - Test execute_binary with execute_in_workspace
+
+sh_binary(
+    name = "find_workspace",
+    srcs = ["find_workspace.sh"],
+)
+
+execute_binary(
+    name = "find_workspace_eb",
+    binary = ":find_workspace",
+    execute_in_workspace = True,
+)
+
+sh_test(
+    name = "find_workspace_eb_test",
+    srcs = ["find_workspace_eb_test.sh"],
+    data = [
+        ":find_workspace_eb",
+    ],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_starlib//shlib/lib:assertions",
+    ],
+)

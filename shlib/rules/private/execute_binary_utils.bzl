@@ -75,7 +75,7 @@ execute_in_workspace="{execute_in_workspace}"
 """.format(
             bin_path = bin_path,
             workspace_name = workspace_name,
-            execute_in_workspace = str(execute_in_workspace),
+            execute_in_workspace = "true" if execute_in_workspace else "false",
         ) + """\
 
 # If the bin_path can be found relative to the current directory, use it.
@@ -84,10 +84,6 @@ if [[ -f "${bin_path}" ]]; then
   binary="${PWD}/${bin_path}"
 else
   binary="${RUNFILES_DIR}/${workspace_name}/${bin_path}"
-fi
-
-if [[ "${execute_in_workspace}" == "true" ]]; then
-  cd "${BUILD_WORKSPACE_DIRECTORY}"
 fi
 
 # Construct the command (binary plus args).
@@ -101,6 +97,11 @@ cmd=( "${binary}" )
 
 # Add any args that were passed to this invocation
 [[ $# > 0 ]] && cmd+=( "${@}" )
+
+# Change to the workspace directory if configured to do so
+if [[ "${execute_in_workspace}" == "true" ]]; then
+  cd "${BUILD_WORKSPACE_DIRECTORY}"
+fi
 
 # Execute the binary with its args
 "${cmd[@]}"
