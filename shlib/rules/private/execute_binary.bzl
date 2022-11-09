@@ -27,7 +27,7 @@ The args attribute is not supported for execute_binary. Use the arguments instea
 
     # The file_arguments attribute shows up as a dict under ctx.attr.file_arguments and
     # as a list under ctx.files.file_arguments
-    runfiles = ctx.runfiles(files = ctx.files.data + ctx.files.file_arguments)
+    runfiles = ctx.runfiles(files = ctx.files.data + ctx.files.file_arguments + ctx.files.binary)
     runfiles = execute_binary_utils.collect_runfiles(
         runfiles,
         [ctx.attr.binary] + ctx.attr.file_arguments.keys(),
@@ -47,6 +47,7 @@ processed for file arguments and is not preserved in the resulting script.
 """,
         ),
         "binary": attr.label(
+            allow_files = True,
             executable = True,
             mandatory = True,
             cfg = "target",
