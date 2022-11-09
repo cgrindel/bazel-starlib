@@ -3,9 +3,14 @@ load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
 
 package(default_visibility = ["//mockascript:__subpackages__"])
 
+bzlformat_pkg()
+
+bzl_library(
+    name = "foo",
+    srcs = ["foo.bzl"],
+)
+
 bzl_library(
     name = "mockascript_library",
     srcs = ["mockascript_library.bzl"],
 )
-
-bzlformat_pkg()

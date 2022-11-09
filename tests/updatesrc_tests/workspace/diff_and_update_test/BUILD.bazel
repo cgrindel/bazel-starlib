@@ -1,3 +1,4 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
 load(":sorted_genquery.bzl", "sorted_genquery")
@@ -106,4 +107,10 @@ diff_test(
     name = "with_custom_values_confirm_update_targets",
     file1 = ":with_custom_values_update_query",
     file2 = ":with_custom_values_expected_update_targets",
+)
+
+bzl_library(
+    name = "sorted_genquery",
+    srcs = ["sorted_genquery.bzl"],
+    visibility = ["//visibility:public"],
 )

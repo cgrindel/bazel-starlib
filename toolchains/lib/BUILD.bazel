@@ -6,6 +6,7 @@ bzlformat_pkg(name = "bzlformat")
 bzl_library(
     name = "assets",
     srcs = ["assets.bzl"],
+    visibility = ["//visibility:public"],
     deps = [
         "@bazel_skylib//lib:new_sets",
         "@bazel_skylib//lib:types",

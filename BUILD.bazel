@@ -8,6 +8,8 @@ load(
 load("//tests:integration_test_common.bzl", "INTEGRATION_TEST_TAGS")
 load("//updatesrc:defs.bzl", "updatesrc_update_all")
 
+# MARK: - Gazelle
+
 gazelle_binary(
     name = "gazelle_bin",
     languages = DEFAULT_LANGUAGES + [
@@ -177,18 +179,6 @@ test_suite(
 )
 
 bzl_library(
-    name = "bazel_starlib_buildtools",
-    srcs = ["bazel_starlib_buildtools.bzl"],
-    visibility = ["//visibility:public"],
-)
-
-bzl_library(
-    name = "bazel_versions",
-    srcs = ["bazel_versions.bzl"],
-    visibility = ["//visibility:public"],
-)
-
-bzl_library(
     name = "deps",
     srcs = ["deps.bzl"],
     visibility = ["//visibility:public"],
@@ -204,4 +194,16 @@ bzl_library(
     srcs = ["go_deps.bzl"],
     visibility = ["//visibility:public"],
     deps = ["@bazel_gazelle//:deps"],
+)
+
+bzl_library(
+    name = "bazel_starlib_buildtools",
+    srcs = ["bazel_starlib_buildtools.bzl"],
+    visibility = ["//visibility:public"],
+)
+
+bzl_library(
+    name = "bazel_versions",
+    srcs = ["bazel_versions.bzl"],
+    visibility = ["//visibility:public"],
 )

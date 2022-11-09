@@ -3,13 +3,14 @@ load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 bzlformat_pkg(name = "bzlformat")
 
-bzl_library(
-    name = "integration_test_common",
-    srcs = ["integration_test_common.bzl"],
-)
-
 sh_library(
     name = "setup_git_repo",
     srcs = ["setup_git_repo.sh"],
     visibility = ["//:__subpackages__"],
+)
+
+bzl_library(
+    name = "integration_test_common",
+    srcs = ["integration_test_common.bzl"],
+    visibility = ["//visibility:public"],
 )
