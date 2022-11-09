@@ -16,6 +16,8 @@ gazelle(
     args = [
         "-from_file=go.mod",
         "-to_macro=go_deps.bzl%bazel_starlib_go_dependencies",
+        "-build_external=external",
+        "-prune",
     ],
     command = "update-repos",
 )
