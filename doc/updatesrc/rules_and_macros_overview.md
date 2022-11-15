@@ -71,7 +71,7 @@ Defines an `updatesrc_update` for the package and `diff_test` targets for each s
 ## updatesrc_update_all
 
 <pre>
-updatesrc_update_all(<a href="#updatesrc_update_all-name">name</a>, <a href="#updatesrc_update_all-targets_to_run">targets_to_run</a>)
+updatesrc_update_all(<a href="#updatesrc_update_all-name">name</a>, <a href="#updatesrc_update_all-targets_to_run">targets_to_run</a>, <a href="#updatesrc_update_all-targets_to_run_before">targets_to_run_before</a>)
 </pre>
 
 Defines a runnable target that will query for `updatesrc_update` targets and run them.
@@ -81,7 +81,7 @@ workspace and executes each one. Hence, source files that are mapped
 in these targets will be updated.
 
 Additional targets to execute can be specified using the `targets_to_run`
-attribute.
+and `targets_to_run_before` attributes.
 
 
 **PARAMETERS**
@@ -90,7 +90,8 @@ attribute.
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
 | <a id="updatesrc_update_all-name"></a>name |  The name of the target.   |  none |
-| <a id="updatesrc_update_all-targets_to_run"></a>targets_to_run |  A <code>list</code> of labels to execute in addition to the <code>updatesrc_update</code> targets.   |  <code>[]</code> |
+| <a id="updatesrc_update_all-targets_to_run"></a>targets_to_run |  A <code>list</code> of labels to execute after the <code>updatesrc_update</code> targets.   |  <code>[]</code> |
+| <a id="updatesrc_update_all-targets_to_run_before"></a>targets_to_run_before |  A <code>list</code> of labels to execute before the <code>updatesrc_update</code> targets.   |  <code>[]</code> |
 
 **RETURNS**
 
