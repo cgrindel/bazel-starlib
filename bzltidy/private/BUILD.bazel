@@ -1,7 +1,10 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
 
-exports_files(["tidy.sh"])
+exports_files([
+    "tidy.sh",
+    "check_tidy.sh",
+])
 
 bzlformat_pkg(name = "bzlformat")
 
