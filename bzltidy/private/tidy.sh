@@ -2,6 +2,9 @@
 
 set -o errexit -o nounset -o pipefail
 
+# Purposefully not using Bazel's Bash runfiles support. Running it here,
+# appears to mess up the execution of targets that also use it.
+
 # MARK - Functions
 
 warn() {
