@@ -5,9 +5,9 @@ load(
     "bzlformat_missing_pkgs",
     "bzlformat_pkg",
 )
+load("//bzltidy:defs.bzl", "tidy")
 load("//shlib/rules:execute_binary.bzl", "execute_binary")
 load("//tests:integration_test_common.bzl", "INTEGRATION_TEST_TAGS")
-load("//tidy:defs.bzl", "tidy")
 load("//updatesrc:defs.bzl", "updatesrc_update_all")
 
 # MARK: - Gazelle

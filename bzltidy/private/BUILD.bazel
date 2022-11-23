@@ -8,5 +8,5 @@ bzlformat_pkg(name = "bzlformat")
 bzl_library(
     name = "tidy",
     srcs = ["tidy.bzl"],
-    visibility = ["//tidy:__subpackages__"],
+    visibility = ["//bzltidy:__subpackages__"],
 )

@@ -13,5 +13,5 @@ def tidy(name, targets):
     native.sh_binary(
         name = name,
         args = args,
-        srcs = ["@cgrindel_bazel_starlib//tidy/private:tidy.sh"],
+        srcs = ["@cgrindel_bazel_starlib//bzltidy/private:tidy.sh"],
     )
