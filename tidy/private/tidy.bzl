@@ -9,10 +9,7 @@ def tidy(name, targets):
         name: The name of the target.
         targets: A `list` of targets to execute.
     """
-    args = []
-    for t in targets:
-        args.extend(["--target", t])
-
+    args = targets
     native.sh_binary(
         name = name,
         args = args,
