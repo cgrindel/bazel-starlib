@@ -133,6 +133,8 @@ filegroup(
         "//bzlrelease:all_files",
         "//bzlrelease/private:all_files",
         "//bzlrelease/tools:all_files",
+        "//bzltidy:all_files",
+        "//bzltidy/private:all_files",
         "//markdown:all_files",
         "//markdown/private:all_files",
         "//markdown/tools:all_files",

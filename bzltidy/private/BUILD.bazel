@@ -13,3 +13,11 @@ bzl_library(
     srcs = ["tidy.bzl"],
     visibility = ["//bzltidy:__subpackages__"],
 )
+
+# MARK: - Collect Files for Integation Tests
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)

@@ -9,3 +9,17 @@ bzl_library(
 )
 
 bzlformat_pkg(name = "bzlformat")
+
+filegroup(
+    name = "doc_files",
+    srcs = glob(["*.md"]),
+    visibility = ["//:markdown_test_visibility"],
+)
+
+# MARK: - Collect Files for Integation Tests
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)
