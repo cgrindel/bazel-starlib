@@ -218,8 +218,9 @@ bzl_library(
     visibility = ["//visibility:public"],
 )
 
-bzl_library(
-    name = "bazel_versions",
-    srcs = ["bazel_versions.bzl"],
-    visibility = ["//visibility:public"],
-)
+# TODO(chuck): FIX ME!
+# bzl_library(
+#     name = "bazel_versions",
+#     srcs = ["bazel_versions.bzl"],
+#     visibility = ["//visibility:public"],
+# )
