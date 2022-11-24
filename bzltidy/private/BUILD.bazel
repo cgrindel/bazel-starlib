@@ -1,0 +1,23 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+
+exports_files([
+    "tidy.sh",
+    "check_tidy.sh",
+])
+
+bzlformat_pkg(name = "bzlformat")
+
+# MARK: - Collect Files for Integation Tests
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)
+
+bzl_library(
+    name = "tidy",
+    srcs = ["tidy.bzl"],
+    visibility = ["//bzltidy:__subpackages__"],
+)

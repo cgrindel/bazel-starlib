@@ -1,0 +1,27 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+bzl_library(
+    name = "defs",
+    srcs = ["defs.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["//bzltidy/private:tidy"],
+)
+
+bzlformat_pkg(name = "bzlformat")
+
+filegroup(
+    name = "doc_files",
+    srcs = glob(["*.md"]),
+    visibility = ["//:markdown_test_visibility"],
+)
+
+# MARK: - Collect Files for Integation Tests
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)
