@@ -3,7 +3,8 @@ confirming that the changes have been checked in.
 """
 
 def tidy(name, targets):
-    """Executes the specified targets in order.
+    """Defines targets for executing targets against the workspace and \
+    confirming that there are no changes.
 
     Args:
         name: The name of the target.

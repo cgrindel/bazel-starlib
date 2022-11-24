@@ -72,7 +72,7 @@ git_diff() {
 diff_files() {
   local first="${1}"
   local second="${2}"
-  diff "${first}" "${second}" >/dev/null
+  diff "${first}" "${second}" 
 }
 
 # MARK - Process Args
@@ -135,5 +135,12 @@ after_diff="${after_dir}/diff"
 git_diff "${after_diff}"
 
 # Compare the before and after
-diff_files "${before_status}" "${after_status}" || fail "The git status outputs changed."
-diff_files "${before_diff}" "${after_diff}" || fail "The git diff outputs changed."
+status_diff="$( diff_files "${before_status}" "${after_status}" || true )"
+if [[ -n "${status_diff:-}" ]]; then
+  fail "The git status outputs changed." "${status_diff}"
+fi
+
+diff_diff="$( diff_files "${before_diff}" "${after_diff}" || true )" 
+if [[ -n "${diff_diff:-}" ]]; then
+  fail "The git diff outputs changed." "${diff_diff}"
+fi
