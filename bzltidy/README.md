@@ -42,7 +42,7 @@ The `tidy` macro defines two targets: `tidy` and `tidy_check`. The target named 
 specified targets. The target named `tidy_check` executes `tidy` and checks for any changes in the
 source tree.
 
-### 3. Tidy up you code
+### 3. Tidy up your code
 
 Now, you can run the following to ensure that your source tree is up-to-date:
 
