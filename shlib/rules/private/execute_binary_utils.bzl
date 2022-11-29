@@ -96,7 +96,7 @@ cmd=( "${binary}" )
         ]) + """
 
 # Add any args that were passed to this invocation
-[[ $# > 0 ]] && cmd+=( "${@}" )
+[[ $# -eq 0 ]] || cmd+=( "${@}" )
 
 # Change to the workspace directory if configured to do so
 if [[ "${execute_in_workspace}" == "true" ]]; then
