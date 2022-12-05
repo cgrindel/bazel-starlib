@@ -107,7 +107,7 @@ def make_bazel_labels(workspace_name_resolvers = workspace_name_resolvers):
         )
 
     return struct(
-        create = _create_label_parts,
+        new = _create_label_parts,
         parse = _parse,
         normalize = _normalize,
     )

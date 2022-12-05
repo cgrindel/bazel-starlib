@@ -23,7 +23,7 @@ def _absolute_label_without_repo_name_test(ctx):
 
     value = "//Sources/Foo:chicken"
     actual = bazel_labels.parse(value)
-    expected = bazel_labels.create(
+    expected = bazel_labels.new(
         repository_name = "@",
         package = "Sources/Foo",
         name = "chicken",
@@ -39,7 +39,7 @@ def _absolute_label_with_repo_name_test(ctx):
 
     value = "@my_dep//Sources/Foo:chicken"
     actual = bazel_labels.parse(value)
-    expected = bazel_labels.create(
+    expected = bazel_labels.new(
         repository_name = "@my_dep",
         package = "Sources/Foo",
         name = "chicken",
@@ -55,7 +55,7 @@ def _absolute_label_without_explicit_name_test(ctx):
 
     value = "//Sources/Foo"
     actual = bazel_labels.parse(value)
-    expected = bazel_labels.create(
+    expected = bazel_labels.new(
         repository_name = "@",
         package = "Sources/Foo",
         name = "Foo",
@@ -71,7 +71,7 @@ def _relative_label_with_colon_test(ctx):
 
     value = ":chicken"
     actual = bazel_labels.parse(value)
-    expected = bazel_labels.create(
+    expected = bazel_labels.new(
         repository_name = "@",
         package = "Sources/Foo",
         name = "chicken",
@@ -87,7 +87,7 @@ def _relative_label_without_colon_test(ctx):
 
     value = "chicken"
     actual = bazel_labels.parse(value)
-    expected = bazel_labels.create(
+    expected = bazel_labels.new(
         repository_name = "@",
         package = "Sources/Foo",
         name = "chicken",
