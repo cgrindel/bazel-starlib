@@ -1,0 +1,9 @@
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+load(":normalize_tests.bzl", "normalize_test_suite")
+load(":parse_tests.bzl", "parse_test_suite")
+
+bzlformat_pkg(name = "bzlformat")
+
+normalize_test_suite(name = "normalize_tests")
+
+parse_test_suite(name = "parse_tests")
