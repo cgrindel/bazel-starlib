@@ -14,6 +14,12 @@ filegroup(
 )
 
 bzl_library(
+    name = "bazel_labels",
+    srcs = ["bazel_labels.bzl"],
+    deps = [":workspace_name_resolvers"],
+)
+
+bzl_library(
     name = "filter_srcs",
     srcs = ["filter_srcs.bzl"],
 )
@@ -21,4 +27,9 @@ bzl_library(
 bzl_library(
     name = "src_utils",
     srcs = ["src_utils.bzl"],
+)
+
+bzl_library(
+    name = "workspace_name_resolvers",
+    srcs = ["workspace_name_resolvers.bzl"],
 )
