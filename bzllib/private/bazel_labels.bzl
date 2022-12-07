@@ -87,6 +87,14 @@ def make_bazel_labels(workspace_name_resolvers = workspace_name_resolvers):
         )
 
     def _normalize(value):
+        """Converts a value into a Bazel label string.
+
+        Args:
+            value: A `Label`, `struct` from `bazel_labels.new`, or a `string`.
+
+        Returns:
+            A fully-formed Bazel label string.
+        """
         value_type = type(value)
         if value_type == "Label":
             parts = _new(
