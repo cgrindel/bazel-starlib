@@ -115,6 +115,13 @@ def make_bazel_labels(workspace_name_resolvers = workspace_name_resolvers):
         else:
             fail("Unrecognized type for bazel_labels.normalize.", value)
 
+        pkg_parts = parts.package.split("/")
+        if pkg_parts[-1] == parts.name:
+            return "{repo_name}//{package}".format(
+                repo_name = parts.repository_name,
+                package = parts.package,
+            )
+
         return "{repo_name}//{package}:{name}".format(
             repo_name = parts.repository_name,
             package = parts.package,
