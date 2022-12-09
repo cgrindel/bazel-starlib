@@ -6,6 +6,7 @@ load(
     _make_bazel_labels = "make_bazel_labels",
 )
 load("//bzllib/private:filter_srcs.bzl", _filter_srcs = "filter_srcs")
+load("//bzllib/private:lists.bzl", _lists = "lists")
 load("//bzllib/private:src_utils.bzl", _src_utils = "src_utils")
 load(
     "//bzllib/private:workspace_name_resolvers.bzl",
@@ -21,3 +22,5 @@ make_stub_workspace_name_resolvers = _make_stub_workspace_name_resolvers
 
 bazel_labels = _bazel_labels
 make_bazel_labels = _make_bazel_labels
+
+lists = _lists
