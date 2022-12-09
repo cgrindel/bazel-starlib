@@ -54,10 +54,28 @@ def _absolute_label_without_repo_name_test(ctx):
 
 absolute_label_without_repo_name_test = unittest.make(_absolute_label_without_repo_name_test)
 
+def _package_matches_name_test(ctx):
+    env = unittest.begin(ctx)
+
+    value = "//Sources/Foo:Foo"
+    actual = bazel_labels.normalize(value)
+    expected = "@//Sources/Foo"
+    asserts.equals(env, expected, actual)
+
+    value = "//Foo:Foo"
+    actual = bazel_labels.normalize(value)
+    expected = "@//Foo"
+    asserts.equals(env, expected, actual)
+
+    return unittest.end(env)
+
+package_matches_name_test = unittest.make(_package_matches_name_test)
+
 def normalize_test_suite(name):
     return unittest.suite(
         name,
         relative_label_test,
         absolute_label_with_repo_name_test,
         absolute_label_without_repo_name_test,
+        package_matches_name_test,
     )

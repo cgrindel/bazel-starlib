@@ -11,21 +11,24 @@ load(
     "make_stub_workspace_name_resolvers",
 )
 
+_repo_name = "@example_cool_repo"
+_pkg_name = "Sources/Foo"
+
 bazel_labels = make_bazel_labels(
     workspace_name_resolvers = make_stub_workspace_name_resolvers(
-        repo_name = "@",
-        pkg_name = "Sources/Foo",
+        repo_name = _repo_name,
+        pkg_name = _pkg_name,
     ),
 )
 
 def _absolute_label_without_repo_name_test(ctx):
     env = unittest.begin(ctx)
 
-    value = "//Sources/Foo:chicken"
+    value = "//Sources/Bar:chicken"
     actual = bazel_labels.parse(value)
     expected = bazel_labels.new(
-        repository_name = "@",
-        package = "Sources/Foo",
+        repository_name = _repo_name,
+        package = "Sources/Bar",
         name = "chicken",
     )
     asserts.equals(env, expected, actual)
@@ -37,11 +40,11 @@ absolute_label_without_repo_name_test = unittest.make(_absolute_label_without_re
 def _absolute_label_with_repo_name_test(ctx):
     env = unittest.begin(ctx)
 
-    value = "@my_dep//Sources/Foo:chicken"
+    value = "@my_dep//Sources/Bar:chicken"
     actual = bazel_labels.parse(value)
     expected = bazel_labels.new(
         repository_name = "@my_dep",
-        package = "Sources/Foo",
+        package = "Sources/Bar",
         name = "chicken",
     )
     asserts.equals(env, expected, actual)
@@ -53,12 +56,12 @@ absolute_label_with_repo_name_test = unittest.make(_absolute_label_with_repo_nam
 def _absolute_label_without_explicit_name_test(ctx):
     env = unittest.begin(ctx)
 
-    value = "//Sources/Foo"
+    value = "//Sources/Bar"
     actual = bazel_labels.parse(value)
     expected = bazel_labels.new(
-        repository_name = "@",
-        package = "Sources/Foo",
-        name = "Foo",
+        repository_name = _repo_name,
+        package = "Sources/Bar",
+        name = "Bar",
     )
     asserts.equals(env, expected, actual)
 
@@ -72,8 +75,8 @@ def _relative_label_with_colon_test(ctx):
     value = ":chicken"
     actual = bazel_labels.parse(value)
     expected = bazel_labels.new(
-        repository_name = "@",
-        package = "Sources/Foo",
+        repository_name = _repo_name,
+        package = _pkg_name,
         name = "chicken",
     )
     asserts.equals(env, expected, actual)
@@ -88,8 +91,8 @@ def _relative_label_without_colon_test(ctx):
     value = "chicken"
     actual = bazel_labels.parse(value)
     expected = bazel_labels.new(
-        repository_name = "@",
-        package = "Sources/Foo",
+        repository_name = _repo_name,
+        package = _pkg_name,
         name = "chicken",
     )
     asserts.equals(env, expected, actual)
