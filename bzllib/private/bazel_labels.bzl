@@ -9,17 +9,6 @@ _NAME_SEPARATOR_LEN = len(_NAME_SEPARATOR)
 _PKG_SEPARATOR = "/"
 _PKG_SEPARATOR_LEN = len(_PKG_SEPARATOR)
 
-def _new(name, repository_name = "@", package = ""):
-    # Support `--noincompatible_unambiguous_label_stringification`
-    if not repository_name.startswith("@"):
-        repository_name = "@{}".format(repository_name)
-
-    return struct(
-        repository_name = repository_name,
-        package = package,
-        name = name,
-    )
-
 def make_bazel_labels(workspace_name_resolvers = workspace_name_resolvers):
     """Creates a `bazel_labels` module using the specified name resolver.
 
@@ -29,6 +18,23 @@ def make_bazel_labels(workspace_name_resolvers = workspace_name_resolvers):
     Returns:
         A `struct` that can be used as a `bazel_labels` module.
     """
+
+    def _new(name, repository_name = None, package = None):
+        if repository_name == None:
+            repository_name = workspace_name_resolvers.repository_name()
+
+        # Support `--noincompatible_unambiguous_label_stringification`
+        if not repository_name.startswith("@"):
+            repository_name = "@{}".format(repository_name)
+
+        if package == None:
+            package = workspace_name_resolvers.package_name()
+
+        return struct(
+            repository_name = repository_name,
+            package = package,
+            name = name,
+        )
 
     def _parse(value):
         """Parse a string as a Bazel label returning its parts.
@@ -51,7 +57,7 @@ def make_bazel_labels(workspace_name_resolvers = workspace_name_resolvers):
         if root_sep_pos > 0:
             repo_name = value[:root_sep_pos]
         else:
-            repo_name = workspace_name_resolvers.repository_name()
+            repo_name = None
 
         colon_pos = value.find(_NAME_SEPARATOR)
 
@@ -78,7 +84,7 @@ def make_bazel_labels(workspace_name_resolvers = workspace_name_resolvers):
         if pkg_start_pos > -1:
             package = value[pkg_start_pos:pkg_end_pos]
         else:
-            package = workspace_name_resolvers.package_name()
+            package = None
 
         return _new(
             repository_name = repo_name,
