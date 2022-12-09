@@ -17,6 +17,7 @@ bzl_library(
     deps = [
         "//bzllib/private:bazel_labels",
         "//bzllib/private:filter_srcs",
+        "//bzllib/private:lists",
         "//bzllib/private:src_utils",
         "//bzllib/private:workspace_name_resolvers",
     ],
