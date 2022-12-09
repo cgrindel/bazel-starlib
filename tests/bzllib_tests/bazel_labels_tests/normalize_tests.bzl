@@ -54,7 +54,7 @@ def _absolute_label_without_repo_name_test(ctx):
 
 absolute_label_without_repo_name_test = unittest.make(_absolute_label_without_repo_name_test)
 
-def _package_mathes_name_test(ctx):
+def _package_matches_name_test(ctx):
     env = unittest.begin(ctx)
 
     value = "//Sources/Foo:Foo"
@@ -69,7 +69,7 @@ def _package_mathes_name_test(ctx):
 
     return unittest.end(env)
 
-package_mathes_name_test = unittest.make(_package_mathes_name_test)
+package_matches_name_test = unittest.make(_package_matches_name_test)
 
 def normalize_test_suite(name):
     return unittest.suite(
@@ -77,5 +77,5 @@ def normalize_test_suite(name):
         relative_label_test,
         absolute_label_with_repo_name_test,
         absolute_label_without_repo_name_test,
-        package_mathes_name_test,
+        package_matches_name_test,
     )
