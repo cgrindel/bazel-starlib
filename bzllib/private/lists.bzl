@@ -15,24 +15,30 @@ def _compact(items):
             new_items.append(item)
     return new_items
 
-def _contains(items, target):
+def _contains(items, target_or_fn):
     """Determines if the provide value is found in a list.
 
     Args:
         items: A `list` of items to evaluate.
-        target: The item that may be contained in the items list.
+        target_or_fn: The item that may be contained in the items list or a
+            `function` that takes a single value and returns a `bool`.
 
     Returns:
         A `bool` indicating whether the target item was found in the list.
     """
+    if type(target_or_fn) == "function":
+        bool_fn = target_or_fn
+    else:
+        bool_fn = lambda x: x == target_or_fn
+
     for item in items:
-        if item == target:
+        if bool_fn(item):
             return True
     return False
 
-def _find(items, fn):
+def _find(items, bool_fn):
     for item in items:
-        if fn(item) == True:
+        if bool_fn(item):
             return item
     return None
 
