@@ -30,7 +30,14 @@ def _contains(items, target):
             return True
     return False
 
+def _find(items, fn):
+    for item in items:
+        if fn(item) == True:
+            return item
+    return None
+
 lists = struct(
     compact = _compact,
     contains = _contains,
+    find = _find,
 )
