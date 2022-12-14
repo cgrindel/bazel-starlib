@@ -37,6 +37,16 @@ def _contains(items, target_or_fn):
     return False
 
 def _find(items, bool_fn):
+    """Returns the list item that satisfies the provide boolean function.
+
+    Args:
+        items: A `list` of items to evaluate.
+        bool_fn: A `function` that takes a single parameter (list item) and
+            returns a `bool` indicating whether the meets the criteria.
+
+    Returns:
+        A list item or `None`.
+    """
     for item in items:
         if bool_fn(item):
             return item
