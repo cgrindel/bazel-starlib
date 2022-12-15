@@ -38,6 +38,8 @@ _RULE_DOC_PROVIDERS = [
 ]
 
 _API_SRCS = [
+    "bazel_labels",
+    "lists",
     "src_utils",
 ]
 
