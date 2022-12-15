@@ -38,7 +38,7 @@ def _compile_from_source_buildtools_dependencies():
     maybe(
         http_archive,
         name = "com_google_protobuf",
-        sha256 = "7d688f4af01570718d3908c3379a314117c900fd106e0cb3a004a04e4c018b4a",
+        sha256 = "930c2c3b5ecc6c9c12615cf5ad93f1cd6e12d0aba862b572e076259970ac3a53",
         strip_prefix = "protobuf-3.21.12",
         urls = [
             "https://github.com/protocolbuffers/protobuf/archive/v3.21.12.tar.gz",
