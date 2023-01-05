@@ -52,8 +52,46 @@ def _find(items, bool_fn):
             return item
     return None
 
+def _flatten(items):
+    """Flattens the items to a single list.
+
+    If provided a single item, it is wrapped in a list and processed as if
+    provided as a `list`.
+
+    Args:
+        items: A `list` or a single item.
+
+    Returns:
+        A `list` with all of the items flattened (i.e., no items in the result
+        are an item of type `list`).
+    """
+    if type(items) == "list":
+        results = items
+    else:
+        results = [items]
+
+    finished = False
+    for _ in range(1000):
+        if finished:
+            break
+        finished = True
+        to_process = list(results)
+        results = []
+        for item in to_process:
+            if type(item) == "list":
+                results.extend(item)
+                finished = False
+            else:
+                results.append(item)
+
+    if not finished:
+        fail("Exceeded the maximum number of iterations to flatten the items.")
+
+    return results
+
 lists = struct(
     compact = _compact,
     contains = _contains,
     find = _find,
+    flatten = _flatten,
 )
