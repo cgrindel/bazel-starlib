@@ -68,10 +68,30 @@ def _find_test(ctx):
 
 find_test = unittest.make(_find_test)
 
+def _flatten_test(ctx):
+    env = unittest.begin(ctx)
+
+    actual = lists.flatten("foo")
+    expected = ["foo"]
+    asserts.equals(env, expected, actual)
+
+    actual = lists.flatten(["foo"])
+    expected = ["foo"]
+    asserts.equals(env, expected, actual)
+
+    actual = lists.flatten(["foo", ["alpha", ["omega"]], ["chicken", "cow"]])
+    expected = ["foo", "alpha", "omega", "chicken", "cow"]
+    asserts.equals(env, expected, actual)
+
+    return unittest.end(env)
+
+flatten_test = unittest.make(_flatten_test)
+
 def lists_test_suite():
     return unittest.suite(
         "lists_tests",
         compact_test,
         contains_test,
         find_test,
+        flatten_test,
     )

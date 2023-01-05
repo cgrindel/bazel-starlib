@@ -70,3 +70,30 @@ Returns the list item that satisfies the provide boolean function.
 A list item or `None`.
 
 
+<a id="lists.flatten"></a>
+
+## lists.flatten
+
+<pre>
+lists.flatten(<a href="#lists.flatten-items">items</a>)
+</pre>
+
+Flattens the items to a single list.
+
+If provided a single item, it is wrapped in a list and processed as if
+provided as a `list`.
+
+
+**PARAMETERS**
+
+
+| Name  | Description | Default Value |
+| :------------- | :------------- | :------------- |
+| <a id="lists.flatten-items"></a>items |  A <code>list</code> or a single item.   |  none |
+
+**RETURNS**
+
+A `list` with all of the items flattened (i.e., no items in the result
+  are an item of type `list`).
+
+
