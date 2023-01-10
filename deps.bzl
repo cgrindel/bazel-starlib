@@ -48,10 +48,10 @@ def _compile_from_source_buildtools_dependencies():
     maybe(
         http_archive,
         name = "com_github_bazelbuild_buildtools",
-        sha256 = "e3bb0dc8b0274ea1aca75f1f8c0c835adbe589708ea89bf698069d0790701ea3",
-        strip_prefix = "buildtools-5.1.0",
+        sha256 = "05eff86c1d444dde18d55ac890f766bce5e4db56c180ee86b5aacd6704a5feb9",
+        strip_prefix = "buildtools-6.0.0",
         urls = [
-            "https://github.com/bazelbuild/buildtools/archive/refs/tags/5.1.0.tar.gz",
+            "https://github.com/bazelbuild/buildtools/archive/refs/tags/6.0.0.tar.gz",
         ],
     )
 
