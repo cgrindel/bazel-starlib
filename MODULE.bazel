@@ -1,5 +1,5 @@
 module(
-    name = "bazel_starlib",
+    name = "cgrindel_bazel_starlib",
     version = "0.11.0",
 )
 
