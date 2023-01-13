@@ -6,3 +6,6 @@ build --incompatible_strict_action_env=true
 
 # Don't allow empty glob patterns by default
 build --incompatible_disallow_empty_glob
+
+# Enable bzlmod
+common --enable_bzlmod
