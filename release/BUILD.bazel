@@ -1,3 +1,4 @@
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
 load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load(
@@ -40,10 +41,11 @@ create_release(
 
 pkg_tar(
     name = "archive",
-    srcs = [
-        # "//:local_repository_files",
-        # "//:release_repository_files",
-        "//:release_filegroup",
-    ],
+    srcs = ["//:release_filegroup"],
     extension = ".tar.gz",
+)
+
+build_test(
+    name = "archive_build_test",
+    targets = [":archive"],
 )

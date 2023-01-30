@@ -121,36 +121,43 @@ pkg_files(
     visibility = ["//:__subpackages__"],
 )
 
+# All of the packages that should be included in the release archive and made
+# available to the child workspaces.
+_RUNTIME_PKGS = [
+    "//",
+    "//bazeldoc",
+    "//bazeldoc/private",
+    "//build",
+    "//bzlformat",
+    "//bzlformat/private",
+    "//bzlformat/tools",
+    "//bzlformat/tools/missing_pkgs",
+    "//bzllib",
+    "//bzllib/private",
+    "//bzlrelease",
+    "//bzlrelease/private",
+    "//bzlrelease/tools",
+    "//bzltidy",
+    "//bzltidy/private",
+    "//markdown",
+    "//markdown/private",
+    "//markdown/tools",
+    "//shlib/lib",
+    "//shlib/rules",
+    "//shlib/rules/private",
+    "//shlib/tools",
+    "//updatesrc",
+    "//updatesrc/private",
+]
+
 # The example workspaces use local_repository to reference this workspace.
 # This target collects all of the files needed for rules_spm to work in the
 # child workspaces.
 filegroup(
     name = "local_repository_files",
     srcs = [
-        ":all_files",
-        "//bazeldoc:all_files",
-        "//bazeldoc/private:all_files",
-        "//build:all_files",
-        "//bzlformat:all_files",
-        "//bzlformat/private:all_files",
-        "//bzlformat/tools:all_files",
-        "//bzlformat/tools/missing_pkgs:all_files",
-        "//bzllib:all_files",
-        "//bzllib/private:all_files",
-        "//bzlrelease:all_files",
-        "//bzlrelease/private:all_files",
-        "//bzlrelease/tools:all_files",
-        "//bzltidy:all_files",
-        "//bzltidy/private:all_files",
-        "//markdown:all_files",
-        "//markdown/private:all_files",
-        "//markdown/tools:all_files",
-        "//shlib/lib:all_files",
-        "//shlib/rules:all_files",
-        "//shlib/rules/private:all_files",
-        "//shlib/tools:all_files",
-        "//updatesrc:all_files",
-        "//updatesrc/private:all_files",
+        pkg + ":all_files"
+        for pkg in _RUNTIME_PKGS
     ],
     visibility = [
         ":integration_test_visibility",
@@ -160,30 +167,8 @@ filegroup(
 pkg_filegroup(
     name = "release_filegroup",
     srcs = [
-        ":release_files",
-        "//bazeldoc:release_files",
-        "//bazeldoc/private:release_files",
-        "//build:release_files",
-        "//bzlformat:release_files",
-        "//bzlformat/private:release_files",
-        "//bzlformat/tools:release_files",
-        "//bzlformat/tools/missing_pkgs:release_files",
-        "//bzllib:release_files",
-        "//bzllib/private:release_files",
-        "//bzlrelease:release_files",
-        "//bzlrelease/private:release_files",
-        "//bzlrelease/tools:release_files",
-        "//bzltidy:release_files",
-        "//bzltidy/private:release_files",
-        "//markdown:release_files",
-        "//markdown/private:release_files",
-        "//markdown/tools:release_files",
-        "//shlib/lib:release_files",
-        "//shlib/rules:release_files",
-        "//shlib/rules/private:release_files",
-        "//shlib/tools:release_files",
-        "//updatesrc:release_files",
-        "//updatesrc/private:release_files",
+        pkg + ":release_files"
+        for pkg in _RUNTIME_PKGS
     ],
     visibility = [
         "//:__subpackages__",
