@@ -1,3 +1,4 @@
+load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load(
     "//bzlrelease:defs.bzl",
@@ -35,4 +36,14 @@ update_readme(
 create_release(
     name = "create",
     workflow_name = "Create Release",
+)
+
+pkg_tar(
+    name = "archive",
+    srcs = [
+        # "//:local_repository_files",
+        # "//:release_repository_files",
+        "//:release_filegroup",
+    ],
+    extension = ".tar.gz",
 )

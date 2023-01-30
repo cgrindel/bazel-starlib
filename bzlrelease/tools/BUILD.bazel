@@ -1,3 +1,4 @@
+load("@rules_pkg//pkg:mappings.bzl", "pkg_files")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 bzlformat_pkg(name = "bzlformat")
@@ -112,5 +113,12 @@ sh_binary(
 filegroup(
     name = "all_files",
     srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)
+
+pkg_files(
+    name = "release_files",
+    srcs = [":all_files"],
+    prefix = package_name(),
     visibility = ["//:__subpackages__"],
 )

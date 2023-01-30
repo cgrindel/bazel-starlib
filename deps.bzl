@@ -82,7 +82,7 @@ def bazel_starlib_dependencies(
         http_archive,
         name = "bazel_skylib",
         sha256 =
-            "3b620033ca48fcd6f5ef2ac85e0f6ec5639605fa2f627968490e52fc91a9932f",
+            "a08d3162cdab5ed2d9f91fe9ed37c3e76b786fbd6a18db6919cd421ae0cd3165",
         strip_prefix = "bazel-skylib-1.3.0",
         urls = [
             "https://github.com/bazelbuild/bazel-skylib/archive/1.3.0.tar.gz",
@@ -107,6 +107,16 @@ def bazel_starlib_dependencies(
             "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.29.0/bazel-gazelle-v0.29.0.tar.gz",
             "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.29.0/bazel-gazelle-v0.29.0.tar.gz",
         ],
+    )
+
+    maybe(
+        http_archive,
+        name = "rules_pkg",
+        urls = [
+            "https://mirror.bazel.build/github.com/bazelbuild/rules_pkg/releases/download/0.8.0/rules_pkg-0.8.0.tar.gz",
+            "https://github.com/bazelbuild/rules_pkg/releases/download/0.8.0/rules_pkg-0.8.0.tar.gz",
+        ],
+        sha256 = "eea0f59c28a9241156a47d7a8e32db9122f3d50b505fae0f33de6ce4d9b61834",
     )
 
     if use_bazeldoc:

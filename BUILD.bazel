@@ -1,5 +1,6 @@
 load("@bazel_gazelle//:def.bzl", "DEFAULT_LANGUAGES", "gazelle", "gazelle_binary")
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@rules_pkg//pkg:mappings.bzl", "pkg_filegroup", "pkg_files")
 load(
     "//bzlformat:defs.bzl",
     "bzlformat_missing_pkgs",
@@ -114,6 +115,12 @@ filegroup(
     visibility = ["//:__subpackages__"],
 )
 
+pkg_files(
+    name = "release_files",
+    srcs = [":all_files"],
+    visibility = ["//:__subpackages__"],
+)
+
 # The example workspaces use local_repository to reference this workspace.
 # This target collects all of the files needed for rules_spm to work in the
 # child workspaces.
@@ -145,7 +152,42 @@ filegroup(
         "//updatesrc:all_files",
         "//updatesrc/private:all_files",
     ],
-    visibility = [":integration_test_visibility"],
+    visibility = [
+        ":integration_test_visibility",
+    ],
+)
+
+pkg_filegroup(
+    name = "release_filegroup",
+    srcs = [
+        ":release_files",
+        "//bazeldoc:release_files",
+        "//bazeldoc/private:release_files",
+        "//build:release_files",
+        "//bzlformat:release_files",
+        "//bzlformat/private:release_files",
+        "//bzlformat/tools:release_files",
+        "//bzlformat/tools/missing_pkgs:release_files",
+        "//bzllib:release_files",
+        "//bzllib/private:release_files",
+        "//bzlrelease:release_files",
+        "//bzlrelease/private:release_files",
+        "//bzlrelease/tools:release_files",
+        "//bzltidy:release_files",
+        "//bzltidy/private:release_files",
+        "//markdown:release_files",
+        "//markdown/private:release_files",
+        "//markdown/tools:release_files",
+        "//shlib/lib:release_files",
+        "//shlib/rules:release_files",
+        "//shlib/rules/private:release_files",
+        "//shlib/tools:release_files",
+        "//updatesrc:release_files",
+        "//updatesrc/private:release_files",
+    ],
+    visibility = [
+        "//:__subpackages__",
+    ],
 )
 
 filegroup(
