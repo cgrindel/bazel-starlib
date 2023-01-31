@@ -2,7 +2,12 @@
 
 load("//shlib/rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 
-def generate_workspace_snippet(name, template = None, workspace_name = None):
+def generate_workspace_snippet(
+        name,
+        template = None,
+        workspace_name = None,
+        sha256_file = None,
+        url_templates = []):
     """Defines an executable target that generates a workspace snippet suitable \
     for inclusion in a markdown document.
 
@@ -14,8 +19,11 @@ def generate_workspace_snippet(name, template = None, workspace_name = None):
         name: The name of the executable target as a `string`.
         template: Optional. The path to a template file  as a `string`.
         workspace_name: Optional. The name of the workspace. If not provided,
-                        the workspace name is derived from the owner and
-                        repository name.
+            the workspace name is derived from the owner and repository name.
+        sha256_file: Optional. The path to a file with the SHA256 value for the
+            release archive.
+        url_templates: Optional. A `list` of templates to use when generating
+            the URL values for the release archive.
     """
     file_arguments = {}
     arguments = []
@@ -25,6 +33,18 @@ def generate_workspace_snippet(name, template = None, workspace_name = None):
         file_arguments[template] = file_key
     if workspace_name != None:
         arguments.extend(["--workspace_name", workspace_name])
+    if sha256_file != None:
+        # If you give us a SHA256 file, then we assume that you are using a
+        # release archive.
+        arguments.append("--github_release_archive_url")
+        file_key = "sha256_file"
+        arguments.extend(["--sha256_file", file_placeholder(file_key)])
+        file_arguments[sha256_file] = file_key
+    for url_template in url_templates:
+        # Need to escape the dollar signs so that they will pass through the
+        # shell.
+        url_template = url_template.replace("$", "\\$")
+        arguments.extend(["--url", url_template])
 
     execute_binary(
         name = name,

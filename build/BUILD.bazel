@@ -1,11 +1,19 @@
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+load("@rules_pkg//pkg:mappings.bzl", "pkg_files")
 
 bzlformat_pkg(name = "bzlformat")
 
 filegroup(
     name = "all_files",
     srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)
+
+pkg_files(
+    name = "release_files",
+    srcs = [":all_files"],
+    prefix = package_name(),
     visibility = ["//:__subpackages__"],
 )
 

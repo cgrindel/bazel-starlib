@@ -1,5 +1,7 @@
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
-load("//bzlrelease:defs.bzl", "generate_workspace_snippet")
+load("//bzlrelease:defs.bzl", "generate_workspace_snippet", "hash_sha256")
 load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
 
 bzlformat_pkg(name = "bzlformat")
@@ -13,10 +15,37 @@ generate_workspace_snippet(
     template = "workspace_snippet.tmpl",
 )
 
+write_file(
+    name = "src_file",
+    out = "src_file.txt",
+    content = ["Hello, World!"],
+)
+
+pkg_tar(
+    name = "archive",
+    srcs = [":src_file"],
+)
+
+hash_sha256(
+    name = "archive_sha256",
+    src = ":archive",
+)
+
+generate_workspace_snippet(
+    name = "with_sha256_file_and_url_template",
+    sha256_file = ":archive_sha256",
+    template = "workspace_snippet.tmpl",
+    url_templates = [
+        "https://mirror.foo.org/${owner}/${repo}/repo_name.${tag}.tar.gz",
+    ],
+)
+
 sh_test(
     name = "generate_workspace_snippet_test",
     srcs = ["generate_workspace_snippet_test.sh"],
     data = [
+        ":archive_sha256",
+        ":with_sha256_file_and_url_template",
         ":with_template",
         ":without_template",
     ],

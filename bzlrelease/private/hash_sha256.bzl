@@ -1,7 +1,8 @@
 """Definition for hash_sha256 rule."""
 
 def _hash_sha256_impl(ctx):
-    out = ctx.actions.declare_file(ctx.label.name)
+    out_filename = ctx.attr.out if ctx.attr.out != "" else ctx.label.name
+    out = ctx.actions.declare_file(out_filename)
     args = ctx.actions.args()
     args.add("--source", ctx.file.src)
     args.add("--output", out)
@@ -25,6 +26,9 @@ def _hash_sha256_impl(ctx):
 hash_sha256 = rule(
     implementation = _hash_sha256_impl,
     attrs = {
+        "out": attr.string(
+            doc = "The filename for the output file.",
+        ),
         "src": attr.label(
             mandatory = True,
             allow_single_file = True,
@@ -37,7 +41,9 @@ hash_sha256 = rule(
         ),
     },
     doc = """\
-Generates a SHA256 hash for the specified file and writes it to a file with the \
-same name as the label.\
+Generates a SHA256 hash for the specified file and writes it to a file. 
+
+If an output filename is provided, the value is written to a file with that \
+name. Otherwise, it is written to a file with the name of the declaration.
 """,
 )

@@ -65,7 +65,6 @@ EOF
 
 # MARK - Test with custom workspace_name
 
-
 actual_snippet="$(
 "${generate_workspace_snippet_sh}" \
   --workspace_name "foo_bar" \
@@ -128,7 +127,7 @@ actual_snippet="$(
 "${generate_workspace_snippet_sh}" \
   --sha256 "${sha256}" \
   --tag "${tag}" \
-  --no_github_archive_url \
+  --no_github_source_archive_url \
   --url "${url1}" \
   --url "${url2}" \
   --owner "${owner}" \
@@ -181,7 +180,7 @@ err_output="$(
 "${generate_workspace_snippet_sh}" \
   --tag "${tag}" \
   --sha256 "${sha256}" \
-  --no_github_archive_url \
+  --no_github_source_archive_url \
   2>&1 || true
 )"
 [[ "${err_output}" =~ "Expected one ore more url templates." ]] || fail "Missing url template failure."
