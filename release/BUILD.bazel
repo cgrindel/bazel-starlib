@@ -6,6 +6,7 @@ load(
     "create_release",
     "generate_release_notes",
     "generate_workspace_snippet",
+    "hash_sha256",
     "update_readme",
 )
 
@@ -21,6 +22,8 @@ filegroup(
 
 generate_workspace_snippet(
     name = "generate_workspace_snippet",
+    # TODO(chuck): FIX ME!
+    # sha256_file = ":archive_sha256",
     template = "workspace_snippet.tmpl",
 )
 
@@ -42,10 +45,20 @@ create_release(
 pkg_tar(
     name = "archive",
     srcs = ["//:release_filegroup"],
+    out = "bazel-starlib.tar.gz",
     extension = ".tar.gz",
+)
+
+hash_sha256(
+    name = "archive_sha256",
+    src = ":archive",
+    out = "bazel-starlib.tar.gz.sha256",
 )
 
 build_test(
     name = "archive_build_test",
-    targets = [":archive"],
+    targets = [
+        ":archive",
+        ":archive_sha256",
+    ],
 )
