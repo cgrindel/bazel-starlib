@@ -44,6 +44,7 @@ sh_test(
     name = "generate_workspace_snippet_test",
     srcs = ["generate_workspace_snippet_test.sh"],
     data = [
+        ":archive_sha256",
         ":with_sha256_file_and_url_template",
         ":with_template",
         ":without_template",

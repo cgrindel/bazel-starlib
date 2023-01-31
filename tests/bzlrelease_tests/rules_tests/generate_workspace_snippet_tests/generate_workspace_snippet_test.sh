@@ -32,6 +32,10 @@ with_sha256_file_and_url_template_sh_location=cgrindel_bazel_starlib/tests/bzlre
 with_sha256_file_and_url_template_sh="$(rlocation "${with_sha256_file_and_url_template_sh_location}")" || \
   (echo >&2 "Failed to locate ${with_sha256_file_and_url_template_sh_location}" && exit 1)
 
+archive_sha256_location=cgrindel_bazel_starlib/tests/bzlrelease_tests/rules_tests/generate_workspace_snippet_tests/archive_sha256
+archive_sha256="$(rlocation "${archive_sha256_location}")" || \
+  (echo >&2 "Failed to locate ${archive_sha256_location}" && exit 1)
+
 # MARK - Setup
 
 source "${setup_git_repo_sh}"
@@ -64,7 +68,8 @@ assert_match \
   'name = "cgrindel_bazel_starlib"' \
   "${actual}" \
   "With SHA256 File and URL Template name attribute"
+expected_sha256="$(< "${archive_sha256}")"
 assert_match \
-  'sha256 = "e21ba92ff81e65b9a5739fa6b7abd9d22911c30ae38556b4a5c7151bbfdf3d02"' \
+  'sha256 = "'"${expected_sha256}"'"' \
   "${actual}" \
   "With SHA256 File and URL Template sha256 attribute"
