@@ -28,6 +28,10 @@ with_template_sh_location=cgrindel_bazel_starlib/tests/bzlrelease_tests/rules_te
 with_template_sh="$(rlocation "${with_template_sh_location}")" || \
   (echo >&2 "Failed to locate ${with_template_sh_location}" && exit 1)
 
+with_sha256_file_and_url_template_sh_location=cgrindel_bazel_starlib/tests/bzlrelease_tests/rules_tests/generate_workspace_snippet_tests/with_sha256_file_and_url_template.sh
+with_sha256_file_and_url_template_sh="$(rlocation "${with_sha256_file_and_url_template_sh_location}")" || \
+  (echo >&2 "Failed to locate ${with_sha256_file_and_url_template_sh_location}" && exit 1)
+
 # MARK - Setup
 
 source "${setup_git_repo_sh}"
@@ -45,3 +49,14 @@ actual="$( "${with_template_sh}" --tag "${tag}" )"
 assert_match 'http_archive\(' "${actual}" "With Template http_archive"
 assert_match 'name = "cgrindel_bazel_starlib"' "${actual}" "With Template name attribute"
 assert_match bazel_starlib_dependencies "${actual}" "With Template bazel_starlib_dependencies"
+
+actual="$( "${with_sha256_file_and_url_template_sh}" --tag "${tag}" )"
+assert_match \
+  'https://github.com/owner/repo_name/releases/download/v999.0.0/repo_name.v999.0.0.tar.gz' \
+  "${actual}" \
+  "With SHA256 File and URL Template correct URL"
+assert_no_match 'strip_prefix' "${actual}"  "With SHA256 File and URL Template no strip_prefix"
+assert_match \
+  'name = "cgrindel_bazel_starlib"' \
+  "${actual}" \
+  "With SHA256 File and URL Template name attribute"

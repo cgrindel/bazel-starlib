@@ -52,13 +52,17 @@ starting_dir="${PWD}"
 
 # MARK - Process Args
 
-add_github_archive_url=true
+add_github_src_archive_url=true
 url_templates=()
 args=()
 while (("$#")); do
   case "${1}" in
     "--sha256")
       sha256="${2}"
+      shift 2
+      ;;
+    "--sha256_file")
+      sha256_file="${2}"
       shift 2
       ;;
     "--tag")
@@ -69,8 +73,8 @@ while (("$#")); do
       url_templates+=( "${2}" )
       shift 2
       ;;
-    "--no_github_archive_url")
-      add_github_archive_url=false
+    "--no_github_source_archive_url")
+      add_github_src_archive_url=false
       shift 1
       ;;
     "--owner")
@@ -104,16 +108,19 @@ while (("$#")); do
   esac
 done
 
-[[ ${#args[@]} > 0 ]] && fail "Received unexpected arguments: ${args[@]}"
+[[ ${#args[@]} -gt 0 ]] && fail "Received unexpected arguments: ${args[@]}"
 
 [[ -z "${tag:-}" ]] && fail "Expected a tag value."
 
-[[ "${add_github_archive_url}" == true ]] && \
+[[ "${add_github_src_archive_url}" == true ]] && \
   url_templates+=( 'http://github.com/${owner}/${repo}/archive/${tag}.tar.gz' )
-[[ ${#url_templates[@]} > 0 ]] || fail "Expected one ore more url templates."
+[[ ${#url_templates[@]} -gt 0 ]] || fail "Expected one ore more url templates."
 
 # MARK - Ensure that we have a SHA256 value
 
+if [[ -n "${sha256_file:-}" ]]; then
+  sha256="$(< "${sha256_file}")"
+fi
 if [[ -z "${sha256:-}" ]]; then
   sha256="$( "${generate_git_archive_sh}" --tag_name "${tag}" | "${generate_sha256_sh}" )"
 fi
@@ -148,8 +155,10 @@ urls="$(
   done
 )"
 
-# Generate the workspace snippet
-http_archive_statement="$(cat  <<-EOF
+
+if [[ "${add_github_src_archive_url}" == true ]]; then
+  # Generate the workspace snippet
+  http_archive_statement="$(cat  <<-EOF
 http_archive(
     name = "${workspace_name}",
     sha256 = "${sha256}",
@@ -159,7 +168,20 @@ ${urls}
     ],
 )
 EOF
-)"
+  )"
+else
+  http_archive_statement="$(cat  <<-EOF
+http_archive(
+    name = "${workspace_name}",
+    sha256 = "${sha256}",
+    urls = [
+${urls}
+    ],
+)
+EOF
+  )"
+fi
+
 
 if [[ -z "${template:-}" ]]; then
   snippet="${http_archive_statement}"

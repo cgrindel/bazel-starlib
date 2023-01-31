@@ -65,7 +65,6 @@ EOF
 
 # MARK - Test with custom workspace_name
 
-
 actual_snippet="$(
 "${generate_workspace_snippet_sh}" \
   --workspace_name "foo_bar" \
