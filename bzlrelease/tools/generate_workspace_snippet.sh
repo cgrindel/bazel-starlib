@@ -52,6 +52,7 @@ starting_dir="${PWD}"
 
 # MARK - Process Args
 
+add_strip_prefix=true
 add_github_src_archive_url=true
 add_github_release_archive_url=false
 url_templates=()
@@ -77,9 +78,14 @@ while (("$#")); do
     "--github_release_archive_url")
       add_github_release_archive_url=true
       add_github_src_archive_url=false
+      add_strip_prefix=false
       shift 1
       ;;
     "--no_github_source_archive_url")
+      add_github_src_archive_url=false
+      shift 1
+      ;;
+    "--no_strip_prefix")
       add_github_src_archive_url=false
       shift 1
       ;;
@@ -164,7 +170,7 @@ urls="$(
 )"
 
 
-if [[ "${add_github_src_archive_url}" == true ]]; then
+if [[ "${add_strip_prefix}" == true ]]; then
   # Generate the workspace snippet
   http_archive_statement="$(cat  <<-EOF
 http_archive(
