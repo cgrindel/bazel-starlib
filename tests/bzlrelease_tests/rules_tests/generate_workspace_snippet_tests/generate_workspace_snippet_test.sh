@@ -52,11 +52,19 @@ assert_match bazel_starlib_dependencies "${actual}" "With Template bazel_starlib
 
 actual="$( "${with_sha256_file_and_url_template_sh}" --tag "${tag}" )"
 assert_match \
-  'https://github.com/owner/repo_name/releases/download/v999.0.0/repo_name.v999.0.0.tar.gz' \
+  'https://github.com/cgrindel/bazel-starlib/releases/download/v999.0.0/repo_name.v999.0.0.tar.gz' \
   "${actual}" \
-  "With SHA256 File and URL Template correct URL"
+  "With SHA256 File and URL Template correct release artifact URL"
+assert_match \
+  'https://mirror.foo.org/cgrindel/bazel-starlib/repo_name.v999.0.0.tar.gz' \
+  "${actual}" \
+  "With SHA256 File and URL Template correct custom URL"
 assert_no_match 'strip_prefix' "${actual}"  "With SHA256 File and URL Template no strip_prefix"
 assert_match \
   'name = "cgrindel_bazel_starlib"' \
   "${actual}" \
   "With SHA256 File and URL Template name attribute"
+assert_match \
+  'sha256 = "e21ba92ff81e65b9a5739fa6b7abd9d22911c30ae38556b4a5c7151bbfdf3d02"' \
+  "${actual}" \
+  "With SHA256 File and URL Template sha256 attribute"

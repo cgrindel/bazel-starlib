@@ -53,6 +53,7 @@ starting_dir="${PWD}"
 # MARK - Process Args
 
 add_github_src_archive_url=true
+add_github_release_archive_url=false
 url_templates=()
 args=()
 while (("$#")); do
@@ -72,6 +73,11 @@ while (("$#")); do
     "--url")
       url_templates+=( "${2}" )
       shift 2
+      ;;
+    "--github_release_archive_url")
+      add_github_release_archive_url=true
+      add_github_src_archive_url=false
+      shift 1
       ;;
     "--no_github_source_archive_url")
       add_github_src_archive_url=false
@@ -114,6 +120,8 @@ done
 
 [[ "${add_github_src_archive_url}" == true ]] && \
   url_templates+=( 'http://github.com/${owner}/${repo}/archive/${tag}.tar.gz' )
+[[ "${add_github_release_archive_url}" == true ]] && \
+  url_templates+=( 'https://github.com/${owner}/${repo}/releases/download/${tag}/repo_name.${tag}.tar.gz' )
 [[ ${#url_templates[@]} -gt 0 ]] || fail "Expected one ore more url templates."
 
 # MARK - Ensure that we have a SHA256 value

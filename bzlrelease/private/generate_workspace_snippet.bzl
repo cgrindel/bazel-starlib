@@ -34,9 +34,9 @@ def generate_workspace_snippet(
     if workspace_name != None:
         arguments.extend(["--workspace_name", workspace_name])
     if sha256_file != None:
-        # If you give us a SHA256 file, then we assume that you do not want the
-        # source archive.
-        arguments.append("--no_github_source_archive_url")
+        # If you give us a SHA256 file, then we assume that you are using a
+        # release archive.
+        arguments.append("--github_release_archive_url")
         file_key = "sha256_file"
         arguments.extend(["--sha256_file", file_placeholder(file_key)])
         file_arguments[sha256_file] = file_key

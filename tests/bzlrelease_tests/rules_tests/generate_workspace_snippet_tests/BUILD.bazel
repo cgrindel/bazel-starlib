@@ -36,7 +36,7 @@ generate_workspace_snippet(
     sha256_file = ":archive_sha256",
     template = "workspace_snippet.tmpl",
     url_templates = [
-        "https://github.com/owner/repo_name/releases/download/${tag}/repo_name.${tag}.tar.gz",
+        "https://mirror.foo.org/${owner}/${repo}/repo_name.${tag}.tar.gz",
     ],
 )
 
