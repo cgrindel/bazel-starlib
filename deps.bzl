@@ -108,7 +108,6 @@ def bazel_starlib_dependencies(
         ],
     )
 
-    # TODO(chuck): Move this to WORKSPACE as it is not needed to use bazel-starlib
     maybe(
         http_archive,
         name = "rules_pkg",
