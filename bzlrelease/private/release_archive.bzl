@@ -8,17 +8,30 @@ def _release_archive_impl(ctx):
             ext = ctx.attr.ext,
         )
     out = ctx.actions.declare_file(out_basename)
+
+    # Write the file list to a file
+    file_list_out = ctx.actions.declare_file(ctx.label.name + "_files")
+    file_list_args = ctx.actions.args()
+    file_list_args.add_all(ctx.files.srcs)
+    ctx.actions.write(
+        output = file_list_out,
+        content = file_list_args,
+    )
+
+    # Create the archive
     args = ctx.actions.args()
     args.add(out)
-    args.add_all(ctx.files.srcs)
+    args.add(file_list_out)
     ctx.actions.run_shell(
         outputs = [out],
-        inputs = ctx.files.srcs,
+        inputs = [file_list_out] + ctx.files.srcs,
         arguments = [args],
         command = """\
 archive="$1"
+file_list="$2"
 shift 1
-tar -Lczvf "$archive" "$@" 2>/dev/null
+# tar -Lczvf "$archive" "$@" 2>/dev/null
+tar -Lczvf "$archive" -T "${file_list}" 2>/dev/null
 """,
     )
     return DefaultInfo(
