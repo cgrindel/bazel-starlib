@@ -1,6 +1,5 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
-load("@rules_pkg//pkg:mappings.bzl", "pkg_files")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -24,12 +23,5 @@ filegroup(
 filegroup(
     name = "all_files",
     srcs = glob(["*"]),
-    visibility = ["//:__subpackages__"],
-)
-
-pkg_files(
-    name = "release_files",
-    srcs = [":all_files"],
-    prefix = package_name(),
     visibility = ["//:__subpackages__"],
 )

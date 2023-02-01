@@ -1,5 +1,4 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
-load("@rules_pkg//pkg:mappings.bzl", "pkg_files")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 package(default_visibility = ["//bzlrelease:__subpackages__"])
@@ -46,14 +45,12 @@ filegroup(
     visibility = ["//:__subpackages__"],
 )
 
-pkg_files(
-    name = "release_files",
-    srcs = [":all_files"],
-    prefix = package_name(),
-    visibility = ["//:__subpackages__"],
-)
-
 bzl_library(
     name = "hash_sha256",
     srcs = ["hash_sha256.bzl"],
+)
+
+bzl_library(
+    name = "release_archive",
+    srcs = ["release_archive.bzl"],
 )
