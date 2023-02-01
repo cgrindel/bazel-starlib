@@ -30,8 +30,7 @@ def _release_archive_impl(ctx):
 archive="$1"
 file_list="$2"
 shift 1
-# tar -Lczvf "$archive" "$@" 2>/dev/null
-tar -Lczvf "$archive" -T "${file_list}" 2>/dev/null
+tar 2>/dev/null -hczvf "$archive" -T "${file_list}"
 """,
     )
     return DefaultInfo(
