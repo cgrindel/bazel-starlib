@@ -14,6 +14,10 @@ load(
 )
 load("//bzlrelease/private:hash_sha256.bzl", _hash_sha256 = "hash_sha256")
 load(
+    "//bzlrelease/private:release_archive.bzl",
+    _release_archive = "release_archive",
+)
+load(
     "//bzlrelease/private:update_readme.bzl",
     _update_readme = "update_readme",
 )
@@ -27,3 +31,5 @@ generate_release_notes = _generate_release_notes
 hash_sha256 = _hash_sha256
 
 update_readme = _update_readme
+
+release_archive = _release_archive
