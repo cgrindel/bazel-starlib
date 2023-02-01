@@ -1,7 +1,6 @@
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
-load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
-load("//bzlrelease:defs.bzl", "generate_workspace_snippet", "hash_sha256")
+load("//bzlrelease:defs.bzl", "generate_workspace_snippet", "hash_sha256", "release_archive")
 load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
 
 bzlformat_pkg(name = "bzlformat")
@@ -21,7 +20,7 @@ write_file(
     content = ["Hello, World!"],
 )
 
-pkg_tar(
+release_archive(
     name = "archive",
     srcs = [":src_file"],
 )

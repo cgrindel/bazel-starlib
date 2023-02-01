@@ -41,13 +41,6 @@ create_release(
     workflow_name = "Create Release",
 )
 
-# pkg_tar(
-#     name = "archive",
-#     srcs = ["//:release_filegroup"],
-#     out = "bazel-starlib.tar.gz",
-#     extension = ".tar.gz",
-# )
-
 release_archive(
     name = "archive",
     srcs = ["//:local_repository_files"],

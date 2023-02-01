@@ -26,10 +26,6 @@ load("@io_bazel_stardoc//:setup.bzl", "stardoc_repositories")
 
 stardoc_repositories()
 
-load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
-
-rules_pkg_dependencies()
-
 # MARK: - Prebuilt Buildtools Deps
 
 load("@buildifier_prebuilt//:deps.bzl", "buildifier_prebuilt_deps")
