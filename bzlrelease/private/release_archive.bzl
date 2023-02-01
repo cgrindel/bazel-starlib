@@ -41,5 +41,11 @@ release_archive = rule(
             mandatory = True,
         ),
     },
-    doc = "Create a source release archive.",
+    doc = """\
+Create a source release archive.
+
+This rule uses `tar` to collect and compress files into an archive file \
+suitable for use as a release artifact. Any permissions on the source files \
+will be preserved.
+""",
 )
