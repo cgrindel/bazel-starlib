@@ -127,7 +127,7 @@ done
 [[ "${add_github_src_archive_url}" == true ]] && \
   url_templates+=( 'http://github.com/${owner}/${repo}/archive/${tag}.tar.gz' )
 [[ "${add_github_release_archive_url}" == true ]] && \
-  url_templates+=( 'https://github.com/${owner}/${repo}/releases/download/${tag}/repo_name.${tag}.tar.gz' )
+  url_templates+=( 'https://github.com/${owner}/${repo}/releases/download/${tag}/${repo}.${tag}.tar.gz' )
 [[ ${#url_templates[@]} -gt 0 ]] || fail "Expected one ore more url templates."
 
 # MARK - Ensure that we have a SHA256 value
