@@ -20,6 +20,7 @@ bzl_library(
         "//bzlrelease/private:generate_release_notes",
         "//bzlrelease/private:generate_workspace_snippet",
         "//bzlrelease/private:hash_sha256",
+        "//bzlrelease/private:release_archive",
         "//bzlrelease/private:update_readme",
     ],
 )

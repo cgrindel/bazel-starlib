@@ -57,3 +57,8 @@ bzl_library(
     name = "hash_sha256",
     srcs = ["hash_sha256.bzl"],
 )
+
+bzl_library(
+    name = "release_archive",
+    srcs = ["release_archive.bzl"],
+)

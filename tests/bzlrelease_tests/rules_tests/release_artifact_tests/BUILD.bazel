@@ -1,0 +1,23 @@
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+load("//bzlrelease:defs.bzl", "release_archive")
+
+bzlformat_pkg(name = "bzlformat")
+
+release_archive(
+    name = "archive",
+    srcs = [
+        "//bzlrelease:all_files",
+        "//bzlrelease/private:all_files",
+        "//bzlrelease/tools:all_files",
+    ],
+)
+
+sh_test(
+    name = "archive_test",
+    srcs = ["archive_test.sh"],
+    data = [":archive"],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_starlib//shlib/lib:assertions",
+    ],
+)

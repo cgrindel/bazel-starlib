@@ -1,3 +1,5 @@
+"""Definition for `release_archive` rule."""
+
 def _release_archive_impl(ctx):
     out_basename = ctx.attr.out
     if out_basename == "":
@@ -16,10 +18,13 @@ def _release_archive_impl(ctx):
         command = """\
 archive="$1"
 shift 1
-tar -Lczvf "$archive" "$@"
+tar -Lczvf "$archive" "$@" 2>/dev/null
 """,
     )
-    return DefaultInfo(files = depset([out]))
+    return DefaultInfo(
+        files = depset([out]),
+        runfiles = ctx.runfiles(files = [out]),
+    )
 
 release_archive = rule(
     implementation = _release_archive_impl,
@@ -36,5 +41,5 @@ release_archive = rule(
             mandatory = True,
         ),
     },
-    doc = "",
+    doc = "Create a source release archive.",
 )
