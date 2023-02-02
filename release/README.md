@@ -19,10 +19,11 @@ This will launch the [release workflow](.github/workflows/create_release.yml). T
 the following steps:
 
 1. Creates the specified tag at the HEAD of the main branch.
-2. Generates release notes.
-3. Creates a GitHub release.
-4. Updates the `README.md` with the latest workspace snippet information.
-5. Creates a PR with the updated `README.md` configured to auto-merge if all the checks pass.
+2. Builds a release archive.
+3. Generates release notes.
+4. Creates a GitHub release.
+5. Updates the `README.md` with the latest workspace snippet information.
+6. Creates a PR with the updated `README.md` configured to auto-merge if all the checks pass.
 
 There are two ways that this process could fail. First, if an improperly formatted release tag is
 specified, the release workflow will fail. Be sure to prefix the release tag with `v`. Second, the
