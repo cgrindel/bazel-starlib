@@ -2,7 +2,7 @@ module github.com/cgrindel/bazel-starlib
 
 go 1.19
 
-require github.com/ekalinin/github-markdown-toc.go v0.0.0-20220910061337-2d4fdaaf52fa
+require github.com/ekalinin/github-markdown-toc.go v1.2.1
 
 require golang.org/x/net v0.1.0 // indirect
 
