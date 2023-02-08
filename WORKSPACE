@@ -30,10 +30,10 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "bazel_skylib_gazelle_plugin",
-    sha256 = "ff0a4f11ec4bff4e25f4a3a04bf2c44a1e4b6a532d655cbf1dc390222fe0214f",
-    strip_prefix = "bazel-skylib-28527b51465bb1437deb3ad5926a6f1e16481a94/gazelle",
+    sha256 = "3a1c1b735ccd740e057526e1e88926d997a1a1f1288a120f9c545acc849a5d01",
+    strip_prefix = "bazel-skylib-facabc1db378af42a7b0e600ce7af59f188e8786/gazelle",
     urls = [
-        "https://github.com/cgrindel/bazel-skylib/archive/28527b51465bb1437deb3ad5926a6f1e16481a94.tar.gz",
+        "https://github.com/bazelbuild/bazel-skylib/archive/facabc1db378af42a7b0e600ce7af59f188e8786.tar.gz",
     ],
 )
 
