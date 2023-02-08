@@ -75,9 +75,6 @@ def bazel_starlib_dependencies(
                       should be loaded.
     """
 
-    # 2022-11-08: Retrieving the source archive so that I can use the gazelle
-    # plugin. Work is happening to include it in the distribution.
-    # https://github.com/bazelbuild/bazel-skylib/pull/400
     maybe(
         http_archive,
         name = "bazel_skylib",

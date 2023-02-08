@@ -12,6 +12,35 @@ load("//:go_deps.bzl", "bazel_starlib_go_dependencies")
 # gazelle:repository_macro go_deps.bzl%bazel_starlib_go_dependencies
 bazel_starlib_go_dependencies()
 
+# MARK: - Skylib Gazelle Extension
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# Using fork of skylib while waiting for
+# https://github.com/bazelbuild/bazel-skylib/pull/432 to be merged.
+
+# http_archive(
+#     name = "bazel_skylib_gazelle_plugin",
+#     sha256 = "04182233284fcb6545d36b94248fe28186b4d9d574c4131d6a511d5aeb278c46",
+#     urls = [
+#         "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.4.0/bazel-skylib-gazelle-plugin-1.4.0.tar.gz",
+#         "https://github.com/bazelbuild/bazel-skylib/releases/download/1.4.0/bazel-skylib-gazelle-plugin-1.4.0.tar.gz",
+#     ],
+# )
+
+http_archive(
+    name = "bazel_skylib_gazelle_plugin",
+    sha256 = "ff0a4f11ec4bff4e25f4a3a04bf2c44a1e4b6a532d655cbf1dc390222fe0214f",
+    strip_prefix = "bazel-skylib-28527b51465bb1437deb3ad5926a6f1e16481a94/gazelle",
+    urls = [
+        "https://github.com/cgrindel/bazel-skylib/archive/28527b51465bb1437deb3ad5926a6f1e16481a94.tar.gz",
+    ],
+)
+
+load("@bazel_skylib_gazelle_plugin//:workspace.bzl", "bazel_skylib_gazelle_plugin_workspace")
+
+bazel_skylib_gazelle_plugin_workspace()
+
 go_rules_dependencies()
 
 go_register_toolchains(version = "1.19.1")
@@ -37,8 +66,6 @@ load("@buildifier_prebuilt//:defs.bzl", "buildifier_prebuilt_register_toolchains
 buildifier_prebuilt_register_toolchains()
 
 # MARK: - Integration Testing
-
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "contrib_rules_bazel_integration_test",
