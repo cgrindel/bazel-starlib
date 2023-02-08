@@ -43,7 +43,7 @@ bazel_skylib_gazelle_plugin_workspace()
 
 go_rules_dependencies()
 
-go_register_toolchains(version = "1.19.1")
+go_register_toolchains(version = "1.19.5")
 
 gazelle_dependencies()
 
