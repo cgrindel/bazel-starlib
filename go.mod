@@ -4,7 +4,6 @@ go 1.19
 
 require github.com/ekalinin/github-markdown-toc.go v1.2.1
 
-require golang.org/x/net v0.1.0 // indirect
+// require gopkg.in/alecthomas/kingpin.v2 v2.3.1
 
-// The replace version is v0.0.0-<commit timestamp>-<first 12 characters of commit hash>
-replace github.com/ekalinin/github-markdown-toc.go => github.com/cgrindel/github-markdown-toc.go v0.0.0-20221108150410-563f2322eacc
+// replace gopkg.in/alecthomas/kingpin.v2 => github.com/alecthomas/kingpin/v2 v2.3.1
