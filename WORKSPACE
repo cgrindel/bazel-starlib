@@ -16,24 +16,12 @@ bazel_starlib_go_dependencies()
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# Using fork of skylib while waiting for
-# https://github.com/bazelbuild/bazel-skylib/pull/432 to be merged.
-
-# http_archive(
-#     name = "bazel_skylib_gazelle_plugin",
-#     sha256 = "04182233284fcb6545d36b94248fe28186b4d9d574c4131d6a511d5aeb278c46",
-#     urls = [
-#         "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.4.0/bazel-skylib-gazelle-plugin-1.4.0.tar.gz",
-#         "https://github.com/bazelbuild/bazel-skylib/releases/download/1.4.0/bazel-skylib-gazelle-plugin-1.4.0.tar.gz",
-#     ],
-# )
-
 http_archive(
     name = "bazel_skylib_gazelle_plugin",
-    sha256 = "931216eaaba32fe804a6ed760289725e214e146642790c8535972959d569ec82",
-    strip_prefix = "bazel-skylib-cc477631c941fe9dda8ad6b13ef4ed9960ed4933/gazelle",
+    sha256 = "0a466b61f331585f06ecdbbf2480b9edf70e067a53f261e0596acd573a7d2dc3",
     urls = [
-        "https://github.com/bazelbuild/bazel-skylib/archive/cc477631c941fe9dda8ad6b13ef4ed9960ed4933.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.4.1/bazel-skylib-gazelle-plugin-1.4.1.tar.gz",
+        "https://github.com/bazelbuild/bazel-skylib/releases/download/1.4.1/bazel-skylib-gazelle-plugin-1.4.1.tar.gz",
     ],
 )
 
