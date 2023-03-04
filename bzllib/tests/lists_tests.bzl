@@ -87,6 +87,56 @@ def _flatten_test(ctx):
 
 flatten_test = unittest.make(_flatten_test)
 
+def _filter_test(ctx):
+    env = unittest.begin(ctx)
+
+    tests = [
+        struct(
+            msg = "empty list",
+            items = [],
+            fn = lambda x: x > 0,
+            exp = [],
+        ),
+        struct(
+            msg = "some matching values",
+            items = [0, 4, 3, 0],
+            fn = lambda x: x > 0,
+            exp = [4, 3],
+        ),
+    ]
+    for t in tests:
+        actual = lists.filter(t.items, t.fn)
+        asserts.equals(env, t.exp, actual, t.msg)
+
+    return unittest.end(env)
+
+filter_test = unittest.make(_filter_test)
+
+def _map_test(ctx):
+    env = unittest.begin(ctx)
+
+    tests = [
+        struct(
+            msg = "empty list",
+            items = [],
+            fn = lambda x: x + 1,
+            exp = [],
+        ),
+        struct(
+            msg = "non-empty list",
+            items = [-1, 0, 6, 3],
+            fn = lambda x: x + 1,
+            exp = [0, 1, 7, 4],
+        ),
+    ]
+    for t in tests:
+        actual = lists.map(t.items, t.fn)
+        asserts.equals(env, t.exp, actual, t.msg)
+
+    return unittest.end(env)
+
+map_test = unittest.make(_map_test)
+
 def lists_test_suite():
     return unittest.suite(
         "lists_tests",
@@ -94,4 +144,6 @@ def lists_test_suite():
         contains_test,
         find_test,
         flatten_test,
+        filter_test,
+        map_test,
     )

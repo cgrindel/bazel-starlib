@@ -89,9 +89,39 @@ def _flatten(items):
 
     return results
 
+def _filter(items, bool_fn):
+    """Returns a new `list` with the items that satisfy the boolean function.
+
+    Args:
+        items: A `list` of items to evaluate.
+        bool_fn: A `function` that takes a single parameter (list item) and
+            returns a `bool` indicating whether the meets the criteria.
+
+    Returns:
+        A `list` of the provided items that satisfy the boolean function.
+    """
+    return [item for item in items if bool_fn(item)]
+
+def _map(items, map_fn):
+    """Returns a new `list` where each item is the result of calling the map \
+    function on each item in the original `list`.
+
+    Args:
+        items: A `list` of items to evaluate.
+        map_fn: A `function` that takes a single parameter (list item) and
+            returns a value that will be added to the new list at the
+            correspnding location.
+
+    Returns:
+        A `list` with the transformed values.
+    """
+    return [map_fn(item) for item in items]
+
 lists = struct(
     compact = _compact,
     contains = _contains,
+    filter = _filter,
     find = _find,
     flatten = _flatten,
+    map = _map,
 )
