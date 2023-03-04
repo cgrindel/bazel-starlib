@@ -55,7 +55,7 @@ A `bool` indicating whether the target item was found in the list.
 lists.filter(<a href="#lists.filter-items">items</a>, <a href="#lists.filter-bool_fn">bool_fn</a>)
 </pre>
 
-Returns a new list with the items that satisfy the boolean function.
+Returns a new `list` with the items that satisfy the boolean function.
 
 **PARAMETERS**
 
@@ -118,5 +118,28 @@ provided as a `list`.
 
 A `list` with all of the items flattened (i.e., no items in the result
   are an item of type `list`).
+
+
+<a id="lists.map"></a>
+
+## lists.map
+
+<pre>
+lists.map(<a href="#lists.map-items">items</a>, <a href="#lists.map-map_fn">map_fn</a>)
+</pre>
+
+Returns a new `list` where each item is the result of calling the map     function on each item in the original `list`.
+
+**PARAMETERS**
+
+
+| Name  | Description | Default Value |
+| :------------- | :------------- | :------------- |
+| <a id="lists.map-items"></a>items |  A <code>list</code> of items to evaluate.   |  none |
+| <a id="lists.map-map_fn"></a>map_fn |  A <code>function</code> that takes a single parameter (list item) and returns a value that will be added to the new list at the correspnding location.   |  none |
+
+**RETURNS**
+
+A `list` with the transformed values.
 
 
