@@ -47,6 +47,29 @@ Determines if the provide value is found in a list.
 A `bool` indicating whether the target item was found in the list.
 
 
+<a id="lists.filter"></a>
+
+## lists.filter
+
+<pre>
+lists.filter(<a href="#lists.filter-items">items</a>, <a href="#lists.filter-bool_fn">bool_fn</a>)
+</pre>
+
+Returns a new list with the items that satisfy the boolean function.
+
+**PARAMETERS**
+
+
+| Name  | Description | Default Value |
+| :------------- | :------------- | :------------- |
+| <a id="lists.filter-items"></a>items |  A <code>list</code> of items to evaluate.   |  none |
+| <a id="lists.filter-bool_fn"></a>bool_fn |  A <code>function</code> that takes a single parameter (list item) and returns a <code>bool</code> indicating whether the meets the criteria.   |  none |
+
+**RETURNS**
+
+A `list` of the provided items that satisfy the boolean function.
+
+
 <a id="lists.find"></a>
 
 ## lists.find
