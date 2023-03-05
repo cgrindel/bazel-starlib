@@ -90,14 +90,26 @@ def _find_test(ctx):
     apple = struct(name = "apple")
     items = [zebra, apple]
 
-    actual = lists.find(items, lambda item: item.name == "does_not_exist")
-    asserts.equals(env, None, actual)
-
-    actual = lists.find(items, lambda item: item.name == "zebra")
-    asserts.equals(env, zebra, actual)
-
-    actual = lists.find(items, lambda item: item.name == "apple")
-    asserts.equals(env, apple, actual)
+    tests = [
+        struct(
+            msg = "target not found",
+            bool_fn = lambda x: x.name == "does_not_exist",
+            exp = None,
+        ),
+        struct(
+            msg = "target found, first item",
+            bool_fn = lambda x: x.name == "zebra",
+            exp = zebra,
+        ),
+        struct(
+            msg = "target found, later item",
+            bool_fn = lambda x: x.name == "apple",
+            exp = apple,
+        ),
+    ]
+    for t in tests:
+        actual = lists.find(items, t.bool_fn)
+        asserts.equals(env, t.exp, actual, t.msg)
 
     return unittest.end(env)
 
