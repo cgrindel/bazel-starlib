@@ -6,14 +6,31 @@ load("//bzllib/private:lists.bzl", "lists")
 def _compact_test(ctx):
     env = unittest.begin(ctx)
 
-    actual = lists.compact([])
-    asserts.equals(env, [], actual)
-
-    actual = lists.compact([None, None, None])
-    asserts.equals(env, [], actual)
-
-    actual = lists.compact(["zebra", None, "apple"])
-    asserts.equals(env, ["zebra", "apple"], actual)
+    tests = [
+        struct(
+            msg = "empty list",
+            items = [],
+            exp = [],
+        ),
+        struct(
+            msg = "list of None",
+            items = [None, None, None],
+            exp = [],
+        ),
+        struct(
+            msg = "list with None and other",
+            items = ["zebra", None, "apple"],
+            exp = ["zebra", "apple"],
+        ),
+        struct(
+            msg = "list without None",
+            items = ["zebra", "apple"],
+            exp = ["zebra", "apple"],
+        ),
+    ]
+    for t in tests:
+        actual = lists.compact(t.items)
+        asserts.equals(env, t.exp, actual, t.msg)
 
     return unittest.end(env)
 
