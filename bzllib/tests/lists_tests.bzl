@@ -39,27 +39,45 @@ compact_test = unittest.make(_compact_test)
 def _contains_test(ctx):
     env = unittest.begin(ctx)
 
-    actual = lists.contains([], "apple")
-    asserts.false(env, actual)
-
-    actual = lists.contains(["zebra"], "apple")
-    asserts.false(env, actual)
-
-    actual = lists.contains(["zebra", "apple"], "apple")
-    asserts.true(env, actual)
-
     zebra = struct(name = "zebra")
     apple = struct(name = "apple")
-    items = [zebra, apple]
+    structs = [zebra, apple]
 
-    actual = lists.contains(items, lambda x: x.name == "zebra")
-    asserts.true(env, actual)
-
-    actual = lists.contains(items, lambda x: x.name == "apple")
-    asserts.true(env, actual)
-
-    actual = lists.contains(items, lambda x: x.name == "does_not_exist")
-    asserts.false(env, actual)
+    tests = [
+        struct(
+            msg = "empty list",
+            items = [],
+            target = "apple",
+            exp = False,
+        ),
+        struct(
+            msg = "list does not contain target",
+            items = ["zebra"],
+            target = "apple",
+            exp = False,
+        ),
+        struct(
+            msg = "list contains target",
+            items = ["zebra", "apple"],
+            target = "apple",
+            exp = True,
+        ),
+        struct(
+            msg = "list with bool fn, found target",
+            items = structs,
+            target = lambda x: x.name == "apple",
+            exp = True,
+        ),
+        struct(
+            msg = "list with bool fn, not found target",
+            items = structs,
+            target = lambda x: x.name == "does_not_exist",
+            exp = False,
+        ),
+    ]
+    for t in tests:
+        actual = lists.contains(t.items, t.target)
+        asserts.equals(env, t.exp, actual, t.msg)
 
     return unittest.end(env)
 
