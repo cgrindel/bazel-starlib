@@ -26,11 +26,8 @@ def _contains(items, target_or_fn):
         bool_fn = target_or_fn
     else:
         bool_fn = lambda x: x == target_or_fn
-
-    for item in items:
-        if bool_fn(item):
-            return True
-    return False
+    item = _find(items, bool_fn)
+    return item != None
 
 def _find(items, bool_fn):
     """Returns the list item that satisfies the provide boolean function.
