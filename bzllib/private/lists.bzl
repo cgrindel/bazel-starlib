@@ -9,11 +9,7 @@ def _compact(items):
     Returns:
         A `list` of items with the `None` values removed.
     """
-    new_items = []
-    for item in items:
-        if item != None:
-            new_items.append(item)
-    return new_items
+    return _filter(items, lambda x: x != None)
 
 def _contains(items, target_or_fn):
     """Determines if the provide value is found in a list.
