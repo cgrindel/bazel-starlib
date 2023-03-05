@@ -118,17 +118,26 @@ find_test = unittest.make(_find_test)
 def _flatten_test(ctx):
     env = unittest.begin(ctx)
 
-    actual = lists.flatten("foo")
-    expected = ["foo"]
-    asserts.equals(env, expected, actual)
-
-    actual = lists.flatten(["foo"])
-    expected = ["foo"]
-    asserts.equals(env, expected, actual)
-
-    actual = lists.flatten(["foo", ["alpha", ["omega"]], ["chicken", "cow"]])
-    expected = ["foo", "alpha", "omega", "chicken", "cow"]
-    asserts.equals(env, expected, actual)
+    tests = [
+        struct(
+            msg = "not a list",
+            items = "foo",
+            exp = ["foo"],
+        ),
+        struct(
+            msg = "already flat list",
+            items = ["foo", "bar"],
+            exp = ["foo", "bar"],
+        ),
+        struct(
+            msg = "multi-level list",
+            items = ["foo", ["alpha", ["omega"]], ["chicken", "cow"]],
+            exp = ["foo", "alpha", "omega", "chicken", "cow"],
+        ),
+    ]
+    for t in tests:
+        actual = lists.flatten(t.items)
+        asserts.equals(env, t.exp, actual, t.msg)
 
     return unittest.end(env)
 
