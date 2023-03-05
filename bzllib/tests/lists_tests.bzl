@@ -6,14 +6,31 @@ load("//bzllib/private:lists.bzl", "lists")
 def _compact_test(ctx):
     env = unittest.begin(ctx)
 
-    actual = lists.compact([])
-    asserts.equals(env, [], actual)
-
-    actual = lists.compact([None, None, None])
-    asserts.equals(env, [], actual)
-
-    actual = lists.compact(["zebra", None, "apple"])
-    asserts.equals(env, ["zebra", "apple"], actual)
+    tests = [
+        struct(
+            msg = "empty list",
+            items = [],
+            exp = [],
+        ),
+        struct(
+            msg = "list of None",
+            items = [None, None, None],
+            exp = [],
+        ),
+        struct(
+            msg = "list with None and other",
+            items = ["zebra", None, "apple"],
+            exp = ["zebra", "apple"],
+        ),
+        struct(
+            msg = "list without None",
+            items = ["zebra", "apple"],
+            exp = ["zebra", "apple"],
+        ),
+    ]
+    for t in tests:
+        actual = lists.compact(t.items)
+        asserts.equals(env, t.exp, actual, t.msg)
 
     return unittest.end(env)
 
@@ -22,27 +39,45 @@ compact_test = unittest.make(_compact_test)
 def _contains_test(ctx):
     env = unittest.begin(ctx)
 
-    actual = lists.contains([], "apple")
-    asserts.false(env, actual)
-
-    actual = lists.contains(["zebra"], "apple")
-    asserts.false(env, actual)
-
-    actual = lists.contains(["zebra", "apple"], "apple")
-    asserts.true(env, actual)
-
     zebra = struct(name = "zebra")
     apple = struct(name = "apple")
-    items = [zebra, apple]
+    structs = [zebra, apple]
 
-    actual = lists.contains(items, lambda x: x.name == "zebra")
-    asserts.true(env, actual)
-
-    actual = lists.contains(items, lambda x: x.name == "apple")
-    asserts.true(env, actual)
-
-    actual = lists.contains(items, lambda x: x.name == "does_not_exist")
-    asserts.false(env, actual)
+    tests = [
+        struct(
+            msg = "empty list",
+            items = [],
+            target = "apple",
+            exp = False,
+        ),
+        struct(
+            msg = "list does not contain target",
+            items = ["zebra"],
+            target = "apple",
+            exp = False,
+        ),
+        struct(
+            msg = "list contains target",
+            items = ["zebra", "apple"],
+            target = "apple",
+            exp = True,
+        ),
+        struct(
+            msg = "list with bool fn, found target",
+            items = structs,
+            target = lambda x: x.name == "apple",
+            exp = True,
+        ),
+        struct(
+            msg = "list with bool fn, not found target",
+            items = structs,
+            target = lambda x: x.name == "does_not_exist",
+            exp = False,
+        ),
+    ]
+    for t in tests:
+        actual = lists.contains(t.items, t.target)
+        asserts.equals(env, t.exp, actual, t.msg)
 
     return unittest.end(env)
 
@@ -55,14 +90,26 @@ def _find_test(ctx):
     apple = struct(name = "apple")
     items = [zebra, apple]
 
-    actual = lists.find(items, lambda item: item.name == "does_not_exist")
-    asserts.equals(env, None, actual)
-
-    actual = lists.find(items, lambda item: item.name == "zebra")
-    asserts.equals(env, zebra, actual)
-
-    actual = lists.find(items, lambda item: item.name == "apple")
-    asserts.equals(env, apple, actual)
+    tests = [
+        struct(
+            msg = "target not found",
+            bool_fn = lambda x: x.name == "does_not_exist",
+            exp = None,
+        ),
+        struct(
+            msg = "target found, first item",
+            bool_fn = lambda x: x.name == "zebra",
+            exp = zebra,
+        ),
+        struct(
+            msg = "target found, later item",
+            bool_fn = lambda x: x.name == "apple",
+            exp = apple,
+        ),
+    ]
+    for t in tests:
+        actual = lists.find(items, t.bool_fn)
+        asserts.equals(env, t.exp, actual, t.msg)
 
     return unittest.end(env)
 
@@ -71,17 +118,26 @@ find_test = unittest.make(_find_test)
 def _flatten_test(ctx):
     env = unittest.begin(ctx)
 
-    actual = lists.flatten("foo")
-    expected = ["foo"]
-    asserts.equals(env, expected, actual)
-
-    actual = lists.flatten(["foo"])
-    expected = ["foo"]
-    asserts.equals(env, expected, actual)
-
-    actual = lists.flatten(["foo", ["alpha", ["omega"]], ["chicken", "cow"]])
-    expected = ["foo", "alpha", "omega", "chicken", "cow"]
-    asserts.equals(env, expected, actual)
+    tests = [
+        struct(
+            msg = "not a list",
+            items = "foo",
+            exp = ["foo"],
+        ),
+        struct(
+            msg = "already flat list",
+            items = ["foo", "bar"],
+            exp = ["foo", "bar"],
+        ),
+        struct(
+            msg = "multi-level list",
+            items = ["foo", ["alpha", ["omega"]], ["chicken", "cow"]],
+            exp = ["foo", "alpha", "omega", "chicken", "cow"],
+        ),
+    ]
+    for t in tests:
+        actual = lists.flatten(t.items)
+        asserts.equals(env, t.exp, actual, t.msg)
 
     return unittest.end(env)
 
