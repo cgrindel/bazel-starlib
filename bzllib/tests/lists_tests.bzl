@@ -193,6 +193,23 @@ def _map_test(ctx):
 
 map_test = unittest.make(_map_test)
 
+def _avoid_recursion_test(ctx):
+    env = unittest.begin(ctx)
+
+    fruits = ["apple", "pear", "cherry", "banana"]
+    fav_fruits = ["apple", "cherry"]
+
+    # Find the first favorite fruit
+    actual = lists.find(
+        fruits,
+        lambda x: lists.contains(fav_fruits, x),
+    )
+    asserts.equals(env, "apple", actual)
+
+    return unittest.end(env)
+
+avoid_recursion_test = unittest.make(_avoid_recursion_test)
+
 def lists_test_suite():
     return unittest.suite(
         "lists_tests",
@@ -202,4 +219,5 @@ def lists_test_suite():
         flatten_test,
         filter_test,
         map_test,
+        avoid_recursion_test,
     )

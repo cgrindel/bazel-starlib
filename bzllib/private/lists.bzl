@@ -26,8 +26,14 @@ def _contains(items, target_or_fn):
         bool_fn = target_or_fn
     else:
         bool_fn = lambda x: x == target_or_fn
-    item = _find(items, bool_fn)
-    return item != None
+
+    # We are intentionally not calling _find(). We want to be able to use the
+    # lists functions together. For instance, we want to be able to use
+    # lists.contains inside the lambda for lists.find.
+    for item in items:
+        if bool_fn(item):
+            return True
+    return False
 
 def _find(items, bool_fn):
     """Returns the list item that satisfies the provide boolean function.
