@@ -196,8 +196,8 @@ map_test = unittest.make(_map_test)
 def _avoid_recursion_test(ctx):
     env = unittest.begin(ctx)
 
-    fruits = ["apple", "pear", "cherry", "banana"]
-    fav_fruits = ["apple", "cherry"]
+    fruits = ["apple", "pear", "cherry"]
+    fav_fruits = ["apple", "cherry", "banana"]
 
     # Find the first favorite fruit
     actual = lists.find(
@@ -205,6 +205,14 @@ def _avoid_recursion_test(ctx):
         lambda x: lists.contains(fav_fruits, x),
     )
     asserts.equals(env, "apple", actual)
+
+    # This is admittedly a very inefficient way to use these functions
+    # together. It is here to ensure that a recursion error does not occur.
+    actual = lists.filter(
+        fruits,
+        lambda x: lists.contains(lists.compact(fav_fruits), x),
+    )
+    asserts.equals(env, ["apple", "cherry"], actual)
 
     return unittest.end(env)
 

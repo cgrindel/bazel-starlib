@@ -9,7 +9,10 @@ def _compact(items):
     Returns:
         A `list` of items with the `None` values removed.
     """
-    return _filter(items, lambda x: x != None)
+
+    # We are intentionally not calling _filter(). We want to avoid recursion
+    # errors, if these functions are used together.
+    return [item for item in items if item != None]
 
 def _contains(items, target_or_fn):
     """Determines if the provide value is found in a list.
