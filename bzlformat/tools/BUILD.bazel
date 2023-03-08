@@ -5,7 +5,7 @@ load("//bzlformat:defs.bzl", "bzlformat_pkg")
 sh_binary(
     name = "buildifier",
     srcs = ["buildifier.sh"],
-    data = ["@bazel_starlib_buildtools//:buildifier"],
+    data = ["@buildifier_prebuilt//buildifier"],
     visibility = ["//visibility:public"],
     deps = [
         "//shlib/lib:arrays",

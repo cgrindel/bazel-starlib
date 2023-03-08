@@ -2,7 +2,6 @@
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
-load(":bazel_starlib_buildtools.bzl", "bazel_starlib_buildtools")
 
 def _bazeldoc_dependencies():
     maybe(
@@ -25,54 +24,16 @@ def _prebuilt_buildtools_dependencies():
             "http://github.com/keith/buildifier-prebuilt/archive/6.0.0.tar.gz",
         ],
     )
+    # bazel_starlib_buildtools(
+    #     name = "bazel_starlib_buildtools",
+    #     buildozer_target = "@buildifier_prebuilt//buildozer",
+    #     buildozer_location = "buildifier_prebuilt/buildozer/buildozer",
+    #     buildifier_target = "@buildifier_prebuilt//buildifier",
+    #     buildifier_location = "buildifier_prebuilt/buildifier/buildifier",
+    # )
 
-    bazel_starlib_buildtools(
-        name = "bazel_starlib_buildtools",
-        buildozer_target = "@buildifier_prebuilt//buildozer",
-        buildozer_location = "buildifier_prebuilt/buildozer/buildozer",
-        buildifier_target = "@buildifier_prebuilt//buildifier",
-        buildifier_location = "buildifier_prebuilt/buildifier/buildifier",
-    )
-
-def _compile_from_source_buildtools_dependencies():
-    maybe(
-        http_archive,
-        name = "com_google_protobuf",
-        sha256 = "930c2c3b5ecc6c9c12615cf5ad93f1cd6e12d0aba862b572e076259970ac3a53",
-        strip_prefix = "protobuf-3.21.12",
-        urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v3.21.12.tar.gz",
-        ],
-    )
-
-    maybe(
-        http_archive,
-        name = "com_github_bazelbuild_buildtools",
-        sha256 = "ca524d4df8c91838b9e80543832cf54d945e8045f6a2b9db1a1d02eec20e8b8c",
-        strip_prefix = "buildtools-6.0.1",
-        urls = [
-            "https://github.com/bazelbuild/buildtools/archive/refs/tags/6.0.1.tar.gz",
-        ],
-    )
-
-    bazel_starlib_buildtools(
-        name = "bazel_starlib_buildtools",
-        buildozer_target = "@com_github_bazelbuild_buildtools//buildozer",
-        buildozer_location = "com_github_bazelbuild_buildtools/buildozer/buildozer_/buildozer",
-        buildifier_target = "@com_github_bazelbuild_buildtools//buildifier",
-        buildifier_location = "com_github_bazelbuild_buildtools/buildifier/buildifier_/buildifier",
-    )
-
-def bazel_starlib_dependencies(
-        use_prebuilt_buildtools = True,
-        use_bazeldoc = True):
+def bazel_starlib_dependencies():
     """Declares the dependencies for bazel-starlib.
-
-    Args:
-        use_prebuilt_buildtools: A `bool` specifying whether to use a prebuilt
-                                 version of `bazelbuild/buildtools`.
-        use_bazeldoc: A `bool` specifying whether the `bazeldoc` dependencies
-                      should be loaded.
     """
 
     maybe(
@@ -105,10 +66,5 @@ def bazel_starlib_dependencies(
         ],
     )
 
-    if use_bazeldoc:
-        _bazeldoc_dependencies()
-
-    if use_prebuilt_buildtools:
-        _prebuilt_buildtools_dependencies()
-    else:
-        _compile_from_source_buildtools_dependencies()
+    _bazeldoc_dependencies()
+    _prebuilt_buildtools_dependencies()

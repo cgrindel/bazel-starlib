@@ -23,7 +23,7 @@ arrays_sh="$(rlocation "${arrays_sh_location}")" || \
   (echo >&2 "Failed to locate ${arrays_sh_location}" && exit 1)
 source "${arrays_sh}"
 
-buildifier_location=bazel_starlib_buildtools/buildifier
+buildifier_location=buildifier_prebuilt/buildifier/buildifier
 buildifier="$(rlocation "${buildifier_location}")" || \
   (echo >&2 "Failed to locate ${buildifier_location}" && exit 1)
 
