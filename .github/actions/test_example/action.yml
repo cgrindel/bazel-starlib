@@ -18,7 +18,8 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Execute Integration Test
+    - name: Execute Integration Test in Examples Subdirectory
+      if: example_dir != ""
       shell: bash
       env:
         # The integration tests make use of Github-specific functionality 
@@ -26,4 +27,13 @@ runs:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       run: |
         bazelisk test //examples/${{ inputs.example_dir }}:${{ inputs.example_name }}_test_bazel_${{ inputs.bazel_version }}
+    - name: Execute Integration Test in Examples Directory
+      if: example_dir == ""
+      shell: bash
+      env:
+        # The integration tests make use of Github-specific functionality 
+        # (e.g. gh).
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+      run: |
+        bazelisk test //examples:${{ inputs.example_name }}_test_bazel_${{ inputs.bazel_version }}
 
