@@ -177,6 +177,7 @@ test_suite(
     name = "all_smoke_integration_tests",
     tags = INTEGRATION_TEST_TAGS,
     tests = [
+        "//examples:smoke_integration_tests",
         "//examples/bzlformat:smoke_integration_tests",
         "//examples/markdown:smoke_integration_tests",
         "//examples/updatesrc:smoke_integration_tests",
@@ -193,6 +194,7 @@ test_suite(
     name = "all_integration_tests",
     tags = INTEGRATION_TEST_TAGS,
     tests = [
+        "//examples:integration_tests",
         "//examples/bzlformat:integration_tests",
         "//examples/markdown:integration_tests",
         "//examples/updatesrc:integration_tests",
