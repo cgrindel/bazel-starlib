@@ -8,13 +8,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: DEBUG BEFORE
-      shell: bash
-      run: |
-        echo >&2 "BEFORE CONFIGURE"
-        pwd >&2
-        ls -l >&2
-        cat >&2 "shared.bazelrc"
     - name: Enable bzmod
       if: inputs.enabled == 'true'
       shell: bash
@@ -31,9 +24,3 @@ runs:
         # Override earlier settings
         common --noenable_bzlmod
         EOF
-    - name: DEBUG AFTER
-      shell: bash
-      run: |
-        echo >&2 "AFTER CONFIGURE"
-        pwd >&2
-        cat >&2 "shared.bazelrc"
