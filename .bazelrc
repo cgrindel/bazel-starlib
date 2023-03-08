@@ -6,9 +6,6 @@
 build --deleted_packages=examples/bzlformat/simple,examples/bzlformat/simple/mockascript,examples/bzlformat/simple/mockascript/internal,examples/markdown/simple,examples/markdown/simple/bar,examples/updatesrc/simple,examples/updatesrc/simple/header,examples/updatesrc/simple/srcs/Bar,examples/updatesrc/simple/srcs/Foo,tests/bzlformat_tests/tools_tests/missing_pkgs_tests/workspace,tests/bzlformat_tests/tools_tests/missing_pkgs_tests/workspace/foo,tests/bzlformat_tests/tools_tests/missing_pkgs_tests/workspace/foo/bar,tests/updatesrc_tests/workspace/diff_and_update_test,tests/updatesrc_tests/workspace/diff_and_update_test/with_custom_values,tests/updatesrc_tests/workspace/diff_and_update_test/with_defaults,tests/updatesrc_tests/workspace/letters
 query --deleted_packages=examples/bzlformat/simple,examples/bzlformat/simple/mockascript,examples/bzlformat/simple/mockascript/internal,examples/markdown/simple,examples/markdown/simple/bar,examples/updatesrc/simple,examples/updatesrc/simple/header,examples/updatesrc/simple/srcs/Bar,examples/updatesrc/simple/srcs/Foo,tests/bzlformat_tests/tools_tests/missing_pkgs_tests/workspace,tests/bzlformat_tests/tools_tests/missing_pkgs_tests/workspace/foo,tests/bzlformat_tests/tools_tests/missing_pkgs_tests/workspace/foo/bar,tests/updatesrc_tests/workspace/diff_and_update_test,tests/updatesrc_tests/workspace/diff_and_update_test/with_custom_values,tests/updatesrc_tests/workspace/diff_and_update_test/with_defaults,tests/updatesrc_tests/workspace/letters
 
-# GH195: Do not use bzlmod until stardoc supports repo mappings
-build --noenable_bzlmod
-
 # Import Shared settings
 import %workspace%/shared.bazelrc
 
