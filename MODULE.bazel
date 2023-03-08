@@ -1,6 +1,6 @@
 module(
     name = "cgrindel_bazel_starlib",
-    version = "0.11.0",
+    version = "0.13.1",
 )
 
 bazel_dep(
@@ -30,16 +30,3 @@ bazel_dep(
     name = "buildifier_prebuilt",
     version = "6.0.0.1",
 )
-
-# # Need buildifier-prebuilt or bazelbuild/buildtools
-
-# buildtools_deps = use_extension(
-#     "//bzlmod:extensions.bzl",
-#     "install_buildtools_dependencies",
-# )
-# use_repo(
-#     buildtools_deps,
-#     "bazel_starlib_buildtools",
-#     "com_github_bazelbuild_buildtools",
-#     "com_google_protobuf",
-# )
