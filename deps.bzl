@@ -24,13 +24,6 @@ def _prebuilt_buildtools_dependencies():
             "http://github.com/keith/buildifier-prebuilt/archive/6.0.0.tar.gz",
         ],
     )
-    # bazel_starlib_buildtools(
-    #     name = "bazel_starlib_buildtools",
-    #     buildozer_target = "@buildifier_prebuilt//buildozer",
-    #     buildozer_location = "buildifier_prebuilt/buildozer/buildozer",
-    #     buildifier_target = "@buildifier_prebuilt//buildifier",
-    #     buildifier_location = "buildifier_prebuilt/buildifier/buildifier",
-    # )
 
 def bazel_starlib_dependencies():
     """Declares the dependencies for bazel-starlib.
