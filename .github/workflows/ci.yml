@@ -19,16 +19,30 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
-  # macos_int_test_matrix:
-  #   runs-on: macos-12
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - uses: cgrindel/gha_set_up_bazel@v1
-  #     with:
-  #       repo_name: bazel-starlib
-  #   - uses: ./.github/actions/test_example
-  #     with:
-  #       github_token: ${{ secrets.GITHUB_TOKEN }}
+  macos_int_test_matrix:
+    strategy:
+      fail-fast: false
+      matrix:
+        bazel_version: [.bazelversion]
+        include:
+          - example_dir: bzlformat
+            example_name: simple
+          - example_dir: markdown
+            example_name: simple
+          - example_dir: updatesrc
+            example_name: simple
+    runs-on: macos-12
+    steps:
+    - uses: actions/checkout@v3
+    - uses: cgrindel/gha_set_up_bazel@v1
+      with:
+        repo_name: bazel-starlib
+    - uses: ./.github/actions/test_example
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        example_dir: ${{ matrix.example_dir }}
+        example_name: ${{ matrix.example_name }}
+        bazel_version: ${{ matrix.bazel_version }}
 
   ubuntu_tidy_and_test:
     runs-on: ubuntu-22.04
@@ -41,22 +55,36 @@ jobs:
         repo_name: bazel-starlib
     - uses: ./.github/actions/tidy_and_test
 
-  # ubuntu_int_test_matrix:
-  #   runs-on: ubuntu-22.04
-  #   env:
-  #     CC: clang
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - uses: cgrindel/gha_set_up_bazel@v1
-  #     with:
-  #       repo_name: bazel-starlib
-  #   - uses: ./.github/actions/build_and_test
-  #     with:
-  #       github_token: ${{ secrets.GITHUB_TOKEN }}
+  ubuntu_int_test_matrix:
+    strategy:
+      fail-fast: false
+      matrix:
+        bazel_version: [.bazelversion]
+        include:
+          - example_dir: bzlformat
+            example_name: simple
+          - example_dir: markdown
+            example_name: simple
+          - example_dir: updatesrc
+            example_name: simple
+    runs-on: ubuntu-22.04
+    env:
+      CC: clang
+    steps:
+    - uses: actions/checkout@v3
+    - uses: cgrindel/gha_set_up_bazel@v1
+      with:
+        repo_name: bazel-starlib
+    - uses: ./.github/actions/build_and_test
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        example_dir: ${{ matrix.example_dir }}
+        example_name: ${{ matrix.example_name }}
+        bazel_version: ${{ matrix.bazel_version }}
 
 
   all_ci_tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: [macos_tidy_and_test, ubuntu_tidy_and_test]
     if: ${{ always() }}
     steps:
