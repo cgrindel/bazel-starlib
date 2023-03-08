@@ -16,7 +16,7 @@ runs:
         ls -l >&2
         cat >&2 "shared.bazelrc"
     - name: Enable bzmod
-      if: inputs.enabled == true 
+      if: inputs.enabled == 'true'
       shell: bash
       run: |
         cat >> "shared.bazelrc" <<EOF
@@ -24,7 +24,7 @@ runs:
         common --enable_bzlmod
         EOF
     - name: Disable bzmod
-      if: inputs.enabled == false
+      if: inputs.enabled != 'true'
       shell: bash
       run: |
         cat >> "shared.bazelrc" <<EOF
