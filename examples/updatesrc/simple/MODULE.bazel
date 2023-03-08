@@ -1,8 +1,7 @@
 bazel_dep(name = "cgrindel_bazel_starlib")
-
 local_path_override(
     module_name = "cgrindel_bazel_starlib",
     path = "../../..",
 )
 
-bazel_dep(name = "bazel_skylib", version = "1.3.0")
+bazel_dep(name = "bazel_skylib", version = "1.4.1")
