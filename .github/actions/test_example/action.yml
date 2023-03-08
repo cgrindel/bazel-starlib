@@ -19,7 +19,7 @@ runs:
   using: composite
   steps:
     - name: Execute Integration Test in Examples Subdirectory
-      if: inputs.example_dir != ""
+      if: inputs.example_dir != ''
       shell: bash
       env:
         # The integration tests make use of Github-specific functionality 
@@ -28,7 +28,7 @@ runs:
       run: |
         bazelisk test //examples/${{ inputs.example_dir }}:${{ inputs.example_name }}_test_bazel_${{ inputs.bazel_version }}
     - name: Execute Integration Test in Examples Directory
-      if: inputs.example_dir == ""
+      if: inputs.example_dir == ''
       shell: bash
       env:
         # The integration tests make use of Github-specific functionality 
