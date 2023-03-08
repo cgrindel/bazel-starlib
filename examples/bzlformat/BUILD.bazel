@@ -1,8 +1,6 @@
 load(
     "@contrib_rules_bazel_integration_test//bazel_integration_test:defs.bzl",
-    "bazel_integration_test",
     "bazel_integration_tests",
-    "default_test_runner",
     "integration_test_utils",
 )
 load("//:bazel_versions.bzl", "CURRENT_BAZEL_VERSION", "SUPPORTED_BAZEL_VERSIONS")
@@ -15,7 +13,6 @@ filegroup(
     srcs = glob(["*.md"]) + [
         # The child workspaces do not appear as packages in the parent workspace.
         # Hence, we reference the relevant doc files as files, not a target.
-        "build_buildtools/README.md",
         "simple/README.md",
     ],
     visibility = ["//:markdown_test_visibility"],
@@ -52,26 +49,6 @@ bazel_integration_tests(
     workspace_path = "simple",
 )
 
-default_test_runner(
-    name = "build_buildtools_test_runner",
-    bazel_cmds = [
-        "info",
-        "test //...",
-        "run //:bzlformat_missing_pkgs_test",
-    ],
-)
-
-bazel_integration_test(
-    name = "build_buildtools_test",
-    timeout = "eternal",
-    bazel_version = CURRENT_BAZEL_VERSION,
-    test_runner = ":build_buildtools_test_runner",
-    workspace_files = integration_test_utils.glob_workspace_files("build_buildtools") + [
-        "//:workspace_integration_test_files",
-    ],
-    workspace_path = "build_buildtools",
-)
-
 test_suite(
     name = "smoke_integration_tests",
     tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
@@ -90,8 +67,6 @@ test_suite(
     tests = integration_test_utils.bazel_integration_test_names(
         ":simple_test",
         SUPPORTED_BAZEL_VERSIONS,
-    ) + [
-        ":build_buildtools_test",
-    ],
+    ),
     visibility = ["//:__subpackages__"],
 )
