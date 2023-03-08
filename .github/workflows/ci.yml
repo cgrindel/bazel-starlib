@@ -24,6 +24,7 @@ jobs:
       fail-fast: false
       matrix:
         bazel_version: [.bazelversion]
+        example_dir: [bzlformat, markdown, updatesrc]
         include:
           - example_dir: bzlformat
             example_name: simple
@@ -60,6 +61,7 @@ jobs:
       fail-fast: false
       matrix:
         bazel_version: [.bazelversion]
+        example_dir: [bzlformat, markdown, updatesrc]
         include:
           - example_dir: bzlformat
             example_name: simple
