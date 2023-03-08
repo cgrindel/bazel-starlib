@@ -95,7 +95,11 @@ jobs:
 
   all_ci_tests:
     runs-on: ubuntu-22.04
-    needs: [macos_tidy_and_test, ubuntu_tidy_and_test]
+    needs: 
+      - macos_tidy_and_test 
+      - macos_int_test_matrix
+      - ubuntu_tidy_and_test
+      - ubuntu_int_test_matrix
     if: ${{ always() }}
     steps:
       - uses: cgrindel/gha_join_jobs@v1
