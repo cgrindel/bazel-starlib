@@ -4,6 +4,9 @@ bazel-starlib repository.
 
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
+# NOTE: The go_repository declarations must be kept in sync with the go_deps.module() declarations
+# in MODULE.bazel.
+
 def bazel_starlib_go_dependencies():
     """Specifies the Golang dependencies for the bazel-starlib repository."""
     go_repository(

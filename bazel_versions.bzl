@@ -3,7 +3,9 @@
 CURRENT_BAZEL_VERSION = "//:.bazelversion"
 
 OTHER_BAZEL_VERSIONS = [
-    "5.4.0",
+    # GH195: Enable once we can use the default enable_bzlmod values (i.e., do
+    # not need to specify).
+    # "5.4.0",
 ]
 
 SUPPORTED_BAZEL_VERSIONS = [

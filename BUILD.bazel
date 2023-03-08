@@ -40,9 +40,7 @@ gazelle(
 
 bzlformat_pkg(name = "bzlformat")
 
-bzlformat_missing_pkgs(
-    name = "bzlformat_missing_pkgs",
-)
+bzlformat_missing_pkgs(name = "bzlformat_missing_pkgs")
 
 # MARK: - Update Source Files
 
@@ -51,6 +49,9 @@ updatesrc_update_all(name = "update_all")
 tidy(
     name = "tidy",
     targets = [
+        # Remove the child workspace symlinks before doing some of the other
+        # operations that my experience infinite symlink expansion errors.
+        "@contrib_rules_bazel_integration_test//tools:remove_child_wksp_bazel_symlinks",
         "@contrib_rules_bazel_integration_test//tools:update_deleted_packages",
         ":bzlformat_missing_pkgs_fix",
         ":update_all",
@@ -209,7 +210,6 @@ bzl_library(
     srcs = ["deps.bzl"],
     visibility = ["//visibility:public"],
     deps = [
-        ":bazel_starlib_buildtools",
         "@bazel_tools//tools/build_defs/repo:http.bzl",
         "@bazel_tools//tools/build_defs/repo:utils.bzl",
     ],
@@ -220,12 +220,6 @@ bzl_library(
     srcs = ["go_deps.bzl"],
     visibility = ["//visibility:public"],
     deps = ["@bazel_gazelle//:deps"],
-)
-
-bzl_library(
-    name = "bazel_starlib_buildtools",
-    srcs = ["bazel_starlib_buildtools.bzl"],
-    visibility = ["//visibility:public"],
 )
 
 bzl_library(

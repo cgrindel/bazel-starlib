@@ -25,9 +25,7 @@ information.
 
 In addition to the [workspace snippet for the repository](/README.md#workspace-configuration), add
 the following to your `WORKSPACE` file. This is the initialization logic for the [prebuilt
-buildtools](https://github.com/keith/buildifier-prebuilt).  If you would prefer to build the
-[buildtools](https://github.com/bazelbuild/buildtools) from source, check out the [build_buildtools
-example](/examples/bzlformat/build_buildtools)
+buildtools](https://github.com/keith/buildifier-prebuilt).
 
 ```python
 load("@buildifier_prebuilt//:deps.bzl", "buildifier_prebuilt_deps")
