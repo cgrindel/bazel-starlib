@@ -25,6 +25,7 @@ jobs:
       matrix:
         bazel_version: [.bazelversion]
         example_dir: [bzlformat, markdown, updatesrc]
+        enable_bzlmod: [true, false]
         include:
           - example_dir: bzlformat
             example_name: simple
@@ -38,6 +39,10 @@ jobs:
     - uses: cgrindel/gha_set_up_bazel@v1
       with:
         repo_name: bazel-starlib
+    - uses: ./.github/actions/configure_bzlmod
+      with:
+        enabled: ${{ matrix.enable_bzlmod }}
+        directory: "${{ matrix.example_dir  }}/${{ matrix.example_name }}"
     - uses: ./.github/actions/test_example
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -62,6 +67,7 @@ jobs:
       matrix:
         bazel_version: [.bazelversion]
         example_dir: [bzlformat, markdown, updatesrc]
+        enable_bzlmod: [true, false]
         include:
           - example_dir: bzlformat
             example_name: simple
@@ -77,6 +83,10 @@ jobs:
     - uses: cgrindel/gha_set_up_bazel@v1
       with:
         repo_name: bazel-starlib
+    - uses: ./.github/actions/configure_bzlmod
+      with:
+        enabled: ${{ matrix.enable_bzlmod }}
+        directory: "${{ matrix.example_dir  }}/${{ matrix.example_name }}"
     - uses: ./.github/actions/test_example
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
