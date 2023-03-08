@@ -4,9 +4,6 @@ inputs:
   enabled:
     description: Boolean value that specifies whether bzlmod should be enabled.
     required: true
-  directory:
-    description: The directory where to write the local.bazelrc
-    default: "."
 
 runs:
   using: composite
@@ -14,18 +11,16 @@ runs:
     - name: Enable bzmod
       if: ${{ inputs.enabled == true }}
       shell: bash
-      env:
-        OUTPUT_DIR: ${{ inputs.directory }}
       run: |
-        cat >> "${OUTPUT_DIR}/local.bazelrc" <<EOF
+        cat >> "shared.bazelrc" <<EOF
+        # Override earlier settings
         common --enable_bzlmod
         EOF
     - name: Disable bzmod
       if: ${{ inputs.enabled == false }}
       shell: bash
-      env:
-        OUTPUT_DIR: ${{ inputs.directory }}
       run: |
-        cat >> "${OUTPUT_DIR}/local.bazelrc" <<EOF
+        cat >> "shared.bazelrc" <<EOF
+        # Override earlier settings
         common --noenable_bzlmod
         EOF
