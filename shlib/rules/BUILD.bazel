@@ -6,14 +6,6 @@ package(default_visibility = ["//visibility:public"])
 bzlformat_pkg(name = "bzlformat")
 
 bzl_library(
-    name = "binary_pkg",
-    srcs = ["binary_pkg.bzl"],
-    deps = [
-        "//shlib/rules/private:binary_pkg",
-    ],
-)
-
-bzl_library(
     name = "execute_binary",
     srcs = ["execute_binary.bzl"],
     deps = [
