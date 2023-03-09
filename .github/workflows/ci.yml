@@ -36,6 +36,7 @@ jobs:
           - example_dir: ""
             example_name: bzlmod_e2e
             enable_bzlmod: true
+            bazel_version: .bazelversion
     runs-on: macos-12
     steps:
     - uses: actions/checkout@v3
