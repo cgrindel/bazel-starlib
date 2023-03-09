@@ -14,7 +14,7 @@ def sorted_genquery(name, expression, scope, testonly):
     native.genrule(
         name = name,
         srcs = [raw_query_name],
-        outs = [name],
+        outs = [name + ".out"],
         testonly = testonly,
         cmd = """\
 # cat $(location {src}) | sort > $@

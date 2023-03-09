@@ -17,6 +17,7 @@ bazel_dep(
 bazel_dep(
     name = "gazelle",
     version = "0.29.0",
+    repo_name = "bazel_gazelle",
 )
 bazel_dep(name = "bazel_skylib", version = "1.4.1")
 bazel_dep(
@@ -28,8 +29,13 @@ bazel_dep(
     name = "buildifier_prebuilt",
     version = "6.0.0.1",
 )
+bazel_dep(name = "platforms", version = "0.0.6")
 
-go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
+go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
+go_sdk.download(name = "go_sdk")
+use_repo(go_sdk, "go_sdk")
+
+go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")
 
 # NOTE: We are not loading the Go modules from go.mod, because we are doing
 # something a little weird in that we are building an executable from another

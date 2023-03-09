@@ -1,5 +1,5 @@
 module(
-    name = "simple_example",
+    name = "updatesrc_test_workspace",
     version = "0.0.0",
 )
 
