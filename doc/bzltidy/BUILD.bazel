@@ -1,56 +1,58 @@
-load(
-    "//bazeldoc:defs.bzl",
-    "doc_for_provs",
-    "write_header",
-    doc_providers = "providers",
-)
-load("//bzlformat:defs.bzl", "bzlformat_pkg")
+# GH195: Enable once stardoc supports repo mapping.
 
-bzlformat_pkg(name = "bzlformat")
+# load(
+#     "//bazeldoc:defs.bzl",
+#     "doc_for_provs",
+#     "write_header",
+#     doc_providers = "providers",
+# )
+# load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
-filegroup(
-    name = "doc_files",
-    srcs = glob(["*.md"]) + [
-        # A doc file has a reference to this file.
-        "BUILD.bazel",
-    ],
-    visibility = ["//:markdown_test_visibility"],
-)
+# bzlformat_pkg(name = "bzlformat")
 
-# MARK: - Documentation Providers
+# filegroup(
+#     name = "doc_files",
+#     srcs = glob(["*.md"]) + [
+#         # A doc file has a reference to this file.
+#         "BUILD.bazel",
+#     ],
+#     visibility = ["//:markdown_test_visibility"],
+# )
 
-_STARDOC_INPUT = "//bzltidy:defs.bzl"
+# # MARK: - Documentation Providers
 
-_DOC_DEPS = ["//bzltidy:defs"]
+# _STARDOC_INPUT = "//bzltidy:defs.bzl"
 
-_RULES_AND_MACROS_DOC_PROVIDER = doc_providers.create(
-    name = "rules_and_macros_overview",
-    stardoc_input = _STARDOC_INPUT,
-    symbols = [
-        "tidy",
-    ],
-    deps = _DOC_DEPS,
-)
+# _DOC_DEPS = ["//bzltidy:defs"]
 
-_ALL_DOC_PROVIDERS = [
-    _RULES_AND_MACROS_DOC_PROVIDER,
-]
+# _RULES_AND_MACROS_DOC_PROVIDER = doc_providers.create(
+#     name = "rules_and_macros_overview",
+#     stardoc_input = _STARDOC_INPUT,
+#     symbols = [
+#         "tidy",
+#     ],
+#     deps = _DOC_DEPS,
+# )
 
-# MARK: - Headers
+# _ALL_DOC_PROVIDERS = [
+#     _RULES_AND_MACROS_DOC_PROVIDER,
+# ]
 
-write_header(
-    name = _RULES_AND_MACROS_DOC_PROVIDER.header_label,
-    header_content = [
-        "# Rules and Macros",
-        "",
-        "The rules and macros described below are used to help keep your ",
-        "workspace source files up-to-date.",
-    ],
-    symbols = _RULES_AND_MACROS_DOC_PROVIDER.symbols,
-)
+# # MARK: - Headers
 
-# MARK: - Generate Documentation from Providers
+# write_header(
+#     name = _RULES_AND_MACROS_DOC_PROVIDER.header_label,
+#     header_content = [
+#         "# Rules and Macros",
+#         "",
+#         "The rules and macros described below are used to help keep your ",
+#         "workspace source files up-to-date.",
+#     ],
+#     symbols = _RULES_AND_MACROS_DOC_PROVIDER.symbols,
+# )
 
-doc_for_provs(
-    doc_provs = _ALL_DOC_PROVIDERS,
-)
+# # MARK: - Generate Documentation from Providers
+
+# doc_for_provs(
+#     doc_provs = _ALL_DOC_PROVIDERS,
+# )
