@@ -1,16 +1,6 @@
-# Demonstrate `markdown` Rules
+# E2E Test Workspace for bzlmod
 
-This workspace demonstrates the use of `markdown_check_links_test`.
-
-NOTE: The links in this document are meant to be relative to this child workspace, not the parent
-workspace. Hence, if you navigated here from the parent workspace, the absolute paths (i.e.,
-starting with a `/`) will not work properly. However, they must remain as is for the integration
-tests to work properly.
-
-- [External Link](https://bazel.build/)
-- [Internal Link, same package](/foo.md)
-- [Link to bar package](/bar/)
-
+This workspace demonstrates a number of `bazel-starlib` capabilities in a bzlmod-enabled repository.
 
 ## Table of Contents
 

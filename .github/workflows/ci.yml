@@ -33,6 +33,10 @@ jobs:
             example_name: simple
           - example_dir: updatesrc
             example_name: simple
+          - example_dir: ""
+            example_name: bzlmod_e2e
+            enable_bzlmod: true
+            bazel_version: .bazelversion
     runs-on: macos-12
     steps:
     - uses: actions/checkout@v3
@@ -74,6 +78,10 @@ jobs:
             example_name: simple
           - example_dir: updatesrc
             example_name: simple
+          - example_dir: ""
+            example_name: bzlmod_e2e
+            enable_bzlmod: true
+            bazel_version: .bazelversion
     runs-on: ubuntu-22.04
     env:
       CC: clang

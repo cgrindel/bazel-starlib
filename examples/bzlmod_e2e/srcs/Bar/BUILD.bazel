@@ -1,0 +1,29 @@
+load(
+    "@cgrindel_bazel_starlib//updatesrc:defs.bzl",
+    "updatesrc_diff_and_update",
+)
+
+srcs = [
+    "c.txt",
+    "d.txt",
+]
+
+outs = [f + "_modified" for f in srcs]
+
+[
+    genrule(
+        name = "gen_" + outs[idx],
+        srcs = [srcs[idx]],
+        outs = [outs[idx]],
+        cmd = """\
+$(location //header:add_header) $(location {src}) $@ "# Howdy"
+""".format(src = srcs[idx]),
+        tools = ["//header:add_header"],
+    )
+    for idx in range(len(srcs))
+]
+
+updatesrc_diff_and_update(
+    srcs = srcs,
+    outs = outs,
+)
