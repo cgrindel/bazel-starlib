@@ -111,7 +111,13 @@ filegroup(
 
 filegroup(
     name = "all_files",
-    srcs = glob(["*"]),
+    srcs = glob(
+        ["*"],
+        exclude = [
+            ".git",
+            ".gitignore",
+        ],
+    ),
     visibility = ["//:__subpackages__"],
 )
 
@@ -133,6 +139,7 @@ _RUNTIME_PKGS = [
     "//bzlrelease/tools",
     "//bzltidy",
     "//bzltidy/private",
+    "//examples",
     "//markdown",
     "//markdown/private",
     "//markdown/tools",
