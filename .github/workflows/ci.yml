@@ -14,12 +14,16 @@ jobs:
       fail-fast: false
       matrix:
         runner: [macos-12, ubuntu-22.04]
+        enable_bzlmod: [true, false]
     runs-on: ${{ matrix.runner }}
     steps:
     - uses: actions/checkout@v3
     - uses: cgrindel/gha_set_up_bazel@v1
       with:
         repo_name: bazel-starlib
+    - uses: ./.github/actions/configure_bzlmod
+      with:
+        enabled: ${{ matrix.enable_bzlmod }}
     - uses: ./.github/actions/tidy_and_test
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
