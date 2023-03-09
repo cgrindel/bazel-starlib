@@ -1,3 +1,6 @@
+# This file marks the root of the Bazel workspace.
+# See MODULE.bazel for dependencies and setup.
+
 workspace(name = "cgrindel_bazel_starlib")
 
 load("//:deps.bzl", "bazel_starlib_dependencies")
