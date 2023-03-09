@@ -48,6 +48,7 @@ jobs:
             example_dir: ""
             example_name: bzlmod_e2e
             enable_bzlmod: true
+            bazel_version: .bazelversion
     runs-on: ${{ matrix.runner }}
     steps:
     - uses: actions/checkout@v3
