@@ -80,6 +80,7 @@ jobs:
           - example_dir: ""
             example_name: bzlmod_e2e
             enable_bzlmod: true
+            bazel_version: .bazelversion
     runs-on: ubuntu-22.04
     env:
       CC: clang
