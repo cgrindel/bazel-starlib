@@ -8,8 +8,13 @@ on:
     - cron: '13 11 * * *'
 
 jobs:
-  macos_tidy_and_test:
-    runs-on: macos-12
+
+  tidy_and_test_matrix:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [macos-12, ubuntu-22.04]
+    runs-on: ${{ matrix.runner }}
     steps:
     - uses: actions/checkout@v3
     - uses: cgrindel/gha_set_up_bazel@v1
@@ -19,10 +24,11 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
-  macos_int_test_matrix:
+  integration_test_matrix:
     strategy:
       fail-fast: false
       matrix:
+        runner: [macos-12, ubuntu-22.04]
         bazel_version: [.bazelversion]
         example_dir: [bzlformat, markdown, updatesrc]
         enable_bzlmod: [true, false]
@@ -33,11 +39,16 @@ jobs:
             example_name: simple
           - example_dir: updatesrc
             example_name: simple
-          - example_dir: ""
+          - runner: macos-12
+            example_dir: ""
             example_name: bzlmod_e2e
             enable_bzlmod: true
             bazel_version: .bazelversion
-    runs-on: macos-12
+          - runner: ubuntu-22.04
+            example_dir: ""
+            example_name: bzlmod_e2e
+            enable_bzlmod: true
+    runs-on: ${{ matrix.runner }}
     steps:
     - uses: actions/checkout@v3
     - uses: cgrindel/gha_set_up_bazel@v1
@@ -53,61 +64,107 @@ jobs:
         example_name: ${{ matrix.example_name }}
         bazel_version: ${{ matrix.bazel_version }}
 
-  ubuntu_tidy_and_test:
-    runs-on: ubuntu-22.04
-    env:
-      CC: clang
-    steps:
-    - uses: actions/checkout@v3
-    - uses: cgrindel/gha_set_up_bazel@v1
-      with:
-        repo_name: bazel-starlib
-    - uses: ./.github/actions/tidy_and_test
 
-  ubuntu_int_test_matrix:
-    strategy:
-      fail-fast: false
-      matrix:
-        bazel_version: [.bazelversion]
-        example_dir: [bzlformat, markdown, updatesrc]
-        enable_bzlmod: [true, false]
-        include:
-          - example_dir: bzlformat
-            example_name: simple
-          - example_dir: markdown
-            example_name: simple
-          - example_dir: updatesrc
-            example_name: simple
-          - example_dir: ""
-            example_name: bzlmod_e2e
-            enable_bzlmod: true
-            bazel_version: .bazelversion
-    runs-on: ubuntu-22.04
-    env:
-      CC: clang
-    steps:
-    - uses: actions/checkout@v3
-    - uses: cgrindel/gha_set_up_bazel@v1
-      with:
-        repo_name: bazel-starlib
-    - uses: ./.github/actions/configure_bzlmod
-      with:
-        enabled: ${{ matrix.enable_bzlmod }}
-    - uses: ./.github/actions/test_example
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        example_dir: ${{ matrix.example_dir }}
-        example_name: ${{ matrix.example_name }}
-        bazel_version: ${{ matrix.bazel_version }}
+  # macos_tidy_and_test:
+  #   runs-on: macos-12
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - uses: cgrindel/gha_set_up_bazel@v1
+  #     with:
+  #       repo_name: bazel-starlib
+  #   - uses: ./.github/actions/tidy_and_test
+  #     with:
+  #       github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  # macos_int_test_matrix:
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       bazel_version: [.bazelversion]
+  #       example_dir: [bzlformat, markdown, updatesrc]
+  #       enable_bzlmod: [true, false]
+  #       include:
+  #         - example_dir: bzlformat
+  #           example_name: simple
+  #         - example_dir: markdown
+  #           example_name: simple
+  #         - example_dir: updatesrc
+  #           example_name: simple
+  #         - example_dir: ""
+  #           example_name: bzlmod_e2e
+  #           enable_bzlmod: true
+  #   runs-on: macos-12
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - uses: cgrindel/gha_set_up_bazel@v1
+  #     with:
+  #       repo_name: bazel-starlib
+  #   - uses: ./.github/actions/configure_bzlmod
+  #     with:
+  #       enabled: ${{ matrix.enable_bzlmod }}
+  #   - uses: ./.github/actions/test_example
+  #     with:
+  #       github_token: ${{ secrets.GITHUB_TOKEN }}
+  #       example_dir: ${{ matrix.example_dir }}
+  #       example_name: ${{ matrix.example_name }}
+  #       bazel_version: ${{ matrix.bazel_version }}
+
+  # ubuntu_tidy_and_test:
+  #   runs-on: ubuntu-22.04
+  #   env:
+  #     CC: clang
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - uses: cgrindel/gha_set_up_bazel@v1
+  #     with:
+  #       repo_name: bazel-starlib
+  #   - uses: ./.github/actions/tidy_and_test
+
+  # ubuntu_int_test_matrix:
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       bazel_version: [.bazelversion]
+  #       example_dir: [bzlformat, markdown, updatesrc]
+  #       enable_bzlmod: [true, false]
+  #       include:
+  #         - example_dir: bzlformat
+  #           example_name: simple
+  #         - example_dir: markdown
+  #           example_name: simple
+  #         - example_dir: updatesrc
+  #           example_name: simple
+  #         - example_dir: ""
+  #           example_name: bzlmod_e2e
+  #           enable_bzlmod: true
+  #           bazel_version: .bazelversion
+  #   runs-on: ubuntu-22.04
+  #   env:
+  #     CC: clang
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - uses: cgrindel/gha_set_up_bazel@v1
+  #     with:
+  #       repo_name: bazel-starlib
+  #   - uses: ./.github/actions/configure_bzlmod
+  #     with:
+  #       enabled: ${{ matrix.enable_bzlmod }}
+  #   - uses: ./.github/actions/test_example
+  #     with:
+  #       github_token: ${{ secrets.GITHUB_TOKEN }}
+  #       example_dir: ${{ matrix.example_dir }}
+  #       example_name: ${{ matrix.example_name }}
+  #       bazel_version: ${{ matrix.bazel_version }}
 
 
   all_ci_tests:
     runs-on: ubuntu-22.04
     needs: 
-      - macos_tidy_and_test 
-      - macos_int_test_matrix
-      - ubuntu_tidy_and_test
-      - ubuntu_int_test_matrix
+      - tidy_and_test_matrix
+      - integration_test_matrix
+      # - macos_int_test_matrix
+      # - ubuntu_tidy_and_test
+      # - ubuntu_int_test_matrix
     if: ${{ always() }}
     steps:
       - uses: cgrindel/gha_join_jobs@v1
