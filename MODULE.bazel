@@ -1,6 +1,6 @@
 module(
     name = "cgrindel_bazel_starlib",
-    version = "0.13.1",
+    version = "0.0.0",
 )
 
 bazel_dep(
