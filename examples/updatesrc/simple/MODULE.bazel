@@ -1,3 +1,8 @@
+module(
+    name = "simple_example",
+    version = "0.0.0",
+)
+
 bazel_dep(name = "cgrindel_bazel_starlib")
 local_path_override(
     module_name = "cgrindel_bazel_starlib",
