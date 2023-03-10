@@ -11,6 +11,12 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v2 ---
 
+# DEBUG BEGIN
+echo >&2 "CHUCK DEBUG BEGIN"
+find . | sort >&2
+echo >&2 "CHUCK DEBUG END"
+# DEBUG END
+
 # MARK - Locate Deps
 
 fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
