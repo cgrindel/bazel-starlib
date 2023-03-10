@@ -1,11 +1,14 @@
-# Import Shared settings
-import %workspace%/../../shared.bazelrc
+# Do not import any of the shared .bazelrc files. Keep this
+# clean for presubmit builds when publishing to BCR.
 
-# Import CI settings.
-import %workspace%/../../ci.bazelrc
+# Verbose Failures
+build --verbose_failures
 
-# Try to import a local.rc file; typically, written by CI
-try-import %workspace%/../../local.bazelrc
+# Strict PATH. Helps prevent build cache invalidation due to PATH differences.
+build --incompatible_strict_action_env=true
+
+# Don't allow empty glob patterns by default
+build --incompatible_disallow_empty_glob
 
 # Explicitly enable bzlmod
 common --enable_bzlmod
