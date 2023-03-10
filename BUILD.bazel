@@ -70,7 +70,9 @@ execute_binary(
         "mod",
         "tidy",
     ],
-    binary = "@go_sdk//:bin/go",
+    # TODO(chuck): Clean up
+    # binary = "@go_sdk//:bin/go",
+    binary = "@go_default_sdk//:bin/go",
     execute_in_workspace = True,
 )
 
