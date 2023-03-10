@@ -14,7 +14,13 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 # DEBUG BEGIN
 echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") =========" 
 find . | sort >&2
-set -x
+if [[ -f "${RUNFILES_REPO_MAPPING}" ]]; then
+  echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") RUNFILES_REPO_MAPPING: ${RUNFILES_REPO_MAPPING}" 
+  cat >&2 "${RUNFILES_REPO_MAPPING}"
+fi
+# Enable debug for rlocation
+export RUNFILES_LIB_DEBUG=1
+# set -x
 # DEBUG END
 
 # MARK - Locate Deps
