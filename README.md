@@ -41,9 +41,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "cgrindel_bazel_starlib",
-    sha256 = "0b78a96eff4d0059321643a78e54f11ab9d0e319994299c0f2b2ebd5325c3f48",
+    sha256 = "78e8754ce435bc2292d9157682fd842335239fe664cb4f75fed5968203c70794",
     urls = [
-        "https://github.com/cgrindel/bazel-starlib/releases/download/v0.14.3/bazel-starlib.v0.14.3.tar.gz",
+        "https://github.com/cgrindel/bazel-starlib/releases/download/v0.14.4/bazel-starlib.v0.14.4.tar.gz",
     ],
 )
 
