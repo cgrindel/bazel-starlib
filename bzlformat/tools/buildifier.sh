@@ -11,18 +11,6 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v3 ---
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") =========" 
-find . | sort >&2
-if [[ -f "${RUNFILES_REPO_MAPPING}" ]]; then
-  echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") RUNFILES_REPO_MAPPING: ${RUNFILES_REPO_MAPPING}" 
-  cat >&2 "${RUNFILES_REPO_MAPPING}"
-fi
-# Enable debug for rlocation
-export RUNFILES_LIB_DEBUG=1
-# set -x
-# DEBUG END
-
 # MARK - Locate Deps
 
 fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
