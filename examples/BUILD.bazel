@@ -10,6 +10,9 @@ load("//bzllib:defs.bzl", "lists")
 
 bzlformat_pkg(name = "bzlformat")
 
+# Do not have Gazelle process the child workspace
+# gazelle:exclude bzlmod_e2e/**
+
 # MARK: - Integration Tests
 
 _EXAMPLE_DIRS = ["bzlmod_e2e"]

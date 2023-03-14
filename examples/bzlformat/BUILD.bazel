@@ -8,6 +8,9 @@ load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 bzlformat_pkg(name = "bzlformat")
 
+# Do not have Gazelle process the child workspace
+# gazelle:exclude simple/**
+
 filegroup(
     name = "doc_files",
     srcs = glob(["*.md"]) + [
