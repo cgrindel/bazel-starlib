@@ -15,6 +15,7 @@ runs:
         cat >> "shared.bazelrc" <<EOF
         # Override earlier settings
         common --enable_bzlmod
+        build --@cgrindel_bazel_starlib//bzlmod:enabled
         EOF
     - name: Disable bzmod
       if: inputs.enabled != 'true'
@@ -23,4 +24,5 @@ runs:
         cat >> "shared.bazelrc" <<EOF
         # Override earlier settings
         common --noenable_bzlmod
+        build --no@cgrindel_bazel_starlib//bzlmod:enabled
         EOF

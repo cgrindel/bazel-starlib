@@ -47,10 +47,25 @@ if [[ ${#targets_to_run_before[0]} -gt 0 ]]; then
 fi
 
 # Query for any 'updatesrc_update' targets
+starlark_file="$(mktemp)"
+cleanup() {
+  rm -f "${starlark_file}"
+}
+trap cleanup EXIT
+cat >"${starlark_file}" <<-EOF
+def format(target):
+  # Only include targets that compatible with the platform
+  if "IncompatiblePlatformProvider" not in providers(target):
+    return target.label
+  return ""
+EOF
 bazel_query="kind(updatesrc_update, //...)"
 update_targets=()
 while IFS=$'\n' read -r line; do update_targets+=("$line"); done < <(
-  bazel query "${bazel_query}" | sort
+  bazel cquery "${bazel_query}" \
+    --output=starlark \
+    --starlark:file="${starlark_file}" \
+    | sort
 )
 if [[ ${#update_targets[@]} -gt 0 ]]; then
   run_bazel_targets "${update_targets[@]}"

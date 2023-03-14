@@ -1,0 +1,24 @@
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+config_setting(
+    name = "is_enabled",
+    flag_values = {
+        ":enabled": "true",
+    },
+    visibility = ["//visibility:public"],
+)
+
+bool_flag(
+    name = "enabled",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)

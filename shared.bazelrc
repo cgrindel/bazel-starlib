@@ -7,5 +7,6 @@ build --incompatible_strict_action_env=true
 # Don't allow empty glob patterns by default
 build --incompatible_disallow_empty_glob
 
-# GH195: Do not use bzlmod until stardoc supports repo mappings
-common --noenable_bzlmod
+# Enable bzlmod
+common --enable_bzlmod
+build --@cgrindel_bazel_starlib//bzlmod:enabled

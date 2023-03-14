@@ -46,7 +46,7 @@ Option #2: Rules that provide `UpdateSrcsInfo` can be specified in the `deps` at
 
 <pre>
 updatesrc_diff_and_update(<a href="#updatesrc_diff_and_update-srcs">srcs</a>, <a href="#updatesrc_diff_and_update-outs">outs</a>, <a href="#updatesrc_diff_and_update-name">name</a>, <a href="#updatesrc_diff_and_update-update_name">update_name</a>, <a href="#updatesrc_diff_and_update-diff_test_prefix">diff_test_prefix</a>, <a href="#updatesrc_diff_and_update-diff_test_suffix">diff_test_suffix</a>,
-                          <a href="#updatesrc_diff_and_update-update_visibility">update_visibility</a>, <a href="#updatesrc_diff_and_update-diff_test_visibility">diff_test_visibility</a>)
+                          <a href="#updatesrc_diff_and_update-update_visibility">update_visibility</a>, <a href="#updatesrc_diff_and_update-diff_test_visibility">diff_test_visibility</a>, <a href="#updatesrc_diff_and_update-kwargs">kwargs</a>)
 </pre>
 
 Defines an `updatesrc_update` for the package and `diff_test` targets for each src-out pair.
@@ -64,6 +64,7 @@ Defines an `updatesrc_update` for the package and `diff_test` targets for each s
 | <a id="updatesrc_diff_and_update-diff_test_suffix"></a>diff_test_suffix |  Optional. The suffix to be used for the <code>diff_test</code> target names.   |  <code>"_difftest"</code> |
 | <a id="updatesrc_diff_and_update-update_visibility"></a>update_visibility |  Optional. The visibility declarations for the <code>updatesrc_update</code> target.   |  <code>None</code> |
 | <a id="updatesrc_diff_and_update-diff_test_visibility"></a>diff_test_visibility |  Optional. The visibility declarations for the <code>diff_test</code> targets.   |  <code>None</code> |
+| <a id="updatesrc_diff_and_update-kwargs"></a>kwargs |  Common attributes that are applied to the underlying rules.   |  none |
 
 
 <a id="updatesrc_update_all"></a>

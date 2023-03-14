@@ -19,7 +19,7 @@ On this page:
 ## doc_for_provs
 
 <pre>
-doc_for_provs(<a href="#doc_for_provs-doc_provs">doc_provs</a>)
+doc_for_provs(<a href="#doc_for_provs-doc_provs">doc_provs</a>, <a href="#doc_for_provs-kwargs">kwargs</a>)
 </pre>
 
 Defines targets for generating documentation, testing that the generated doc matches the workspace directory, and copying the generated doc to the workspace directory.
@@ -30,6 +30,7 @@ Defines targets for generating documentation, testing that the generated doc mat
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
 | <a id="doc_for_provs-doc_provs"></a>doc_provs |  A <code>list</code> of document provider <code>struct</code> values as returned from <code>providers.create()</code>.   |  none |
+| <a id="doc_for_provs-kwargs"></a>kwargs |  Common attributes that are applied to the underlying rules.   |  none |
 
 
 <a id="write_file_list"></a>

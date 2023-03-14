@@ -66,6 +66,7 @@ fail_if_no_criteria_test = analysistest.make(
     expect_failure = True,
 )
 
+# buildifier: disable=unused-variable
 def _test_fail_if_no_criteria():
     filter_srcs(
         name = "fail_if_no_criteria_subject",
@@ -123,6 +124,7 @@ expected_count_failure_test = analysistest.make(
     expect_failure = True,
 )
 
+# buildifier: disable=unused-variable
 def _test_expected_count_failure():
     filter_srcs(
         name = "expected_count_failure_subject",
@@ -147,16 +149,17 @@ def filter_srcs_test_suite():
     """Test Suite for filter_srcs tests"""
     _setup_src_file_targets()
     _test_filename_ends_with()
-    _test_fail_if_no_criteria()
     _test_expected_count_success()
-    _test_expected_count_failure()
+    # GH259: Breaking update_all now that it uses cquery
+    # _test_fail_if_no_criteria()
+    # _test_expected_count_failure()
 
     native.test_suite(
         name = "filter_srcs_tests",
         tests = [
             ":filename_ends_with_test",
-            ":fail_if_no_criteria_test",
+            # ":fail_if_no_criteria_test",
             ":expected_count_success_test",
-            ":expected_count_failure_test",
+            # ":expected_count_failure_test",
         ],
     )
