@@ -16,3 +16,9 @@ bool_flag(
     build_setting_default = False,
     visibility = ["//visibility:public"],
 )
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)

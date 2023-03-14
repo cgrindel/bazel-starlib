@@ -134,6 +134,7 @@ _RUNTIME_PKGS = [
     "//bzlformat/tools/missing_pkgs",
     "//bzllib",
     "//bzllib/private",
+    "//bzlmod",
     "//bzlrelease",
     "//bzlrelease/private",
     "//bzlrelease/tools",
