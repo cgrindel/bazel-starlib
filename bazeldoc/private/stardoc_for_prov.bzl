@@ -13,7 +13,7 @@ def stardoc_for_prov(doc_prov, **kwargs):
         None.
     """
     target_compatible_with = kwargs.pop("target_compatible_with", select({
-        "//bzlmod:is_enabled": ["@platforms//:incompatible"],
+        "@cgrindel_bazel_starlib//bzlmod:is_enabled": ["@platforms//:incompatible"],
         "//conditions:default": [],
     }))
 
