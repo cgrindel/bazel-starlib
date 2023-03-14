@@ -9,4 +9,4 @@ build --incompatible_disallow_empty_glob
 
 # Enable bzlmod
 common --enable_bzlmod
-build --//bzlmod:enabled
+build --@cgrindel_bazel_starlib//bzlmod:enabled
