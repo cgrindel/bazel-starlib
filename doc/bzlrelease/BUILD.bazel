@@ -1,118 +1,116 @@
-# GH195: Enable once stardoc supports repo mapping.
+load(
+    "//bazeldoc:defs.bzl",
+    "doc_for_provs",
+    "write_file_list",
+    "write_header",
+    doc_providers = "providers",
+)
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
-# load(
-#     "//bazeldoc:defs.bzl",
-#     "doc_for_provs",
-#     "write_file_list",
-#     "write_header",
-#     doc_providers = "providers",
-# )
-# load("//bzlformat:defs.bzl", "bzlformat_pkg")
+bzlformat_pkg(name = "bzlformat")
 
-# bzlformat_pkg(name = "bzlformat")
+filegroup(
+    name = "doc_files",
+    srcs = glob(["*.md"]),
+    visibility = ["//:markdown_test_visibility"],
+)
 
-# filegroup(
-#     name = "doc_files",
-#     srcs = glob(["*.md"]),
-#     visibility = ["//:markdown_test_visibility"],
-# )
+# MARK: - Documentation Providers
 
-# # MARK: - Documentation Providers
+_RULE_NAMES = [
+    "create_release",
+    "generate_release_notes",
+    "generate_workspace_snippet",
+    "hash_sha256",
+    "release_archive",
+    "update_readme",
+]
 
-# _RULE_NAMES = [
-#     "create_release",
-#     "generate_release_notes",
-#     "generate_workspace_snippet",
-#     "hash_sha256",
-#     "release_archive",
-#     "update_readme",
-# ]
+_RULE_DOC_PROVIDERS = [
+    doc_providers.create(
+        name = rule,
+        stardoc_input = "//bzlrelease:defs.bzl",
+        symbols = [rule],
+        deps = ["//bzlrelease:defs"],
+    )
+    for rule in _RULE_NAMES
+]
 
-# _RULE_DOC_PROVIDERS = [
-#     doc_providers.create(
-#         name = rule,
-#         stardoc_input = "//bzlrelease:defs.bzl",
-#         symbols = [rule],
-#         deps = ["//bzlrelease:defs"],
-#     )
-#     for rule in _RULE_NAMES
-# ]
+_API_DOC_PROVIDERS = []
 
-# _API_DOC_PROVIDERS = []
+_ALL_DOC_PROVIDERS = [
+    doc_providers.create(
+        name = "api",
+        is_stardoc = False,
+        stardoc_input = "",
+        deps = [],
+    ),
+    doc_providers.create(
+        name = "rules",
+        is_stardoc = False,
+        stardoc_input = "",
+        deps = [],
+    ),
+] + _RULE_DOC_PROVIDERS + _API_DOC_PROVIDERS
 
-# _ALL_DOC_PROVIDERS = [
-#     doc_providers.create(
-#         name = "api",
-#         is_stardoc = False,
-#         stardoc_input = "",
-#         deps = [],
-#     ),
-#     doc_providers.create(
-#         name = "rules",
-#         is_stardoc = False,
-#         stardoc_input = "",
-#         deps = [],
-#     ),
-# ] + _RULE_DOC_PROVIDERS + _API_DOC_PROVIDERS
+# MARK: - Headers
 
-# # MARK: - Headers
+# Write rule headers
+[
+    write_header(
+        name = doc_prov.header_label,
+        out = doc_prov.header_basename,
+        header_content = [
+            "# `{name}` Rule".format(name = doc_prov.name),
+        ],
+    )
+    for doc_prov in _RULE_DOC_PROVIDERS
+    if doc_prov.is_stardoc
+]
 
-# # Write rule headers
-# [
-#     write_header(
-#         name = doc_prov.header_label,
-#         out = doc_prov.header_basename,
-#         header_content = [
-#             "# `{name}` Rule".format(name = doc_prov.name),
-#         ],
-#     )
-#     for doc_prov in _RULE_DOC_PROVIDERS
-#     if doc_prov.is_stardoc
-# ]
+# Write the API headers
+[
+    write_header(
+        name = doc_prov.header_label,
+        out = doc_prov.header_basename,
+        header_content = [
+            "# `{name}` API".format(name = doc_prov.name),
+        ],
+    )
+    for doc_prov in _API_DOC_PROVIDERS
+    if doc_prov.is_stardoc
+]
 
-# # Write the API headers
-# [
-#     write_header(
-#         name = doc_prov.header_label,
-#         out = doc_prov.header_basename,
-#         header_content = [
-#             "# `{name}` API".format(name = doc_prov.name),
-#         ],
-#     )
-#     for doc_prov in _API_DOC_PROVIDERS
-#     if doc_prov.is_stardoc
-# ]
+# MARK: - Special Case api.md
 
-# # MARK: - Special Case api.md
+# Write the api.md_ file as a special case.
+write_file_list(
+    name = "api_doc",
+    out = "api.md_",
+    doc_provs = _API_DOC_PROVIDERS,
+    header_content = [
+        "# Build API",
+        "",
+        "The APIs listed below are available in this repository.",
+        "",
+    ],
+)
 
-# # Write the api.md_ file as a special case.
-# write_file_list(
-#     name = "api_doc",
-#     out = "api.md_",
-#     doc_provs = _API_DOC_PROVIDERS,
-#     header_content = [
-#         "# Build API",
-#         "",
-#         "The APIs listed below are available in this repository.",
-#         "",
-#     ],
-# )
+# Write the rules.md_ file as a special case.
+write_file_list(
+    name = "rules_doc",
+    out = "rules.md_",
+    doc_provs = _RULE_DOC_PROVIDERS,
+    header_content = [
+        "# Rules",
+        "",
+        "The rules listed below are available in this repository.",
+        "",
+    ],
+)
 
-# # Write the rules.md_ file as a special case.
-# write_file_list(
-#     name = "rules_doc",
-#     out = "rules.md_",
-#     doc_provs = _RULE_DOC_PROVIDERS,
-#     header_content = [
-#         "# Rules",
-#         "",
-#         "The rules listed below are available in this repository.",
-#         "",
-#     ],
-# )
+# MARK: - Generate Documentation from Providers
 
-# # MARK: - Generate Documentation from Providers
-
-# doc_for_provs(
-#     doc_provs = _ALL_DOC_PROVIDERS,
-# )
+doc_for_provs(
+    doc_provs = _ALL_DOC_PROVIDERS,
+)

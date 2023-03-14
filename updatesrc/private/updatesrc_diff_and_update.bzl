@@ -11,7 +11,8 @@ def updatesrc_diff_and_update(
         diff_test_prefix = "",
         diff_test_suffix = "_difftest",
         update_visibility = None,
-        diff_test_visibility = None):
+        diff_test_visibility = None,
+        **kwargs):
     """Defines an `updatesrc_update` for the package and `diff_test` targets for each src-out pair.
 
     Args:
@@ -32,7 +33,16 @@ def updatesrc_diff_and_update(
                            `updatesrc_update` target.
         diff_test_visibility: Optional. The visibility declarations for the
                               `diff_test` targets.
+        **kwargs: Common attributes that are applied to the underlying rules.
     """
+
+    # Apply the common visibility if another value was not already specified
+    common_visibility = kwargs.pop("visibility", None)
+    if common_visibility != None:
+        if update_visibility == None:
+            update_visibility = common_visibility
+        if diff_test_visibility == None:
+            diff_test_visibility = common_visibility
 
     # Make sure that we have the same number of srcs and outs.
     if len(srcs) != len(outs):
@@ -48,6 +58,7 @@ def updatesrc_diff_and_update(
             file1 = src,
             file2 = out,
             visibility = diff_test_visibility,
+            **kwargs
         )
 
     if name == None:
@@ -62,4 +73,5 @@ def updatesrc_diff_and_update(
         srcs = srcs,
         outs = outs,
         visibility = update_visibility,
+        **kwargs
     )
