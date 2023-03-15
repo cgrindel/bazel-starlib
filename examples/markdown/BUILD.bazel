@@ -1,7 +1,8 @@
+load("@bazel_binaries//:defs.bzl", "bazel_binaries")
 load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
 load("@cgrindel_bazel_starlib//shlib/rules:execute_binary.bzl", "execute_binary")
 load(
-    "@contrib_rules_bazel_integration_test//bazel_integration_test:defs.bzl",
+    "@rules_bazel_integration_test//bazel_integration_test:defs.bzl",
     "bazel_integration_tests",
     "integration_test_utils",
 )
@@ -48,7 +49,7 @@ _ARGS_SELECT_DICT = {
 sh_binary(
     name = "simple_test_runner_binary",
     srcs = [
-        "@contrib_rules_bazel_integration_test//bazel_integration_test/private:default_test_runner.sh",
+        "@rules_bazel_integration_test//bazel_integration_test/private:default_test_runner.sh",
     ],
     args = _COMMON_ARGS + select(_ARGS_SELECT_DICT),
     deps = [
@@ -66,6 +67,7 @@ execute_binary(
 
 bazel_integration_tests(
     name = "simple_test",
+    bazel_binaries = bazel_binaries,
     bazel_versions = SUPPORTED_BAZEL_VERSIONS,
     test_runner = ":simple_test_runner",
     workspace_files = integration_test_utils.glob_workspace_files("simple") + [

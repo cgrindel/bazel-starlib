@@ -59,7 +59,7 @@ buildifier_prebuilt_register_toolchains()
 # MARK: - Integration Testing
 
 http_archive(
-    name = "contrib_rules_bazel_integration_test",
+    name = "rules_bazel_integration_test",
     sha256 = "6263b8d85a125e1877c463bf4d692bebc2b6479c924f64a3d45c81fbfbc495df",
     strip_prefix = "rules_bazel_integration_test-0.10.3",
     urls = [
@@ -67,11 +67,11 @@ http_archive(
     ],
 )
 
-load("@contrib_rules_bazel_integration_test//bazel_integration_test:deps.bzl", "bazel_integration_test_rules_dependencies")
+load("@rules_bazel_integration_test//bazel_integration_test:deps.bzl", "bazel_integration_test_rules_dependencies")
 
 bazel_integration_test_rules_dependencies()
 
-load("@contrib_rules_bazel_integration_test//bazel_integration_test:defs.bzl", "bazel_binaries")
+load("@rules_bazel_integration_test//bazel_integration_test:defs.bzl", "bazel_binaries")
 load("//:bazel_versions.bzl", "SUPPORTED_BAZEL_VERSIONS")
 
 bazel_binaries(versions = SUPPORTED_BAZEL_VERSIONS)

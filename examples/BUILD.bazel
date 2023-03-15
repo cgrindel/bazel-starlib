@@ -1,5 +1,6 @@
+load("@bazel_binaries//:defs.bzl", "bazel_binaries")
 load(
-    "@contrib_rules_bazel_integration_test//bazel_integration_test:defs.bzl",
+    "@rules_bazel_integration_test//bazel_integration_test:defs.bzl",
     "bazel_integration_tests",
     "default_test_runner",
     "integration_test_utils",
@@ -23,6 +24,7 @@ default_test_runner(name = "default_test_runner")
     bazel_integration_tests(
         name = "{}_test".format(dirname),
         timeout = "eternal",
+        bazel_binaries = bazel_binaries,
         bazel_versions = SUPPORTED_BAZEL_VERSIONS,
         test_runner = ":default_test_runner",
         workspace_files = integration_test_utils.glob_workspace_files(dirname) + [
