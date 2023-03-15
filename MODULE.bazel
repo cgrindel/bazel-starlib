@@ -4,11 +4,7 @@ module(
     bazel_compatibility = [">=6.1.0"],
 )
 
-bazel_dep(
-    name = "bazel_skylib_gazelle_plugin",
-    version = "1.4.1",
-    dev_dependency = True,
-)
+# MARK: - Runtime Dependencies
 
 bazel_dep(
     name = "rules_go",
@@ -116,4 +112,12 @@ use_repo(
     "com_github_sergi_go_diff",
     "com_github_stretchr_testify",
     "in_gopkg_alecthomas_kingpin_v2",
+)
+
+# MARK: - Dev Dependencies
+
+bazel_dep(
+    name = "bazel_skylib_gazelle_plugin",
+    version = "1.4.1",
+    dev_dependency = True,
 )
