@@ -26,6 +26,10 @@ default_test_runner(name = "default_test_runner")
         timeout = "eternal",
         bazel_binaries = bazel_binaries,
         bazel_versions = SUPPORTED_BAZEL_VERSIONS,
+        target_compatible_with = select({
+            "@cgrindel_bazel_starlib//bzlmod:is_enabled": [],
+            "//conditions:default": ["@platforms//:incompatible"],
+        }),
         test_runner = ":default_test_runner",
         workspace_files = integration_test_utils.glob_workspace_files(dirname) + [
             "//:workspace_integration_test_files",
