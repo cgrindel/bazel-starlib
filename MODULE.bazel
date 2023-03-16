@@ -123,8 +123,7 @@ bazel_dep(
 )
 bazel_dep(
     name = "rules_bazel_integration_test",
-    # TODO(chuck): Add correct version for rules_bazel_integration_test
-    version = "0.0.0",
+    version = "0.11.1",
     dev_dependency = True,
 )
 
@@ -136,10 +135,3 @@ bazel_binaries = use_extension(
 bazel_binaries.download(version_file = "//:.bazelversion")
 bazel_binaries.download(version = "7.0.0-pre.20230215.2")
 use_repo(bazel_binaries, "bazel_binaries")
-
-# MARK: - Overrides
-
-local_path_override(
-    module_name = "rules_bazel_integration_test",
-    path = "/Users/chuck/code/bazel-contrib/rules_bazel_integration_test/gh125_reduce_bzlmod_boilerplate",
-)

@@ -60,17 +60,12 @@ buildifier_prebuilt_register_toolchains()
 
 # TODO(chuck): Update with latest release of rules_bazel_integration_test.
 
-# http_archive(
-#     name = "rules_bazel_integration_test",
-#     sha256 = "6263b8d85a125e1877c463bf4d692bebc2b6479c924f64a3d45c81fbfbc495df",
-#     strip_prefix = "rules_bazel_integration_test-0.10.3",
-#     urls = [
-#         "http://github.com/bazel-contrib/rules_bazel_integration_test/archive/v0.10.3.tar.gz",
-#     ],
-# )
-local_repository(
+http_archive(
     name = "rules_bazel_integration_test",
-    path = "/Users/chuck/code/bazel-contrib/rules_bazel_integration_test/gh125_reduce_bzlmod_boilerplate",
+    sha256 = "e843087f7e3475b52b302f9e1cf324d62d17a77d311dac26c4d66fdbff1b9b38",
+    urls = [
+        "https://github.com/bazel-contrib/rules_bazel_integration_test/releases/download/v0.11.1/rules_bazel_integration_test.v0.11.1.tar.gz",
+    ],
 )
 
 load("@rules_bazel_integration_test//bazel_integration_test:deps.bzl", "bazel_integration_test_rules_dependencies")
