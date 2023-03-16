@@ -1,5 +1,6 @@
+load("@bazel_binaries//:defs.bzl", "bazel_binaries")
 load(
-    "@contrib_rules_bazel_integration_test//bazel_integration_test:defs.bzl",
+    "@rules_bazel_integration_test//bazel_integration_test:defs.bzl",
     "bazel_integration_tests",
     "integration_test_utils",
 )
@@ -28,7 +29,7 @@ sh_binary(
     testonly = True,
     srcs = ["simple_test.sh"],
     data = [
-        "@contrib_rules_bazel_integration_test//tools:create_scratch_dir",
+        "@rules_bazel_integration_test//tools:create_scratch_dir",
         # NOTE: The test runnder does not use buildozer. However, the child
         # workspace does not find it properly if we don't specify it here.
         "@buildifier_prebuilt//buildozer",
@@ -44,6 +45,7 @@ sh_binary(
 bazel_integration_tests(
     name = "simple_test",
     timeout = "eternal",
+    bazel_binaries = bazel_binaries,
     bazel_versions = SUPPORTED_BAZEL_VERSIONS,
     test_runner = ":simple_test_runner",
     workspace_files = integration_test_utils.glob_workspace_files("simple") + [

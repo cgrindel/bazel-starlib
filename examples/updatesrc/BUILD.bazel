@@ -1,6 +1,7 @@
+load("@bazel_binaries//:defs.bzl", "bazel_binaries")
 load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
 load(
-    "@contrib_rules_bazel_integration_test//bazel_integration_test:defs.bzl",
+    "@rules_bazel_integration_test//bazel_integration_test:defs.bzl",
     "bazel_integration_tests",
     "default_test_runner",
     "integration_test_utils",
@@ -35,6 +36,7 @@ default_test_runner(
 
 bazel_integration_tests(
     name = "simple_test",
+    bazel_binaries = bazel_binaries,
     bazel_versions = SUPPORTED_BAZEL_VERSIONS,
     test_runner = ":simple_test_runner",
     workspace_files = integration_test_utils.glob_workspace_files("simple") + [

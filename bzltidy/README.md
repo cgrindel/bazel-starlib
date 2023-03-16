@@ -28,7 +28,7 @@ tidy(
     name = "tidy",
     targets = [
         # Replace this list with the source-modifying targets that should be executed.
-        "@contrib_rules_bazel_integration_test//tools:update_deleted_packages",
+        "@rules_bazel_integration_test//tools:update_deleted_packages",
         ":bzlformat_missing_pkgs_fix",
         ":update_all",
         ":go_mod_tidy",
