@@ -1,8 +1,18 @@
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
-load("//bzlrelease:defs.bzl", "generate_workspace_snippet", "update_readme")
+load(
+    "//bzlrelease:defs.bzl",
+    "generate_module_snippet",
+    "generate_workspace_snippet",
+    "update_readme",
+)
 load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
 
 bzlformat_pkg(name = "bzlformat")
+
+generate_module_snippet(
+    name = "generate_module_snippet",
+    module_name = "foo_bar",
+)
 
 generate_workspace_snippet(
     name = "generate_workspace_snippet",
@@ -11,6 +21,7 @@ generate_workspace_snippet(
 
 update_readme(
     name = "update_readme",
+    generate_module_snippet = ":generate_module_snippet",
     generate_workspace_snippet = ":generate_workspace_snippet",
 )
 
