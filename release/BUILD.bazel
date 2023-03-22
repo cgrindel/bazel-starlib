@@ -40,7 +40,7 @@ generate_release_notes(
 
 update_readme(
     name = "update_readme",
-    # generate_module_snippet = ":generate_module_snippet",
+    generate_module_snippet = ":generate_module_snippet",
     generate_workspace_snippet = ":generate_workspace_snippet",
 )
 

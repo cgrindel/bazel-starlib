@@ -43,6 +43,15 @@ while (("$#")); do
         generate_workspace_snippet="${starting_dir}/${generate_workspace_snippet}"
       shift 2
       ;;
+    "--generate_module_snippet")
+      # If the input path is not absolute, then resolve it to be relative to
+      # the starting directory. We do this before we starting changing
+      # directories.
+      generate_module_snippet="${2}"
+      [[ "${generate_module_snippet}" =~ ^/ ]] || \
+        generate_module_snippet="${starting_dir}/${generate_module_snippet}"
+      shift 2
+      ;;
     "--readme")
       # This is a relative path from the root of the workspace.
       readme_path="${2}"
@@ -61,9 +70,9 @@ done
 [[ ${#args[@]} == 0 ]] && fail "A tag name for the release must be specified."
 tag_name="${args[0]}"
 
-[[ -z "${generate_workspace_snippet:-}" ]] && \
-  fail "Expected a value for --generate_workspace_snippet."
-
+if [[ -z "${generate_workspace_snippet:-}" ]] && [[ -z "${generate_module_snippet:-}" ]]; then
+  fail "Expect at least one of the following flags to be specified: --generate_workspace_snippet, --generate_module_snippet."
+fi
 
 # MARK - Update README.md
 
@@ -74,25 +83,37 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 # Set up the cleanup
 readme_backup="${readme_path}.bak"
-snippet_path="$(mktemp)"
+workspace_snippet_path="$(mktemp)"
+module_snippet_path="$(mktemp)"
 cleanup() {
   local exit_code="${1}"
-  rm -f "${snippet_path}" 
+  rm -f "${workspace_snippet_path}" "${module_snippet_path}"
   if [[ ${exit_code} == 0 ]]; then
     rm -f "${readme_backup}"
   fi
 }
 trap 'cleanup $?' EXIT
 
-# Generate the snippet
-"${generate_workspace_snippet}" --tag "${tag_name}" --output "${snippet_path}"
+update_doc() {
+  local marker="${1}"
+  local snippet_path="${2}"
+  # Copy the readme
+  cp "${readme_path}" "${readme_backup}"
 
-# Copy the readme
-cp "${readme_path}" "${readme_backup}"
+  # Update the original
+  "${update_markdown_doc_sh}" \
+    --marker_begin "BEGIN ${marker}" \
+    --marker_end "END ${marker}" \
+    --update "${snippet_path}" \
+    "${readme_backup}" "${readme_path}"
+}
 
-# Update the original
-"${update_markdown_doc_sh}" \
-  --marker_begin "BEGIN WORKSPACE SNIPPET" \
-  --marker_end "END WORKSPACE SNIPPET" \
-  --update "${snippet_path}" \
-  "${readme_backup}" "${readme_path}"
+if [[ -n "${generate_workspace_snippet:-}" ]]; then
+  "${generate_workspace_snippet}" --tag "${tag_name}" --output "${workspace_snippet_path}"
+  update_doc "WORKSPACE SNIPPET" "${workspace_snippet_path}"
+fi
+
+if [[ -n "${generate_module_snippet:-}" ]]; then
+  "${generate_module_snippet}" --version "${tag_name}" --output "${module_snippet_path}"
+  update_doc "MODULE SNIPPET" "${module_snippet_path}"
+fi
