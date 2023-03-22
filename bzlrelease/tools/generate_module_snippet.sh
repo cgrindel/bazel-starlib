@@ -3,14 +3,6 @@
 # Generates a Bazel module snippet suitable for inclusion in a MODULE.bazel 
 # file.
 
-# The --url flag accepts a string template that will be evaluated with the
-# result being added to the list of download URLs. The available parameters
-# are:
-#   ${owner}: The owner of the current Github hosted repository.
-#   ${repo}: The name of the current Github hosted repository.
-#   ${tag}: The tag name, if one is provided.
-#   ${workspace_name}: The name used in the workspace snippet.
-
 # --- begin runfiles.bash initialization v3 ---
 # Copy-pasted from the Bazel Bash runfiles library v3.
 set -uo pipefail; set +e; f=bazel_tools/tools/bash/runfiles/runfiles.bash
