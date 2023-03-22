@@ -93,8 +93,6 @@ sh_test(
     srcs = ["generate_release_notes_test.sh"],
     data = [
         "//bzlrelease/tools:generate_release_notes",
-        # "//bzlrelease/tools:generate_module_snippet",
-        # "//bzlrelease/tools:generate_workspace_snippet",
     ],
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,

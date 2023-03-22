@@ -1,8 +1,18 @@
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
-load("//bzlrelease:defs.bzl", "generate_release_notes", "generate_workspace_snippet")
+load(
+    "//bzlrelease:defs.bzl",
+    "generate_module_snippet",
+    "generate_release_notes",
+    "generate_workspace_snippet",
+)
 load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
 
 bzlformat_pkg(name = "bzlformat")
+
+generate_module_snippet(
+    name = "generate_module_snippet",
+    module_name = "foo_bar",
+)
 
 generate_workspace_snippet(
     name = "generate_snippet_with_template",
@@ -22,6 +32,7 @@ generate_workspace_snippet(
 
 generate_release_notes(
     name = "generate_release_notes_with_workspace_name",
+    generate_module_snippet = ":generate_module_snippet",
     generate_workspace_snippet = ":generate_snippet_with_workspace_name",
 )
 
