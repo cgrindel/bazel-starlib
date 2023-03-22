@@ -42,6 +42,15 @@ while (("$#")); do
         generate_workspace_snippet="${starting_dir}/${generate_workspace_snippet}"
       shift 2
       ;;
+    "--generate_module_snippet")
+      # If the input path is not absolute, then resolve it to be relative to
+      # the starting directory. We do this before we starting changing
+      # directories.
+      generate_module_snippet="${2}"
+      [[ "${generate_module_snippet}" =~ ^/ ]] || \
+        generate_module_snippet="${starting_dir}/${generate_module_snippet}"
+      shift 2
+      ;;
     --*)
       fail "Unrecognized flag ${1}."
       ;;
@@ -55,9 +64,9 @@ done
 [[ ${#args[@]} == 0 ]] && fail "A tag name for the release must be specified."
 tag_name="${args[0]}"
 
-[[ -z "${generate_workspace_snippet:-}" ]] && \
-  fail "Expected a value for --generate_workspace_snippet."
-
+if [[ -z "${generate_workspace_snippet:-}" ]] && [[ -z "${generate_module_snippet:-}" ]]; then
+  fail "Expect at least one of the following flags to be specified: --generate_workspace_snippet, --generate_module_snippet."
+fi
 
 # MARK - Generate the changelog.
 
@@ -71,16 +80,40 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 changelog_md="$( "${generate_gh_changelog_sh}" "${tag_name}" )"
 
-workspace_snippet="$( "${generate_workspace_snippet}" --tag "${tag_name}" )"
+if [[ -n "${generate_workspace_snippet:-}" ]]; then
+  workspace_snippet="$( "${generate_workspace_snippet}" --tag "${tag_name}" )"
+fi
+
+if [[ -n "${generate_module_snippet:-}" ]]; then
+  module_snippet="$( "${generate_module_snippet}" --version "${tag_name}" )"
+fi
 
 release_notes_md="$(cat <<-EOF
 ${changelog_md}
+EOF
+)"
+
+if [[ -n "${module_snippet:-}" ]]; then
+  release_notes_md="$(cat <<-EOF
+${release_notes_md}
+
+## Bazel Module Snippet
+
+${module_snippet}
+EOF
+)"
+fi
+
+if [[ -n "${workspace_snippet:-}" ]]; then
+  release_notes_md="$(cat <<-EOF
+${release_notes_md}
 
 ## Workspace Snippet
 
 ${workspace_snippet}
 EOF
 )"
+fi
 
 # Output the changelog
 if [[ -z "${output_path:-}" ]]; then

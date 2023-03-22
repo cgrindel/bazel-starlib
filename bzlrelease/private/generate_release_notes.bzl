@@ -2,7 +2,10 @@
 
 load("//shlib/rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 
-def generate_release_notes(name, generate_workspace_snippet):
+def generate_release_notes(
+        name,
+        generate_workspace_snippet = None,
+        generate_module_snippet = None):
     """Defines an executable target that generates release notes as Github markdown.
 
     Typically, this macro is used in conjunction with the \
@@ -12,15 +15,22 @@ def generate_release_notes(name, generate_workspace_snippet):
 
     Args:
         name: The name of the executable target as a `string`.
-        generate_workspace_snippet: The label that should be executed to
-                                    generate the workspace snippet.
+        generate_workspace_snippet: Optional.The label that should be executed to
+            generate the workspace snippet.
+        generate_module_snippet: Optional.The label that should be executed to
+            generate the Bazel module snippet.
     """
     file_arguments = {}
     arguments = []
 
-    file_key = "generate_workspace_snippet"
-    arguments.extend(["--generate_workspace_snippet", file_placeholder(file_key)])
-    file_arguments[generate_workspace_snippet] = file_key
+    if generate_workspace_snippet != None:
+        file_key = "generate_workspace_snippet"
+        arguments.extend(["--generate_workspace_snippet", file_placeholder(file_key)])
+        file_arguments[generate_workspace_snippet] = file_key
+    if generate_module_snippet != None:
+        file_key = "generate_module_snippet"
+        arguments.extend(["--generate_module_snippet", file_placeholder(file_key)])
+        file_arguments[generate_module_snippet] = file_key
 
     execute_binary(
         name = name,

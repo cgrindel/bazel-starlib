@@ -16,6 +16,7 @@ bzl_library(
     srcs = ["defs.bzl"],
     deps = [
         "//bzlrelease/private:create_release",
+        "//bzlrelease/private:generate_module_snippet",
         "//bzlrelease/private:generate_release_notes",
         "//bzlrelease/private:generate_workspace_snippet",
         "//bzlrelease/private:hash_sha256",

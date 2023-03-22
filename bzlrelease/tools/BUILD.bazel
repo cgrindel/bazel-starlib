@@ -107,6 +107,16 @@ sh_binary(
     ],
 )
 
+sh_binary(
+    name = "generate_module_snippet",
+    srcs = ["generate_module_snippet.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//shlib/lib:fail",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
 # MARK: - Collect Files for Integation Tests
 
 filegroup(

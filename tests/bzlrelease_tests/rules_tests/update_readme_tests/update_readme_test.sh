@@ -32,11 +32,16 @@ update_readme_sh="$(rlocation "${update_readme_sh_location}")" || \
 source "${setup_git_repo_sh}"
 
 readme_content="$(cat <<-EOF
-Text before snippet
+Text before workspace snippet
 <!-- BEGIN WORKSPACE SNIPPET -->
 Text should be replaced
 <!-- END WORKSPACE SNIPPET -->
-Text after snippet
+Text after workspace snippet
+Text before module snippet
+<!-- BEGIN MODULE SNIPPET -->
+Text should be replaced
+<!-- END MODULE SNIPPET -->
+Text after module snippet
 EOF
 )"
 
@@ -52,11 +57,10 @@ echo "${readme_content}" > "${readme_path}"
 "${update_readme_sh}" --readme "${readme_path}" "${tag_name}"
 
 actual="$(< "${readme_path}")"
-assert_match "Text before snippet" "${actual}" "Find README.md"
-assert_match "Text after snippet" "${actual}" "Find README.md"
-assert_no_match "Text should be replaced" "${actual}" "Find README.md"
-assert_match "http_archive" "${actual}" "Find README.md"
-assert_match "${tag_name}" "${actual}" "Find README.md"
+assert_no_match "Text should be replaced" "${actual}"
+assert_match "http_archive" "${actual}"
+assert_match "${tag_name}" "${actual}"
+assert_match "bazel_dep" "${actual}"
 
 
 # MARK - Test Find README.md
@@ -67,8 +71,7 @@ echo "${readme_content}" > "${readme_path}"
 "${update_readme_sh}" "${tag_name}"
 
 actual="$(< "${readme_path}")"
-assert_match "Text before snippet" "${actual}" "Find README.md"
-assert_match "Text after snippet" "${actual}" "Find README.md"
-assert_no_match "Text should be replaced" "${actual}" "Find README.md"
-assert_match "http_archive" "${actual}" "Find README.md"
-assert_match "${tag_name}" "${actual}" "Find README.md"
+assert_no_match "Text should be replaced" "${actual}"
+assert_match "http_archive" "${actual}"
+assert_match "${tag_name}" "${actual}"
+assert_match "bazel_dep" "${actual}"

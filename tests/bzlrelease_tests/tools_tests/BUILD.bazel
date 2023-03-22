@@ -17,20 +17,10 @@ sh_test(
     ],
 )
 
-sh_binary(
-    name = "generate_fake_snippet",
-    srcs = ["generate_fake_snippet.sh"],
-    deps = [
-        "//shlib/lib:fail",
-        "@bazel_tools//tools/bash/runfiles",
-    ],
-)
-
 sh_test(
     name = "update_readme_test",
     srcs = ["update_readme_test.sh"],
     data = [
-        ":generate_fake_snippet",
         "//bzlrelease/tools:update_readme",
     ],
     deps = [
@@ -93,14 +83,26 @@ sh_test(
     srcs = ["generate_release_notes_test.sh"],
     data = [
         "//bzlrelease/tools:generate_release_notes",
-        "//bzlrelease/tools:generate_workspace_snippet",
     ],
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
     deps = [
+        "//shlib/lib:assertions",
         "//shlib/lib:env",
         "//tests:setup_git_repo",
         "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_test(
+    name = "generate_module_snippet_test",
+    srcs = ["generate_module_snippet_test.sh"],
+    data = [
+        "//bzlrelease/tools:generate_module_snippet",
+    ],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_starlib//shlib/lib:assertions",
     ],
 )
 

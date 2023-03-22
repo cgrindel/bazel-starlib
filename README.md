@@ -33,6 +33,15 @@ more information on how to use the projects from this repository in your workspa
 how-to links above and review the [the generated documentation](/doc/).
 
 
+### `MODULE.bazel` Snippet
+
+<!-- BEGIN MODULE SNIPPET -->
+```python
+bazel_dep(name = "cgrindel_bazel_starlib", version = "0.14.9")
+```
+<!-- END MODULE SNIPPET -->
+
+
 ### Workspace Configuration
 
 <!-- BEGIN WORKSPACE SNIPPET -->

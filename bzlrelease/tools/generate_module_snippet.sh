@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Generates a Bazel module snippet suitable for inclusion in a MODULE.bazel 
+# file.
+
 # --- begin runfiles.bash initialization v3 ---
 # Copy-pasted from the Bazel Bash runfiles library v3.
 set -uo pipefail; set +e; f=bazel_tools/tools/bash/runfiles/runfiles.bash
@@ -11,14 +14,26 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v3 ---
 
+# MARK - Locate Dependencies
+
 fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
 fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 source "${fail_sh}"
 
+# MARK - Process Args
+
 args=()
 while (("$#")); do
   case "${1}" in
+    "--module_name")
+      module_name="${2}"
+      shift 2
+      ;;
+    "--version")
+      version="${2}"
+      shift 2
+      ;;
     "--output")
       output_path="${2}"
       shift 2
@@ -30,11 +45,36 @@ while (("$#")); do
   esac
 done
 
-[[ -z "${output_path:-}" ]] && fail "Expected an output path."
+if [[ -z "${module_name:-}" ]]; then
+  fail "A module name must be specified."
+fi
 
-echo "
-This is the beginning of the fake snippet.
+if [[ -z "${version:-}" ]]; then
+  fail "A version must be specified."
+fi
+if [[ "${version}" =~ ^v ]]; then
+  version="${version:1}"
+fi
 
+# MARK - Generate the Snippet
 
-This is the end of the fake snippet.
-" > "${output_path}"
+snippet="$(cat <<-EOF
+bazel_dep(name = "${module_name}", version = "${version}")
+EOF
+)"
+
+snippet="$(cat <<-EOF
+\`\`\`python
+${snippet}
+\`\`\`
+EOF
+)"
+
+# MARK - Output the Snippet
+
+# Output the snippet
+if [[ -z "${output_path:-}" ]]; then
+  echo "${snippet}"
+else
+  echo "${snippet}" > "${output_path}"
+fi
