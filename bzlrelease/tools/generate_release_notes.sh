@@ -85,11 +85,7 @@ if [[ -n "${generate_workspace_snippet:-}" ]]; then
 fi
 
 if [[ -n "${generate_module_snippet:-}" ]]; then
-  version="${tag_name}"
-  if [[ "${version}" =~ ^v ]]; then
-    version="${version:1}"
-  fi
-  module_snippet="$( "${generate_module_snippet}" --version "${version}" )"
+  module_snippet="$( "${generate_module_snippet}" --version "${tag_name}" )"
 fi
 
 release_notes_md="$(cat <<-EOF

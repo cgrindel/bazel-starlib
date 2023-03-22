@@ -60,6 +60,9 @@ fi
 if [[ -z "${version:-}" ]]; then
   fail "A version must be specified."
 fi
+if [[ "${version}" =~ ^v ]]; then
+  version="${version:1}"
+fi
 
 # MARK - Generate the Snippet
 

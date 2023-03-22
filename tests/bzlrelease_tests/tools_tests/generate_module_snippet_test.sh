@@ -33,3 +33,12 @@ bazel_dep(name = "rules_chicken", version = "1.2.3")
 EOF
 )"
 assert_equal "${expected}" "${output}" "module with version"
+
+output="$( "${generate_module_snippet_sh}" --module_name "rules_chicken" --version "v1.2.3" )"
+expected="$(cat <<-EOF
+\`\`\`python
+bazel_dep(name = "rules_chicken", version = "1.2.3")
+\`\`\`
+EOF
+)"
+assert_equal "${expected}" "${output}" "module with tag"
