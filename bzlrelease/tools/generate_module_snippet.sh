@@ -68,6 +68,13 @@ bazel_dep(name = "${module_name}", version = "${version}")
 EOF
 )"
 
+snippet="$(cat <<-EOF
+\`\`\`python
+${snippet}
+\`\`\`
+EOF
+)"
+
 # MARK - Output the Snippet
 
 # Output the snippet
