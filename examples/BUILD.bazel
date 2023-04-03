@@ -5,7 +5,6 @@ load(
     "default_test_runner",
     "integration_test_utils",
 )
-load("//:bazel_versions.bzl", "CURRENT_BAZEL_VERSION", "SUPPORTED_BAZEL_VERSIONS")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load("//bzllib:defs.bzl", "lists")
 
@@ -25,7 +24,7 @@ default_test_runner(name = "default_test_runner")
         name = "{}_test".format(dirname),
         timeout = "eternal",
         bazel_binaries = bazel_binaries,
-        bazel_versions = SUPPORTED_BAZEL_VERSIONS,
+        bazel_versions = bazel_binaries.versions.all,
         target_compatible_with = select({
             "@cgrindel_bazel_starlib//bzlmod:is_enabled": [],
             "//conditions:default": ["@platforms//:incompatible"],
@@ -45,7 +44,7 @@ test_suite(
     tests = [
         integration_test_utils.bazel_integration_test_name(
             ":{}_test".format(dirname),
-            CURRENT_BAZEL_VERSION,
+            bazel_binaries.versions.current,
         )
         for dirname in _EXAMPLE_DIRS
     ],
@@ -58,7 +57,7 @@ test_suite(
     tests = lists.flatten([
         integration_test_utils.bazel_integration_test_names(
             ":{}_test".format(dirname),
-            SUPPORTED_BAZEL_VERSIONS,
+            bazel_binaries.versions.all,
         )
         for dirname in _EXAMPLE_DIRS
     ]),

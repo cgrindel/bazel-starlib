@@ -6,7 +6,6 @@ load(
     "default_test_runner",
     "integration_test_utils",
 )
-load("//:bazel_versions.bzl", "CURRENT_BAZEL_VERSION", "SUPPORTED_BAZEL_VERSIONS")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 bzlformat_pkg(name = "bzlformat")
@@ -30,7 +29,7 @@ bazel_integration_tests(
     name = "updatesrc_test",
     timeout = "eternal",
     bazel_binaries = bazel_binaries,
-    bazel_versions = SUPPORTED_BAZEL_VERSIONS,
+    bazel_versions = bazel_binaries.versions.all,
     test_runner = ":updatesrc_test_runner",
     workspace_files = integration_test_utils.glob_workspace_files("workspace") + [
         "//:workspace_integration_test_files",
@@ -44,7 +43,7 @@ test_suite(
     tests = [
         integration_test_utils.bazel_integration_test_name(
             ":updatesrc_test",
-            CURRENT_BAZEL_VERSION,
+            bazel_binaries.versions.current,
         ),
     ],
     visibility = ["//:__subpackages__"],
@@ -55,7 +54,7 @@ test_suite(
     tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
     tests = integration_test_utils.bazel_integration_test_names(
         ":updatesrc_test",
-        SUPPORTED_BAZEL_VERSIONS,
+        bazel_binaries.versions.all,
     ),
     visibility = ["//:__subpackages__"],
 )

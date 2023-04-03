@@ -58,30 +58,17 @@ buildifier_prebuilt_register_toolchains()
 
 # MARK: - Integration Testing
 
-# TODO(chuck): Update with latest release of rules_bazel_integration_test.
-
 http_archive(
     name = "rules_bazel_integration_test",
-    sha256 = "e843087f7e3475b52b302f9e1cf324d62d17a77d311dac26c4d66fdbff1b9b38",
+    sha256 = "0a1edb5ceb2797e463d40c0ae1c1b0de2c12104304ce07930a43ba4c9a314f85",
     urls = [
-        "https://github.com/bazel-contrib/rules_bazel_integration_test/releases/download/v0.11.1/rules_bazel_integration_test.v0.11.1.tar.gz",
+        "https://github.com/bazel-contrib/rules_bazel_integration_test/releases/download/v0.12.0/rules_bazel_integration_test.v0.12.0.tar.gz",
     ],
 )
 
-load("@rules_bazel_integration_test//bazel_integration_test:deps.bzl", "bazel_integration_test_rules_dependencies")
+load("@rules_bazel_integration_test//bazel_integration_test:repo_defs.bzl", "bazel_binaries")
 
-bazel_integration_test_rules_dependencies()
-
-load(
-    "@rules_bazel_integration_test//bazel_integration_test/bzlmod:workspace_bazel_binaries.bzl",
-    "workspace_bazel_binaries",
-)
-
-# This is only necessary while bazel-starlib switches back and forth between WORKSPACE repositories
-# and bzlmod repositories.
-workspace_bazel_binaries(name = "bazel_binaries")
-
-load("@rules_bazel_integration_test//bazel_integration_test:defs.bzl", "bazel_binaries")
-load("//:bazel_versions.bzl", "SUPPORTED_BAZEL_VERSIONS")
-
-bazel_binaries(versions = SUPPORTED_BAZEL_VERSIONS)
+bazel_binaries(versions = [
+    "//:.bazelversion",
+    "7.0.0-pre.20230215.2",
+])
