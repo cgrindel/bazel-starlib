@@ -23,6 +23,7 @@ source "${fail_sh}"
 
 # MARK - Process Args
 
+dev_dependency="false"
 args=()
 while (("$#")); do
   case "${1}" in
@@ -37,6 +38,10 @@ while (("$#")); do
     "--output")
       output_path="${2}"
       shift 2
+      ;;
+    "--dev_dependency")
+      dev_dependency="true"
+      shift 1
       ;;
     *)
       args+=("${1}")
@@ -58,10 +63,22 @@ fi
 
 # MARK - Generate the Snippet
 
-snippet="$(cat <<-EOF
+if [[ "${dev_dependency}" == "true" ]]; then
+  snippet="$(cat <<-EOF
+bazel_dep(
+    name = "${module_name}",
+    version = "${version}",
+    dev_dependency = True,
+)
+EOF
+)"
+else
+  snippet="$(cat <<-EOF
 bazel_dep(name = "${module_name}", version = "${version}")
 EOF
 )"
+fi
+
 
 snippet="$(cat <<-EOF
 \`\`\`python

@@ -42,3 +42,16 @@ bazel_dep(name = "rules_chicken", version = "1.2.3")
 EOF
 )"
 assert_equal "${expected}" "${output}" "module with tag"
+
+output="$( "${generate_module_snippet_sh}" --module_name "rules_chicken" --version "v1.2.3" --dev_dependency )"
+expected="$(cat <<-EOF
+\`\`\`python
+bazel_dep(
+    name = "rules_chicken",
+    version = "1.2.3",
+    dev_dependency = True,
+)
+\`\`\`
+EOF
+)"
+assert_equal "${expected}" "${output}" "module with dev_dependency"
