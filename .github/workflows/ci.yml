@@ -24,6 +24,9 @@ jobs:
     - uses: ./.github/actions/configure_bzlmod
       with:
         enabled: ${{ matrix.enable_bzlmod }}
+    - uses: ./.github/actions/configure_remote_cache_auth
+      with:
+        buildbuddy_api_key: ${{  secrets.BUILDBUDDY_API_KEY }}
     - uses: ./.github/actions/tidy_and_test
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -62,6 +65,9 @@ jobs:
     - uses: ./.github/actions/configure_bzlmod
       with:
         enabled: ${{ matrix.enable_bzlmod }}
+    - uses: ./.github/actions/configure_remote_cache_auth
+      with:
+        buildbuddy_api_key: ${{  secrets.BUILDBUDDY_API_KEY }}
     - uses: ./.github/actions/test_example
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
