@@ -15,13 +15,13 @@ common --enable_bzlmod
 build --@cgrindel_bazel_starlib//bzlmod:enabled
 
 # Remote Cache
-build --bes_results_url=https://app.buildbuddy.io/invocation/
-build --bes_backend=grpcs://remote.buildbuddy.io
-build --remote_cache=grpcs://remote.buildbuddy.io
-build --remote_download_toplevel # Helps remove network bottleneck if caching is enabled
-build --remote_timeout=3600
-build --experimental_remote_cache_async
-build --experimental_remote_cache_compression
+build:cache --bes_results_url=https://app.buildbuddy.io/invocation/
+build:cache --bes_backend=grpcs://remote.buildbuddy.io
+build:cache --remote_cache=grpcs://remote.buildbuddy.io
+build:cache --remote_download_toplevel # Helps remove network bottleneck if caching is enabled
+build:cache --remote_timeout=3600
+build:cache --experimental_remote_cache_async
+build:cache --experimental_remote_cache_compression
 
 # Recommended by BuildBuddy
 build --experimental_remote_build_event_upload=minimal

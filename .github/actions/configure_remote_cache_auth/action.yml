@@ -14,5 +14,6 @@ runs:
         BUILDBUDDY_API_KEY: ${{ inputs.BUILDBUDDY_API_KEY }}
       run: |
         cat >> "shared.bazelrc" <<EOF
-        build --remote_header=x-buildbuddy-api-key=${BUILDBUDDY_API_KEY}
+        build:cache --remote_header=x-buildbuddy-api-key=${BUILDBUDDY_API_KEY}
+        build --config=cache
         EOF
