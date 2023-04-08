@@ -4,3 +4,5 @@ bazel-*
 # Ignore npm/yarn stuff
 node_modules
 
+# Ignore the local.bazelrc
+local.bazelrc
