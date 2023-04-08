@@ -6,4 +6,3 @@ node_modules
 
 # Ignore the local.bazelrc
 local.bazelrc
-
