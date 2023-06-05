@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [macos-12, ubuntu-22.04]
+        runner: [macos-13, ubuntu-22.04]
         enable_bzlmod: [true, false]
     runs-on: ${{ matrix.runner }}
     steps:
@@ -35,7 +35,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [macos-12, ubuntu-22.04]
+        runner: [macos-13, ubuntu-22.04]
         bazel_version: [.bazelversion]
         example_dir: [bzlformat, markdown, updatesrc]
         enable_bzlmod: [true, false]
@@ -46,7 +46,7 @@ jobs:
             example_name: simple
           - example_dir: updatesrc
             example_name: simple
-          - runner: macos-12
+          - runner: macos-13
             example_dir: ""
             example_name: bzlmod_e2e
             enable_bzlmod: true
