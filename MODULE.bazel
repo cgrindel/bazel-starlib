@@ -16,7 +16,7 @@ bazel_dep(
     version = "0.29.0",
     repo_name = "bazel_gazelle",
 )
-bazel_dep(name = "bazel_skylib", version = "1.4.1")
+bazel_dep(name = "bazel_skylib", version = "1.4.2")
 bazel_dep(
     name = "stardoc",
     version = "0.5.6",
