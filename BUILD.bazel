@@ -70,7 +70,7 @@ execute_binary(
         "mod",
         "tidy",
     ],
-    binary = "@go_sdk//:bin/go",
+    binary = "@io_bazel_rules_go//go",
     execute_in_workspace = True,
 )
 

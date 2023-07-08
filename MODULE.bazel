@@ -28,12 +28,6 @@ bazel_dep(
 )
 bazel_dep(name = "platforms", version = "0.0.6")
 
-go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
-use_repo(
-    go_sdk,
-    go_sdk = "go_default_sdk",
-)
-
 go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")
 
 # NOTE: We are not loading the Go modules from go.mod, because we are doing

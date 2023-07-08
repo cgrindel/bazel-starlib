@@ -14,7 +14,7 @@ Execute the following to update the go module files, resolve the Golang dependen
 Bazel build files.
 
 ```sh
-# bazel run @go_sdk//:bin/go -- mod tidy
+# bazel run //:go_mod_tidy
 $ bazel run //:gazelle_update_repos
 $ bazel run //:gazelle
 ```
