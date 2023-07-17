@@ -40,7 +40,8 @@ make_err_msg() {
 assert_equal() {
   local expected="${1}"
   local actual="${2}"
-  local err_msg="$(make_err_msg "Expected to be equal. expected: ${expected}, actual: ${actual}" "${3:-}")"
+  local err_msg
+  err_msg="$(make_err_msg "Expected to be equal. expected: ${expected}, actual: ${actual}" "${3:-}")"
   [[ "${expected}" == "${actual}" ]] || fail "${err_msg}"
 }
 
@@ -57,7 +58,8 @@ assert_equal() {
 assert_match() {
   local pattern=${1}
   local actual="${2}"
-  local err_msg="$(make_err_msg "Expected to match. pattern: ${pattern}, actual: ${actual}" "${3:-}")"
+  local err_msg
+  err_msg="$(make_err_msg "Expected to match. pattern: ${pattern}, actual: ${actual}" "${3:-}")"
   [[ "${actual}" =~ ${pattern} ]] || fail "${err_msg}"
 }
 
@@ -74,7 +76,8 @@ assert_match() {
 assert_no_match() {
   local pattern=${1}
   local actual="${2}"
-  local err_msg="$(make_err_msg "Expected not to match. pattern: ${pattern}, actual: ${actual}" "${3:-}")"
+  local err_msg
+  err_msg="$(make_err_msg "Expected not to match. pattern: ${pattern}, actual: ${actual}" "${3:-}")"
   [[ "${actual}" =~ ${pattern} ]] && fail "${err_msg}"
   # Because this is a negative test, we need to end on a positive note if all is well.
   echo ""
