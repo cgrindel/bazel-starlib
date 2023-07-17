@@ -29,7 +29,8 @@ upsearch() {
   while (("$#")); do
     case "${1}" in
       "--start_dir")
-        local start_dir="$(normalize_path "${2}")"
+        local start_dir
+        start_dir="$(normalize_path "${2}")"
         shift 2
         ;;
       "--error_if_not_found")
