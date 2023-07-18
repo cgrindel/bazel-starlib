@@ -16,17 +16,18 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
 fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../shlib/lib/fail.sh
 source "${fail_sh}"
 
 arrays_sh_location=cgrindel_bazel_starlib/shlib/lib/arrays.sh
 arrays_sh="$(rlocation "${arrays_sh_location}")" || \
   (echo >&2 "Failed to locate ${arrays_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../shlib/lib/arrays.sh
 source "${arrays_sh}"
 
 buildifier_location=buildifier_prebuilt/buildifier/buildifier
 buildifier="$(rlocation "${buildifier_location}")" || \
   (echo >&2 "Failed to locate ${buildifier_location}" && exit 1)
-
 
 # MARK - Process Args
 
@@ -40,8 +41,9 @@ lint_mode="off"
 warnings="all"
 
 get_usage() {
-  local utility="$(basename "${BASH_SOURCE[0]}")"
-  echo "$(cat <<-EOF
+  local utility
+  utility="$(basename "${BASH_SOURCE[0]}")"
+  cat <<-EOF
 Executes buildifier for a Starlark file and writes the resulting output to a file.
 
 Usage:
@@ -53,7 +55,6 @@ Options:
   <input>                  A path to a Starlark file
   <output>                 A path where to write the output from buildifier
 EOF
-  )"
 }
 
 args=()
@@ -61,7 +62,6 @@ while (("$#")); do
   case "${1}" in
     "--help")
       show_usage
-      exit 0
       ;;
     "--lint_mode")
       lint_mode="${2}"
@@ -81,9 +81,9 @@ while (("$#")); do
   esac
 done
 
-[[ ${#args[@]} < 1 ]] && usage_error "Expected a path to a Starlark file."
+[[ ${#args[@]} -lt 1 ]] && usage_error "Expected a path to a Starlark file."
 bzl_path="${args[0]}"
-[[ ${#args[@]} > 1 ]] && out_path="${args[1]}"
+[[ ${#args[@]} -gt 1 ]] && out_path="${args[1]}"
 
 contains_item "${lint_mode}" "${lint_modes[@]}" || \
   usage_error "Invalid lint_mode (${lint_mode}). Expected to be one of the following: $( join_by ", " "${lint_modes[@]}" )."
@@ -95,7 +95,7 @@ exec_buildifier() {
   local bzl_path="${1}"
   shift 1
   local buildifier_cmd=( "${buildifier}" "--path=${bzl_path}" )
-  [[ ${#} > 0 ]] && buildifier_cmd+=( "${@}" )
+  [[ ${#} -gt 0 ]] && buildifier_cmd+=( "${@}" )
   "${buildifier_cmd[@]}"
 }
 
