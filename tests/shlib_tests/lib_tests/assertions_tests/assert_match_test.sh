@@ -14,11 +14,13 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 assertions_sh_location=cgrindel_bazel_starlib/shlib/lib/assertions.sh
 assertions_sh="$(rlocation "${assertions_sh_location}")" || \
   (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../../../shlib/lib/assertions.sh
 source "${assertions_sh}"
 
 assert_fail_sh_location=cgrindel_bazel_starlib/tests/shlib_tests/lib_tests/assertions_tests/assert_fail.sh
 assert_fail_sh="$(rlocation "${assert_fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${assert_fail_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/assert_fail.sh
 source "${assert_fail_sh}"
 
 # MARK - Test assert_match
