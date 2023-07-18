@@ -16,11 +16,13 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
 fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../../shlib/lib/fail.sh
 source "${fail_sh}"
 
 env_sh_location=cgrindel_bazel_starlib/shlib/lib/env.sh
 env_sh="$(rlocation "${env_sh_location}")" || \
   (echo >&2 "Failed to locate ${env_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../../shlib/lib/env.sh
 source "${env_sh}"
 
 setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
@@ -39,6 +41,7 @@ is_installed git || fail "Could not find git."
 
 # MARK - Setup
 
+# shellcheck source=SCRIPTDIR/../../setup_git_repo.sh
 source "${setup_git_repo_sh}"
 cd "${repo_dir}"
 
