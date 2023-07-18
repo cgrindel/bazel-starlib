@@ -16,6 +16,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
 fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../shlib/lib/fail.sh
 source "${fail_sh}"
 
 generate_gh_changelog_sh_location=cgrindel_bazel_starlib/bzlrelease/tools/generate_gh_changelog.sh
@@ -61,7 +62,7 @@ while (("$#")); do
   esac
 done
 
-[[ ${#args[@]} == 0 ]] && fail "A tag name for the release must be specified."
+[[ ${#args[@]} -eq 0 ]] && fail "A tag name for the release must be specified."
 tag_name="${args[0]}"
 
 if [[ -z "${generate_workspace_snippet:-}" ]] && [[ -z "${generate_module_snippet:-}" ]]; then
