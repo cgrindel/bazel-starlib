@@ -42,6 +42,7 @@ is_installed git || fail "Could not find git."
 
 # MARK - Process Arguments
 
+main_branch=main
 args=()
 while (("$#")); do
   case "${1}" in
