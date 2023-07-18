@@ -76,14 +76,11 @@ join_by() {
 #   stdout: The double quoted items separated by spaces.
 #   stderr: None.
 double_quote_items() {
-  items=()
   while (("$#")); do
-    items+=( "\"${1}\"" )
+    echo "\"${1}\""
     shift 1
   done 
-  echo "${items[@]}"
 }
-
 
 # Searches for the expected value in the follow-on arguments. If your list is sorted and has
 # more than ~40 items, consider using 'contains_item_sorted'.
