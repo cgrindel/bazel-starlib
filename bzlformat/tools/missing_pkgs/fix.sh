@@ -14,13 +14,16 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 # --- end runfiles.bash initialization v3 ---
 
 arrays_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/arrays.sh)"
+# shellcheck source=SCRIPTDIR/../../../shlib/lib/arrays.sh
 source "${arrays_lib}"
 
 common_sh_location=cgrindel_bazel_starlib/bzlformat/tools/missing_pkgs/common.sh
 common_sh="$(rlocation "${common_sh_location}")" || \
   (echo >&2 "Failed to locate ${common_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/common.sh
 source "${common_sh}"
 
+# shellcheck source=SCRIPTDIR/find.sh
 find_missing_pkgs_bin="$(rlocation cgrindel_bazel_starlib/bzlformat/tools/missing_pkgs/find.sh)"
 
 buildozer_location=buildifier_prebuilt/buildozer/buildozer
@@ -32,7 +35,7 @@ args=()
 while (("$#")); do
   case "${1}" in
     "--exclude")
-      exclude_pkgs+=( $(normalize_pkg "${2}") )
+      exclude_pkgs+=( "$(normalize_pkg "${2}")" )
       shift 2
       ;;
     *)
@@ -49,10 +52,13 @@ find_args=()
 for pkg in "${exclude_pkgs[@]:-}" ; do
   find_args+=(--exclude "${pkg}")
 done
-missing_pkgs=( $(. "${find_missing_pkgs_bin}" "${find_args[@]:-}") )
+missing_pkgs=()
+while IFS=$'\n' read -r line; do missing_pkgs+=("$line"); done < <(
+  "${find_missing_pkgs_bin}" "${find_args[@]:-}"
+)
 
 # If no missing packages, we are done.
-[[ ${#missing_pkgs[@]} == 0 ]] && echo "No missing package updates were found." && exit
+[[ ${#missing_pkgs[@]} -eq 0 ]] && echo "No missing package updates were found." && exit
 
 echo "Updating the following packages:"
 for pkg in "${missing_pkgs[@]}" ; do
