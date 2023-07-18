@@ -14,16 +14,19 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 assertions_sh_location=cgrindel_bazel_starlib/shlib/lib/assertions.sh
 assertions_sh="$(rlocation "${assertions_sh_location}")" || \
   (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../../../shlib/lib/assertions.sh
 source "${assertions_sh}"
 
 paths_sh_location=cgrindel_bazel_starlib/shlib/lib/paths.sh
 paths_sh="$(rlocation "${paths_sh_location}")" || \
   (echo >&2 "Failed to locate ${paths_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../../../shlib/lib/paths.sh
 source "${paths_sh}"
 
 messages_sh_location=cgrindel_bazel_starlib/shlib/lib/messages.sh
 messages_sh="$(rlocation "${messages_sh_location}")" || \
   (echo >&2 "Failed to locate ${messages_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../../../shlib/lib/messages.sh
 source "${messages_sh}"
 
 buildozer_location=buildifier_prebuilt/buildozer/buildozer
@@ -56,7 +59,9 @@ cd "${scratch_dir}"
 
 # MARK - Find the missing packages without exclusions
 
-missing_pkgs=( $("${bazel}" run "//:bzlformat_missing_pkgs_find") )
+while IFS=$'\n' read -r line; do missing_pkgs+=("$line"); done < <(
+  "${bazel}" run "//:bzlformat_missing_pkgs_find"
+)
 assert_msg="Missing packages, no exclusions"
 expected_array=(// //foo //foo/bar)
 assert_equal ${#expected_array[@]} ${#missing_pkgs[@]} "${assert_msg}"
@@ -73,7 +78,10 @@ done
 # Add exclusions to the bzlformat_missing_pkgs
 "${buildozer}" 'add exclude //foo' //:bzlformat_missing_pkgs
 
-missing_pkgs=( $("${bazel}" run "//:bzlformat_missing_pkgs_find") )
+missing_pkgs=()
+while IFS=$'\n' read -r line; do missing_pkgs+=("$line"); done < <(
+  "${bazel}" run "//:bzlformat_missing_pkgs_find"
+)
 assert_msg="Missing packages, with exclusions"
 expected_array=(// //foo/bar)
 assert_equal ${#expected_array[@]} ${#missing_pkgs[@]} "${assert_msg}"
@@ -83,11 +91,14 @@ done
 
 # MARK - Fix the missing packages with exclusions
 
-fix_pkgs=( $("${bazel}" run "//:bzlformat_missing_pkgs_fix") )
+fix_pkgs=()
+while IFS=$'\n' read -r line; do fix_pkgs+=("$line"); done < <(
+  "${bazel}" run "//:bzlformat_missing_pkgs_fix"
+)
 assert_msg="Update missing packages, with exclusions"
-# Note: The expected array purposefully does not quote the message as the fix_pkgs array 
+# Note: The expected array purposefully does not quote the message as the fix_pkgs array
 # will parse each space-separated item.
-expected_array=(Updating the following packages: // //foo/bar)
+expected_array=("Updating the following packages:" // //foo/bar)
 assert_equal ${#expected_array[@]} ${#fix_pkgs[@]} "${assert_msg}"
 for (( i = 0; i < ${#expected_array[@]}; i++ )); do
   assert_equal "${expected_array[${i}]}" "${fix_pkgs[${i}]}" "${assert_msg}[${i}]"
@@ -98,7 +109,10 @@ done
 # Remove exclusions from the bzlformat_missing_pkgs
 "${buildozer}" 'remove exclude //foo' //:bzlformat_missing_pkgs
 
-missing_pkgs=( $("${bazel}" run "//:bzlformat_missing_pkgs_find") )
+missing_pkgs=()
+while IFS=$'\n' read -r line; do missing_pkgs+=("$line"); done < <(
+  "${bazel}" run "//:bzlformat_missing_pkgs_find"
+)
 assert_msg="Missing packages after removing exclusions"
 expected_array=(//foo)
 assert_equal ${#expected_array[@]} ${#missing_pkgs[@]} "${assert_msg}"
@@ -106,11 +120,14 @@ for (( i = 0; i < ${#expected_array[@]}; i++ )); do
   assert_equal "${expected_array[${i}]}" "${missing_pkgs[${i}]}" "${assert_msg}[${i}]"
 done
 
-fix_pkgs=( $("${bazel}" run "//:bzlformat_missing_pkgs_fix") )
+fix_pkgs=()
+while IFS=$'\n' read -r line; do fix_pkgs+=("$line"); done < <(
+  "${bazel}" run "//:bzlformat_missing_pkgs_fix"
+)
 assert_msg="Update missing packages after removing exclusions"
-# Note: The expected array purposefully does not quote the message as the fix_pkgs array 
+# Note: The expected array purposefully does not quote the message as the fix_pkgs array
 # will parse each space-separated item.
-expected_array=(Updating the following packages: //foo)
+expected_array=("Updating the following packages:" //foo)
 assert_equal ${#expected_array[@]} ${#fix_pkgs[@]} "${assert_msg}"
 for (( i = 0; i < ${#expected_array[@]}; i++ )); do
   assert_equal "${expected_array[${i}]}" "${fix_pkgs[${i}]}" "${assert_msg}[${i}]"
@@ -118,7 +135,10 @@ done
 
 # MARK - Confirm that finding no missing packages works
 
-missing_pkgs=( $("${bazel}" run "//:bzlformat_missing_pkgs_find") )
+missing_pkgs=()
+while IFS=$'\n' read -r line; do missing_pkgs+=("$line"); done < <(
+  "${bazel}" run "//:bzlformat_missing_pkgs_find"
+)
 assert_msg="Expect no missing packages"
 expected_array=()
 assert_equal ${#expected_array[@]} ${#missing_pkgs[@]} "${assert_msg}"
@@ -126,11 +146,14 @@ for (( i = 0; i < ${#expected_array[@]}; i++ )); do
   assert_equal "${expected_array[${i}]}" "${missing_pkgs[${i}]}" "${assert_msg}[${i}]"
 done
 
-fix_pkgs=( $("${bazel}" run "//:bzlformat_missing_pkgs_fix") )
+fix_pkgs=()
+while IFS=$'\n' read -r line; do fix_pkgs+=("$line"); done < <(
+  "${bazel}" run "//:bzlformat_missing_pkgs_fix"
+)
 assert_msg="Update with no missing packages"
-# Note: The expected array purposefully does not quote the message as the fix_pkgs array 
+# Note: The expected array purposefully does not quote the message as the fix_pkgs array
 # will parse each space-separated item.
-expected_array=(No missing package updates were found.)
+expected_array=("No missing package updates were found.")
 assert_equal ${#expected_array[@]} ${#fix_pkgs[@]} "${assert_msg}"
 for (( i = 0; i < ${#expected_array[@]}; i++ )); do
   assert_equal "${expected_array[${i}]}" "${fix_pkgs[${i}]}" "${assert_msg}[${i}]"
