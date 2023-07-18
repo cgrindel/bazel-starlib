@@ -23,7 +23,10 @@ sh_library(
 sh_library(
     name = "files",
     srcs = ["files.sh"],
-    deps = [":paths"],
+    deps = [
+        ":paths",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
 )
 
 sh_library(

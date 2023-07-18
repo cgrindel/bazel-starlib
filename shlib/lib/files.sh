@@ -1,12 +1,30 @@
 #!/usr/bin/env bash
 
+# Since we are in a library, check if rlocation has been defined yet.
+if [[ $(type -t rlocation) != function ]]; then
+  # --- begin runfiles.bash initialization v3 ---
+  # Copy-pasted from the Bazel Bash runfiles library v3.
+  set -uo pipefail; set +e; f=bazel_tools/tools/bash/runfiles/runfiles.bash
+  source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
+    source "$(grep -sm1 "^$f " "${RUNFILES_MANIFEST_FILE:-/dev/null}" | cut -f2- -d' ')" 2>/dev/null || \
+    source "$0.runfiles/$f" 2>/dev/null || \
+    source "$(grep -sm1 "^$f " "$0.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \
+    source "$(grep -sm1 "^$f " "$0.exe.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \
+    { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
+  # --- end runfiles.bash initialization v3 ---
+fi
+
+if [[ $(type -t cgrindel_bazel_shlib_lib_paths_loaded) != function ]]; then
+  paths_sh_location=cgrindel_bazel_starlib/shlib/lib/paths.sh
+  paths_sh="$(rlocation "${paths_sh_location}")" || \
+    (echo >&2 "Failed to locate ${paths_sh_location}" && exit 1)
+  # shellcheck disable=SC1090 # external source
+  source "${paths_sh}"
+fi
+
 # This is used to determine if the library has been loaded
 cgrindel_bazel_shlib_lib_files_loaded() { return; }
 
-if [[ $(type -t cgrindel_bazel_shlib_lib_paths_loaded) != function ]]; then
-  # shellcheck source=SCRIPTDIR/paths.sh
-  source "shlib/lib/paths.sh"
-fi
 
 # Recursively searches for a file starting from the current directory up to the root of the filesystem.
 #
