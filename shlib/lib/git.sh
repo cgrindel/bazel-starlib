@@ -22,7 +22,7 @@ fetch_latest_from_git_remote() {
   local remote="${1:-}"
   local branch="${2:-}"
   fetch_cmd=(git fetch)
-  if [[ ! -z "${remote:-}" ]]; then
+  if [[ -n "${remote:-}" ]]; then
     fetch_cmd+=( "${remote}" )
     [[ -z "${branch:-}" ]] || fetch_cmd+=( "${branch}" )
   fi
