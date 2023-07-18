@@ -64,9 +64,9 @@ _get_github_repo_pattern_index() {
   local repo_url="${1}"
   for (( i = 0; i < ${#_github_url_patterns[@]}; i++ )); do
     pattern="${_github_url_patterns[$i]}"
-    [[ "${repo_url}" =~ "${pattern}" ]] && echo $i && return
+    [[ "${repo_url}" =~ ${pattern} ]] && echo $i && return
   done
-  return -1
+  return 1
 }
 
 # Succeeds if the URL is a Github repo URL. Otherwise, it fails.
@@ -78,7 +78,8 @@ is_github_repo_url() {
 # Return the Github repository owner from the repository URL.
 get_gh_repo_owner() {
   local repo_url="${1}"
-  local pattern_index=$( _get_github_repo_pattern_index "${repo_url}" )
+  local pattern_index
+  pattern_index=$( _get_github_repo_pattern_index "${repo_url}" )
   local sed_cmd="${_github_url_owner_sed_cmds[${pattern_index}]}"
   echo "${repo_url}" | sed -E -n "${sed_cmd}"
 }
@@ -100,8 +101,10 @@ gh_release_exists() {
 # Returns a base URL suitable for API calls.
 get_gh_api_base_url() {
   local repo_url="${1}"
-  local owner="$( get_gh_repo_owner "${repo_url}" )"
-  local name="$( get_gh_repo_name "${repo_url}" )"
+  local owner
+  owner="$( get_gh_repo_owner "${repo_url}" )"
+  local name
+  name="$( get_gh_repo_name "${repo_url}" )"
   echo "https://api.github.com/repos/${owner}/${name}"
 }
 
@@ -125,9 +128,9 @@ get_gh_changelog() {
     esac
   done
 
-  [[ ${#args[@]} > 0 ]] && fail "Received positional args when none were expected. args: ${args[@]}"
+  [[ ${#args[@]} -gt 0 ]] && fail "Received positional args when none were expected. args:" "${args[@]}"
   [[ ${#api_args[@]} == 0 ]] && fail "Expected one or more API args."
 
   # Execute the API call
-  gh api repos/{owner}/{repo}/releases/generate-notes "${api_args[@]}" --jq '.body'
+  gh api "repos/{owner}/{repo}/releases/generate-notes" "${api_args[@]}" --jq '.body'
 }
