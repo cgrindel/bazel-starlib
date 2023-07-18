@@ -5,7 +5,7 @@ load(
     "bzlformat_missing_pkgs",
     "bzlformat_pkg",
 )
-load("//bzltidy:defs.bzl", "tidy")
+load("//bzltidy:defs.bzl", "tidy", "tidy_all")
 load("//shlib/rules:execute_binary.bzl", "execute_binary")
 load("//tests:integration_test_common.bzl", "INTEGRATION_TEST_TAGS")
 load("//updatesrc:defs.bzl", "updatesrc_update_all")
@@ -61,6 +61,9 @@ tidy(
         ":gazelle",
     ],
 )
+
+tidy_all(name = "tidy_all")
+# tidy_modified(name = "tidy_modified")
 
 # MARK: - Golang
 

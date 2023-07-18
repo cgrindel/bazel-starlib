@@ -7,7 +7,10 @@ bzl_library(
     name = "defs",
     srcs = ["defs.bzl"],
     visibility = ["//visibility:public"],
-    deps = ["//bzltidy/private:tidy"],
+    deps = [
+        "//bzltidy/private:tidy",
+        "//bzltidy/private:tidy_all",
+    ],
 )
 
 bzlformat_pkg(name = "bzlformat")

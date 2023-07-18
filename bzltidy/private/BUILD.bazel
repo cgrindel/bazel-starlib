@@ -3,6 +3,7 @@ load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
 
 exports_files([
     "tidy.sh",
+    "tidy_all.sh",
     "check_tidy.sh",
 ])
 
@@ -19,5 +20,11 @@ filegroup(
 bzl_library(
     name = "tidy",
     srcs = ["tidy.bzl"],
+    visibility = ["//bzltidy:__subpackages__"],
+)
+
+bzl_library(
+    name = "tidy_all",
+    srcs = ["tidy_all.bzl"],
     visibility = ["//bzltidy:__subpackages__"],
 )
