@@ -20,16 +20,19 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 assertions_sh_location=cgrindel_bazel_starlib/shlib/lib/assertions.sh
 assertions_sh="$(rlocation "${assertions_sh_location}")" || \
   (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../shlib/lib/assertions.sh
 source "${assertions_sh}"
 
 paths_sh_location=cgrindel_bazel_starlib/shlib/lib/paths.sh
 paths_sh="$(rlocation "${paths_sh_location}")" || \
   (echo >&2 "Failed to locate ${paths_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../shlib/lib/paths.sh
 source "${paths_sh}"
 
 messages_sh_location=cgrindel_bazel_starlib/shlib/lib/messages.sh
 messages_sh="$(rlocation "${messages_sh_location}")" || \
   (echo >&2 "Failed to locate ${messages_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../shlib/lib/messages.sh
 source "${messages_sh}"
 
 create_scratch_dir_sh_location=rules_bazel_integration_test/tools/create_scratch_dir.sh
