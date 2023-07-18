@@ -11,11 +11,17 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v3 ---
 
-assertions_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/assertions.sh)"
-source "${assertions_lib}"
+assertions_sh_location=cgrindel_bazel_starlib/shlib/lib/assertions.sh
+assertions_sh="$(rlocation "${assertions_sh_location}")" || \
+  (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../../../shlib/lib/assertions.sh
+source "${assertions_sh}"
 
-paths_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/paths.sh)"
-source "${paths_lib}"
+paths_sh_location=cgrindel_bazel_starlib/shlib/lib/paths.sh
+paths_sh="$(rlocation "${paths_sh_location}")" || \
+  (echo >&2 "Failed to locate ${paths_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../../../shlib/lib/paths.sh
+source "${paths_sh}"
 
 current_dir="${PWD}"
 
