@@ -133,7 +133,7 @@ done
 # shellcheck disable=SC2016
 [[ "${add_github_release_archive_url}" == true ]] && \
   url_templates+=( 'https://github.com/${owner}/${repo}/releases/download/${tag}/${repo}.${tag}.tar.gz' )
-[[ ${#url_templates[@]} -gt 0 ]] || fail "Expected one ore more url templates."
+[[ ${#url_templates[@]} -gt 0 ]] || fail "Expected one or more url templates."
 
 # MARK - Ensure that we have a SHA256 value
 

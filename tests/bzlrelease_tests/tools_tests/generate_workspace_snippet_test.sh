@@ -16,6 +16,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
 fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../../shlib/lib/fail.sh
 source "${fail_sh}"
 
 setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
@@ -32,6 +33,7 @@ workspace_snippet_tmpl="$(rlocation "${workspace_snippet_tmpl_location}")" || \
 
 # MARK - Setup
 
+# shellcheck source=SCRIPTDIR/../../setup_git_repo.sh
 source "${setup_git_repo_sh}"
 cd "${repo_dir}"
 
@@ -119,7 +121,9 @@ actual_snippet="$(< "${output_path}")"
 
 owner=acme
 repo=rules_fun
+# shellcheck disable=SC2016 # Template string
 url1='http://github.com/${owner}/${repo}/releases/download/${tag}/${repo}-${tag:1}.tar.gz'
+# shellcheck disable=SC2016 # Template string
 url2='http://mirror.bazel.build/github.com/${owner}/${repo}/releases/download/${tag}/${repo}-${tag:1}.tar.gz'
 strip_prefix="rules_fun-1.2.3"
 
@@ -163,7 +167,7 @@ actual_snippet="$(
 
 [[ "${actual_snippet}" =~ load.*http_archive ]] || \
   fail "Did not find load statement from the template."
-[[ "${actual_snippet}" =~ 'http_archive(' ]] || \
+[[ "${actual_snippet}" =~ http_archive\( ]] || \
   fail "Did not find http_archive statement from the utility."
 
 
@@ -174,7 +178,7 @@ err_output="$(
   --sha256 "${sha256}" \
   2>&1 || true
 )"
-[[ "${err_output}" =~ "Expected a tag value." ]] || fail "Missing tag failure."
+[[ "${err_output}" =~ Expected\ a\ tag\ value\. ]] || fail "Missing tag failure."
 
 err_output="$(
 "${generate_workspace_snippet_sh}" \
@@ -183,5 +187,5 @@ err_output="$(
   --no_github_source_archive_url \
   2>&1 || true
 )"
-[[ "${err_output}" =~ "Expected one ore more url templates." ]] || fail "Missing url template failure."
+[[ "${err_output}" =~ Expected\ one\ or\ more\ url\ templates\. ]] || fail "Missing url template failure."
 
