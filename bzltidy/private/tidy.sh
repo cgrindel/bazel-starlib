@@ -77,7 +77,6 @@ while (("$#")); do
   case "${1}" in
     "--help")
       show_usage
-      exit 0
       ;;
     --*)
       usage_error "Unrecognized option. ${1}"
