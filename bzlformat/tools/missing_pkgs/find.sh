@@ -12,11 +12,13 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 # --- end runfiles.bash initialization v3 ---
 
 arrays_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/arrays.sh)"
+# shellcheck source=SCRIPTDIR/../../../shlib/lib/arrays.sh
 source "${arrays_lib}"
 
 common_sh_location=cgrindel_bazel_starlib/bzlformat/tools/missing_pkgs/common.sh
 common_sh="$(rlocation "${common_sh_location}")" || \
   (echo >&2 "Failed to locate ${common_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/common.sh
 source "${common_sh}"
 
 query_for_pkgs() {
@@ -49,8 +51,14 @@ done
 cd "${BUILD_WORKSPACE_DIRECTORY}"
 
 # The output `package` appears to sort the results
-all_pkgs=( $(query_for_pkgs //...) )
-pkgs_with_format=( $(query_for_pkgs 'kind(bzlformat_format, //...)') )
+all_pkgs=()
+while IFS=$'\n' read -r line; do all_pkgs+=("$line"); done < <(
+  query_for_pkgs //...
+)
+pkgs_with_format=()
+while IFS=$'\n' read -r line; do pkgs_with_format+=("$line"); done < <(
+  query_for_pkgs 'kind(bzlformat_format, //...)'
+)
 
 pkgs_missing_format=()
 for pkg in "${all_pkgs[@]}" ; do
@@ -59,7 +67,7 @@ for pkg in "${all_pkgs[@]}" ; do
   fi
 done
 
-if [[ ${#pkgs_missing_format[@]} > 0 ]]; then
+if [[ ${#pkgs_missing_format[@]} -gt 0 ]]; then
   # Output the missing packages.
   print_by_line "${pkgs_missing_format[@]:-}"
 
