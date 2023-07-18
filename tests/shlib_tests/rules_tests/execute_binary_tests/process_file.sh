@@ -35,7 +35,7 @@ done
 data="$(< "${data_file_txt}")"
 echo "Data: ${data}"
 
-if [[ ! -z "${arg_file:-}" ]]; then
+if [[ -n "${arg_file:-}" ]]; then
   arg_file_data="$(< "${arg_file}")"
   echo "Arg File: ${arg_file_data}"
 fi
