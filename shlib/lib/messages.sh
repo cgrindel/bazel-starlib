@@ -24,7 +24,8 @@ exit_with_msg() {
   while (("$#")); do
     case "${1}" in
       "--exit_code")
-        local exit_code=${2}
+        local exit_code
+        exit_code=$(($2))
         shift 2
         ;;
       "--no_exit")

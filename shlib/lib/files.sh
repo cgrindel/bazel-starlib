@@ -15,12 +15,16 @@ if [[ $(type -t rlocation) != function ]]; then
 fi
 
 if [[ $(type -t cgrindel_bazel_shlib_lib_paths_loaded) != function ]]; then
-  paths_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/paths.sh)"
-  source "${paths_lib}"
+  paths_sh_location=cgrindel_bazel_starlib/shlib/lib/paths.sh
+  paths_sh="$(rlocation "${paths_sh_location}")" || \
+    (echo >&2 "Failed to locate ${paths_sh_location}" && exit 1)
+  # shellcheck disable=SC1090 # external source
+  source "${paths_sh}"
 fi
 
 # This is used to determine if the library has been loaded
 cgrindel_bazel_shlib_lib_files_loaded() { return; }
+
 
 # Recursively searches for a file starting from the current directory up to the root of the filesystem.
 #
@@ -43,7 +47,8 @@ upsearch() {
   while (("$#")); do
     case "${1}" in
       "--start_dir")
-        local start_dir="$(normalize_path "${2}")"
+        local start_dir
+        start_dir="$(normalize_path "${2}")"
         shift 2
         ;;
       "--error_if_not_found")

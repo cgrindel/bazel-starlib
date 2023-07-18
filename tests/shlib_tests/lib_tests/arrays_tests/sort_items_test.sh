@@ -11,15 +11,25 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v3 ---
 
-assertions_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/assertions.sh)"
-source "${assertions_lib}"
+assertions_sh_location=cgrindel_bazel_starlib/shlib/lib/assertions.sh
+assertions_sh="$(rlocation "${assertions_sh_location}")" || \
+  (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../../../shlib/lib/assertions.sh
+source "${assertions_sh}"
 
-arrays_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/arrays.sh)"
-source "${arrays_lib}"
+arrays_sh_location=cgrindel_bazel_starlib/shlib/lib/arrays.sh
+arrays_sh="$(rlocation "${arrays_sh_location}")" || \
+  (echo >&2 "Failed to locate ${arrays_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../../../shlib/lib/arrays.sh
+source "${arrays_sh}"
+
 
 array=(b e a c e)
 expected=(a b c e)
-actual=( $(sort_items "${array[@]}") )
+actual=()
+while IFS=$'\n' read -r line; do actual+=("$line"); done < <(
+  sort_items "${array[@]}"
+)
 
 assert_equal "${#expected[@]}" "${#actual[@]}"
 for (( i = 0; i < ${#expected[@]}; i++ )); do

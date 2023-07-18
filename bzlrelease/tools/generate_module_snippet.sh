@@ -19,6 +19,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
 fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../shlib/lib/fail.sh
 source "${fail_sh}"
 
 # MARK - Process Args

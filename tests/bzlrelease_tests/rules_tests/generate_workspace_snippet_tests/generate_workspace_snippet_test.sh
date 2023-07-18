@@ -14,6 +14,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 assertions_sh_location=cgrindel_bazel_starlib/shlib/lib/assertions.sh
 assertions_sh="$(rlocation "${assertions_sh_location}")" || \
   (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../../../shlib/lib/assertions.sh
 source "${assertions_sh}"
 
 setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
@@ -38,6 +39,7 @@ archive_sha256="$(rlocation "${archive_sha256_location}")" || \
 
 # MARK - Setup
 
+# shellcheck source=SCRIPTDIR/../../../setup_git_repo.sh
 source "${setup_git_repo_sh}"
 
 # MARK - Test

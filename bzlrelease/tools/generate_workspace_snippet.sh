@@ -26,16 +26,19 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
 fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../shlib/lib/fail.sh
 source "${fail_sh}"
 
 git_sh_location=cgrindel_bazel_starlib/shlib/lib/git.sh
 git_sh="$(rlocation "${git_sh_location}")" || \
   (echo >&2 "Failed to locate ${git_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../shlib/lib/git.sh
 source "${git_sh}"
 
 github_sh_location=cgrindel_bazel_starlib/shlib/lib/github.sh
 github_sh="$(rlocation "${github_sh_location}")" || \
   (echo >&2 "Failed to locate ${github_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../shlib/lib/github.sh
 source "${github_sh}"
 
 generate_git_archive_sh_location=cgrindel_bazel_starlib/bzlrelease/tools/generate_git_archive.sh
@@ -120,15 +123,17 @@ while (("$#")); do
   esac
 done
 
-[[ ${#args[@]} -gt 0 ]] && fail "Received unexpected arguments: ${args[@]}"
+[[ ${#args[@]} -gt 0 ]] && fail "Received unexpected arguments:" "${args[@]}"
 
 [[ -z "${tag:-}" ]] && fail "Expected a tag value."
 
+# shellcheck disable=SC2016
 [[ "${add_github_src_archive_url}" == true ]] && \
   url_templates+=( 'http://github.com/${owner}/${repo}/archive/${tag}.tar.gz' )
+# shellcheck disable=SC2016
 [[ "${add_github_release_archive_url}" == true ]] && \
   url_templates+=( 'https://github.com/${owner}/${repo}/releases/download/${tag}/${repo}.${tag}.tar.gz' )
-[[ ${#url_templates[@]} -gt 0 ]] || fail "Expected one ore more url templates."
+[[ ${#url_templates[@]} -gt 0 ]] || fail "Expected one or more url templates."
 
 # MARK - Ensure that we have a SHA256 value
 

@@ -16,11 +16,13 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
 fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../../shlib/lib/fail.sh
 source "${fail_sh}"
 
 env_sh_location=cgrindel_bazel_starlib/shlib/lib/env.sh
 env_sh="$(rlocation "${env_sh_location}")" || \
   (echo >&2 "Failed to locate ${env_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../../shlib/lib/env.sh
 source "${env_sh}"
 
 generate_gh_changelog_sh_location=cgrindel_bazel_starlib/bzlrelease/tools/generate_gh_changelog.sh
@@ -35,6 +37,7 @@ is_installed git || fail "Could not find git."
 
 # MARK - Setup
 
+# shellcheck source=SCRIPTDIR/../../setup_git_repo.sh
 source "${setup_git_repo_sh}"
 cd "${repo_dir}"
 
@@ -44,7 +47,8 @@ cd "${repo_dir}"
 tag_name="v0.1.1"
 prev_tag_name="v0.1.0"
 result="$( "${generate_gh_changelog_sh}" --previous_tag_name "${prev_tag_name}" "${tag_name}" )"
-[[ "${result}" =~ "**Full Changelog**: https://github.com/cgrindel/bazel-starlib/compare/v0.1.0...v0.1.1" ]] || \
+# [[ "${result}" =~ "**Full Changelog**: https://github.com/cgrindel/bazel-starlib/compare/v0.1.0...v0.1.1" ]] || \
+[[ "${result}" =~ \*\*Full\ Changelog\*\*:\ https://github.com/cgrindel/bazel-starlib/compare/v0\.1\.0\.\.\.v0\.1\.1 ]] || \
   fail "Expected to find changelog URL for v0.1.0...v0.1.1. result: ${result}"
 
 

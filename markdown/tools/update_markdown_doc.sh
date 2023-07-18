@@ -16,6 +16,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
 fail_sh="$(rlocation "${fail_sh_location}")" || \
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../shlib/lib/fail.sh
 source "${fail_sh}"
 
 
@@ -55,7 +56,7 @@ done
 
 [[ -z "${update_path:-}" ]] && fail "No update file was specified."
 
-([[ -z "${marker_begin:-}" ]] || [[ -z "${marker_end:-}" ]]) && \
+{ [[ -z "${marker_begin:-}" ]] || [[ -z "${marker_end:-}" ]]; } && \
   fail "No markers were specified."
 
 [[ ${#args[@]} != 2 ]] && fail "Expected exactly two files: input and output."

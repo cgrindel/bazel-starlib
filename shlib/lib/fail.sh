@@ -35,6 +35,6 @@ usage_error() {
 }
 
 show_usage() {
-  echo "$(get_usage)"
+  get_usage
   exit 0
 }

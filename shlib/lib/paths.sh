@@ -16,8 +16,10 @@ normalize_path() {
   if [[ -d "${path}" ]]; then
     local dirname="${path}"
   else
-    local dirname="$(dirname "${path}")"
-    local basename="$(basename "${path}")"
+    local dirname
+    dirname="$(dirname "${path}")"
+    local basename
+    basename="$(basename "${path}")"
   fi
   dirname="$(cd "${dirname}" > /dev/null && pwd)"
   if [[ -z "${basename:-}" ]]; then

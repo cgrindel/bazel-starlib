@@ -13,8 +13,8 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 
 # MARK - Args Count
 
-args_count=($# - 1)
-echo "Args Count: ${args_count}"
+
+echo "Args Count: ${#}"
 for (( i = 1; i <= ${#}; i++ )); do
   echo "  ${i}: ${!i}"
 done

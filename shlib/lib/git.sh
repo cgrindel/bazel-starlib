@@ -8,7 +8,6 @@ cgrindel_bazel_starlib_lib_private_git_loaded() { return; }
 # MARK - Default Values
 
 remote=origin
-main_branch=main
 
 # Returns the URL for the git repository. It is typically in the form:
 #  git@github.com:cgrindel/bazel-starlib.git
@@ -23,7 +22,7 @@ fetch_latest_from_git_remote() {
   local remote="${1:-}"
   local branch="${2:-}"
   fetch_cmd=(git fetch)
-  if [[ ! -z "${remote:-}" ]]; then
+  if [[ -n "${remote:-}" ]]; then
     fetch_cmd+=( "${remote}" )
     [[ -z "${branch:-}" ]] || fetch_cmd+=( "${branch}" )
   fi
@@ -34,7 +33,7 @@ fetch_latest_from_git_remote() {
 
 is_valid_release_tag() {
   local tag="${1}"
-  [[ "${tag}" =~ ^v?[0-9]+[.][0-9]+[.][0-9]+ ]] || return -1
+  [[ "${tag}" =~ ^v?[0-9]+[.][0-9]+[.][0-9]+ ]] || return 1
 }
 
 # Returns the commit hash for the provided branch or tag.
@@ -45,24 +44,32 @@ get_git_commit_hash() {
 
 # Returns the list of release tags sorted by most recent to oldest.
 get_git_release_tags() {
-  local tags=( $(git tag --sort=refname -l) )
+  local tags=()
+  while IFS=$'\n' read -r line; do tags+=("$line"); done < <(
+    git tag --sort=refname -l
+  )
   [[ ${#tags[@]} == 0 ]] && return
   local release_tags=()
   for tag in "${tags[@]}" ; do
     is_valid_release_tag "${tag}" && release_tags+=( "${tag}" )
   done
-  [[ ${#release_tags[@]} == 0 ]] && return
-  echo "${release_tags[@]}"
+  for release_tag in "${release_tags[@]}" ; do
+    echo "${release_tag}"
+  done
 }
 
 git_tag_exists() {
   local target_tag="${1}"
-  local tags=( $(git tag) )
+  # local tags=( $(git tag) )
+  local tags=()
+  while IFS=$'\n' read -r line; do tags+=("$line"); done < <(
+    git tag
+  )
   # Make sure that the for loop variable is not tag or something else common.
   for cur_tag in "${tags[@]}" ; do
     [[ "${cur_tag}" == "${target_tag}" ]] && return
   done
-  return -1
+  return 1
 }
 
 create_git_tag() {

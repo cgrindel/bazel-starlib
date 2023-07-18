@@ -43,7 +43,7 @@ join_by() {
   local delimiter="${1}"
   shift 1
   printf -v joined '%s'"${delimiter}" "${@}"
-  echo "${joined%${delimiter}}"
+  echo "${joined%"${delimiter}"}"
 }
 
 # GH076: Figure out how to handle returning items with spaces.
@@ -76,14 +76,11 @@ join_by() {
 #   stdout: The double quoted items separated by spaces.
 #   stderr: None.
 double_quote_items() {
-  items=()
   while (("$#")); do
-    items+=( "\"${1}\"" )
+    echo "\"${1}\""
     shift 1
   done 
-  echo "${items[@]}"
 }
-
 
 # Searches for the expected value in the follow-on arguments. If your list is sorted and has
 # more than ~40 items, consider using 'contains_item_sorted'.
@@ -107,7 +104,7 @@ contains_item() {
   
   # Do a quick regex to see if the value is in the rest of the args
   # If not, then don't bother looping
-  [[ ! "${*}" =~ "${x}" ]] && return -1
+  [[ ! "${*}" =~ ${x} ]] && return 1
 
   # Loop through items for a precise match
   for it in "${@}" ; do
@@ -115,7 +112,7 @@ contains_item() {
   done
 
   # We did not find the item
-  return -1
+  return 1
 }
 
 # Searches for the expected value in the follow-on arguments. This function assumes that the list 
@@ -139,35 +136,37 @@ contains_item_sorted() {
   # s: start index
   # e: end index
   # m: midpoint index
+  # mv: midpoint value
 
   # Remember the expected value
   local x="${1}"
   shift
 
   # Don't preceed if we have no list items.
-  [[ ${#} == 0 ]] && return -1
+  [[ ${#} -eq 0 ]] && return 1
 
   # Init the start and end indexes
   local s=1
   local e=${#}
 
-  while [[ 0 == 0 ]]; do
+  while true; do
     # Find midpoint
-    local m=$(( ${s} + (${e} - ${s} + 1)/2 ))
+    local m=$(( s + (e - s + 1)/2 ))
 
     # If the midpoint value (!m) is the expected, found it
-    [[ "${x}" == "${!m}" ]] && return 
+    local mv="${!m}"
+    [[ "${x}" == "${mv}" ]] && return 
 
     # If the start index and end index are the same, finished searching
-    [[ ${s} == ${e} ]] && return -1
+    [[ $s -eq $e ]] && return 1
 
     # Update the start/end index based upon whether the expected is greater
     # than or less than the midpoint value.
-    if [[ "${x}" < "${!m}" ]]; then
-      local e=$(( ${m} - 1 ))
+    if [[ "${x}" < "${mv}" ]]; then
+      local e=$(( m - 1 ))
     else
-      [[ ${m} == ${e} ]] && return -1
-      local s=$(( ${m} + 1 ))
+      [[ $m -eq $e ]] && return 1
+      local s=$(( m + 1 ))
     fi
   done
 }

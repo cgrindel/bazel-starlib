@@ -35,7 +35,7 @@ cd "${run_dir}"
 
 # Execute the binary
 cmd=( "${RUNFILES_DIR}/{{EXEC_BINARY}}" )
-[[ ${#} > 0 ]] && cmd+=( "${@}" )
+[[ ${#} -gt 0 ]] && cmd+=( "${@}" )
 "${cmd[@]}"
 
 # Finished

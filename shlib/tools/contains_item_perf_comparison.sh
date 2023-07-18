@@ -12,6 +12,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 # --- end runfiles.bash initialization v3 ---
 
 arrays_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/arrays.sh)"
+# shellcheck source=SCRIPTDIR/../lib/arrays.sh
 source "${arrays_lib}"
 
 # MARK - Performance Tests
@@ -20,7 +21,7 @@ test_iterations=${1:-100}
 
 create_array() {
   local item_count=${1}
-  local max_val=$(( ${item_count} - 1 ))
+  local max_val=$(( item_count - 1 ))
   local width=$(( ${#max_val} ))
   local output=()
   local val=0
@@ -31,7 +32,7 @@ create_array() {
 }
 
 do_contains_item_perf_test() {
-  for (( i = 0; i < $test_iterations; i++ )); do
+  for (( i = 0; i < test_iterations; i++ )); do
     for item in "${@}" ; do
       contains_item "${item}" "${@}"
     done
@@ -39,7 +40,7 @@ do_contains_item_perf_test() {
 }
 
 do_contains_item_sorted_perf_test() {
-  for (( i = 0; i < $test_iterations; i++ )); do
+  for (( i = 0; i < test_iterations; i++ )); do
     for item in "${@}" ; do
       contains_item_sorted "${item}" "${@}"
     done
@@ -52,7 +53,10 @@ echo ""
 array_sizes=(25 30 35 40 45 50)
 for size in "${array_sizes[@]}" ; do
   echo "array size: ${size}" 
-  array=( $(create_array ${size}) )
+  array=()
+  while IFS=$'\n' read -r line; do array+=("$line"); done < <(
+    create_array "${size}"
+  )
   contains_item_time="$( (time do_contains_item_perf_test "${array[@]}") 2>&1 )"
   contains_item_sorted_time="$( (time do_contains_item_sorted_perf_test "${array[@]}") 2>&1 )"
   echo "contains_item: ${contains_item_time}" 
