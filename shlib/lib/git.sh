@@ -53,8 +53,9 @@ get_git_release_tags() {
   for tag in "${tags[@]}" ; do
     is_valid_release_tag "${tag}" && release_tags+=( "${tag}" )
   done
-  [[ ${#release_tags[@]} == 0 ]] && return
-  echo "${release_tags[@]}"
+  for release_tag in "${release_tags[@]}" ; do
+    echo "${release_tag}"
+  done
 }
 
 git_tag_exists() {
