@@ -12,7 +12,9 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 # --- end runfiles.bash initialization v3 ---
 
 assertions_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/assertions.sh)"
+# shellcheck source=SCRIPTDIR/../../../../../shlib/lib/assertions.sh
 source "${assertions_lib}"
+# shellcheck source=SCRIPTDIR/../../../../../bzlformat/tools/missing_pkgs/common.sh
 source "$(rlocation cgrindel_bazel_starlib/bzlformat/tools/missing_pkgs/common.sh)"
 
 assert_equal "//foo/bar" "$(normalize_pkg "foo/bar")"
