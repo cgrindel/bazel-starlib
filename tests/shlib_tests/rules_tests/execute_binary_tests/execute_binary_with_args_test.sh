@@ -14,6 +14,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 assertions_sh_location=cgrindel_bazel_starlib/shlib/lib/assertions.sh
 assertions_sh="$(rlocation "${assertions_sh_location}")" || \
   (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../../../shlib/lib/assertions.sh
 source "${assertions_sh}"
 
 my_bin_with_args_sh_location=cgrindel_bazel_starlib/tests/shlib_tests/rules_tests/execute_binary_tests/my_bin_with_args.sh
@@ -26,7 +27,7 @@ assert_arg() {
   local output="${1}"
   local index="${2}"
   local value="${3}"
-  [[ "${output}" =~ "  ${index}: ${value}" ]] || fail "Expected ${index}: ${value}
+  [[ "${output}" =~ \ \ ${index}:\ ${value} ]] || fail "Expected ${index}: ${value}
   ${output}
   "
 }
@@ -50,8 +51,8 @@ ${output}
 assert_embedded_args "${output}"
 
 
-[[ "${output}" =~ "Data: This is a data file." ]] || fail "Did not see data file output."
-[[ "${output}" =~ "Input: This is an input file." ]] || fail "Did not see input file output."
+[[ "${output}" =~ Data:\ This\ is\ a\ data\ file\. ]] || fail "Did not see data file output."
+[[ "${output}" =~ Input:\ This\ is\ an\ input\ file\. ]] || fail "Did not see input file output."
 
 
 # MARK - Test that additional arguments are passed along properly
