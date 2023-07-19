@@ -1,0 +1,14 @@
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+load("@cgrindel_bazel_starlib//bzltidy:defs.bzl", "tidy")
+
+bzlformat_pkg(name = "bzlformat")
+
+tidy(
+    name = "my_tidy",
+    targets = [":do_bar_tidy"],
+)
+
+sh_binary(
+    name = "do_bar_tidy",
+    srcs = ["do_bar_tidy.sh"],
+)
