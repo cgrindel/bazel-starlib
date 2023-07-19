@@ -19,6 +19,7 @@ sh_binary(
         "@rules_bazel_integration_test//tools:create_scratch_dir",
     ],
     deps = [
+        "//shlib/lib:arrays",
         "//shlib/lib:assertions",
         "@bazel_tools//tools/bash/runfiles",
     ],

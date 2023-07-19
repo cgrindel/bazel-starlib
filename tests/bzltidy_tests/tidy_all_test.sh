@@ -20,6 +20,13 @@ assertions_sh="$(rlocation "${assertions_sh_location}")" || \
 # shellcheck source=SCRIPTDIR/../../shlib/lib/assertions.sh
 source "${assertions_sh}"
 
+arrays_sh_location=cgrindel_bazel_starlib/shlib/lib/arrays.sh
+arrays_sh="$(rlocation "${arrays_sh_location}")" || \
+  (echo >&2 "Failed to locate ${arrays_sh_location}" && exit 1)
+# shellcheck source=SCRIPTDIR/../../shlib/lib/arrays.sh
+source "${arrays_sh}"
+
+
 create_scratch_dir_sh_location=rules_bazel_integration_test/tools/create_scratch_dir.sh
 create_scratch_dir_sh="$(rlocation "${create_scratch_dir_sh_location}")" || \
   (echo >&2 "Failed to locate ${create_scratch_dir_sh_location}" && exit 1)
@@ -29,6 +36,12 @@ create_scratch_dir_sh="$(rlocation "${create_scratch_dir_sh_location}")" || \
 find_tidy_out_files() {
   local start_dir="$1"
   find "${start_dir}" -name "*.tidy_out"
+}
+
+revert_changes() {
+  local start_dir="$1"
+  cd "${start_dir}"
+  git clean -f
 }
 
 # MARK - Initialize Important Variables
@@ -56,14 +69,56 @@ git commit -m "Initial commit"
 
 output_prefix_regex='\[tidy_all\]'
 
-# Attempt to tidy all for modified workspaces, but there are none.
+# Tidy all modified workspaces, but there are none.
+assert_msg="//:tidy_all_modified, no modifications"
+revert_changes "${scratch_dir}"
 output="$( bazel run //:tidy_all_modified )"
 tidy_out_files=()
 while IFS=$'\n' read -r line; do tidy_out_files+=("$line"); done < <(
   find_tidy_out_files "${scratch_dir}"
 )
-assert_msg="//:tidy_all_modified, no modifications"
 assert_equal 0 ${#tidy_out_files[@]} "${assert_msg}"
 assert_match "${output_prefix_regex}"\ No\ workspaces\ to\ tidy\. "${output}" "${assert_msg}"
 
-fail "IMPLEMENT ME!"
+# Tidy all modified workspaces with modification in bar
+assert_msg="//:tidy_all_modified, modification in bar"
+revert_changes "${scratch_dir}"
+echo "# Modification" >> child_workspaces/bar/BUILD.bazel
+output="$( bazel run //:tidy_all_modified )"
+tidy_out_files=()
+while IFS=$'\n' read -r line; do tidy_out_files+=("$line"); done < <(
+  find_tidy_out_files "${scratch_dir}"
+)
+assert_equal 1 ${#tidy_out_files[@]} "${assert_msg}"
+assert_match child_workspaces/bar/bar\.tidy_out "${tidy_out_files[0]}" "${assert_msg}"
+assert_match "${output_prefix_regex}"\ Running\ //:my_tidy\ in\ .*bar "${output}" "${assert_msg}"
+
+# Tidy all modified workspaces with modification in parent and bar
+assert_msg="//:tidy_all_modified, modification in parent and bar"
+revert_changes "${scratch_dir}"
+echo "# Modification" >> BUILD.bazel
+echo "# Modification" >> child_workspaces/bar/BUILD.bazel
+output="$( bazel run //:tidy_all_modified )"
+tidy_out_files=()
+while IFS=$'\n' read -r line; do tidy_out_files+=("$line"); done < <(
+  find_tidy_out_files "${scratch_dir}"
+)
+assert_equal 2 ${#tidy_out_files[@]} "${assert_msg}"
+assert_match parent\.tidy_out "${tidy_out_files[0]}" "${assert_msg}"
+assert_match child_workspaces/bar/bar\.tidy_out "${tidy_out_files[1]}" "${assert_msg}"
+assert_match \
+  "${output_prefix_regex}"\ Running\ //:my_tidy\ in\ .*child_workspaces/bar \
+  "${output}" "${assert_msg}"
+
+# Tidy all all workspaces.
+assert_msg="//:tidy_all_all"
+revert_changes "${scratch_dir}"
+output="$( bazel run //:tidy_all_all )"
+tidy_out_files=()
+while IFS=$'\n' read -r line; do tidy_out_files+=("$line"); done < <(
+  find_tidy_out_files "${scratch_dir}"
+)
+assert_equal 2 ${#tidy_out_files[@]} "${assert_msg}"
+assert_match parent\.tidy_out "${tidy_out_files[0]}" "${assert_msg}"
+assert_match child_workspaces/bar/bar\.tidy_out "${tidy_out_files[1]}" "${assert_msg}"
+assert_match "${output_prefix_regex}"\ Skipping\ .*foo\. "${output}" "${assert_msg}"

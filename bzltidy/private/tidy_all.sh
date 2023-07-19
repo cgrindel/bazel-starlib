@@ -164,18 +164,18 @@ find_all_workspaces() {
 
 find_workspaces_with_modifications() {
   local start_dir="$1"
+  cd "${start_dir}"
+
+  # Find the modified files
   local modified_files=()
+  while IFS=$'\n' read -r line; do modified_files+=("$line"); done < <(
+    git ls-files -m
+  )
 
   # If there are no modified files, return immediately.
   if [[ ${#modified_files[@]} -eq 0 ]]; then
     return
   fi
-
-  # Find the modified files
-  cd "${start_dir}"
-  while IFS=$'\n' read -r line; do modified_files+=("$line"); done < <(
-    git ls-files -m
-  )
 
   # Find the workspace file for each modified file.
   local workspaces=()
