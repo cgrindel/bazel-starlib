@@ -1,0 +1,28 @@
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+load("@cgrindel_bazel_starlib//bzltidy:defs.bzl", "tidy", "tidy_all")
+
+bzlformat_pkg(name = "bzlformat")
+
+tidy(
+    name = "my_tidy",
+    targets = [":do_parent_tidy"],
+)
+
+# Tidy all of the workspaces
+tidy_all(
+    name = "tidy_all",
+    mode = "all",
+    tidy_target = "//:my_tidy",
+)
+
+# Tidy workspaces with modifications
+tidy_all(
+    name = "tidy_modified",
+    mode = "modified",
+    tidy_target = "//:my_tidy",
+)
+
+sh_binary(
+    name = "do_parent_tidy",
+    srcs = ["do_parent_tidy.sh"],
+)

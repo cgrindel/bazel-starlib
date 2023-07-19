@@ -5,7 +5,7 @@ load(
     "bzlformat_missing_pkgs",
     "bzlformat_pkg",
 )
-load("//bzltidy:defs.bzl", "tidy")
+load("//bzltidy:defs.bzl", "tidy", "tidy_all")
 load("//shlib/rules:execute_binary.bzl", "execute_binary")
 load("//tests:integration_test_common.bzl", "INTEGRATION_TEST_TAGS")
 load("//updatesrc:defs.bzl", "updatesrc_update_all")
@@ -60,6 +60,13 @@ tidy(
         ":gazelle_update_repos",
         ":gazelle",
     ],
+)
+
+tidy_all(name = "tidy_all")
+
+tidy_all(
+    name = "tidy_modified",
+    mode = "modified",
 )
 
 # MARK: - Golang
@@ -191,6 +198,7 @@ test_suite(
         "//examples/updatesrc:smoke_integration_tests",
         "//tests/bzlformat_tests/tools_tests/missing_pkgs_tests:smoke_integration_tests",
         "//tests/bzlrelease_tests:all_integration_tests",
+        "//tests/bzltidy_tests:smoke_integration_tests",
         "//tests/shlib_tests/lib_tests/git_tests:integration_tests",
         "//tests/shlib_tests/lib_tests/github_tests:integration_tests",
         "//tests/updatesrc_tests:smoke_integration_tests",
@@ -208,6 +216,7 @@ test_suite(
         "//examples/updatesrc:integration_tests",
         "//tests/bzlformat_tests/tools_tests/missing_pkgs_tests:integration_tests",
         "//tests/bzlrelease_tests:all_integration_tests",
+        "//tests/bzltidy_tests:integration_tests",
         "//tests/shlib_tests/lib_tests/git_tests:integration_tests",
         "//tests/shlib_tests/lib_tests/github_tests:integration_tests",
         "//tests/updatesrc_tests:integration_tests",

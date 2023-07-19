@@ -1,0 +1,7 @@
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+# Intentionally did not add //:my_tidy to this workspace.  This will ensure
+# that tidy_all does not fail if a workspace does not have the specified tidy
+# target.

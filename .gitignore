@@ -6,3 +6,6 @@ node_modules
 
 # Ignore the local.bazelrc
 local.bazelrc
+
+# Some bzltidy tests write files with the extension .tidy_out
+*.tidy_out
