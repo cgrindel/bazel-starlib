@@ -12,9 +12,11 @@ cgrindel_bazel_shlib_lib_assertions_loaded() { return; }
 #   stdout: None.
 #   stderr: The error message.
 fail() {
-  local err_msg="${1:-}"
-  [[ -n "${err_msg}" ]] || err_msg="Unspecified error occurred."
-  echo >&2 "${err_msg}"
+  if [[ $# -eq 0 ]]; then
+    echo >&2 "Unspecified error occurred."
+  else
+    echo >&2 "${@}"
+  fi
   exit 1
 }
 
