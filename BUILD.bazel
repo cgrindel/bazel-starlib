@@ -63,7 +63,11 @@ tidy(
 )
 
 tidy_all(name = "tidy_all")
-# tidy_modified(name = "tidy_modified")
+
+tidy_all(
+    name = "tidy_modified",
+    mode = "modified",
+)
 
 # MARK: - Golang
 
