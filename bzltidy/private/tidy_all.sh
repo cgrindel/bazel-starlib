@@ -192,15 +192,20 @@ target_exists() {
 # MARK - Process Args
 
 find_workspace_mode=all
+tidy_target="//:tidy"
 
 while (("$#")); do
   case "${1}" in
     "--help")
       show_usage
       ;;
-    "--modified")
-      find_workspace_mode=modified
-      shift 1
+    "--mode")
+      find_workspace_mode="$2"
+      shift 2
+      ;;
+    "--tidy_target")
+      tidy_target="$2"
+      shift 2
       ;;
     --*)
       usage_error "Unrecognized option. ${1}"
@@ -234,7 +239,6 @@ while IFS=$'\n' read -r line; do workspaces+=("$line"); done < <(
 )
 
 # Execute tidy target in the workspaces, if it exists.
-tidy_target="//:tidy"
 for workspace in "${workspaces[@]}" ; do
   workspace_dir="$(dirname "${workspace}")"
   cd "${workspace_dir}"
