@@ -166,6 +166,11 @@ find_workspaces_with_modifications() {
   local start_dir="$1"
   local modified_files=()
 
+  # If there are no modified files, return immediately.
+  if [[ ${#modified_files[@]} -eq 0 ]]; then
+    return
+  fi
+
   # Find the modified files
   cd "${start_dir}"
   while IFS=$'\n' read -r line; do modified_files+=("$line"); done < <(
@@ -237,6 +242,11 @@ workspaces=()
 while IFS=$'\n' read -r line; do workspaces+=("$line"); done < <(
   "${find_workspace_cmd[@]}"
 )
+
+if [[ ${#workspaces[@]} -eq 0 ]]; then
+  info "No workspaces to tidy."
+  exit 0
+fi
 
 # Execute tidy target in the workspaces, if it exists.
 for workspace in "${workspaces[@]}" ; do
