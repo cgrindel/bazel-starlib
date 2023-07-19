@@ -10,14 +10,14 @@ tidy(
 
 # Tidy all of the workspaces
 tidy_all(
-    name = "tidy_all_all",
+    name = "tidy_all",
     mode = "all",
     tidy_target = "//:my_tidy",
 )
 
 # Tidy workspaces with modifications
 tidy_all(
-    name = "tidy_all_modified",
+    name = "tidy_modified",
     mode = "modified",
     tidy_target = "//:my_tidy",
 )

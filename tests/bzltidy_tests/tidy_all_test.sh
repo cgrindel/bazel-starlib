@@ -70,9 +70,9 @@ git commit -m "Initial commit"
 output_prefix_regex='\[tidy_all\]'
 
 # Tidy all modified workspaces, but there are none.
-assert_msg="//:tidy_all_modified, no modifications"
+assert_msg="//:tidy_modified, no modifications"
 revert_changes "${scratch_dir}"
-output="$( bazel run //:tidy_all_modified )"
+output="$( bazel run //:tidy_modified )"
 tidy_out_files=()
 while IFS=$'\n' read -r line; do tidy_out_files+=("$line"); done < <(
   find_tidy_out_files "${scratch_dir}"
@@ -81,10 +81,10 @@ assert_equal 0 ${#tidy_out_files[@]} "${assert_msg}"
 assert_match "${output_prefix_regex}"\ No\ workspaces\ to\ tidy\. "${output}" "${assert_msg}"
 
 # Tidy all modified workspaces with modification in bar
-assert_msg="//:tidy_all_modified, modification in bar"
+assert_msg="//:tidy_modified, modification in bar"
 revert_changes "${scratch_dir}"
 echo "# Modification" >> child_workspaces/bar/BUILD.bazel
-output="$( bazel run //:tidy_all_modified )"
+output="$( bazel run //:tidy_modified )"
 tidy_out_files=()
 while IFS=$'\n' read -r line; do tidy_out_files+=("$line"); done < <(
   find_tidy_out_files "${scratch_dir}"
@@ -94,11 +94,11 @@ assert_match child_workspaces/bar/bar\.tidy_out "${tidy_out_files[0]}" "${assert
 assert_match "${output_prefix_regex}"\ Running\ //:my_tidy\ in\ .*bar "${output}" "${assert_msg}"
 
 # Tidy all modified workspaces with modification in parent and bar
-assert_msg="//:tidy_all_modified, modification in parent and bar"
+assert_msg="//:tidy_modified, modification in parent and bar"
 revert_changes "${scratch_dir}"
 echo "# Modification" >> BUILD.bazel
 echo "# Modification" >> child_workspaces/bar/BUILD.bazel
-output="$( bazel run //:tidy_all_modified )"
+output="$( bazel run //:tidy_modified )"
 tidy_out_files=()
 while IFS=$'\n' read -r line; do tidy_out_files+=("$line"); done < <(
   find_tidy_out_files "${scratch_dir}"
@@ -111,9 +111,9 @@ assert_match \
   "${output}" "${assert_msg}"
 
 # Tidy all all workspaces.
-assert_msg="//:tidy_all_all"
+assert_msg="//:tidy_all"
 revert_changes "${scratch_dir}"
-output="$( bazel run //:tidy_all_all )"
+output="$( bazel run //:tidy_all )"
 tidy_out_files=()
 while IFS=$'\n' read -r line; do tidy_out_files+=("$line"); done < <(
   find_tidy_out_files "${scratch_dir}"
