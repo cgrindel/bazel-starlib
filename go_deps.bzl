@@ -4,11 +4,8 @@ bazel-starlib repository.
 
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
-# NOTE: The go_repository declarations must be kept in sync with the go_deps.module() declarations
-# in MODULE.bazel.
-
 def bazel_starlib_go_dependencies():
-    """Specifies the Golang dependencies for the bazel-starlib repository."""
+    """Declare dependencies for bazel-starlib."""
     go_repository(
         name = "com_github_alecthomas_assert",
         build_external = "external",
@@ -58,7 +55,6 @@ def bazel_starlib_go_dependencies():
         sum = "h1:6jRFt5qg61XfXZbP3SDaeTX+1OC1EgbHvRceYDmPAUE=",
         version = "v1.2.1",
     )
-
     go_repository(
         name = "com_github_mattn_go_isatty",
         build_external = "external",
@@ -66,7 +62,6 @@ def bazel_starlib_go_dependencies():
         sum = "h1:yVuAays6BHfxijgZPzw+3Zlu5yQgKGP2/hcQbHb7S9Y=",
         version = "v0.0.14",
     )
-
     go_repository(
         name = "com_github_sergi_go_diff",
         build_external = "external",
