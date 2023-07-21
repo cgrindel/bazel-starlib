@@ -87,7 +87,7 @@ test_suite(
 )
 
 test_suite(
-    name = "integration_tests",
+    name = "all_integration_tests",
     tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
     tests = lists.flatten([
         integration_test_utils.bazel_integration_test_names(

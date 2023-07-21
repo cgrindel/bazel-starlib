@@ -200,20 +200,28 @@ filegroup(
     visibility = [":integration_test_visibility"],
 )
 
+_INTEGRATION_TEST_PKGS = [
+    "//examples",
+    "//examples/bzlformat",
+    "//examples/markdown",
+    "//examples/updatesrc",
+    "//tests/bzlformat_tests/tools_tests/missing_pkgs_tests",
+    "//tests/bzlrelease_tests/rules_tests/generate_release_notes_tests",
+    "//tests/bzlrelease_tests/rules_tests/generate_workspace_snippet_tests",
+    "//tests/bzlrelease_tests/rules_tests/update_readme_tests",
+    "//tests/bzlrelease_tests/tools_tests",
+    "//tests/bzltidy_tests",
+    "//tests/shlib_tests/lib_tests/git_tests",
+    "//tests/shlib_tests/lib_tests/github_tests",
+    "//tests/updatesrc_tests",
+]
+
 test_suite(
     name = "all_smoke_integration_tests",
     tags = INTEGRATION_TEST_TAGS,
     tests = [
-        "//examples:smoke_integration_tests",
-        "//examples/bzlformat:smoke_integration_tests",
-        "//examples/markdown:smoke_integration_tests",
-        "//examples/updatesrc:smoke_integration_tests",
-        "//tests/bzlformat_tests/tools_tests/missing_pkgs_tests:smoke_integration_tests",
-        "//tests/bzlrelease_tests:all_integration_tests",
-        "//tests/bzltidy_tests:smoke_integration_tests",
-        "//tests/shlib_tests/lib_tests/git_tests:integration_tests",
-        "//tests/shlib_tests/lib_tests/github_tests:integration_tests",
-        "//tests/updatesrc_tests:smoke_integration_tests",
+        "{}:smoke_integration_tests".format(pkg)
+        for pkg in _INTEGRATION_TEST_PKGS
     ],
     visibility = ["//:__subpackages__"],
 )
@@ -222,30 +230,17 @@ test_suite(
     name = "all_integration_tests",
     tags = INTEGRATION_TEST_TAGS,
     tests = [
-        "//examples:integration_tests",
-        "//examples/bzlformat:integration_tests",
-        "//examples/markdown:integration_tests",
-        "//examples/updatesrc:integration_tests",
-        "//tests/bzlformat_tests/tools_tests/missing_pkgs_tests:integration_tests",
-        "//tests/bzlrelease_tests:all_integration_tests",
-        "//tests/bzltidy_tests:integration_tests",
-        "//tests/shlib_tests/lib_tests/git_tests:integration_tests",
-        "//tests/shlib_tests/lib_tests/github_tests:integration_tests",
-        "//tests/updatesrc_tests:integration_tests",
+        "{}:all_integration_tests".format(pkg)
+        for pkg in _INTEGRATION_TEST_PKGS
     ],
     visibility = ["//:__subpackages__"],
 )
 
 ci_workflow(
     name = "ci_workflow",
-    # This list should have a ci_integration_test_params for each of the
-    # labels in the all_integration_tests list.
     test_params = [
-        "//examples:all_test_params",
-        "//examples/bzlformat:simple_test_params",
-        "//examples/markdown:simple_test_params",
-        "//examples/updatesrc:simple_test_params",
-        "//tests/bzlformat_tests/tools_tests/missing_pkgs_tests:all_test_params",
+        "{}:all_test_params".format(pkg)
+        for pkg in _INTEGRATION_TEST_PKGS
     ],
     workflow_yml = ".github/workflows/ci.yml",
 )

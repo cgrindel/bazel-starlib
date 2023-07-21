@@ -5,6 +5,7 @@ load(
     "generate_workspace_snippet",
     "update_readme",
 )
+load("//ci:defs.bzl", "ci_integration_test_params")
 load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
 
 bzlformat_pkg(name = "bzlformat")
@@ -41,10 +42,31 @@ sh_test(
 )
 
 test_suite(
-    name = "integration_tests",
+    name = "all_integration_tests",
     tags = INTEGRATION_TEST_TAGS,
     tests = [
         ":update_readme_test",
     ],
+    visibility = ["//:__subpackages__"],
+)
+
+alias(
+    name = "smoke_integration_tests",
+    actual = ":all_integration_tests",
+    visibility = ["//:__subpackages__"],
+)
+
+ci_integration_test_params(
+    name = "update_readme_test_params",
+    bzlmod_modes = ["enabled"],
+    # We only run this on linux.
+    oss = ["linux"],
+    test_names = ["update_readme_test"],
+    visibility = ["//:__subpackages__"],
+)
+
+alias(
+    name = "all_test_params",
+    actual = ":update_readme_test_params",
     visibility = ["//:__subpackages__"],
 )
