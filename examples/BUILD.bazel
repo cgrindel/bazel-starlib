@@ -7,6 +7,8 @@ load(
 )
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load("//bzllib:defs.bzl", "lists")
+load("//ci:defs.bzl", "ci_integration_test_params", "ci_test_params_suite")
+load(":examples.bzl", "examples")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -15,38 +17,71 @@ bzlformat_pkg(name = "bzlformat")
 
 # MARK: - Integration Tests
 
-_EXAMPLE_DIRS = ["bzlmod_e2e"]
+_EXAMPLES = [
+    examples.new(
+        bzlmod_modes = ["enabled"],
+        dirname = "bzlmod_e2e",
+        oss = [
+            "macos",
+            "linux",
+        ],
+        target_compatible_with = select({
+            "@cgrindel_bazel_starlib//bzlmod:is_enabled": [],
+            "//conditions:default": ["@platforms//:incompatible"],
+        }),
+    ),
+]
 
 default_test_runner(name = "default_test_runner")
 
 [
     bazel_integration_tests(
-        name = "{}_test".format(dirname),
+        name = "{}_test".format(example.dirname),
         timeout = "eternal",
         bazel_binaries = bazel_binaries,
         bazel_versions = bazel_binaries.versions.all,
-        target_compatible_with = select({
-            "@cgrindel_bazel_starlib//bzlmod:is_enabled": [],
-            "//conditions:default": ["@platforms//:incompatible"],
-        }),
+        target_compatible_with = example.target_compatible_with,
         test_runner = ":default_test_runner",
-        workspace_files = integration_test_utils.glob_workspace_files(dirname) + [
+        workspace_files = integration_test_utils.glob_workspace_files(example.dirname) + [
             "//:workspace_integration_test_files",
         ],
-        workspace_path = dirname,
+        workspace_path = example.dirname,
     )
-    for dirname in _EXAMPLE_DIRS
+    for example in _EXAMPLES
 ]
+
+[
+    ci_integration_test_params(
+        name = "{}_test_params".format(example.dirname),
+        bzlmod_modes = example.bzlmod_modes,
+        oss = example.oss,
+        test_names = integration_test_utils.bazel_integration_test_names(
+            "{}_test".format(example.dirname),
+            bazel_binaries.versions.all,
+        ),
+        visibility = ["//:__subpackages__"],
+    )
+    for example in _EXAMPLES
+]
+
+ci_test_params_suite(
+    name = "all_test_params",
+    test_params = [
+        "{}_test_params".format(example.dirname)
+        for example in _EXAMPLES
+    ],
+    visibility = ["//:__subpackages__"],
+)
 
 test_suite(
     name = "smoke_integration_tests",
     tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
     tests = [
         integration_test_utils.bazel_integration_test_name(
-            ":{}_test".format(dirname),
+            ":{}_test".format(example.dirname),
             bazel_binaries.versions.current,
         )
-        for dirname in _EXAMPLE_DIRS
+        for example in _EXAMPLES
     ],
     visibility = ["//:__subpackages__"],
 )
@@ -56,10 +91,10 @@ test_suite(
     tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
     tests = lists.flatten([
         integration_test_utils.bazel_integration_test_names(
-            ":{}_test".format(dirname),
+            ":{}_test".format(example.dirname),
             bazel_binaries.versions.all,
         )
-        for dirname in _EXAMPLE_DIRS
+        for example in _EXAMPLES
     ]),
     visibility = ["//:__subpackages__"],
 )
