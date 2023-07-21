@@ -5,6 +5,17 @@ To ensure that these binary targets are downloaded and built properly, a simple 
 exists to reference the required packages. [Gazelle](https://github.com/bazelbuild/bazel-gazelle) is
 then used to identify the transitive dependencies and saves them to `go_deps.bzl`.
 
+NOTE: If the external Go module has dependencies that are referenced only in its `main` package, you
+must update this repository to directly reference those direct dependencies. For instance,
+`github.com/ekalinin/github-markdown-toc.go` references `gopkg.in/alecthomas/kingpin.v2` in its
+`main` package. Hence, we added the version of `gopkg.in/alecthomas/kingpin.v2` that is referenced
+in `github.com/ekalinin/github-markdown-toc.go` and added a usage to `cmd/go_deps`.
+
+For more details, please see the following:
+
+- https://github.com/bazelbuild/bazel-gazelle/issues/1585
+- [Slack thread](https://bazelbuild.slack.com/archives/CDBP88Z0D/p1689814617770239)
+
 ## To Add a Golang Dependency
 
 Update the `main.go` in this directory to depend upon the desired Golang package. Be sure to use the
