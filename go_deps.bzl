@@ -5,7 +5,7 @@ bazel-starlib repository.
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
 def bazel_starlib_go_dependencies():
-    """Declare dependencies for bazel-starlib."""
+    """Load dependencies for `bazel-starlib`."""
     go_repository(
         name = "com_github_alecthomas_assert",
         build_external = "external",
@@ -20,7 +20,6 @@ def bazel_starlib_go_dependencies():
         sum = "h1:nOE9rJm6dsZ66RGWYSFrXw461ZIt9A6+nHgL7FRrDUk=",
         version = "v0.1.0",
     )
-
     go_repository(
         name = "com_github_alecthomas_repr",
         build_external = "external",
@@ -42,7 +41,6 @@ def bazel_starlib_go_dependencies():
         sum = "h1:qet1QNfXsQxTZqLG4oE62mJzwPIB8+Tee4RNCL9ulrY=",
         version = "v0.0.0-20151022065526-2efee857e7cf",
     )
-
     go_repository(
         name = "com_github_creasty_defaults",
         build_external = "external",
@@ -50,7 +48,6 @@ def bazel_starlib_go_dependencies():
         sum = "h1:eNdqZvc5B509z18lD8yc212CAqJNvfT1Jq6L8WowdBA=",
         version = "v1.7.0",
     )
-
     go_repository(
         name = "com_github_davecgh_go_spew",
         build_external = "external",
@@ -58,7 +55,6 @@ def bazel_starlib_go_dependencies():
         sum = "h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=",
         version = "v1.1.1",
     )
-
     go_repository(
         name = "com_github_ekalinin_github_markdown_toc_go",
         build_external = "external",
@@ -80,7 +76,6 @@ def bazel_starlib_go_dependencies():
         sum = "h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=",
         version = "v1.0.0",
     )
-
     go_repository(
         name = "com_github_sergi_go_diff",
         build_external = "external",
@@ -95,31 +90,13 @@ def bazel_starlib_go_dependencies():
         sum = "h1:1zr/of2m5FGMsad5YfcqgdqdWrIhu+EBEJRhR1U7z/c=",
         version = "v0.5.0",
     )
-
-    go_repository(
-        name = "com_github_stretchr_objx",
-        build_external = "external",
-        importpath = "github.com/stretchr/objx",
-        sum = "h1:4G4v2dO3VZwixGIRoQ5Lfboy6nUhCyYzaqnIAPPhYs4=",
-        version = "v0.1.0",
-    )
-
     go_repository(
         name = "com_github_stretchr_testify",
         build_external = "external",
         importpath = "github.com/stretchr/testify",
-        sum = "h1:+h33VjcLVPDHtOdpUCuF+7gSuG3yGIftsP1YvFihtJ8=",
-        version = "v1.8.2",
+        sum = "h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=",
+        version = "v1.8.4",
     )
-
-    go_repository(
-        name = "com_github_xhit_go_str2duration_v2",
-        build_external = "external",
-        importpath = "github.com/xhit/go-str2duration/v2",
-        sum = "h1:lxklc02Drh6ynqX+DdPyp5pCKLUQpRT8bp8Ydu2Bstc=",
-        version = "v2.1.0",
-    )
-
     go_repository(
         name = "in_gopkg_alecthomas_kingpin_v2",
         build_external = "external",
@@ -134,23 +111,6 @@ def bazel_starlib_go_dependencies():
         sum = "h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=",
         version = "v0.0.0-20161208181325-20d25e280405",
     )
-
-    go_repository(
-        name = "in_gopkg_yaml_v3",
-        build_external = "external",
-        importpath = "gopkg.in/yaml.v3",
-        sum = "h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=",
-        version = "v3.0.1",
-    )
-
-    go_repository(
-        name = "in_gopkg_check_v1",
-        build_external = "external",
-        importpath = "gopkg.in/check.v1",
-        sum = "h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=",
-        version = "v0.0.0-20161208181325-20d25e280405",
-    )
-
     go_repository(
         name = "in_gopkg_yaml_v3",
         build_external = "external",

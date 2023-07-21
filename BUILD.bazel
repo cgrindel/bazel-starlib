@@ -217,7 +217,7 @@ _INTEGRATION_TEST_PKGS = [
 ]
 
 test_suite(
-    name = "all_smoke_integration_tests",
+    name = "smoke_integration_tests",
     tags = INTEGRATION_TEST_TAGS,
     tests = [
         "{}:smoke_integration_tests".format(pkg)
