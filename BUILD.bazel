@@ -245,6 +245,7 @@ ci_workflow(
         "//examples/bzlformat:simple_test_params",
         "//examples/markdown:simple_test_params",
         "//examples/updatesrc:simple_test_params",
+        "//tests/bzlformat_tests/tools_tests/missing_pkgs_tests:all_test_params",
     ],
     workflow_yml = ".github/workflows/ci.yml",
 )
