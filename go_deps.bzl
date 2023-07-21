@@ -4,11 +4,8 @@ bazel-starlib repository.
 
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
-# NOTE: The go_repository declarations must be kept in sync with the go_deps.module() declarations
-# in MODULE.bazel.
-
 def bazel_starlib_go_dependencies():
-    """Specifies the Golang dependencies for the bazel-starlib repository."""
+    """Declare dependencies for bazel-starlib."""
     go_repository(
         name = "com_github_alecthomas_assert",
         build_external = "external",
@@ -23,6 +20,7 @@ def bazel_starlib_go_dependencies():
         sum = "h1:nOE9rJm6dsZ66RGWYSFrXw461ZIt9A6+nHgL7FRrDUk=",
         version = "v0.1.0",
     )
+
     go_repository(
         name = "com_github_alecthomas_repr",
         build_external = "external",
@@ -58,13 +56,19 @@ def bazel_starlib_go_dependencies():
         sum = "h1:6jRFt5qg61XfXZbP3SDaeTX+1OC1EgbHvRceYDmPAUE=",
         version = "v1.2.1",
     )
-
     go_repository(
         name = "com_github_mattn_go_isatty",
         build_external = "external",
         importpath = "github.com/mattn/go-isatty",
         sum = "h1:yVuAays6BHfxijgZPzw+3Zlu5yQgKGP2/hcQbHb7S9Y=",
         version = "v0.0.14",
+    )
+    go_repository(
+        name = "com_github_pmezard_go_difflib",
+        build_external = "external",
+        importpath = "github.com/pmezard/go-difflib",
+        sum = "h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=",
+        version = "v1.0.0",
     )
 
     go_repository(
@@ -74,6 +78,7 @@ def bazel_starlib_go_dependencies():
         sum = "h1:XU+rvMAioB0UC3q1MFrIQy4Vo5/4VsRDQQXHsEya6xQ=",
         version = "v1.2.0",
     )
+
     go_repository(
         name = "com_github_stretchr_testify",
         build_external = "external",
@@ -81,10 +86,33 @@ def bazel_starlib_go_dependencies():
         sum = "h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=",
         version = "v1.7.0",
     )
+
     go_repository(
         name = "in_gopkg_alecthomas_kingpin_v2",
         build_external = "external",
         importpath = "gopkg.in/alecthomas/kingpin.v2",
         sum = "h1:CC8tJ/xljioKrK6ii3IeWVXU4Tw7VB+LbjZBJaBxN50=",
         version = "v2.2.4",
+    )
+    go_repository(
+        name = "in_gopkg_check_v1",
+        build_external = "external",
+        importpath = "gopkg.in/check.v1",
+        sum = "h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=",
+        version = "v0.0.0-20161208181325-20d25e280405",
+    )
+
+    go_repository(
+        name = "in_gopkg_yaml_v3",
+        build_external = "external",
+        importpath = "gopkg.in/yaml.v3",
+        sum = "h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=",
+        version = "v3.0.1",
+    )
+    go_repository(
+        name = "org_golang_x_sys",
+        build_external = "external",
+        importpath = "golang.org/x/sys",
+        sum = "h1:SqMFp9UcQJZa+pmYuAKjd9xq1f0j5rLcDIk0mj4qAsA=",
+        version = "v0.10.0",
     )

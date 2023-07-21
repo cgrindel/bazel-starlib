@@ -21,7 +21,7 @@ gazelle_binary(
 
 # gazelle:prefix github.com/cgrindel/bazel-starlib
 gazelle(
-    name = "gazelle",
+    name = "update_build_files",
     gazelle = ":gazelle_bin",
 )
 
@@ -58,7 +58,17 @@ tidy(
         # Run go mod tidy before we gazelle_update_repos
         ":go_mod_tidy",
         ":gazelle_update_repos",
-        ":gazelle",
+        ":update_build_files",
+    ],
+)
+
+# This is meant to be fast and convenient to quickly update the source files
+# with the latest.
+tidy(
+    name = "update_files",
+    targets = [
+        ":update_all",
+        ":update_build_files",
     ],
 )
 
