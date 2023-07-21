@@ -55,6 +55,30 @@ jobs:
           - test: '@@//examples/bzlformat:simple_test_bazel_7_0_0-pre_20230215_2'
             runner: macos-13
             enable_bzlmod: true
+          - test: '@@//examples/markdown:simple_test_bazel_.bazelversion'
+            runner: ubuntu-22.04
+            enable_bzlmod: false
+          - test: '@@//examples/markdown:simple_test_bazel_.bazelversion'
+            runner: ubuntu-22.04
+            enable_bzlmod: true
+          - test: '@@//examples/markdown:simple_test_bazel_.bazelversion'
+            runner: macos-13
+            enable_bzlmod: false
+          - test: '@@//examples/markdown:simple_test_bazel_.bazelversion'
+            runner: macos-13
+            enable_bzlmod: true
+          - test: '@@//examples/markdown:simple_test_bazel_7_0_0-pre_20230215_2'
+            runner: ubuntu-22.04
+            enable_bzlmod: false
+          - test: '@@//examples/markdown:simple_test_bazel_7_0_0-pre_20230215_2'
+            runner: ubuntu-22.04
+            enable_bzlmod: true
+          - test: '@@//examples/markdown:simple_test_bazel_7_0_0-pre_20230215_2'
+            runner: macos-13
+            enable_bzlmod: false
+          - test: '@@//examples/markdown:simple_test_bazel_7_0_0-pre_20230215_2'
+            runner: macos-13
+            enable_bzlmod: true
           - test: '@@//examples:bzlmod_e2e_test_bazel_.bazelversion'
             runner: ubuntu-22.04
             enable_bzlmod: true

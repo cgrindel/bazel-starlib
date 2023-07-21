@@ -240,6 +240,7 @@ ci_workflow(
     name = "ci_workflow",
     test_params = [
         "//examples/bzlformat:simple_test_params",
+        "//examples/markdown:simple_test_params",
         "//examples:all_test_params",
     ],
     workflow_yml = ".github/workflows/ci.yml",
