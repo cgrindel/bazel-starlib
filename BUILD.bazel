@@ -6,6 +6,7 @@ load(
     "bzlformat_pkg",
 )
 load("//bzltidy:defs.bzl", "tidy", "tidy_all")
+load("//ci:defs.bzl", "ci_workflow")
 load("//shlib/rules:execute_binary.bzl", "execute_binary")
 load("//tests:integration_test_common.bzl", "INTEGRATION_TEST_TAGS")
 load("//updatesrc:defs.bzl", "updatesrc_update_all")
@@ -233,6 +234,14 @@ test_suite(
         "//tests/updatesrc_tests:integration_tests",
     ],
     visibility = ["//:__subpackages__"],
+)
+
+ci_workflow(
+    name = "ci_workflow",
+    test_params = [
+        "//examples/bzlformat:simple_test_params",
+    ],
+    workflow_yml = ".github/workflows/ci.yml",
 )
 
 bzl_library(

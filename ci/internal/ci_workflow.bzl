@@ -47,7 +47,7 @@ _ci_workflow = rule(
             doc = "The test parameters.",
         ),
         "_workflow_generator": attr.label(
-            default = Label("//tools/generate_ci_workflow"),
+            default = Label("//ci/tools/generate_ci_workflow"),
             allow_files = True,
             executable = True,
             cfg = "exec",
