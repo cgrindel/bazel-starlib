@@ -39,8 +39,8 @@ def bazel_starlib_go_dependencies():
         name = "com_github_alecthomas_units",
         build_external = "external",
         importpath = "github.com/alecthomas/units",
-        sum = "h1:s6gZFSlWYmbqAuRjVTiNNhvNRfY2Wxp9nhfyel4rklc=",
-        version = "v0.0.0-20211218093645-b94a6e3cc137",
+        sum = "h1:qet1QNfXsQxTZqLG4oE62mJzwPIB8+Tee4RNCL9ulrY=",
+        version = "v0.0.0-20151022065526-2efee857e7cf",
     )
     go_repository(
         name = "com_github_davecgh_go_spew",
@@ -107,9 +107,8 @@ def bazel_starlib_go_dependencies():
         name = "in_gopkg_alecthomas_kingpin_v2",
         build_external = "external",
         importpath = "gopkg.in/alecthomas/kingpin.v2",
-        replace = "github.com/alecthomas/kingpin/v2",
-        sum = "h1:H0aULhgmSzN8xQ3nX1uxtdlTHYoPLu5AhHxWrKI6ocU=",
-        version = "v2.3.2",
+        sum = "h1:CC8tJ/xljioKrK6ii3IeWVXU4Tw7VB+LbjZBJaBxN50=",
+        version = "v2.2.4",
     )
     go_repository(
         name = "in_gopkg_check_v1",
@@ -118,13 +117,7 @@ def bazel_starlib_go_dependencies():
         sum = "h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=",
         version = "v0.0.0-20161208181325-20d25e280405",
     )
-    go_repository(
-        name = "in_gopkg_yaml_v2",
-        build_external = "external",
-        importpath = "gopkg.in/yaml.v2",
-        sum = "h1:ZCJp+EgiOT7lHqUV2J862kp8Qj64Jo6az82+3Td9dZw=",
-        version = "v2.2.2",
-    )
+
     go_repository(
         name = "in_gopkg_yaml_v3",
         build_external = "external",
