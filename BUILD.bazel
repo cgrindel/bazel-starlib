@@ -238,10 +238,13 @@ test_suite(
 
 ci_workflow(
     name = "ci_workflow",
+    # This list should have a ci_integration_test_params for each of the
+    # labels in the all_integration_tests list.
     test_params = [
+        "//examples:all_test_params",
         "//examples/bzlformat:simple_test_params",
         "//examples/markdown:simple_test_params",
-        "//examples:all_test_params",
+        "//examples/updatesrc:simple_test_params",
     ],
     workflow_yml = ".github/workflows/ci.yml",
 )
