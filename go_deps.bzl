@@ -20,6 +20,7 @@ def bazel_starlib_go_dependencies():
         sum = "h1:nOE9rJm6dsZ66RGWYSFrXw461ZIt9A6+nHgL7FRrDUk=",
         version = "v0.1.0",
     )
+
     go_repository(
         name = "com_github_alecthomas_repr",
         build_external = "external",
@@ -38,8 +39,8 @@ def bazel_starlib_go_dependencies():
         name = "com_github_alecthomas_units",
         build_external = "external",
         importpath = "github.com/alecthomas/units",
-        sum = "h1:qet1QNfXsQxTZqLG4oE62mJzwPIB8+Tee4RNCL9ulrY=",
-        version = "v0.0.0-20151022065526-2efee857e7cf",
+        sum = "h1:s6gZFSlWYmbqAuRjVTiNNhvNRfY2Wxp9nhfyel4rklc=",
+        version = "v0.0.0-20211218093645-b94a6e3cc137",
     )
     go_repository(
         name = "com_github_davecgh_go_spew",
@@ -63,6 +64,14 @@ def bazel_starlib_go_dependencies():
         version = "v0.0.14",
     )
     go_repository(
+        name = "com_github_pmezard_go_difflib",
+        build_external = "external",
+        importpath = "github.com/pmezard/go-difflib",
+        sum = "h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=",
+        version = "v1.0.0",
+    )
+
+    go_repository(
         name = "com_github_sergi_go_diff",
         build_external = "external",
         importpath = "github.com/sergi/go-diff",
@@ -70,16 +79,54 @@ def bazel_starlib_go_dependencies():
         version = "v1.2.0",
     )
     go_repository(
+        name = "com_github_stretchr_objx",
+        build_external = "external",
+        importpath = "github.com/stretchr/objx",
+        sum = "h1:4G4v2dO3VZwixGIRoQ5Lfboy6nUhCyYzaqnIAPPhYs4=",
+        version = "v0.1.0",
+    )
+
+    go_repository(
         name = "com_github_stretchr_testify",
         build_external = "external",
         importpath = "github.com/stretchr/testify",
-        sum = "h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=",
-        version = "v1.7.0",
+        sum = "h1:+h33VjcLVPDHtOdpUCuF+7gSuG3yGIftsP1YvFihtJ8=",
+        version = "v1.8.2",
     )
+    go_repository(
+        name = "com_github_xhit_go_str2duration_v2",
+        build_external = "external",
+        importpath = "github.com/xhit/go-str2duration/v2",
+        sum = "h1:lxklc02Drh6ynqX+DdPyp5pCKLUQpRT8bp8Ydu2Bstc=",
+        version = "v2.1.0",
+    )
+
     go_repository(
         name = "in_gopkg_alecthomas_kingpin_v2",
         build_external = "external",
         importpath = "gopkg.in/alecthomas/kingpin.v2",
-        sum = "h1:CC8tJ/xljioKrK6ii3IeWVXU4Tw7VB+LbjZBJaBxN50=",
-        version = "v2.2.4",
+        replace = "github.com/alecthomas/kingpin/v2",
+        sum = "h1:H0aULhgmSzN8xQ3nX1uxtdlTHYoPLu5AhHxWrKI6ocU=",
+        version = "v2.3.2",
+    )
+    go_repository(
+        name = "in_gopkg_check_v1",
+        build_external = "external",
+        importpath = "gopkg.in/check.v1",
+        sum = "h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=",
+        version = "v0.0.0-20161208181325-20d25e280405",
+    )
+    go_repository(
+        name = "in_gopkg_yaml_v2",
+        build_external = "external",
+        importpath = "gopkg.in/yaml.v2",
+        sum = "h1:ZCJp+EgiOT7lHqUV2J862kp8Qj64Jo6az82+3Td9dZw=",
+        version = "v2.2.2",
+    )
+    go_repository(
+        name = "in_gopkg_yaml_v3",
+        build_external = "external",
+        importpath = "gopkg.in/yaml.v3",
+        sum = "h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=",
+        version = "v3.0.1",
     )

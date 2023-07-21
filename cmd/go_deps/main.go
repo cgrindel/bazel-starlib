@@ -5,9 +5,11 @@ import (
 	"strings"
 
 	gmt "github.com/ekalinin/github-markdown-toc.go"
+	"gopkg.in/alecthomas/kingpin.v2"
 )
 
 func main() {
+	kingpin.Parse()
 	fmt.Println("Hello, world.")
 
 	ghtoc := generateToc()

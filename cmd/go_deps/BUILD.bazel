@@ -6,7 +6,10 @@ go_library(
     srcs = ["main.go"],
     importpath = "github.com/cgrindel/bazel-starlib/cmd/go_deps",
     visibility = ["//visibility:private"],
-    deps = ["@com_github_ekalinin_github_markdown_toc_go//:github-markdown-toc_go"],
+    deps = [
+        "@com_github_ekalinin_github_markdown_toc_go//:github-markdown-toc_go",
+        "@in_gopkg_alecthomas_kingpin_v2//:kingpin_v2",
+    ],
 )
 
 go_binary(
