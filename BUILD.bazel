@@ -20,6 +20,7 @@ gazelle_binary(
 )
 
 # gazelle:prefix github.com/cgrindel/bazel-starlib
+# gazelle:go_naming_convention import
 gazelle(
     name = "update_build_files",
     gazelle = ":gazelle_bin",
