@@ -53,18 +53,27 @@ sh_test(
     ],
 )
 
+_TEST_NAMES = [
+    "generate_release_notes_test",
+]
+
 test_suite(
     name = "all_integration_tests",
     tags = INTEGRATION_TEST_TAGS,
     tests = [
-        ":generate_release_notes_test",
+        ":{}".format(name)
+        for name in _TEST_NAMES
     ],
     visibility = ["//:__subpackages__"],
 )
 
-alias(
+test_suite(
     name = "smoke_integration_tests",
-    actual = ":all_integration_tests",
+    tags = INTEGRATION_TEST_TAGS,
+    tests = [
+        ":{}".format(name)
+        for name in _TEST_NAMES
+    ],
     visibility = ["//:__subpackages__"],
 )
 
@@ -73,6 +82,6 @@ ci_integration_test_params(
     bzlmod_modes = ["enabled"],
     # We only run this on linux.
     oss = ["linux"],
-    test_names = ["generate_release_notes_test"],
+    test_names = _TEST_NAMES,
     visibility = ["//:__subpackages__"],
 )

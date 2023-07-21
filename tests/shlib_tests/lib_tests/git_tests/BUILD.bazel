@@ -21,18 +21,27 @@ sh_test(
     ],
 )
 
+_TEST_NAMES = [
+    "git_integration_test",
+]
+
 test_suite(
     name = "all_integration_tests",
     tags = INTEGRATION_TEST_TAGS,
     tests = [
-        ":git_integration_test",
+        ":{}".format(name)
+        for name in _TEST_NAMES
     ],
     visibility = ["//:__subpackages__"],
 )
 
-alias(
+test_suite(
     name = "smoke_integration_tests",
-    actual = ":all_integration_tests",
+    tags = INTEGRATION_TEST_TAGS,
+    tests = [
+        ":{}".format(name)
+        for name in _TEST_NAMES
+    ],
     visibility = ["//:__subpackages__"],
 )
 
