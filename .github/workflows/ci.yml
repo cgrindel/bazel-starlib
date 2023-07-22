@@ -224,7 +224,6 @@ jobs:
           - ubuntu-22.04
         enable_bzlmod:
           - true
-          - false
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v3
@@ -238,5 +237,3 @@ jobs:
         with:
           buildbuddy_api_key: ${{  secrets.BUILDBUDDY_API_KEY }}
       - uses: ./.github/actions/tidy_and_test
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
