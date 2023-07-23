@@ -1,3 +1,4 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("@bazel_binaries//:defs.bzl", "bazel_binaries")
 load(
     "@rules_bazel_integration_test//bazel_integration_test:defs.bzl",
@@ -105,4 +106,10 @@ filegroup(
     name = "all_files",
     srcs = glob(["bzlmod_e2e/**"]),
     visibility = ["//:__subpackages__"],
+)
+
+bzl_library(
+    name = "examples",
+    srcs = ["examples.bzl"],
+    visibility = ["//visibility:public"],
 )
