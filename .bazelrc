@@ -17,6 +17,10 @@ import %workspace%/ci.bazelrc
 # import ci.bazelrc and they do not have a //build:execution_env flag.
 build:ci --//build:execution_env=ci
 
+# The parent workspace always runs with bzlmod enabled.
+common --enable_bzlmod
+build --@cgrindel_bazel_starlib//bzlmod:enabled
+
 # Try to import a local.rc file; typically, written by CI
 try-import %workspace%/local.bazelrc
 

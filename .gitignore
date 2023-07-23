@@ -7,5 +7,8 @@ node_modules
 # Ignore the local.bazelrc
 local.bazelrc
 
+# Ignore configuration files that are used for chidl workspaces
+child_workspace.bazelrc
+
 # Some bzltidy tests write files with the extension .tidy_out
 *.tidy_out

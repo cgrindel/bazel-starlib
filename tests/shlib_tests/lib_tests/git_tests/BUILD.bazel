@@ -1,4 +1,5 @@
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
+load("//ci:defs.bzl", "ci_integration_test_params")
 load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
 
 bzlformat_pkg(name = "bzlformat")
@@ -20,11 +21,35 @@ sh_test(
     ],
 )
 
+_TEST_NAMES = [
+    "git_integration_test",
+]
+
 test_suite(
-    name = "integration_tests",
+    name = "all_integration_tests",
     tags = INTEGRATION_TEST_TAGS,
     tests = [
-        ":git_integration_test",
+        ":{}".format(name)
+        for name in _TEST_NAMES
     ],
+    visibility = ["//:__subpackages__"],
+)
+
+test_suite(
+    name = "smoke_integration_tests",
+    tags = INTEGRATION_TEST_TAGS,
+    tests = [
+        ":{}".format(name)
+        for name in _TEST_NAMES
+    ],
+    visibility = ["//:__subpackages__"],
+)
+
+ci_integration_test_params(
+    name = "all_test_params",
+    bzlmod_modes = ["enabled"],
+    # We only run this on linux.
+    oss = ["linux"],
+    test_names = ["git_integration_test"],
     visibility = ["//:__subpackages__"],
 )

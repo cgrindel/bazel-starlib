@@ -7,6 +7,7 @@ load(
     "integration_test_utils",
 )
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
+load("//ci:defs.bzl", "ci_integration_test_params")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -50,10 +51,27 @@ test_suite(
 )
 
 test_suite(
-    name = "integration_tests",
+    name = "all_integration_tests",
     tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
     tests = integration_test_utils.bazel_integration_test_names(
         ":updatesrc_test",
+        bazel_binaries.versions.all,
+    ),
+    visibility = ["//:__subpackages__"],
+)
+
+ci_integration_test_params(
+    name = "all_test_params",
+    bzlmod_modes = [
+        "enabled",
+        "disabled",
+    ],
+    oss = [
+        "linux",
+        "macos",
+    ],
+    test_names = integration_test_utils.bazel_integration_test_names(
+        "updatesrc_test",
         bazel_binaries.versions.all,
     ),
     visibility = ["//:__subpackages__"],

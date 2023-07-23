@@ -59,6 +59,7 @@ cd "${scratch_dir}"
 
 # MARK - Find the missing packages without exclusions
 
+missing_pkgs=()
 while IFS=$'\n' read -r line; do missing_pkgs+=("$line"); done < <(
   "${bazel}" run "//:bzlformat_missing_pkgs_find"
 )

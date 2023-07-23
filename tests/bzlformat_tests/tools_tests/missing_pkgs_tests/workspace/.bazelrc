@@ -7,5 +7,9 @@ import %workspace%/../../../../../ci.bazelrc
 # Try to import a local.rc file; typically, written by CI
 try-import %workspace%/../../../../../local.bazelrc
 
+# Try to load parameters for the child workspace(s). These configuration values
+# should not be loaded by the parent workspace.
+try-import %workspace%/../../../../../child_workspace.bazelrc
+
 # Explicitly enable bzlmod
 common --enable_bzlmod

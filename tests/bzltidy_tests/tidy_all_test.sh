@@ -72,7 +72,7 @@ output_prefix_regex='\[tidy_all\]'
 # Tidy all modified workspaces, but there are none.
 assert_msg="//:tidy_modified, no modifications"
 revert_changes "${scratch_dir}"
-output="$( bazel run //:tidy_modified )"
+output="$( "${bazel}" run //:tidy_modified )"
 tidy_out_files=()
 while IFS=$'\n' read -r line; do tidy_out_files+=("$line"); done < <(
   find_tidy_out_files "${scratch_dir}"
@@ -84,7 +84,7 @@ assert_match "${output_prefix_regex}"\ No\ workspaces\ to\ tidy\. "${output}" "$
 assert_msg="//:tidy_modified, modification in bar"
 revert_changes "${scratch_dir}"
 echo "# Modification" >> child_workspaces/bar/BUILD.bazel
-output="$( bazel run //:tidy_modified )"
+output="$( "${bazel}" run //:tidy_modified )"
 tidy_out_files=()
 while IFS=$'\n' read -r line; do tidy_out_files+=("$line"); done < <(
   find_tidy_out_files "${scratch_dir}"
@@ -98,7 +98,7 @@ assert_msg="//:tidy_modified, modification in parent and bar"
 revert_changes "${scratch_dir}"
 echo "# Modification" >> BUILD.bazel
 echo "# Modification" >> child_workspaces/bar/BUILD.bazel
-output="$( bazel run //:tidy_modified )"
+output="$( "${bazel}" run //:tidy_modified )"
 tidy_out_files=()
 while IFS=$'\n' read -r line; do tidy_out_files+=("$line"); done < <(
   find_tidy_out_files "${scratch_dir}"
@@ -113,7 +113,7 @@ assert_match \
 # Tidy all all workspaces.
 assert_msg="//:tidy_all"
 revert_changes "${scratch_dir}"
-output="$( bazel run //:tidy_all )"
+output="$( "${bazel}" run //:tidy_all )"
 tidy_out_files=()
 while IFS=$'\n' read -r line; do tidy_out_files+=("$line"); done < <(
   find_tidy_out_files "${scratch_dir}"

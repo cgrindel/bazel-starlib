@@ -1,11 +1,5 @@
-# Import shared settings
-import %workspace%/../../../../../shared.bazelrc
-
-# Import CI settings.
-import %workspace%/../../../../../ci.bazelrc
-
-# Try to import a local.rc file; typically, written by CI
-try-import %workspace%/../../../../../local.bazelrc
+# Purposefully not importing the shared bazelrc files as they are
+# not needed and saw failures when run in CI.
 
 # Explicitly enable bzlmod
 common --enable_bzlmod

@@ -1,15 +1,25 @@
 name: Tidy and Test
-# inputs: []
+
+inputs:
+  github_token:
+    description: The Github token to authenticate gh CLI.
+    required: true
 
 runs:
   using: composite
   steps:
     - name: Ensure everything is tidy
       shell: bash
+      env:
+        # The tests make use of Github-specific functionality (e.g. gh).
+        GITHUB_TOKEN: ${{ inputs.github_token }}
       run: |
         bazelisk run //:tidy_check
 
     - name: Execute Tests
       shell: bash
+      env:
+        # The tests make use of Github-specific functionality (e.g. gh).
+        GITHUB_TOKEN: ${{ inputs.github_token }}
       run: |
         bazelisk test //... 
