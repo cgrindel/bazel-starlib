@@ -16,7 +16,6 @@ sh_binary(
     testonly = True,
     srcs = ["tidy_all_test.sh"],
     data = [
-        # "@buildifier_prebuilt//buildozer",
         "@rules_bazel_integration_test//tools:create_scratch_dir",
     ],
     deps = [
