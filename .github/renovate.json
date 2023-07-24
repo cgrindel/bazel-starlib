@@ -3,5 +3,11 @@
   "extends": [
     "github>cgrindel/renovate_presets:ruleset_base",
     "github>cgrindel/renovate_presets:cgrindel_default"
-  ]
+  ],
+  "postUpgradeTasks": {
+    "commands": [
+      "bazel run //:tidy_modified"
+    ],
+    "executionMode": "branch"
+  }
 }
