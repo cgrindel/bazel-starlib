@@ -104,16 +104,8 @@ while IFS=$'\n' read -r line; do tidy_out_files+=("$line"); done < <(
   find_tidy_out_files "${scratch_dir}"
 )
 assert_equal 2 ${#tidy_out_files[@]} "${assert_msg}"
-# DEBUG BEGIN
-echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") -------------------" 
-echo >&2 "*** CHUCK  tidy_out_files:"
-for (( i = 0; i < ${#tidy_out_files[@]}; i++ )); do
-  echo >&2 "*** CHUCK   ${i}: ${tidy_out_files[${i}]}"
-done
-# DEBUG END
-
-assert_match parent\.tidy_out "${tidy_out_files[0]}" "${assert_msg}"
-assert_match child_workspaces/bar/bar\.tidy_out "${tidy_out_files[1]}" "${assert_msg}"
+assert_match child_workspaces/bar/bar\.tidy_out "${tidy_out_files[0]}" "${assert_msg}"
+assert_match parent\.tidy_out "${tidy_out_files[1]}" "${assert_msg}"
 assert_match \
   "${output_prefix_regex}"\ Running\ //:my_tidy\ in\ .*child_workspaces/bar \
   "${output}" "${assert_msg}"
@@ -127,6 +119,6 @@ while IFS=$'\n' read -r line; do tidy_out_files+=("$line"); done < <(
   find_tidy_out_files "${scratch_dir}"
 )
 assert_equal 2 ${#tidy_out_files[@]} "${assert_msg}"
-assert_match parent\.tidy_out "${tidy_out_files[0]}" "${assert_msg}"
-assert_match child_workspaces/bar/bar\.tidy_out "${tidy_out_files[1]}" "${assert_msg}"
+assert_match child_workspaces/bar/bar\.tidy_out "${tidy_out_files[0]}" "${assert_msg}"
+assert_match parent\.tidy_out "${tidy_out_files[1]}" "${assert_msg}"
 assert_match "${output_prefix_regex}"\ Skipping\ .*foo\. "${output}" "${assert_msg}"
