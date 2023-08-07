@@ -35,7 +35,7 @@ create_scratch_dir_sh="$(rlocation "${create_scratch_dir_sh_location}")" || \
 
 find_tidy_out_files() {
   local start_dir="$1"
-  find "${start_dir}" -name "*.tidy_out"
+  find "${start_dir}" -name "*.tidy_out" | sort -u
 }
 
 revert_changes() {
@@ -111,6 +111,7 @@ for (( i = 0; i < ${#tidy_out_files[@]}; i++ )); do
   echo >&2 "*** CHUCK   ${i}: ${tidy_out_files[${i}]}"
 done
 # DEBUG END
+
 assert_match parent\.tidy_out "${tidy_out_files[0]}" "${assert_msg}"
 assert_match child_workspaces/bar/bar\.tidy_out "${tidy_out_files[1]}" "${assert_msg}"
 assert_match \
