@@ -6,7 +6,6 @@
   ],
   "postUpgradeTasks": {
     "commands": [
-      "npm install -g @bazel/bazelisk",
       "bazelisk run //:tidy_modified"
     ],
     "executionMode": "branch"
