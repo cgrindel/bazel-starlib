@@ -163,6 +163,8 @@ _RUNTIME_PKGS = [
     "//markdown",
     "//markdown/private",
     "//markdown/tools",
+    "//markdown/tools/github_markdown_toc",
+    "//markdown/tools/github_markdown_toc/cmd/gh-md-toc",
     "//shlib/lib",
     "//shlib/rules",
     "//shlib/rules/private",
