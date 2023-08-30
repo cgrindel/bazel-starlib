@@ -23,7 +23,7 @@ sh_binary(
     srcs = ["update_markdown_toc.sh"],
     data = [
         ":update_markdown_doc",
-        "@com_github_ekalinin_github_markdown_toc_go//cmd/gh-md-toc",
+        "//markdown/tools/github_markdown_toc/cmd/gh-md-toc",
     ],
     visibility = ["//visibility:public"],
     deps = [

@@ -10,8 +10,8 @@ def bazel_starlib_go_dependencies():
         name = "com_github_alecthomas_assert",
         build_external = "external",
         importpath = "github.com/alecthomas/assert",
-        sum = "h1:smF2tmSOzy2Mm+0dGI2AIUHY+w0BUc+4tn40djz7+6U=",
-        version = "v0.0.0-20170929043011-405dbfeb8e38",
+        sum = "h1:3XmGh/PSuLzDbK3W2gUbRXwgW5lqPkuqvRgeQ30FI5o=",
+        version = "v1.0.0",
     )
     go_repository(
         name = "com_github_alecthomas_colour",
@@ -54,13 +54,6 @@ def bazel_starlib_go_dependencies():
         importpath = "github.com/davecgh/go-spew",
         sum = "h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=",
         version = "v1.1.1",
-    )
-    go_repository(
-        name = "com_github_ekalinin_github_markdown_toc_go",
-        build_external = "external",
-        importpath = "github.com/ekalinin/github-markdown-toc.go",
-        sum = "h1:6jRFt5qg61XfXZbP3SDaeTX+1OC1EgbHvRceYDmPAUE=",
-        version = "v1.2.1",
     )
     go_repository(
         name = "com_github_mattn_go_isatty",
@@ -119,9 +112,31 @@ def bazel_starlib_go_dependencies():
         version = "v3.0.1",
     )
     go_repository(
+        name = "org_golang_x_net",
+        build_external = "external",
+        importpath = "golang.org/x/net",
+        sum = "h1:hZ/3BUoy5aId7sCpA/Tc5lt8DkFgdVS2onTpJsZ/fl0=",
+        version = "v0.1.0",
+    )
+
+    go_repository(
         name = "org_golang_x_sys",
         build_external = "external",
         importpath = "golang.org/x/sys",
         sum = "h1:SqMFp9UcQJZa+pmYuAKjd9xq1f0j5rLcDIk0mj4qAsA=",
         version = "v0.10.0",
+    )
+    go_repository(
+        name = "org_golang_x_term",
+        build_external = "external",
+        importpath = "golang.org/x/term",
+        sum = "h1:g6Z6vPFA9dYBAF7DWcH6sCcOntplXsDKcliusYijMlw=",
+        version = "v0.1.0",
+    )
+    go_repository(
+        name = "org_golang_x_text",
+        build_external = "external",
+        importpath = "golang.org/x/text",
+        sum = "h1:BrVqGRd7+k1DiOgtnFvAkoQEWQvBc25ouMJM6429SFg=",
+        version = "v0.4.0",
     )

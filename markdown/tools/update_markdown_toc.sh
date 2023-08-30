@@ -23,7 +23,7 @@ update_markdown_doc_sh_location=cgrindel_bazel_starlib/markdown/tools/update_mar
 update_markdown_doc_sh="$(rlocation "${update_markdown_doc_sh_location}")" || \
   (echo >&2 "Failed to locate ${update_markdown_doc_sh_location}" && exit 1)
 
-gh_md_toc_location=com_github_ekalinin_github_markdown_toc_go/cmd/gh-md-toc/gh-md-toc_/gh-md-toc
+gh_md_toc_location=cgrindel_bazel_starlib/markdown/tools/github_markdown_toc/cmd/gh-md-toc/gh-md-toc_/gh-md-toc
 gh_md_toc="$(rlocation "${gh_md_toc_location}")" || \
   (echo >&2 "Failed to locate ${gh_md_toc_location}" && exit 1)
 
