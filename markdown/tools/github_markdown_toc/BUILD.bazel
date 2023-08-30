@@ -1,0 +1,31 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "github_markdown_toc",
+    srcs = [
+        "ghdoc.go",
+        "headerfinder.go",
+        "internals.go",
+    ],
+    importpath = "github.com/cgrindel/bazel-starlib/markdown/tools/github_markdown_toc",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@org_golang_x_net//html",
+        "@org_golang_x_net//html/atom",
+    ],
+)
+
+go_test(
+    name = "github_markdown_toc_test",
+    srcs = [
+        "ghdoc_test.go",
+        "headerfinder_test.go",
+        "internal_test.go",
+    ],
+    embed = [":github_markdown_toc"],
+    deps = [
+        "@com_github_stretchr_testify//assert",
+        "@org_golang_x_net//html",
+        "@org_golang_x_net//html/atom",
+    ],
+)
