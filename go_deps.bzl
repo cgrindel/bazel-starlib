@@ -56,13 +56,6 @@ def bazel_starlib_go_dependencies():
         version = "v1.1.1",
     )
     go_repository(
-        name = "com_github_ekalinin_github_markdown_toc_go",
-        build_external = "external",
-        importpath = "github.com/ekalinin/github-markdown-toc.go",
-        sum = "h1:6jRFt5qg61XfXZbP3SDaeTX+1OC1EgbHvRceYDmPAUE=",
-        version = "v1.2.1",
-    )
-    go_repository(
         name = "com_github_mattn_go_isatty",
         build_external = "external",
         importpath = "github.com/mattn/go-isatty",

@@ -4,7 +4,6 @@ go 1.19
 
 require (
 	github.com/creasty/defaults v1.7.0
-	github.com/ekalinin/github-markdown-toc.go v1.2.1
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/net v0.1.0
 	gopkg.in/alecthomas/kingpin.v2 v2.2.4
