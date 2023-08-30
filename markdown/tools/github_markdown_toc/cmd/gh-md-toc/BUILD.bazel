@@ -6,7 +6,7 @@ go_library(
     importpath = "github.com/cgrindel/bazel-starlib/markdown/tools/github_markdown_toc/cmd/gh-md-toc",
     visibility = ["//visibility:private"],
     deps = [
-        "@com_github_ekalinin_github_markdown_toc_go//:github-markdown-toc_go",
+        "//markdown/tools/github_markdown_toc",
         "@in_gopkg_alecthomas_kingpin_v2//:kingpin_v2",
     ],
 )

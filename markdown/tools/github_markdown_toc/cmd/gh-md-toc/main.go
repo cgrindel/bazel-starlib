@@ -7,7 +7,7 @@ import (
 
 	"gopkg.in/alecthomas/kingpin.v2"
 
-	ghtoc "github.com/ekalinin/github-markdown-toc.go"
+	ghtoc "github.com/cgrindel/bazel-starlib/markdown/tools/github_markdown_toc"
 )
 
 var (
