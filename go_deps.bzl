@@ -10,8 +10,8 @@ def bazel_starlib_go_dependencies():
         name = "com_github_alecthomas_assert",
         build_external = "external",
         importpath = "github.com/alecthomas/assert",
-        sum = "h1:smF2tmSOzy2Mm+0dGI2AIUHY+w0BUc+4tn40djz7+6U=",
-        version = "v0.0.0-20170929043011-405dbfeb8e38",
+        sum = "h1:3XmGh/PSuLzDbK3W2gUbRXwgW5lqPkuqvRgeQ30FI5o=",
+        version = "v1.0.0",
     )
     go_repository(
         name = "com_github_alecthomas_colour",
