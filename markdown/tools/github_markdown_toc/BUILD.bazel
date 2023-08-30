@@ -1,3 +1,4 @@
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
@@ -29,3 +30,5 @@ go_test(
         "@org_golang_x_net//html/atom",
     ],
 )
+
+bzlformat_pkg(name = "bzlformat")

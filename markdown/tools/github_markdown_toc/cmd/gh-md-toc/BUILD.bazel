@@ -1,3 +1,4 @@
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_library(
@@ -16,3 +17,5 @@ go_binary(
     embed = [":gh-md-toc_lib"],
     visibility = ["//visibility:public"],
 )
+
+bzlformat_pkg(name = "bzlformat")
