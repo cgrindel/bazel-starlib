@@ -34,25 +34,22 @@ how-to links above and review the [the generated documentation](/doc/).
 ### `MODULE.bazel` Snippet
 
 <!-- BEGIN MODULE SNIPPET -->
-
 ```python
-bazel_dep(name = "cgrindel_bazel_starlib", version = "0.16.2")
+bazel_dep(name = "cgrindel_bazel_starlib", version = "0.17.0")
 ```
-
 <!-- END MODULE SNIPPET -->
 
 ### Workspace Configuration
 
 <!-- BEGIN WORKSPACE SNIPPET -->
-
 ```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "cgrindel_bazel_starlib",
-    sha256 = "8814c7dbbac4f1a7c20b7f39c590fd0b5e39174718fbb3a0522e149ed085a84f",
+    sha256 = "a8d25340956b429b56302d3fd702bb3df8b3a67db248dd32b3084891ad497964",
     urls = [
-        "https://github.com/cgrindel/bazel-starlib/releases/download/v0.16.2/bazel-starlib.v0.16.2.tar.gz",
+        "https://github.com/cgrindel/bazel-starlib/releases/download/v0.17.0/bazel-starlib.v0.17.0.tar.gz",
     ],
 )
 
@@ -64,7 +61,6 @@ load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 
 bazel_skylib_workspace()
 ```
-
 <!-- END WORKSPACE SNIPPET -->
 
 ## Developer Documentation
