@@ -37,7 +37,7 @@ jobs:
     - uses: cgrindel/gha_set_up_bazel@v1
       with:
         repo_name: bazel-starlib
-    - uses: tibdex/github-app-token@v1
+    - uses: tibdex/github-app-token@v2
       id: generate_token
       with:
         app_id: ${{ secrets.APP_ID }}
