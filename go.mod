@@ -6,7 +6,7 @@ require (
 	github.com/creasty/defaults v1.7.0
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/net v0.15.0
-	gopkg.in/alecthomas/kingpin.v2 v2.2.4
+	gopkg.in/alecthomas/kingpin.v2 v2.3.2
 	gopkg.in/yaml.v3 v3.0.1
 )
 
