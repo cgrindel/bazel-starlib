@@ -140,10 +140,6 @@ func (doc *GHDoc) GrabToc() *GHToc {
 	doc.d("GrabToc: start, html size: " + strconv.Itoa(len(doc.html)))
 	defer doc.d("GrabToc: done.")
 
-	// DEBUG BEGIN
-	log.Printf("*** CHUCK:  doc.html:\n%s", doc.html)
-	// DEBUG END
-
 	listIndentation := generateListIndentation(doc.Indent)
 
 	minDepth := doc.StartDepth
