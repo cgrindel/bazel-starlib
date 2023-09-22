@@ -1,0 +1,15 @@
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "mdtoc",
+    srcs = [
+        "heading.go",
+        "table_of_contents.go",
+    ],
+    importpath = "github.com/cgrindel/bazel-starlib/markdown/tools/markdown_toc/mdtoc",
+    visibility = ["//visibility:public"],
+    deps = ["@com_github_gomarkdown_markdown//ast"],
+)
+
+bzlformat_pkg(name = "bzlformat")
