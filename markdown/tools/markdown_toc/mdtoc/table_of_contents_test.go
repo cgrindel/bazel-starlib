@@ -18,7 +18,7 @@ func TestNewFromBytes(t *testing.T) {
 			in:  "# Foo Bar",
 			exp: &mdtoc.TableOfContents{
 				Headings: []*mdtoc.Heading{
-					{Title: "Foo Bar", Level: 1},
+					{Title: "Foo Bar", Text: "Foo Bar", Level: 1},
 				},
 			},
 		},
@@ -27,7 +27,7 @@ func TestNewFromBytes(t *testing.T) {
 			in:  "## Foo Bar",
 			exp: &mdtoc.TableOfContents{
 				Headings: []*mdtoc.Heading{
-					{Title: "Foo Bar", Level: 2},
+					{Title: "Foo Bar", Text: "Foo Bar", Level: 2},
 				},
 			},
 		},
@@ -36,7 +36,11 @@ func TestNewFromBytes(t *testing.T) {
 			in:  "## `MODULE.bazel` Snippet",
 			exp: &mdtoc.TableOfContents{
 				Headings: []*mdtoc.Heading{
-					{Title: "`MODULE.bazel` Snippet", Level: 2},
+					{
+						Title: "`MODULE.bazel` Snippet",
+						Text:  "MODULE.bazel Snippet",
+						Level: 2,
+					},
 				},
 			},
 		},

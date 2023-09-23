@@ -3,7 +3,6 @@ package mdtoc
 import (
 	"fmt"
 	"io"
-	"log"
 	"strings"
 
 	"github.com/gomarkdown/markdown/ast"
@@ -32,9 +31,6 @@ func newFromAST(node ast.Node) *TableOfContents {
 			return ast.GoToNext
 		}
 		if headingNode, ok := node.(*ast.Heading); ok {
-			// DEBUG BEGIN
-			log.Printf("*** CHUCK:  headingNode: %+#v", headingNode)
-			// DEBUG END
 			heading := newHeadingFromNode(headingNode)
 			toc.Headings = append(toc.Headings, heading)
 			return ast.SkipChildren

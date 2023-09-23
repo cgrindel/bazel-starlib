@@ -16,12 +16,20 @@ func TestHeading(t *testing.T) {
 		}{
 			{
 				msg: "simple",
-				h:   &mdtoc.Heading{Title: "Other Configuration", Level: 1},
+				h: &mdtoc.Heading{
+					Title: "Other Configuration",
+					Text:  "Other Configuration",
+					Level: 1,
+				},
 				exp: "other-configuration",
 			},
 			{
 				msg: "code in title",
-				h:   &mdtoc.Heading{Title: "`MODULE.bazel` Snippet", Level: 2},
+				h: &mdtoc.Heading{
+					Title: "`MODULE.bazel` Snippet",
+					Text:  "MODULE.bazel Snippet",
+					Level: 2,
+				},
 				exp: "modulebazel-snippet",
 			},
 		}
@@ -34,6 +42,7 @@ func TestHeading(t *testing.T) {
 	t.Run("markdown link", func(t *testing.T) {
 		heading := mdtoc.Heading{
 			Title: "Other Configuration",
+			Text:  "Other Configuration",
 			Level: 1,
 		}
 		expected := "[Other Configuration](#other-configuration)"
