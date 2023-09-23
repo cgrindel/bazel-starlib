@@ -47,7 +47,7 @@ func main() {
 	}
 
 	toc := mdtoc.NewFromBytes(input)
-	if err = toc.FPrintAtStartLevel(outW, startLevel); err != nil {
+	if err = toc.FprintAtStartLevel(outW, startLevel); err != nil {
 		log.Fatalf("Failed printing TOC; %s", err)
 	}
 }

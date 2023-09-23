@@ -40,18 +40,21 @@ func newFromAST(node ast.Node) *TableOfContents {
 	return &toc
 }
 
-func (toc *TableOfContents) FPrint(w io.Writer) (err error) {
-	return toc.FPrintAtStartLevel(w, 1)
+func (toc *TableOfContents) Fprint(w io.Writer) (err error) {
+	return toc.FprintAtStartLevel(w, 1)
 }
 
-func (toc *TableOfContents) FPrintAtStartLevel(w io.Writer, startLevel int) (err error) {
+func (toc *TableOfContents) FprintAtStartLevel(w io.Writer, startLevel int) (err error) {
+	if startLevel < 1 {
+		return fmt.Errorf("invalid start level: %d", startLevel)
+	}
 	for _, h := range toc.Headings {
 		if h.Level < startLevel {
 			continue
 		}
-		indentCnt := h.Level - startLevel - 1
+		indentCnt := h.Level - startLevel
 		indent := strings.Repeat(singleIndent, indentCnt)
-		_, err := fmt.Fprintf(w, "%s- %s", indent, h.MarkdownLink())
+		_, err := fmt.Fprintf(w, "%s- %s\n", indent, h.MarkdownLink())
 		if err != nil {
 			return err
 		}
