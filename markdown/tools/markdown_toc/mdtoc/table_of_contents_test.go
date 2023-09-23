@@ -22,6 +22,7 @@ func TestNewFromBytes(t *testing.T) {
 				Headings: []*mdtoc.Heading{
 					{Title: "Foo Bar", Text: "Foo Bar", Level: 1},
 				},
+				MarkdownBullet: mdtoc.AsteriskMarkdownBullet,
 			},
 		},
 		{
@@ -31,6 +32,7 @@ func TestNewFromBytes(t *testing.T) {
 				Headings: []*mdtoc.Heading{
 					{Title: "Foo Bar", Text: "Foo Bar", Level: 2},
 				},
+				MarkdownBullet: mdtoc.AsteriskMarkdownBullet,
 			},
 		},
 		{
@@ -44,6 +46,7 @@ func TestNewFromBytes(t *testing.T) {
 						Level: 2,
 					},
 				},
+				MarkdownBullet: mdtoc.AsteriskMarkdownBullet,
 			},
 		},
 	}
@@ -73,13 +76,15 @@ func TestTableOfContents(t *testing.T) {
 			msg    string
 			md     string
 			level  int
+			bullet mdtoc.MarkdownBullet
 			exp    string
 			expErr error
 		}{
 			{
-				msg:   "start at level 1",
-				md:    multiLevelMarkdown,
-				level: 1,
+				msg:    "start at level 1",
+				md:     multiLevelMarkdown,
+				level:  1,
+				bullet: mdtoc.HyphenMarkdownBullet,
 				exp: `- [Heading 1](#heading-1)
   - [Heading 2a](#heading-2a)
     - [Heading 3](#heading-3)
@@ -87,37 +92,53 @@ func TestTableOfContents(t *testing.T) {
 `,
 			},
 			{
-				msg:   "start at level 2",
-				md:    multiLevelMarkdown,
-				level: 2,
+				msg:    "start at level 2",
+				md:     multiLevelMarkdown,
+				level:  2,
+				bullet: mdtoc.HyphenMarkdownBullet,
 				exp: `- [Heading 2a](#heading-2a)
   - [Heading 3](#heading-3)
 - [Heading 2b](#heading-2b)
 `,
 			},
 			{
-				msg:   "start at level 3",
-				md:    multiLevelMarkdown,
-				level: 3,
+				msg:    "start at level 3",
+				md:     multiLevelMarkdown,
+				level:  3,
+				bullet: mdtoc.HyphenMarkdownBullet,
 				exp: `- [Heading 3](#heading-3)
 `,
 			},
 			{
-				msg:   "start at level 4",
-				md:    multiLevelMarkdown,
-				level: 4,
-				exp:   ``,
+				msg:    "start at level 4",
+				md:     multiLevelMarkdown,
+				level:  4,
+				bullet: mdtoc.AsteriskMarkdownBullet,
+				exp:    ``,
+			},
+			{
+				msg:    "asteris bullet",
+				md:     multiLevelMarkdown,
+				level:  1,
+				bullet: mdtoc.AsteriskMarkdownBullet,
+				exp: `* [Heading 1](#heading-1)
+  * [Heading 2a](#heading-2a)
+    * [Heading 3](#heading-3)
+  * [Heading 2b](#heading-2b)
+`,
 			},
 			{
 				msg:    "invalid level",
 				md:     multiLevelMarkdown,
 				level:  0,
+				bullet: mdtoc.AsteriskMarkdownBullet,
 				expErr: fmt.Errorf("invalid start level: 0"),
 			},
 		}
 		for _, tt := range tests {
 			var b bytes.Buffer
 			toc := mdtoc.NewFromBytes([]byte(tt.md))
+			toc.MarkdownBullet = tt.bullet
 			err := toc.FprintAtStartLevel(&b, tt.level)
 			if tt.expErr == nil {
 				assert.NoError(t, err)

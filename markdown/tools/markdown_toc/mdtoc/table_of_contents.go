@@ -11,8 +11,23 @@ import (
 
 const singleIndent = "  "
 
+type MarkdownBullet = string
+
+const (
+	AsteriskMarkdownBullet MarkdownBullet = "*"
+	HyphenMarkdownBullet   MarkdownBullet = "-"
+)
+
 type TableOfContents struct {
-	Headings []*Heading
+	Headings       []*Heading
+	MarkdownBullet MarkdownBullet
+}
+
+func New() *TableOfContents {
+	return &TableOfContents{
+		Headings:       nil,
+		MarkdownBullet: AsteriskMarkdownBullet,
+	}
 }
 
 func NewFromBytes(b []byte) *TableOfContents {
@@ -25,7 +40,7 @@ func NewFromBytes(b []byte) *TableOfContents {
 }
 
 func newFromAST(node ast.Node) *TableOfContents {
-	var toc TableOfContents
+	toc := New()
 	ast.WalkFunc(node, func(node ast.Node, entering bool) ast.WalkStatus {
 		if !entering {
 			return ast.GoToNext
@@ -37,7 +52,7 @@ func newFromAST(node ast.Node) *TableOfContents {
 		}
 		return ast.GoToNext
 	})
-	return &toc
+	return toc
 }
 
 func (toc *TableOfContents) Fprint(w io.Writer) (err error) {
@@ -54,7 +69,7 @@ func (toc *TableOfContents) FprintAtStartLevel(w io.Writer, startLevel int) (err
 		}
 		indentCnt := h.Level - startLevel
 		indent := strings.Repeat(singleIndent, indentCnt)
-		_, err := fmt.Fprintf(w, "%s- %s\n", indent, h.MarkdownLink())
+		_, err := fmt.Fprintf(w, "%s%s %s\n", indent, toc.MarkdownBullet, h.MarkdownLink())
 		if err != nil {
 			return err
 		}
