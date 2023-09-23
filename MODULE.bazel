@@ -35,9 +35,7 @@ use_repo(
     "com_github_creasty_defaults",
     "com_github_gomarkdown_markdown",
     "com_github_stretchr_testify",
-    "in_gopkg_alecthomas_kingpin_v2",
     "in_gopkg_yaml_v3",
-    "org_golang_x_net",
 )
 
 # MARK: - Dev Dependencies
