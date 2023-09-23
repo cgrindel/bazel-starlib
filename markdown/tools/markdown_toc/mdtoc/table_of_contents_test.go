@@ -50,3 +50,9 @@ func TestNewFromBytes(t *testing.T) {
 		assert.Equal(t, tt.exp, actual, tt.msg)
 	}
 }
+
+func TestTableOfContents(t *testing.T) {
+	t.Run("print at start level", func(t *testing.T) {
+		t.Error("IMPLEMENT ME!")
+	})
+}

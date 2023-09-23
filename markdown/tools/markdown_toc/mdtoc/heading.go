@@ -64,8 +64,3 @@ func (h *Heading) AnchorID() string {
 func (h *Heading) MarkdownLink() string {
 	return fmt.Sprintf("[%s](#%s)", h.Title, h.AnchorID())
 }
-
-func (h *Heading) String() string {
-	indentCnt := h.Level - 1
-	return strings.Repeat(indent, indentCnt) + h.Title
-}

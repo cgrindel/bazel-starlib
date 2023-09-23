@@ -11,13 +11,13 @@ import (
 
 func main() {
 	var outputPath string
-	var startIndex int
+	var startLevel int
 	flag.StringVar(&outputPath, "output", "", "path for the TOC output")
-	flag.IntVar(&startIndex, "start-index", 1, "starting index level to render")
+	flag.IntVar(&startLevel, "start-level", 1, "starting heading level to render")
 	flag.Parse()
 
-	if startIndex < 1 {
-		log.Fatalf("Invalid start index %d", startIndex)
+	if startLevel < 1 {
+		log.Fatalf("Invalid start index %d", startLevel)
 	}
 
 	inputPath := flag.Arg(0)
@@ -46,13 +46,8 @@ func main() {
 		outW = os.Stdout
 	}
 
-	// extensions := parser.CommonExtensions | parser.AutoHeadingIDs
-	// p := parser.NewWithExtensions(extensions)
-	// doc := p.Parse(input)
-	// toc := mdtoc.NewFromAST(doc)
-
 	toc := mdtoc.NewFromBytes(input)
-	if err = toc.FPrintWithStart(outW, startIndex); err != nil {
+	if err = toc.FPrintAtStartLevel(outW, startLevel); err != nil {
 		log.Fatalf("Failed printing TOC; %s", err)
 	}
 }
