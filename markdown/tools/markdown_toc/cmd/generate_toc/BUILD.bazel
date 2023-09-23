@@ -6,10 +6,7 @@ go_library(
     srcs = ["main.go"],
     importpath = "github.com/cgrindel/bazel-starlib/markdown/tools/markdown_toc/cmd/generate_toc",
     visibility = ["//visibility:private"],
-    deps = [
-        "//markdown/tools/markdown_toc/mdtoc",
-        "@com_github_gomarkdown_markdown//parser",
-    ],
+    deps = ["//markdown/tools/markdown_toc/mdtoc"],
 )
 
 go_binary(
