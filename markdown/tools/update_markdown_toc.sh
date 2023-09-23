@@ -23,41 +23,21 @@ update_markdown_doc_sh_location=cgrindel_bazel_starlib/markdown/tools/update_mar
 update_markdown_doc_sh="$(rlocation "${update_markdown_doc_sh_location}")" || \
   (echo >&2 "Failed to locate ${update_markdown_doc_sh_location}" && exit 1)
 
-gh_md_toc_location=cgrindel_bazel_starlib/markdown/tools/github_markdown_toc/cmd/gh-md-toc/gh-md-toc_/gh-md-toc
-gh_md_toc="$(rlocation "${gh_md_toc_location}")" || \
-  (echo >&2 "Failed to locate ${gh_md_toc_location}" && exit 1)
+generate_toc_location=cgrindel_bazel_starlib/markdown/tools/markdown_toc/cmd/generate_toc/generate_toc_/generate_toc
+generate_toc="$(rlocation "${generate_toc_location}")" || \
+  (echo >&2 "Failed to locate ${generate_toc_location}" && exit 1)
+
 
 
 # MARK - Process args
 
 remove_toc_header_entry=true
 toc_header="Table of Contents"
-
-gh_md_toc_cmd=( "${gh_md_toc}" --hide-header --hide-footer --start-depth=1 )
+generate_toc_cmd=( "${generate_toc}" --start-level=2 )
 
 args=()
 while (("$#")); do
   case "${1}" in
-    "--no_escape")
-      gh_md_toc_args+=( --no-escape )
-      shift 1
-      ;;
-    "--debug")
-      gh_md_toc_args+=( --debug )
-      shift 1
-      ;;
-    "--start_depth")
-      gh_md_toc_args+=( "--start-depth=${2}" )
-      shift 2
-      ;;
-    "--depth")
-      gh_md_toc_args+=( "--depth=${2}" )
-      shift 2
-      ;;
-    "--indent")
-      gh_md_toc_args+=( "--indent=${2}" )
-      shift 2
-      ;;
     "--no_remove_toc_header_entry")
       remove_toc_header_entry=false
       shift 1
@@ -65,6 +45,9 @@ while (("$#")); do
     "--toc_header")
       toc_header="${2}"
       shift 2
+      ;;
+    --*)
+      fail "Unexpected flag ${1}"
       ;;
     *)
       args+=("${1}")
@@ -90,8 +73,8 @@ cleanup() {
 trap cleanup EXIT
 
 # Generate the TOC 
-gh_md_toc_cmd+=( "${in_path}" )
-"${gh_md_toc_cmd[@]}" > "${toc_path}"
+generate_toc_cmd+=( "${in_path}" )
+"${generate_toc_cmd[@]}" > "${toc_path}"
 
 
 # MARK - Clean up the TOC

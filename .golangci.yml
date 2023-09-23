@@ -1,0 +1,4 @@
+run:
+  skip-dirs:
+    - .*/usr/local/Cellar/
+    - .*/go/pkg/mod/
