@@ -68,3 +68,10 @@ output_file="output.md"
 output="$( < "${output_file}" )"
 assert_match "Heading 1" "${output}" "${msg}"
 assert_match "Heading 2" "${output}" "${msg}"
+
+# MARK - Test invalid start level
+
+msg="invalid start level"
+fail_result=false
+"${generate_toc}" --start-level 0 < "${input_file}" || fail_result=true
+assert_equal "true" "${fail_result}" "${msg}"
