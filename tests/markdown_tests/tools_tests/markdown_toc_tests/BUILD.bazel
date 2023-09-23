@@ -1,0 +1,15 @@
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_test(
+    name = "generate_toc_test",
+    srcs = ["generate_toc_test.sh"],
+    data = [
+        "//markdown/tools/markdown_toc/cmd/generate_toc",
+    ],
+    deps = [
+        "//shlib/lib:assertions",
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
