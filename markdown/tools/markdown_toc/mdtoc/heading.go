@@ -24,6 +24,18 @@ type Heading struct {
 	Level int
 }
 
+func NewHeading() *Heading {
+	return &Heading{Level: 1}
+}
+
+type HeadingWithable = func(h *Heading)
+
+func NewHeadingWith(withable HeadingWithable) *Heading {
+	heading := NewHeading()
+	withable(heading)
+	return heading
+}
+
 func newHeadingFromNode(headingNode *ast.Heading) *Heading {
 	var titleParts []string
 	var textParts []string

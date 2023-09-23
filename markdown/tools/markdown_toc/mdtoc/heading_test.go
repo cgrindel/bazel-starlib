@@ -16,20 +16,18 @@ func TestHeading(t *testing.T) {
 		}{
 			{
 				msg: "simple",
-				h: &mdtoc.Heading{
-					Title: "Other Configuration",
-					Text:  "Other Configuration",
-					Level: 1,
-				},
+				h: mdtoc.NewHeadingWith(func(h *mdtoc.Heading) {
+					h.Title = "Other Configuration"
+					h.Text = "Other Configuration"
+				}),
 				exp: "other-configuration",
 			},
 			{
 				msg: "code in title",
-				h: &mdtoc.Heading{
-					Title: "`MODULE.bazel` Snippet",
-					Text:  "MODULE.bazel Snippet",
-					Level: 2,
-				},
+				h: mdtoc.NewHeadingWith(func(h *mdtoc.Heading) {
+					h.Title = "`MODULE.bazel` Snippet"
+					h.Text = "MODULE.bazel Snippet"
+				}),
 				exp: "modulebazel-snippet",
 			},
 		}
@@ -40,11 +38,10 @@ func TestHeading(t *testing.T) {
 	})
 
 	t.Run("markdown link", func(t *testing.T) {
-		heading := mdtoc.Heading{
-			Title: "Other Configuration",
-			Text:  "Other Configuration",
-			Level: 1,
-		}
+		heading := mdtoc.NewHeadingWith(func(h *mdtoc.Heading) {
+			h.Title = "Other Configuration"
+			h.Text = "Other Configuration"
+		})
 		expected := "[Other Configuration](#other-configuration)"
 		actual := heading.MarkdownLink()
 		assert.Equal(t, expected, actual)

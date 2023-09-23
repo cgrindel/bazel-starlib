@@ -30,6 +30,14 @@ func New() *TableOfContents {
 	}
 }
 
+type TableOfContentsWithable = func(toc *TableOfContents)
+
+func NewWith(withable TableOfContentsWithable) *TableOfContents {
+	toc := New()
+	withable(toc)
+	return toc
+}
+
 func NewFromBytes(b []byte) *TableOfContents {
 	// Cannot use parser.AutoHeadingIDs as it does not format the heading IDs as
 	// Commonmrker/comrak.

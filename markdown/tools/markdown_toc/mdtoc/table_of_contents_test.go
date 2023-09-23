@@ -18,36 +18,39 @@ func TestNewFromBytes(t *testing.T) {
 		{
 			msg: "Level 1 heading",
 			in:  "# Foo Bar",
-			exp: &mdtoc.TableOfContents{
-				Headings: []*mdtoc.Heading{
-					{Title: "Foo Bar", Text: "Foo Bar", Level: 1},
-				},
-				MarkdownBullet: mdtoc.AsteriskMarkdownBullet,
-			},
+			exp: mdtoc.NewWith(func(toc *mdtoc.TableOfContents) {
+				toc.Headings = []*mdtoc.Heading{
+					mdtoc.NewHeadingWith(func(h *mdtoc.Heading) {
+						h.Title = "Foo Bar"
+						h.Text = "Foo Bar"
+					}),
+				}
+			}),
 		},
 		{
 			msg: "Level 2 heading",
 			in:  "## Foo Bar",
-			exp: &mdtoc.TableOfContents{
-				Headings: []*mdtoc.Heading{
-					{Title: "Foo Bar", Text: "Foo Bar", Level: 2},
-				},
-				MarkdownBullet: mdtoc.AsteriskMarkdownBullet,
-			},
+			exp: mdtoc.NewWith(func(toc *mdtoc.TableOfContents) {
+				toc.Headings = []*mdtoc.Heading{
+					mdtoc.NewHeadingWith(func(h *mdtoc.Heading) {
+						h.Title = "Foo Bar"
+						h.Text = "Foo Bar"
+						h.Level = 2
+					}),
+				}
+			}),
 		},
 		{
 			msg: "Code in title",
-			in:  "## `MODULE.bazel` Snippet",
-			exp: &mdtoc.TableOfContents{
-				Headings: []*mdtoc.Heading{
-					{
-						Title: "`MODULE.bazel` Snippet",
-						Text:  "MODULE.bazel Snippet",
-						Level: 2,
-					},
-				},
-				MarkdownBullet: mdtoc.AsteriskMarkdownBullet,
-			},
+			in:  "# `MODULE.bazel` Snippet",
+			exp: mdtoc.NewWith(func(toc *mdtoc.TableOfContents) {
+				toc.Headings = []*mdtoc.Heading{
+					mdtoc.NewHeadingWith(func(h *mdtoc.Heading) {
+						h.Title = "`MODULE.bazel` Snippet"
+						h.Text = "MODULE.bazel Snippet"
+					}),
+				}
+			}),
 		},
 	}
 	for _, tt := range tests {
