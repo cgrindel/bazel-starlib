@@ -197,7 +197,7 @@ jobs:
     env:
       CC: clang
     steps:
-      - uses: actions/checkout@7cdaf2fbc075e6f3b9ca94cfd6cec5adc8a75622
+      - uses: actions/checkout@8530928916aaef40f59e6f221989ccb31f5759e7
       - uses: cgrindel/gha_set_up_bazel@v1
         with:
           repo_name: bazel-starlib
@@ -221,7 +221,7 @@ jobs:
           - ubuntu-22.04
     runs-on: ${{ matrix.runner }}
     steps:
-      - uses: actions/checkout@7cdaf2fbc075e6f3b9ca94cfd6cec5adc8a75622
+      - uses: actions/checkout@8530928916aaef40f59e6f221989ccb31f5759e7
       - uses: cgrindel/gha_set_up_bazel@v1
         with:
           repo_name: bazel-starlib
