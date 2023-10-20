@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 3,
-  "moduleFileHash": "9b8be849cb37f4cf27c2c39d34423f33c61370c09d24db6cd4bad0be4108abf9",
+  "moduleFileHash": "a3d4a4cbf0fa4d48e357f73325937de572ca6b4c6fa06fe95b235dcac08cb69f",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -88,7 +88,7 @@
             {
               "tagName": "download",
               "attributeValues": {
-                "version": "7.0.0-pre.20230628.2"
+                "version": "6.4.0"
               },
               "devDependency": true,
               "location": {
@@ -2050,12 +2050,12 @@
         "accumulatedFileDigests": {},
         "envVariables": {},
         "generatedRepoSpecs": {
-          "build_bazel_bazel_7_0_0-pre_20230628_2": {
+          "build_bazel_bazel_6_4_0": {
             "bzlFile": "@@rules_bazel_integration_test~0.14.1//bazel_integration_test/private:bazel_binaries.bzl",
             "ruleClassName": "bazel_binary",
             "attributes": {
-              "name": "rules_bazel_integration_test~0.14.1~bazel_binaries~build_bazel_bazel_7_0_0-pre_20230628_2",
-              "version": "7.0.0-pre.20230628.2"
+              "name": "rules_bazel_integration_test~0.14.1~bazel_binaries~build_bazel_bazel_6_4_0",
+              "version": "6.4.0"
             }
           },
           "build_bazel_bazel_.bazelversion": {
@@ -2073,7 +2073,7 @@
               "name": "rules_bazel_integration_test~0.14.1~bazel_binaries~bazel_binaries",
               "version_to_repo": {
                 "'@@//:.bazelversion'": "build_bazel_bazel_.bazelversion",
-                "7.0.0-pre.20230628.2": "build_bazel_bazel_7_0_0-pre_20230628_2"
+                "6.4.0": "build_bazel_bazel_6_4_0"
               },
               "current_version": "'@@//:.bazelversion'"
             }
