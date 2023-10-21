@@ -14,10 +14,6 @@ build --incompatible_disallow_empty_glob
 common --enable_bzlmod
 build --@cgrindel_bazel_starlib//bzlmod:enabled
 
-# Disable lockfiles until it works properly.
-# https://github.com/bazelbuild/bazel/issues/19068
-common --lockfile_mode=off
-
 # Remote Cache
 build:cache --bes_results_url=https://app.buildbuddy.io/invocation/
 build:cache --bes_backend=grpcs://remote.buildbuddy.io
@@ -28,6 +24,7 @@ build:cache --experimental_remote_cache_async
 build:cache --experimental_remote_cache_compression
 
 # Recommended by BuildBuddy
+# TODO: Rename this to remote_build_event_upload once we are no longer supporting 6.x.x.
 build --experimental_remote_build_event_upload=minimal
 build --noslim_profile 
 build --experimental_profile_include_target_label 
