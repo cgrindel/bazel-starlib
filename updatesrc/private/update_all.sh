@@ -5,13 +5,17 @@
 
 set -o errexit -o nounset -o pipefail
 
+# Use the Bazel binary specified by the integration test. Otherise, fall back 
+# to bazel.
+bazel="${BIT_BAZEL_BINARY:-bazel}"
+
 # MARK - Functions
 
 run_bazel_targets() {
   while (("$#")); do
     local target="${1}"
     if [[ -n "${target:-}" ]]; then
-      bazel run "${target}"
+      "${bazel}" run "${target}"
     fi
     shift 1
   done
@@ -62,7 +66,7 @@ EOF
 bazel_query="kind(updatesrc_update, //...)"
 update_targets=()
 while IFS=$'\n' read -r line; do update_targets+=("$line"); done < <(
-  bazel cquery "${bazel_query}" \
+  "${bazel}" cquery "${bazel_query}" \
     --output=starlark \
     --starlark:file="${starlark_file}" \
     | sort

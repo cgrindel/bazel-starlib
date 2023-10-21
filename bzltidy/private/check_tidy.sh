@@ -5,6 +5,10 @@ set -o errexit -o nounset -o pipefail
 # Purposefully not using Bazel's Bash runfiles support. Running it here,
 # appears to mess up the execution of targets that also use it.
 
+# Use the Bazel binary specified by the integration test. Otherise, fall back 
+# to bazel.
+bazel="${BIT_BAZEL_BINARY:-bazel}"
+
 # MARK - Functions
 
 warn() {
@@ -125,7 +129,7 @@ before_diff="${before_dir}/diff"
 git_diff "${before_diff}"
 
 # Execute tidy
-bazel run "${tidy_target}"
+"${bazel}" run "${tidy_target}"
 
 # Capture after state
 after_status="${after_dir}/status"
