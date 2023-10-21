@@ -5,8 +5,11 @@ set -o errexit -o nounset -o pipefail
 # Purposefully not using Bazel's Bash runfiles support. Running it here,
 # appears to mess up the execution of targets that also use it.
 
-# MARK - Functions from Library
+# Use the Bazel binary specified by the integration test. Otherise, fall back 
+# to bazel.
+bazel="${BIT_BAZEL_BINARY:-bazel}"
 
+# MARK - Functions from Library
 
 warn() {
   if [[ $# -gt 0 ]]; then
@@ -191,7 +194,7 @@ find_workspaces_with_modifications() {
 
 target_exists() {
   local target="$1"
-  bazel query "${target}" &>/dev/null
+  "${bazel}" query "${target}" &>/dev/null
 }
 
 # MARK - Process Args
@@ -254,7 +257,7 @@ for workspace in "${workspaces[@]}" ; do
   cd "${workspace_dir}"
   if target_exists "${tidy_target}"; then
     info "Running ${tidy_target} in ${workspace_dir}."
-    bazel run "${tidy_target}" --experimental_convenience_symlinks=ignore
+    "${bazel}" run "${tidy_target}" --experimental_convenience_symlinks=ignore
   else
     info "Skipping ${workspace_dir}. ${tidy_target} does not exist."
   fi

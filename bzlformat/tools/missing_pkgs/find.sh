@@ -11,6 +11,10 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v3 ---
 
+# Use the Bazel binary specified by the integration test. Otherise, fall back 
+# to bazel.
+bazel="${BIT_BAZEL_BINARY:-bazel}"
+
 arrays_lib="$(rlocation cgrindel_bazel_starlib/shlib/lib/arrays.sh)"
 # shellcheck source=SCRIPTDIR/../../../shlib/lib/arrays.sh
 source "${arrays_lib}"
@@ -25,7 +29,7 @@ query_for_pkgs() {
   local query="${1}"
   # We need to add a prefix here (//). Otherwise, the root package would be an 
   # empty string. Empty strings are easily lost in Bash.
-  bazel query "${query}" --output package | sed -e 's|^|//|'
+  "${bazel}" query "${query}" --output package | sed -e 's|^|//|'
 }
 
 fail_on_missing_pkgs=false

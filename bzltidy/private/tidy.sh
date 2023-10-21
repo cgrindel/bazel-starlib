@@ -5,6 +5,10 @@ set -o errexit -o nounset -o pipefail
 # Purposefully not using Bazel's Bash runfiles support. Running it here,
 # appears to mess up the execution of targets that also use it.
 
+# Use the Bazel binary specified by the integration test. Otherise, fall back 
+# to bazel.
+bazel="${BIT_BAZEL_BINARY:-bazel}"
+
 # MARK - Functions
 
 warn() {
@@ -63,7 +67,7 @@ run_bazel_targets() {
   while (("$#")); do
     local target="${1}"
     if [[ -n "${target:-}" ]]; then
-      bazel run "${target}"
+      "${bazel}" run "${target}"
     fi
     shift 1
   done
