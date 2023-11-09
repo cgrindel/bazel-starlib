@@ -13,7 +13,7 @@
     "compatibilityMode": "ERROR"
   },
   "localOverrideHashes": {
-    "bazel_tools": "18ffd442cf258c9048798a0d9bc49bbb06aba5ccb141dd357ce0c13c56f1ae78",
+    "bazel_tools": "922ea6752dc9105de5af957f7a99a6933c0a6a712d23df6aad16a9c399f7e787",
     "cgrindel_bazel_starlib": "a3d4a4cbf0fa4d48e357f73325937de572ca6b4c6fa06fe95b235dcac08cb69f"
   },
   "moduleDepGraph": {
@@ -239,7 +239,7 @@
       ],
       "deps": {
         "rules_cc": "rules_cc@0.0.9",
-        "rules_java": "rules_java@7.0.6",
+        "rules_java": "rules_java@7.1.0",
         "rules_license": "rules_license@0.0.7",
         "rules_proto": "rules_proto@4.0.0",
         "rules_python": "rules_python@0.4.0",
@@ -513,7 +513,7 @@
       "extensionUsages": [],
       "deps": {
         "bazel_skylib": "bazel_skylib@1.5.0",
-        "rules_java": "rules_java@7.0.6",
+        "rules_java": "rules_java@7.1.0",
         "rules_license": "rules_license@0.0.7",
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_"
@@ -660,10 +660,10 @@
         }
       }
     },
-    "rules_java@7.0.6": {
+    "rules_java@7.1.0": {
       "name": "rules_java",
-      "version": "7.0.6",
-      "key": "rules_java@7.0.6",
+      "version": "7.1.0",
+      "key": "rules_java@7.1.0",
       "repoName": "rules_java",
       "executionPlatformsToRegister": [],
       "toolchainsToRegister": [
@@ -696,10 +696,10 @@
         {
           "extensionBzlFile": "@rules_java//java:extensions.bzl",
           "extensionName": "toolchains",
-          "usingModule": "rules_java@7.0.6",
+          "usingModule": "rules_java@7.1.0",
           "location": {
-            "file": "https://bcr.bazel.build/modules/rules_java/7.0.6/MODULE.bazel",
-            "line": 18,
+            "file": "https://bcr.bazel.build/modules/rules_java/7.1.0/MODULE.bazel",
+            "line": 19,
             "column": 27
           },
           "imports": {
@@ -750,11 +750,11 @@
         "bzlFile": "@bazel_tools//tools/build_defs/repo:http.bzl",
         "ruleClassName": "http_archive",
         "attributes": {
-          "name": "rules_java~7.0.6",
+          "name": "rules_java~7.1.0",
           "urls": [
-            "https://github.com/bazelbuild/rules_java/releases/download/7.0.6/rules_java-7.0.6.tar.gz"
+            "https://github.com/bazelbuild/rules_java/releases/download/7.1.0/rules_java-7.1.0.tar.gz"
           ],
-          "integrity": "sha256-6B6d6q4NnZnvPdX2wbMjOER/4W1VZBVVMepOt+84hUs=",
+          "integrity": "sha256-o3pOX2OrgnFuXdau75iO2EYcegC46TYnImKJn1h81OE=",
           "strip_prefix": "",
           "remote_patches": {},
           "remote_patch_strip": 0
@@ -888,7 +888,7 @@
         "rules_python": "rules_python@0.4.0",
         "rules_cc": "rules_cc@0.0.9",
         "rules_proto": "rules_proto@4.0.0",
-        "rules_java": "rules_java@7.0.6",
+        "rules_java": "rules_java@7.1.0",
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_"
       },
