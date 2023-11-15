@@ -1624,9 +1624,9 @@
       "general": {
         "bzlTransitiveDigest": "YrW3LfmthaiuxDs+yU7jeVnkxHvRzUiEdu3bZung8pg=",
         "accumulatedFileDigests": {
-          "@@//:go.mod": "2a988325920be786451553b4c7e4251b65cf3de0a1bd8a7917ff742cd33a278e",
+          "@@//:go.mod": "db78d7d0340190c786236e901b5c792022ae8da223e42910dfcc5f6a2df577bf",
           "@@gazelle~0.32.0//:go.sum": "7491cc4ce7c344c149d512167d9e580be4d3c1dcd6fbb334e677ead2c2951b3d",
-          "@@//:go.sum": "c50d75994c714e6fddfc6eb0cb8da5d2c40ff0ca816fa655ed0cf397cf16a27b",
+          "@@//:go.sum": "0727e3bd41e30d078e0f0a4cecc353769997a0708df9eb6cbc7852d1b354c796",
           "@@rules_go~0.41.0//:go.mod": "a7143f329c2a3e0b983ce74a96c0c25b0d0c59d236d75f7e1b069aadd988d55e",
           "@@gazelle~0.32.0//:go.mod": "bba4cfc2ab0f927f85f142b92843ab4dfb3c0be11aec9c663203a6543c0cde9b",
           "@@rules_go~0.41.0//:go.sum": "022d36c9ebcc7b5dee1e9b85b3da9c9f3a529ee6f979946d66e4955b8d54614a"
@@ -1789,9 +1789,9 @@
             "attributes": {
               "name": "gazelle~0.32.0~go_deps~com_github_gomarkdown_markdown",
               "importpath": "github.com/gomarkdown/markdown",
-              "sum": "h1:EcQR3gusLHN46TAD+G+EbaaqJArt5vHhNpXAa12PQf4=",
+              "sum": "h1:PppHBegd3uPZ3Y/Iax/2mlCFJm1w4Qf/zP1MdW4ju2o=",
               "replace": "",
-              "version": "v0.0.0-20230922112808-5421fefb8386",
+              "version": "v0.0.0-20231115200524-a660076da3fd",
               "build_directives": [],
               "build_file_generation": "auto",
               "patches": [],
