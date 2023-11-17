@@ -996,7 +996,7 @@
     }
   },
   "moduleExtensions": {
-    "@bazel_tools//tools/cpp:cc_configure.bzl%cc_configure_extension": {
+    "@@bazel_tools//tools/cpp:cc_configure.bzl%cc_configure_extension": {
       "general": {
         "bzlTransitiveDigest": "O9sf6ilKWU9Veed02jG9o2HM/xgV/UAyciuFBuxrFRY=",
         "accumulatedFileDigests": {},
@@ -1019,9 +1019,9 @@
         }
       }
     },
-    "@bazel_tools//tools/test:extensions.bzl%remote_coverage_tools_extension": {
+    "@@bazel_tools//tools/test:extensions.bzl%remote_coverage_tools_extension": {
       "general": {
-        "bzlTransitiveDigest": "PEh3vETU0xQzauyboFj1AYs9nvzf23oQ3vbV/5bFnE4=",
+        "bzlTransitiveDigest": "cizrA62cv8WUgb0cCmx5B6PRijtr/I4TAWxg/4caNGU=",
         "accumulatedFileDigests": {},
         "envVariables": {},
         "generatedRepoSpecs": {
