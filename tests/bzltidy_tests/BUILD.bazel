@@ -72,9 +72,6 @@ ci_integration_test_params(
         "linux",
         "macos",
     ],
-    test_names = integration_test_utils.bazel_integration_test_names(
-        "tidy_all_test",
-        bazel_binaries.versions.all,
-    ),
+    test_names = ["tidy_all_test"],
     visibility = ["//:__subpackages__"],
 )

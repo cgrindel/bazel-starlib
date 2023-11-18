@@ -6,6 +6,7 @@ load(
     "bzlformat_pkg",
 )
 load("//bzltidy:defs.bzl", "tidy", "tidy_all")
+load("//ci:defs.bzl", "ci_workflow")
 load("//shlib/rules:execute_binary.bzl", "execute_binary")
 load("//tests:integration_test_common.bzl", "INTEGRATION_TEST_TAGS")
 load("//updatesrc:defs.bzl", "updatesrc_update_all")
@@ -237,15 +238,14 @@ test_suite(
     visibility = ["//:__subpackages__"],
 )
 
-# GH368: Enable when this is generating the proper output
-# ci_workflow(
-#     name = "ci_workflow",
-#     test_params = [
-#         "{}:all_test_params".format(pkg)
-#         for pkg in _INTEGRATION_TEST_PKGS
-#     ],
-#     workflow_yml = ".github/workflows/ci.yml",
-# )
+ci_workflow(
+    name = "ci_workflow",
+    test_params = [
+        "{}:all_test_params".format(pkg)
+        for pkg in _INTEGRATION_TEST_PKGS
+    ],
+    workflow_yml = ".github/workflows/ci.yml",
+)
 
 bzl_library(
     name = "deps",
