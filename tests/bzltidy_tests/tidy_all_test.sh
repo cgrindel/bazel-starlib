@@ -44,6 +44,19 @@ revert_changes() {
   git clean -f
 }
 
+dump_modified_files() {
+  local title="${1}"
+  shift
+  if [[ $# -eq 0 ]]; then
+    return 0
+  fi
+  echo >&2 "${title}"
+  while (("$#")); do
+    echo >&2 "  ${1}"
+    shift 1
+  done
+}
+
 # MARK - Initialize Important Variables
 
 bazel="${BIT_BAZEL_BINARY:-}"
@@ -77,6 +90,7 @@ tidy_out_files=()
 while IFS=$'\n' read -r line; do tidy_out_files+=("$line"); done < <(
   find_tidy_out_files "${scratch_dir}"
 )
+dump_modified_files "Modified files for ${assert_msg}" "${tidy_out_files[@]:-}"
 assert_equal 0 ${#tidy_out_files[@]} "${assert_msg}"
 assert_match "${output_prefix_regex}"\ No\ workspaces\ to\ tidy\. "${output}" "${assert_msg}"
 
