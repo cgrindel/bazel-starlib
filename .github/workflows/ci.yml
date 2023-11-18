@@ -148,16 +148,10 @@ jobs:
           - test: '@@//tests/bzlrelease_tests/tools_tests:generate_workspace_snippet_test'
             runner: ubuntu-22.04
             enable_bzlmod: true
-          - test: '@@//tests/bzltidy_tests:tidy_all_test_bazel_.bazelversion'
+          - test: '@@//tests/bzltidy_tests:tidy_all_test'
             runner: ubuntu-22.04
             enable_bzlmod: true
-          - test: '@@//tests/bzltidy_tests:tidy_all_test_bazel_.bazelversion'
-            runner: macos-13
-            enable_bzlmod: true
-          - test: '@@//tests/bzltidy_tests:tidy_all_test_bazel_6_4_0'
-            runner: ubuntu-22.04
-            enable_bzlmod: true
-          - test: '@@//tests/bzltidy_tests:tidy_all_test_bazel_6_4_0'
+          - test: '@@//tests/bzltidy_tests:tidy_all_test'
             runner: macos-13
             enable_bzlmod: true
           - test: '@@//tests/shlib_tests/lib_tests/git_tests:git_integration_test'
