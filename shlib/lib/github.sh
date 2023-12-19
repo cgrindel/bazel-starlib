@@ -25,7 +25,7 @@ get_gh_username() {
   local auth_status="${1:-}"
   [[ -z "${auth_status}" ]] && auth_status="$( get_gh_auth_status )"
   echo "${auth_status}" | \
-    sed -E -n 's/^.* Logged in to [^[:space:]]+ as ([^[:space:]]+).*/\1/gp'
+    sed -E -n 's/^.* Logged in to [^[:space:]]+ account ([^[:space:]]+).*/\1/gp'
 }
 
 # Returns the current user's auth token from the auth status.
