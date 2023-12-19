@@ -30,9 +30,11 @@ source "${github_sh}"
 
 auth_status="
 github.com
-  ✓ Logged in to github.com as cgrindel (/Users/chuck/.config/gh/hosts.yml)
-  ✓ Git operations for github.com configured to use ssh protocol.
-  ✓ Token: 1234567899b95cd24c3e91d210388a28bf560b73
+  ✓ Logged in to github.com account cgrindel (keyring)
+  - Active account: true
+  - Git operations protocol: ssh
+  - Token: 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
+  - Token scopes: 'admin:public_key', 'gist', 'read:org', 'repo'
 "
 
 expected="cgrindel"
