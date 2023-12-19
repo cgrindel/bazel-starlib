@@ -35,7 +35,7 @@ how-to links above and review the [the generated documentation](/doc/).
 
 <!-- BEGIN MODULE SNIPPET -->
 ```python
-bazel_dep(name = "cgrindel_bazel_starlib", version = "0.18.0")
+bazel_dep(name = "cgrindel_bazel_starlib", version = "0.19.0")
 ```
 <!-- END MODULE SNIPPET -->
 
@@ -47,9 +47,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "cgrindel_bazel_starlib",
-    sha256 = "dfa423dbf5aac0a5217d3780b295abd3ea1c633d5f9198712b23f0f14f2e8d92",
+    sha256 = "b9c88ac51ccaa0635621111308b85fdbb2606adb864596f9842aa5f7480cfe3a",
     urls = [
-        "https://github.com/cgrindel/bazel-starlib/releases/download/v0.18.0/bazel-starlib.v0.18.0.tar.gz",
+        "https://github.com/cgrindel/bazel-starlib/releases/download/v0.19.0/bazel-starlib.v0.19.0.tar.gz",
     ],
 )
 
