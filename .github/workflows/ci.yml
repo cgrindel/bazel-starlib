@@ -191,7 +191,7 @@ jobs:
     env:
       CC: clang
     steps:
-      - uses: actions/checkout@df0bcddf6d6823307c716b56a7ef9c3b25078874
+      - uses: actions/checkout@aadec899646c8e0f34c52d9219c2faac36626b55
       - uses: cgrindel/gha_set_up_bazel@v1
         with:
           bazel_disk_cache_dir: ""
@@ -217,7 +217,7 @@ jobs:
           - ubuntu-22.04
     runs-on: ${{ matrix.runner }}
     steps:
-      - uses: actions/checkout@df0bcddf6d6823307c716b56a7ef9c3b25078874
+      - uses: actions/checkout@aadec899646c8e0f34c52d9219c2faac36626b55
       - uses: cgrindel/gha_set_up_bazel@v1
         with:
           bazel_disk_cache_dir: ""
