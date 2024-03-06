@@ -1624,9 +1624,9 @@
       "general": {
         "bzlTransitiveDigest": "YrW3LfmthaiuxDs+yU7jeVnkxHvRzUiEdu3bZung8pg=",
         "accumulatedFileDigests": {
-          "@@//:go.mod": "9f5e61db06de57a5c91a8611b5a139b8050d153b65963045152b74fc1bcaddda",
+          "@@//:go.mod": "3292f69dde2a81bda07387164d20aa7b792e53264e7ad617762fa3827fd6c719",
           "@@gazelle~0.32.0//:go.sum": "7491cc4ce7c344c149d512167d9e580be4d3c1dcd6fbb334e677ead2c2951b3d",
-          "@@//:go.sum": "7f7866e92f3437cf651478db49760bc4b51eeb1483c954dbf7f94abfb797d8ec",
+          "@@//:go.sum": "8fbfecdd326a8f6542903e4fab0ac1cad278294cd1a569e8652da0aec4880ede",
           "@@rules_go~0.41.0//:go.mod": "a7143f329c2a3e0b983ce74a96c0c25b0d0c59d236d75f7e1b069aadd988d55e",
           "@@gazelle~0.32.0//:go.mod": "bba4cfc2ab0f927f85f142b92843ab4dfb3c0be11aec9c663203a6543c0cde9b",
           "@@rules_go~0.41.0//:go.sum": "022d36c9ebcc7b5dee1e9b85b3da9c9f3a529ee6f979946d66e4955b8d54614a"
@@ -1866,9 +1866,9 @@
             "attributes": {
               "name": "gazelle~0.32.0~go_deps~com_github_stretchr_testify",
               "importpath": "github.com/stretchr/testify",
-              "sum": "h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=",
+              "sum": "h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=",
               "replace": "",
-              "version": "v1.8.4",
+              "version": "v1.9.0",
               "build_directives": [],
               "build_file_generation": "auto",
               "patches": [],
