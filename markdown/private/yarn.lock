@@ -296,9 +296,9 @@ lru-cache@^7.14.1:
   integrity sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==
 
 markdown-link-check@^3.10.0:
-  version "3.12.0"
-  resolved "https://registry.yarnpkg.com/markdown-link-check/-/markdown-link-check-3.12.0.tgz#0f5dd003cfb3a79274a5dadae0197e2ced34c7e8"
-  integrity sha512-j4sirtV2QFO6Bf/jfTJpwD/Q+czGBIuWi6AAM0PL+E2+/5ArKoLox/VXQ86I7UTALneAGR5xA/anhvG4eGSCsw==
+  version "3.12.1"
+  resolved "https://registry.yarnpkg.com/markdown-link-check/-/markdown-link-check-3.12.1.tgz#96274ff595fd950a07477c88f1c90af0643e25da"
+  integrity sha512-qjaopy0tcZFKMhr+wAOQf7KyValRXygTOaZQ3Ka1rf+nyObIUdU9hUVY93gYysz8+hx92YnXnKh1dmNRPO/5bA==
   dependencies:
     async "^3.2.5"
     chalk "^5.2.0"
