@@ -12,6 +12,7 @@ name: Continuous Integration
       - test_main
   schedule:
     - cron: 13 11 * * *
+  workflow_dispatch:
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
