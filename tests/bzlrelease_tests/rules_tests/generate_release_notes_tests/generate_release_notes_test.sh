@@ -42,12 +42,12 @@ tag="v999.0.0"
 # Test with template
 actual="$( "${generate_release_notes_with_template_sh}" "${tag}" )"
 assert_match "name = \"cgrindel_bazel_starlib\"" "${actual}" "Did not find workspace name."
-assert_match "## What's Changed" "${actual}" "Did not find release notes header."
+assert_match "## What Has Changed" "${actual}" "Did not find release notes header."
 assert_match "bazel_starlib_dependencies()" "${actual}" "Did not find template content."
 
 # Test with workspace_name
 actual="$( "${generate_release_notes_with_workspace_name_sh}" "${tag}" )"
 assert_match "name = \"foo_bar\"" "${actual}" "Did not find workspace name."
-assert_match "## What's Changed" "${actual}" "Did not find release notes header."
+assert_match "## What Has Changed" "${actual}" "Did not find release notes header."
 assert_match "bazel_starlib_dependencies()" "${actual}" "Did not find template content."
 assert_match "bazel_dep\(" "${actual}" "Did not find module snippet"

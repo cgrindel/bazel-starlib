@@ -27,8 +27,9 @@ func NewWorkflowFromYAML(b []byte) (*Workflow, error) {
 
 // WorkflowTriggers represents the triggers for a workflow.
 type WorkflowTriggers struct {
-	PullRequest PullRequestEvent `yaml:"pull_request"`
-	Schedule    []Schedule       `yaml:"schedule,omitempty"`
+	PullRequest      PullRequestEvent `yaml:"pull_request"`
+	Schedule         []Schedule       `yaml:"schedule,omitempty"`
+	WorkflowDispatch WorkflowDispatch `yaml:"workflow_dispatch"`
 }
 
 // PullRequestEvent is a trigger event.
@@ -40,6 +41,8 @@ type PullRequestEvent struct {
 type Schedule struct {
 	Cron string `yaml:"cron"`
 }
+
+type WorkflowDispatch struct{}
 
 // Concurrency describes how concurrent workflows should be handled.
 type Concurrency struct {
