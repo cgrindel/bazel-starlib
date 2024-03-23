@@ -1,6 +1,9 @@
 # Ignore Bazel symlinks
 bazel-*
 
+# Ignore Bazel lock files
+MODULE.bazel.lock
+
 # Ignore npm/yarn stuff
 node_modules
 
