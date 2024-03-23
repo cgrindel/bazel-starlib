@@ -99,7 +99,7 @@ actual="$(
     --generate_workspace_snippet "${generate_workspace_snippet_sh}" \
     "${tag}" 
 )"
-assert_match "## What's Changed" "${actual}"
+assert_match "## What Has Changed" "${actual}"
 assert_match "## Workspace Snippet" "${actual}"
 assert_match "WORKSPACE SNIPPET CONTENT" "${actual}"
 assert_no_match "## Bazel Module Snippet" "${actual}"
@@ -109,7 +109,7 @@ actual="$(
     --generate_module_snippet "${generate_module_snippet_sh}" \
     "${tag}" 
 )"
-assert_match "## What's Changed" "${actual}"
+assert_match "## What Has Changed" "${actual}"
 assert_match "## Bazel Module Snippet" "${actual}"
 assert_match "MODULE SNIPPET CONTENT" "${actual}"
 assert_no_match "## Workspace Snippet" "${actual}"

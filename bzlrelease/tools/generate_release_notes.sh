@@ -90,6 +90,8 @@ if [[ -n "${generate_module_snippet:-}" ]]; then
 fi
 
 release_notes_md="$(cat <<-EOF
+## What Has Changed
+
 ${changelog_md}
 EOF
 )"
