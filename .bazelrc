@@ -24,6 +24,10 @@ build --@cgrindel_bazel_starlib//bzlmod:enabled
 # windows requires symlinks to work well
 startup --windows_enable_symlinks
 
+# this library requires runfiles for the bzlformat_lint_test
+# but this is off by default on windows. Switch it on.
+common --enable_runfiles
+
 # Try to import a local.rc file; typically, written by CI
 try-import %workspace%/local.bazelrc
 
