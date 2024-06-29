@@ -21,14 +21,14 @@ set -e
 # return a unix-style path on all platforms
 # workaround for https://github.com/bazelbuild/bazel/issues/22803
 function rlocation_as_unix() {
-  path=$(rlocation ${1})
+  path="$(rlocation ${1})"
   case "$(uname -s)" in
     CYGWIN* | MINGW32* | MSYS* | MINGW*)
       path=${path//\\//} # backslashes to forward
       path=/${path//:/}  # d:/ to /d/
       ;;
   esac
-  echo $path
+  echo "$path"
 }
 
 # MARK - Locate Deps
