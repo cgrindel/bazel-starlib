@@ -7,7 +7,7 @@ build --deleted_packages=examples/bzlformat/simple,examples/bzlformat/simple/moc
 query --deleted_packages=examples/bzlformat/simple,examples/bzlformat/simple/mockascript,examples/bzlformat/simple/mockascript/internal,examples/bzlmod_e2e,examples/bzlmod_e2e/header,examples/bzlmod_e2e/mockascript,examples/bzlmod_e2e/mockascript/internal,examples/bzlmod_e2e/srcs/Bar,examples/bzlmod_e2e/srcs/Foo,examples/markdown/simple,examples/markdown/simple/bar,examples/tools/workspace,examples/updatesrc/simple,examples/updatesrc/simple/header,examples/updatesrc/simple/srcs/Bar,examples/updatesrc/simple/srcs/Foo,tests/bzlformat_tests/tools_tests/missing_pkgs_tests/workspace,tests/bzlformat_tests/tools_tests/missing_pkgs_tests/workspace/foo,tests/bzlformat_tests/tools_tests/missing_pkgs_tests/workspace/foo/bar,tests/bzltidy_tests/workspace,tests/bzltidy_tests/workspace/child_workspaces/bar,tests/bzltidy_tests/workspace/child_workspaces/foo,tests/updatesrc_tests/workspace/diff_and_update_test,tests/updatesrc_tests/workspace/diff_and_update_test/with_custom_values,tests/updatesrc_tests/workspace/diff_and_update_test/with_defaults,tests/updatesrc_tests/workspace/letters
 
 # Import Shared settings
-import %workspace%/shared.bazelrc
+import %workspace%/shared.bazelrc#
 
 # Import CI settings.
 import %workspace%/ci.bazelrc
@@ -21,12 +21,8 @@ build:ci --//build:execution_env=ci
 common --enable_bzlmod
 build --@cgrindel_bazel_starlib//bzlmod:enabled
 
-# windows stuff
+# windows requires symlinks to work well
 startup --windows_enable_symlinks
-common --enable_runfiles
-common --override_module=bazel_skylib=d:\\workdir\\github\\bazel-skylib
-#common --override_module=aspect_bazel_lib=d:\\workdir\\bazel-lib2
-common --test_env=BAZEL_SH
 
 # Try to import a local.rc file; typically, written by CI
 try-import %workspace%/local.bazelrc
