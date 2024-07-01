@@ -1,0 +1,5 @@
+# The behavior of core.autocrlf=input is to force conversion to LF on addition
+# into the repository and not to perform any conversion on checkout; that is,
+# to always use LF endings regardless of the user's settings. This is set in 
+# .gitattributes as '* eol=lf'
+* eol=lf

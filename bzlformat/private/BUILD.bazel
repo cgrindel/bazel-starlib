@@ -20,6 +20,7 @@ bzl_library(
         ":bzlformat_format",
         "//bzllib:defs",
         "//updatesrc:defs",
+        "@aspect_bazel_lib//lib:windows_utils",
         "@bazel_skylib//rules:diff_test",
     ],
 )
