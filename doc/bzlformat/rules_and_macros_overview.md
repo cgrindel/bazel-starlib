@@ -17,7 +17,7 @@ On this page:
 ## bzlformat_format
 
 <pre>
-bzlformat_format(<a href="#bzlformat_format-name">name</a>, <a href="#bzlformat_format-fix_lint_warnings">fix_lint_warnings</a>, <a href="#bzlformat_format-output_suffix">output_suffix</a>, <a href="#bzlformat_format-srcs">srcs</a>, <a href="#bzlformat_format-warnings">warnings</a>)
+bzlformat_format(<a href="#bzlformat_format-name">name</a>, <a href="#bzlformat_format-srcs">srcs</a>, <a href="#bzlformat_format-fix_lint_warnings">fix_lint_warnings</a>, <a href="#bzlformat_format-output_suffix">output_suffix</a>, <a href="#bzlformat_format-warnings">warnings</a>)
 </pre>
 
 Formats Starlark source files using Buildifier.
@@ -28,10 +28,10 @@ Formats Starlark source files using Buildifier.
 | Name  | Description | Type | Mandatory | Default |
 | :------------- | :------------- | :------------- | :------------- | :------------- |
 | <a id="bzlformat_format-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/concepts/labels#target-names">Name</a> | required |  |
-| <a id="bzlformat_format-fix_lint_warnings"></a>fix_lint_warnings |  Should lint warnings be fixed, if possible.   | Boolean | optional | <code>True</code> |
-| <a id="bzlformat_format-output_suffix"></a>output_suffix |  The suffix added to the formatted output filename.   | String | optional | <code>".formatted"</code> |
 | <a id="bzlformat_format-srcs"></a>srcs |  The Starlark source files to format.   | <a href="https://bazel.build/concepts/labels">List of labels</a> | required |  |
-| <a id="bzlformat_format-warnings"></a>warnings |  The warnings that should be fixed if lint fix is enabled.   | String | optional | <code>"all"</code> |
+| <a id="bzlformat_format-fix_lint_warnings"></a>fix_lint_warnings |  Should lint warnings be fixed, if possible.   | Boolean | optional |  `True`  |
+| <a id="bzlformat_format-output_suffix"></a>output_suffix |  The suffix added to the formatted output filename.   | String | optional |  `".formatted"`  |
+| <a id="bzlformat_format-warnings"></a>warnings |  The warnings that should be fixed if lint fix is enabled.   | String | optional |  `"all"`  |
 
 
 <a id="bzlformat_lint_test"></a>
@@ -51,7 +51,7 @@ Lints the specified Starlark files using Buildifier.
 | :------------- | :------------- | :------------- | :------------- | :------------- |
 | <a id="bzlformat_lint_test-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/concepts/labels#target-names">Name</a> | required |  |
 | <a id="bzlformat_lint_test-srcs"></a>srcs |  The Starlark source files to lint.   | <a href="https://bazel.build/concepts/labels">List of labels</a> | required |  |
-| <a id="bzlformat_lint_test-warnings"></a>warnings |  The warnings that should be fixed if lint fix is enabled.   | String | optional | <code>"all"</code> |
+| <a id="bzlformat_lint_test-warnings"></a>warnings |  The warnings that should be fixed if lint fix is enabled.   | String | optional |  `"all"`  |
 
 
 <a id="bzlformat_missing_pkgs"></a>
@@ -84,8 +84,8 @@ following targets are defined:
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="bzlformat_missing_pkgs-name"></a>name |  A <code>string</code> that acts as the prefix for the target names that are defined.   |  none |
-| <a id="bzlformat_missing_pkgs-exclude"></a>exclude |  A <code>list</code> of packages to exclude from the find, test and fix operations. Each package should be specifed in the format <code>//path/to/package</code>.   |  <code>[]</code> |
+| <a id="bzlformat_missing_pkgs-name"></a>name |  A `string` that acts as the prefix for the target names that are defined.   |  none |
+| <a id="bzlformat_missing_pkgs-exclude"></a>exclude |  A `list` of packages to exclude from the find, test and fix operations. Each package should be specifed in the format `//path/to/package`.   |  `[]` |
 
 **RETURNS**
 
@@ -110,12 +110,12 @@ NOTE: Any labels detected in the `srcs` will be ignored.
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="bzlformat_pkg-name"></a>name |  The prefix <code>string</code> that is used when creating the targets.   |  <code>"bzlformat"</code> |
-| <a id="bzlformat_pkg-srcs"></a>srcs |  Optional. A <code>list</code> of Starlark source files. If no value is provided, any files that match <code>*.bzl</code>, <code>BUILD</code> or <code>BUILD.bazel</code> are used.   |  <code>None</code> |
-| <a id="bzlformat_pkg-lint_test"></a>lint_test |  Optional. A <code>bool</code> specifying whether a lint test should be defined.   |  <code>True</code> |
-| <a id="bzlformat_pkg-format_visibility"></a>format_visibility |  Optional. A <code>list</code> of Bazel visibility declarations for the format targets.   |  <code>None</code> |
-| <a id="bzlformat_pkg-update_visibility"></a>update_visibility |  Optional. A <code>list</code> of Bazel visibility declarations for the update target.   |  <code>None</code> |
-| <a id="bzlformat_pkg-lint_test_visibility"></a>lint_test_visibility |  Optional. A <code>list</code> of Bazel visibility declarations for the lint test target.   |  <code>None</code> |
+| <a id="bzlformat_pkg-name"></a>name |  The prefix `string` that is used when creating the targets.   |  `"bzlformat"` |
+| <a id="bzlformat_pkg-srcs"></a>srcs |  Optional. A `list` of Starlark source files. If no value is provided, any files that match `*.bzl`, `BUILD` or `BUILD.bazel` are used.   |  `None` |
+| <a id="bzlformat_pkg-lint_test"></a>lint_test |  Optional. A `bool` specifying whether a lint test should be defined.   |  `True` |
+| <a id="bzlformat_pkg-format_visibility"></a>format_visibility |  Optional. A `list` of Bazel visibility declarations for the format targets.   |  `None` |
+| <a id="bzlformat_pkg-update_visibility"></a>update_visibility |  Optional. A `list` of Bazel visibility declarations for the update target.   |  `None` |
+| <a id="bzlformat_pkg-lint_test_visibility"></a>lint_test_visibility |  Optional. A `list` of Bazel visibility declarations for the lint test target.   |  `None` |
 
 **RETURNS**
 

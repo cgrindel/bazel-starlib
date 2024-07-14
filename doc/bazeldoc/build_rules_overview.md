@@ -29,7 +29,7 @@ Defines targets for generating documentation, testing that the generated doc mat
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="doc_for_provs-doc_provs"></a>doc_provs |  A <code>list</code> of document provider <code>struct</code> values as returned from <code>providers.create()</code>.   |  none |
+| <a id="doc_for_provs-doc_provs"></a>doc_provs |  A `list` of document provider `struct` values as returned from `providers.create()`.   |  none |
 | <a id="doc_for_provs-kwargs"></a>kwargs |  Common attributes that are applied to the underlying rules.   |  none |
 
 
@@ -49,10 +49,10 @@ Defines a target that writes a documentation file that contains a header and a l
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
 | <a id="write_file_list-name"></a>name |  The name of the target.   |  none |
-| <a id="write_file_list-out"></a>out |  The basename of the output filename as a <code>string</code>.   |  none |
-| <a id="write_file_list-header_content"></a>header_content |  A <code>list</code> of strings representing the header content of the file.   |  <code>[]</code> |
-| <a id="write_file_list-doc_provs"></a>doc_provs |  A <code>list</code> of document provider <code>struct</code> values as returned from <code>providers.create()</code>.   |  <code>[]</code> |
-| <a id="write_file_list-do_not_edit_warning"></a>do_not_edit_warning |  A <code>bool</code> specifying whether a comment should be added to the top of the written file.   |  <code>True</code> |
+| <a id="write_file_list-out"></a>out |  The basename of the output filename as a `string`.   |  none |
+| <a id="write_file_list-header_content"></a>header_content |  A `list` of strings representing the header content of the file.   |  `[]` |
+| <a id="write_file_list-doc_provs"></a>doc_provs |  A `list` of document provider `struct` values as returned from `providers.create()`.   |  `[]` |
+| <a id="write_file_list-do_not_edit_warning"></a>do_not_edit_warning |  A `bool` specifying whether a comment should be added to the top of the written file.   |  `True` |
 
 **RETURNS**
 
@@ -75,10 +75,10 @@ Defines a target that writes a header file that will be used as a header templat
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
 | <a id="write_header-name"></a>name |  The name of the target.   |  none |
-| <a id="write_header-out"></a>out |  The basename of the output filename as a <code>string</code>.   |  <code>None</code> |
-| <a id="write_header-header_content"></a>header_content |  A <code>list</code> of strings representing the header content of the file.   |  <code>[]</code> |
-| <a id="write_header-symbols"></a>symbols |  A <code>list</code> of symbol names that will be included in the documentation.   |  <code>[]</code> |
-| <a id="write_header-do_not_edit_warning"></a>do_not_edit_warning |  A <code>bool</code> specifying whether a comment should be added to the top of the written file.   |  <code>True</code> |
+| <a id="write_header-out"></a>out |  The basename of the output filename as a `string`.   |  `None` |
+| <a id="write_header-header_content"></a>header_content |  A `list` of strings representing the header content of the file.   |  `[]` |
+| <a id="write_header-symbols"></a>symbols |  A `list` of symbol names that will be included in the documentation.   |  `[]` |
+| <a id="write_header-do_not_edit_warning"></a>do_not_edit_warning |  A `bool` specifying whether a comment should be added to the top of the written file.   |  `True` |
 
 **RETURNS**
 

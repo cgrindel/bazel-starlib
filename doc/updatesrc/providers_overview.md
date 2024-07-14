@@ -24,6 +24,6 @@ Information about files that should be copied from the output to the workspace.
 
 | Name  | Description |
 | :------------- | :------------- |
-| <a id="UpdateSrcsInfo-update_srcs"></a>update_srcs |  A <code>depset</code> of structs as created by <code>update_srcs.create()</code> which specify the source files and their outputs.    |
+| <a id="UpdateSrcsInfo-update_srcs"></a>update_srcs |  A `depset` of structs as created by `update_srcs.create()` which specify the source files and their outputs.    |
 
 

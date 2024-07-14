@@ -2,28 +2,6 @@
 # `src_utils` API
 
 
-<a id="src_utils.is_path"></a>
-
-## src_utils.is_path
-
-<pre>
-src_utils.is_path(<a href="#src_utils.is_path-src">src</a>)
-</pre>
-
-Determines whether the provided string is a path.
-
-**PARAMETERS**
-
-
-| Name  | Description | Default Value |
-| :------------- | :------------- | :------------- |
-| <a id="src_utils.is_path-src"></a>src |  A <code>string</code> value.   |  none |
-
-**RETURNS**
-
-A `bool` specifying whether the `string` value looks like a path.
-
-
 <a id="src_utils.is_label"></a>
 
 ## src_utils.is_label
@@ -39,11 +17,33 @@ Determines whether the provided string is a label.
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="src_utils.is_label-src"></a>src |  A <code>string</code> value.   |  none |
+| <a id="src_utils.is_label-src"></a>src |  A `string` value.   |  none |
 
 **RETURNS**
 
 A `bool` specifying whether the `string` value looks like a label.
+
+
+<a id="src_utils.is_path"></a>
+
+## src_utils.is_path
+
+<pre>
+src_utils.is_path(<a href="#src_utils.is_path-src">src</a>)
+</pre>
+
+Determines whether the provided string is a path.
+
+**PARAMETERS**
+
+
+| Name  | Description | Default Value |
+| :------------- | :------------- | :------------- |
+| <a id="src_utils.is_path-src"></a>src |  A `string` value.   |  none |
+
+**RETURNS**
+
+A `bool` specifying whether the `string` value looks like a path.
 
 
 <a id="src_utils.path_to_name"></a>
@@ -61,9 +61,9 @@ Converts a path string to a name suitable for use as a label name.
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="src_utils.path_to_name-path"></a>path |  A path as a <code>string</code>.   |  none |
-| <a id="src_utils.path_to_name-prefix"></a>prefix |  Optional. A string which will be prefixed to the namified path with an underscore separating the prefix.   |  <code>None</code> |
-| <a id="src_utils.path_to_name-suffix"></a>suffix |  Optional. A <code>string</code> which will be appended to the namified path with an underscore separating the suffix.   |  <code>None</code> |
+| <a id="src_utils.path_to_name-path"></a>path |  A path as a `string`.   |  none |
+| <a id="src_utils.path_to_name-prefix"></a>prefix |  Optional. A string which will be prefixed to the namified path with an underscore separating the prefix.   |  `None` |
+| <a id="src_utils.path_to_name-suffix"></a>suffix |  Optional. A `string` which will be appended to the namified path with an underscore separating the suffix.   |  `None` |
 
 **RETURNS**
 

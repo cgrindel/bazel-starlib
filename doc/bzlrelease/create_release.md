@@ -20,7 +20,7 @@ This utility expects Github's CLI (`gh`) to be installed. Running this     utili
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="create_release-name"></a>name |  The name of the executable target as a <code>string</code>.   |  none |
+| <a id="create_release-name"></a>name |  The name of the executable target as a `string`.   |  none |
 | <a id="create_release-workflow_name"></a>workflow_name |  The name of the Github Actions workflow.   |  none |
 
 
