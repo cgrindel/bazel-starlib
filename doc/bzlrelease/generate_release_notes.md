@@ -20,8 +20,8 @@ Typically, this macro is used in conjunction with the     `generate_workspace_sn
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="generate_release_notes-name"></a>name |  The name of the executable target as a <code>string</code>.   |  none |
-| <a id="generate_release_notes-generate_workspace_snippet"></a>generate_workspace_snippet |  Optional.The label that should be executed to generate the workspace snippet.   |  <code>None</code> |
-| <a id="generate_release_notes-generate_module_snippet"></a>generate_module_snippet |  Optional.The label that should be executed to generate the Bazel module snippet.   |  <code>None</code> |
+| <a id="generate_release_notes-name"></a>name |  The name of the executable target as a `string`.   |  none |
+| <a id="generate_release_notes-generate_workspace_snippet"></a>generate_workspace_snippet |  Optional.The label that should be executed to generate the workspace snippet.   |  `None` |
+| <a id="generate_release_notes-generate_module_snippet"></a>generate_module_snippet |  Optional.The label that should be executed to generate the Bazel module snippet.   |  `None` |
 
 

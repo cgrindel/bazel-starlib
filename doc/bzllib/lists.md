@@ -17,7 +17,7 @@ Returns a new `list` with any `None` values removed.
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="lists.compact-items"></a>items |  A <code>list</code> of items to evaluate.   |  none |
+| <a id="lists.compact-items"></a>items |  A `list` of items to evaluate.   |  none |
 
 **RETURNS**
 
@@ -52,8 +52,8 @@ target, this function returns `False`.
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="lists.contains-items"></a>items |  A <code>list</code> of items to evaluate.   |  none |
-| <a id="lists.contains-target_or_fn"></a>target_or_fn |  An item to be evaluated for equality or a boolean <code>function</code>. A boolean <code>function</code> is defined as one that takes a single argument and returns a <code>bool</code> value.   |  none |
+| <a id="lists.contains-items"></a>items |  A `list` of items to evaluate.   |  none |
+| <a id="lists.contains-target_or_fn"></a>target_or_fn |  An item to be evaluated for equality or a boolean `function`. A boolean `function` is defined as one that takes a single argument and returns a `bool` value.   |  none |
 
 **RETURNS**
 
@@ -75,8 +75,8 @@ Returns a new `list` containing the items from the original that     satisfy the
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="lists.filter-items"></a>items |  A <code>list</code> of items to evaluate.   |  none |
-| <a id="lists.filter-bool_fn"></a>bool_fn |  A <code>function</code> that takes a single parameter returns a <code>bool</code> value.   |  none |
+| <a id="lists.filter-items"></a>items |  A `list` of items to evaluate.   |  none |
+| <a id="lists.filter-bool_fn"></a>bool_fn |  A `function` that takes a single parameter returns a `bool` value.   |  none |
 
 **RETURNS**
 
@@ -105,8 +105,8 @@ boolean function, this function returns `None`.
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="lists.find-items"></a>items |  A <code>list</code> of items to evaluate.   |  none |
-| <a id="lists.find-bool_fn"></a>bool_fn |  A <code>function</code> that takes a single parameter and returns a <code>bool</code> value.   |  none |
+| <a id="lists.find-items"></a>items |  A `list` of items to evaluate.   |  none |
+| <a id="lists.find-bool_fn"></a>bool_fn |  A `function` that takes a single parameter and returns a `bool` value.   |  none |
 
 **RETURNS**
 
@@ -151,8 +151,8 @@ suit your needs.
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="lists.flatten-items"></a>items |  A <code>list</code> or a single item.   |  none |
-| <a id="lists.flatten-max_iterations"></a>max_iterations |  Optional. The maximum number of processing iterations.   |  <code>10000</code> |
+| <a id="lists.flatten-items"></a>items |  A `list` or a single item.   |  none |
+| <a id="lists.flatten-max_iterations"></a>max_iterations |  Optional. The maximum number of processing iterations.   |  `10000` |
 
 **RETURNS**
 
@@ -175,8 +175,8 @@ Returns a new `list` where each item is the result of calling the map     `funct
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="lists.map-items"></a>items |  A <code>list</code> of items to evaluate.   |  none |
-| <a id="lists.map-map_fn"></a>map_fn |  A <code>function</code> that takes a single parameter returns a value that will be added to the new list at the correspnding location.   |  none |
+| <a id="lists.map-items"></a>items |  A `list` of items to evaluate.   |  none |
+| <a id="lists.map-map_fn"></a>map_fn |  A `function` that takes a single parameter returns a value that will be added to the new list at the correspnding location.   |  none |
 
 **RETURNS**
 

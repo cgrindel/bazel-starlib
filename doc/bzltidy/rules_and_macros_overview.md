@@ -25,6 +25,6 @@ Defines targets for executing targets against the workspace and     confirming t
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
 | <a id="tidy-name"></a>name |  The name of the target.   |  none |
-| <a id="tidy-targets"></a>targets |  A <code>list</code> of targets to execute.   |  none |
+| <a id="tidy-targets"></a>targets |  A `list` of targets to execute.   |  none |
 
 

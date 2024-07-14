@@ -17,8 +17,8 @@ Creates a `struct` specifying a source file and an output file that should be us
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="update_srcs.create-src"></a>src |  A <code>File</code> designating a file in the workspace.   |  none |
-| <a id="update_srcs.create-out"></a>out |  A <code>File</code> designating a file in the output directory.   |  none |
+| <a id="update_srcs.create-src"></a>src |  A `File` designating a file in the workspace.   |  none |
+| <a id="update_srcs.create-out"></a>out |  A `File` designating a file in the output directory.   |  none |
 
 **RETURNS**
 

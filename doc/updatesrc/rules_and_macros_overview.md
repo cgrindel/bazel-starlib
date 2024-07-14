@@ -17,17 +17,16 @@ On this page:
 ## updatesrc_update
 
 <pre>
-updatesrc_update(<a href="#updatesrc_update-name">name</a>, <a href="#updatesrc_update-deps">deps</a>, <a href="#updatesrc_update-outs">outs</a>, <a href="#updatesrc_update-srcs">srcs</a>)
+updatesrc_update(<a href="#updatesrc_update-name">name</a>, <a href="#updatesrc_update-deps">deps</a>, <a href="#updatesrc_update-srcs">srcs</a>, <a href="#updatesrc_update-outs">outs</a>)
 </pre>
 
 Updates the source files in the workspace directory using the specified output files.
 
-There are two ways to specify the update mapping for this rule. 
+There are two ways to specify the update mapping for this rule.
 
 Option #1: You can specify a list of source files and output files using the `srcs` and `outs` attributes, respectively. The source file at index 'n' in the `srcs` list will be updated by the output file at index 'n' in the `outs` list.
 
 Option #2: Rules that provide `UpdateSrcsInfo` can be specified in the `deps` attribute.
-
 
 **ATTRIBUTES**
 
@@ -35,9 +34,9 @@ Option #2: Rules that provide `UpdateSrcsInfo` can be specified in the `deps` at
 | Name  | Description | Type | Mandatory | Default |
 | :------------- | :------------- | :------------- | :------------- | :------------- |
 | <a id="updatesrc_update-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/concepts/labels#target-names">Name</a> | required |  |
-| <a id="updatesrc_update-deps"></a>deps |  Build targets that output <code>UpdateSrcsInfo</code>.   | <a href="https://bazel.build/concepts/labels">List of labels</a> | optional | <code>[]</code> |
-| <a id="updatesrc_update-outs"></a>outs |  Output files that will be used to update the files listed in the <code>srcs</code> attribute. Every file listed in the <code>outs</code> attribute must have a corresponding source file list in the <code>srcs</code> attribute.   | <a href="https://bazel.build/concepts/labels">List of labels</a> | optional | <code>[]</code> |
-| <a id="updatesrc_update-srcs"></a>srcs |  Source files that will be updated by the files listed in the <code>outs</code> attribute. Every file listed in the <code>srcs</code> attribute must have a corresponding output file listed in the <code>outs</code> attribute.   | <a href="https://bazel.build/concepts/labels">List of labels</a> | optional | <code>[]</code> |
+| <a id="updatesrc_update-deps"></a>deps |  Build targets that output `UpdateSrcsInfo`.   | <a href="https://bazel.build/concepts/labels">List of labels</a> | optional |  `[]`  |
+| <a id="updatesrc_update-srcs"></a>srcs |  Source files that will be updated by the files listed in the `outs` attribute. Every file listed in the `srcs` attribute must have a corresponding output file listed in the `outs` attribute.   | <a href="https://bazel.build/concepts/labels">List of labels</a> | optional |  `[]`  |
+| <a id="updatesrc_update-outs"></a>outs |  Output files that will be used to update the files listed in the `srcs` attribute. Every file listed in the `outs` attribute must have a corresponding source file list in the `srcs` attribute.   | <a href="https://bazel.build/concepts/labels">List of labels</a> | optional |  `[]`  |
 
 
 <a id="updatesrc_diff_and_update"></a>
@@ -56,14 +55,14 @@ Defines an `updatesrc_update` for the package and `diff_test` targets for each s
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="updatesrc_diff_and_update-srcs"></a>srcs |  Source files that will be updated by the files listed in the <code>outs</code> attribute.  Every file listed in the <code>srcs</code> attribute must have a corresponding output file listed in the <code>outs</code> attribute.   |  none |
-| <a id="updatesrc_diff_and_update-outs"></a>outs |  Output files that will be used to update the files listed in the <code>srcs</code> attribute. Every file listed in the <code>outs</code> attribute must have a corresponding source file list in the <code>srcs</code> attribute.   |  none |
-| <a id="updatesrc_diff_and_update-name"></a>name |  Optional. The name of the <code>updatesrc_update</code> target.   |  <code>None</code> |
-| <a id="updatesrc_diff_and_update-update_name"></a>update_name |  Deprecated. The name of the <code>updatesrc_update</code> target.   |  <code>"update"</code> |
-| <a id="updatesrc_diff_and_update-diff_test_prefix"></a>diff_test_prefix |  Optional. The prefix to be used for the <code>diff_test</code> target names.   |  <code>""</code> |
-| <a id="updatesrc_diff_and_update-diff_test_suffix"></a>diff_test_suffix |  Optional. The suffix to be used for the <code>diff_test</code> target names.   |  <code>"_difftest"</code> |
-| <a id="updatesrc_diff_and_update-update_visibility"></a>update_visibility |  Optional. The visibility declarations for the <code>updatesrc_update</code> target.   |  <code>None</code> |
-| <a id="updatesrc_diff_and_update-diff_test_visibility"></a>diff_test_visibility |  Optional. The visibility declarations for the <code>diff_test</code> targets.   |  <code>None</code> |
+| <a id="updatesrc_diff_and_update-srcs"></a>srcs |  Source files that will be updated by the files listed in the `outs` attribute.  Every file listed in the `srcs` attribute must have a corresponding output file listed in the `outs` attribute.   |  none |
+| <a id="updatesrc_diff_and_update-outs"></a>outs |  Output files that will be used to update the files listed in the `srcs` attribute. Every file listed in the `outs` attribute must have a corresponding source file list in the `srcs` attribute.   |  none |
+| <a id="updatesrc_diff_and_update-name"></a>name |  Optional. The name of the `updatesrc_update` target.   |  `None` |
+| <a id="updatesrc_diff_and_update-update_name"></a>update_name |  Deprecated. The name of the `updatesrc_update` target.   |  `"update"` |
+| <a id="updatesrc_diff_and_update-diff_test_prefix"></a>diff_test_prefix |  Optional. The prefix to be used for the `diff_test` target names.   |  `""` |
+| <a id="updatesrc_diff_and_update-diff_test_suffix"></a>diff_test_suffix |  Optional. The suffix to be used for the `diff_test` target names.   |  `"_difftest"` |
+| <a id="updatesrc_diff_and_update-update_visibility"></a>update_visibility |  Optional. The visibility declarations for the `updatesrc_update` target.   |  `None` |
+| <a id="updatesrc_diff_and_update-diff_test_visibility"></a>diff_test_visibility |  Optional. The visibility declarations for the `diff_test` targets.   |  `None` |
 | <a id="updatesrc_diff_and_update-kwargs"></a>kwargs |  Common attributes that are applied to the underlying rules.   |  none |
 
 
@@ -91,8 +90,8 @@ and `targets_to_run_before` attributes.
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
 | <a id="updatesrc_update_all-name"></a>name |  The name of the target.   |  none |
-| <a id="updatesrc_update_all-targets_to_run"></a>targets_to_run |  A <code>list</code> of labels to execute after the <code>updatesrc_update</code> targets.   |  <code>[]</code> |
-| <a id="updatesrc_update_all-targets_to_run_before"></a>targets_to_run_before |  A <code>list</code> of labels to execute before the <code>updatesrc_update</code> targets.   |  <code>[]</code> |
+| <a id="updatesrc_update_all-targets_to_run"></a>targets_to_run |  A `list` of labels to execute after the `updatesrc_update` targets.   |  `[]` |
+| <a id="updatesrc_update_all-targets_to_run_before"></a>targets_to_run_before |  A `list` of labels to execute before the `updatesrc_update` targets.   |  `[]` |
 
 **RETURNS**
 

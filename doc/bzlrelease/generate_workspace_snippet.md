@@ -20,10 +20,10 @@ Without a template, the utility will output an `http_archive` declaration.     W
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="generate_workspace_snippet-name"></a>name |  The name of the executable target as a <code>string</code>.   |  none |
-| <a id="generate_workspace_snippet-template"></a>template |  Optional. The path to a template file  as a <code>string</code>.   |  <code>None</code> |
-| <a id="generate_workspace_snippet-workspace_name"></a>workspace_name |  Optional. The name of the workspace. If not provided, the workspace name is derived from the owner and repository name.   |  <code>None</code> |
-| <a id="generate_workspace_snippet-sha256_file"></a>sha256_file |  Optional. The path to a file with the SHA256 value for the release archive.   |  <code>None</code> |
-| <a id="generate_workspace_snippet-url_templates"></a>url_templates |  Optional. A <code>list</code> of templates to use when generating the URL values for the release archive.   |  <code>[]</code> |
+| <a id="generate_workspace_snippet-name"></a>name |  The name of the executable target as a `string`.   |  none |
+| <a id="generate_workspace_snippet-template"></a>template |  Optional. The path to a template file  as a `string`.   |  `None` |
+| <a id="generate_workspace_snippet-workspace_name"></a>workspace_name |  Optional. The name of the workspace. If not provided, the workspace name is derived from the owner and repository name.   |  `None` |
+| <a id="generate_workspace_snippet-sha256_file"></a>sha256_file |  Optional. The path to a file with the SHA256 value for the release archive.   |  `None` |
+| <a id="generate_workspace_snippet-url_templates"></a>url_templates |  Optional. A `list` of templates to use when generating the URL values for the release archive.   |  `[]` |
 
 
