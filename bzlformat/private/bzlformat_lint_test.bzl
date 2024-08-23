@@ -1,5 +1,6 @@
 """Definition for bzlformat_lint_test rule."""
 
+load("@aspect_bazel_lib//lib:windows_utils.bzl", "create_windows_native_launcher_script")
 load("@bazel_skylib//lib:shell.bzl", "shell")
 load("//shlib/rules:execute_binary.bzl", "execute_binary_utils")
 
@@ -23,9 +24,9 @@ def _bzlformat_lint_test_impl(ctx):
     lint_test_names = [lt.short_path for lt in lint_tests]
 
     # Write a script that executes all of the lint tests
-    out = ctx.actions.declare_file(ctx.label.name + ".sh")
+    bash_launcher = ctx.actions.declare_file(ctx.label.name + ".sh")
     ctx.actions.write(
-        output = out,
+        output = bash_launcher,
         is_executable = True,
         content = """\
 #!/usr/bin/env bash
@@ -55,15 +56,19 @@ echo "All tests succeeded!"
 """,
     )
 
+    is_windows = ctx.target_platform_has_constraint(ctx.attr._windows_constraint[platform_common.ConstraintValueInfo])
+    launcher = create_windows_native_launcher_script(ctx, bash_launcher) if is_windows else bash_launcher
+    extra_runfiles = [bash_launcher] if is_windows else []
+
     # Gather the runfiles
-    runfiles = ctx.runfiles(files = ctx.files.srcs + lint_tests)
+    runfiles = ctx.runfiles(files = ctx.files.srcs + lint_tests + extra_runfiles)
     runfiles = execute_binary_utils.collect_runfiles(
         runfiles,
         [ctx.attr._buildifier],
     )
 
     # Return the DefaultInfo
-    return DefaultInfo(executable = out, runfiles = runfiles)
+    return DefaultInfo(executable = launcher, runfiles = runfiles)
 
 bzlformat_lint_test = rule(
     implementation = _bzlformat_lint_test_impl,
@@ -85,6 +90,10 @@ bzlformat_lint_test = rule(
             allow_files = True,
             doc = "The `buildifier` script that executes the formatting.",
         ),
+        "_windows_constraint": attr.label(default = "@platforms//os:windows"),
     },
+    toolchains = [
+        "@bazel_tools//tools/sh:toolchain_type",
+    ],
     doc = "Lints the specified Starlark files using Buildifier.",
 )
