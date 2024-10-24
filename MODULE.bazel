@@ -24,9 +24,13 @@ bazel_dep(
 )
 bazel_dep(
     name = "buildifier_prebuilt",
-    version = "6.0.0.1",
+    version = "6.1.2",
 )
 bazel_dep(name = "platforms", version = "0.0.6")
+bazel_dep(
+    name = "aspect_bazel_lib", 
+    version = "2.0.1"
+)
 
 go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")
 go_deps.from_file(go_mod = "//:go.mod")

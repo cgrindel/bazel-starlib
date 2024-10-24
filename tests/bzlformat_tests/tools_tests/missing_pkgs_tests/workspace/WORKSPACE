@@ -13,6 +13,10 @@ load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 
 bazel_skylib_workspace()
 
+load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies")
+
+aspect_bazel_lib_dependencies()
+
 # Buildifier Dependencies
 
 load("@buildifier_prebuilt//:deps.bzl", "buildifier_prebuilt_deps")
