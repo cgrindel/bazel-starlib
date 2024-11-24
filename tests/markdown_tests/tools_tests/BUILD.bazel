@@ -9,8 +9,8 @@ sh_test(
         "//markdown/tools:update_markdown_doc",
     ],
     deps = [
-        "@bazel_tools//tools/bash/runfiles",
         "@cgrindel_bazel_starlib//shlib/lib:assertions",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -21,7 +21,7 @@ sh_test(
         "//markdown/tools:update_markdown_toc",
     ],
     deps = [
-        "@bazel_tools//tools/bash/runfiles",
         "@cgrindel_bazel_starlib//shlib/lib:assertions",
+        "@rules_shell//shell/runfiles",
     ],
 )

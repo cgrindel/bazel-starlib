@@ -26,8 +26,8 @@ sh_binary(
     name = "foo",
     srcs = ["foo.sh"],
     deps = [
-        "@bazel_tools//tools/bash/runfiles",
         "@cgrindel_bazel_starlib//shlib/lib:paths",
+        "@rules_shell//shell/runfiles",
     ],
 )
 ```

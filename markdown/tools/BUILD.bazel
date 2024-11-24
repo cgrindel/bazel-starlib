@@ -14,7 +14,7 @@ sh_binary(
     visibility = ["//visibility:public"],
     deps = [
         "//shlib/lib:fail",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -29,6 +29,6 @@ sh_binary(
     visibility = ["//visibility:public"],
     deps = [
         "//shlib/lib:fail",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )

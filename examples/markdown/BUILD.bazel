@@ -53,8 +53,8 @@ sh_binary(
     ],
     args = _COMMON_ARGS + select(_ARGS_SELECT_DICT),
     deps = [
-        "@bazel_tools//tools/bash/runfiles",
         "@cgrindel_bazel_starlib//shlib/lib:messages",
+        "@rules_shell//shell/runfiles",
     ],
 )
 

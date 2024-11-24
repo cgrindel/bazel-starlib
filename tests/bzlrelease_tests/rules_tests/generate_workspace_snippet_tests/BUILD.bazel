@@ -1,4 +1,5 @@
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load("//bzlrelease:defs.bzl", "generate_workspace_snippet", "hash_sha256", "release_archive")
 load("//ci:defs.bzl", "ci_integration_test_params")
@@ -54,7 +55,7 @@ sh_test(
     deps = [
         "//shlib/lib:assertions",
         "//tests:setup_git_repo",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 

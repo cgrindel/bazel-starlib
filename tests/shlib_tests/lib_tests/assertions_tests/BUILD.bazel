@@ -14,7 +14,7 @@ sh_test(
     deps = [
         ":assert_fail",
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -24,7 +24,7 @@ sh_test(
     deps = [
         ":assert_fail",
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -34,6 +34,6 @@ sh_test(
     deps = [
         ":assert_fail",
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )

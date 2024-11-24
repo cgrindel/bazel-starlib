@@ -14,7 +14,7 @@ sh_test(
     ],
     deps = [
         "//shlib/lib:fail",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -26,7 +26,7 @@ sh_test(
     ],
     deps = [
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -44,7 +44,7 @@ sh_test(
     deps = [
         "//shlib/lib:fail",
         "//tests:setup_git_repo",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -59,7 +59,7 @@ sh_test(
     deps = [
         "//shlib/lib:env",
         "//tests:setup_git_repo",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -75,7 +75,7 @@ sh_test(
     deps = [
         "//shlib/lib:env",
         "//tests:setup_git_repo",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -91,7 +91,7 @@ sh_test(
         "//shlib/lib:assertions",
         "//shlib/lib:env",
         "//tests:setup_git_repo",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -102,8 +102,8 @@ sh_test(
         "//bzlrelease/tools:generate_module_snippet",
     ],
     deps = [
-        "@bazel_tools//tools/bash/runfiles",
         "@cgrindel_bazel_starlib//shlib/lib:assertions",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
