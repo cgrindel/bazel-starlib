@@ -7,6 +7,8 @@
 ## generate_workspace_snippet
 
 <pre>
+load("@cgrindel_bazel_starlib//bzlrelease:defs.bzl", "generate_workspace_snippet")
+
 generate_workspace_snippet(<a href="#generate_workspace_snippet-name">name</a>, <a href="#generate_workspace_snippet-template">template</a>, <a href="#generate_workspace_snippet-workspace_name">workspace_name</a>, <a href="#generate_workspace_snippet-sha256_file">sha256_file</a>, <a href="#generate_workspace_snippet-url_templates">url_templates</a>)
 </pre>
 
