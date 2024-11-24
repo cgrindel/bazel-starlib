@@ -46,4 +46,7 @@ bzl_library(
 bzl_library(
     name = "updatesrc_update_all",
     srcs = ["updatesrc_update_all.bzl"],
+    deps = [
+        "@rules_shell//shell:rules_bzl",
+    ],
 )
