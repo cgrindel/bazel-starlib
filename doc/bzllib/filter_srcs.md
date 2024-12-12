@@ -7,6 +7,8 @@
 ## filter_srcs
 
 <pre>
+load("@cgrindel_bazel_starlib//bzllib:defs.bzl", "filter_srcs")
+
 filter_srcs(<a href="#filter_srcs-name">name</a>, <a href="#filter_srcs-srcs">srcs</a>, <a href="#filter_srcs-expected_count">expected_count</a>, <a href="#filter_srcs-filename_ends_with">filename_ends_with</a>)
 </pre>
 

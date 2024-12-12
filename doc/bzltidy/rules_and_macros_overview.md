@@ -14,6 +14,8 @@ On this page:
 ## tidy
 
 <pre>
+load("@cgrindel_bazel_starlib//bzltidy:defs.bzl", "tidy")
+
 tidy(<a href="#tidy-name">name</a>, <a href="#tidy-targets">targets</a>)
 </pre>
 

@@ -17,7 +17,7 @@ sh_test(
         "//shlib/lib:fail",
         "//shlib/lib:git",
         "//tests:setup_git_repo",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 

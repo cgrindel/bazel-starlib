@@ -6,7 +6,6 @@ load("@bazel_gazelle//:deps.bzl", "go_repository")
 
 def bazel_starlib_go_dependencies():
     """Load dependencies for `bazel-starlib`."""
-
     go_repository(
         name = "com_github_creasty_defaults",
         build_external = "external",
@@ -28,7 +27,6 @@ def bazel_starlib_go_dependencies():
         sum = "h1:TRYrIWJziqvMVn1owO8bmkDJTlMQFYnf74yhD8LXfgU=",
         version = "v0.0.0-20240723152757-afa4a469d4f9",
     )
-
     go_repository(
         name = "com_github_pmezard_go_difflib",
         build_external = "external",
@@ -36,7 +34,6 @@ def bazel_starlib_go_dependencies():
         sum = "h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=",
         version = "v1.0.0",
     )
-
     go_repository(
         name = "com_github_stretchr_objx",
         build_external = "external",
@@ -51,7 +48,6 @@ def bazel_starlib_go_dependencies():
         sum = "h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=",
         version = "v1.9.0",
     )
-
     go_repository(
         name = "in_gopkg_check_v1",
         build_external = "external",

@@ -21,7 +21,7 @@ sh_binary(
     deps = [
         "//shlib/lib:arrays",
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 

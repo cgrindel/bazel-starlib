@@ -2,6 +2,8 @@
 workspaces.
 """
 
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
+
 def tidy_all(name, mode = "all", tidy_target = "//:tidy"):
     """Executes the specified tidy target in each of the found workspaces.
 
@@ -14,7 +16,7 @@ def tidy_all(name, mode = "all", tidy_target = "//:tidy"):
         tidy_target: The fully-qualified label as a `string` that should be
             executed in each workspace.
     """
-    native.sh_binary(
+    sh_binary(
         name = name,
         srcs = ["@cgrindel_bazel_starlib//bzltidy/private:tidy_all.sh"],
         args = ["--mode", mode, "--tidy_target", tidy_target],

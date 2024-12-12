@@ -7,6 +7,8 @@
 ## execute_binary
 
 <pre>
+load("@cgrindel_bazel_starlib//shlib/rules:execute_binary.bzl", "execute_binary")
+
 execute_binary(<a href="#execute_binary-name">name</a>, <a href="#execute_binary-data">data</a>, <a href="#execute_binary-arguments">arguments</a>, <a href="#execute_binary-binary">binary</a>, <a href="#execute_binary-execute_in_workspace">execute_in_workspace</a>, <a href="#execute_binary-file_arguments">file_arguments</a>)
 </pre>
 

@@ -22,7 +22,7 @@ sh_test(
     data = [":my_bin_no_args"],
     deps = [
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -70,7 +70,7 @@ sh_test(
     data = [":my_bin_with_args"],
     deps = [
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -83,7 +83,7 @@ sh_binary(
         ":data_file",
     ],
     deps = [
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -112,7 +112,7 @@ sh_binary(
     srcs = ["process_file_consumer.sh"],
     deps = [
         "//shlib/lib:fail",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -136,7 +136,7 @@ sh_test(
     ],
     deps = [
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -160,7 +160,7 @@ sh_test(
         ":find_workspace_eb",
     ],
     deps = [
-        "@bazel_tools//tools/bash/runfiles",
         "@cgrindel_bazel_starlib//shlib/lib:assertions",
+        "@rules_shell//shell/runfiles",
     ],
 )

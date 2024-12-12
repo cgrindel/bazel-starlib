@@ -7,6 +7,8 @@
 ## generate_release_notes
 
 <pre>
+load("@cgrindel_bazel_starlib//bzlrelease:defs.bzl", "generate_release_notes")
+
 generate_release_notes(<a href="#generate_release_notes-name">name</a>, <a href="#generate_release_notes-generate_workspace_snippet">generate_workspace_snippet</a>, <a href="#generate_release_notes-generate_module_snippet">generate_module_snippet</a>)
 </pre>
 

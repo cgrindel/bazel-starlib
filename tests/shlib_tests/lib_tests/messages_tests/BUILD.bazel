@@ -8,6 +8,6 @@ sh_test(
     deps = [
         "//shlib/lib:assertions",
         "//shlib/lib:messages",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )

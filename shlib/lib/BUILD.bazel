@@ -25,7 +25,7 @@ sh_library(
     srcs = ["files.sh"],
     deps = [
         ":paths",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 

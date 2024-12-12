@@ -8,6 +8,6 @@ sh_test(
     deps = [
         "//bzlformat/tools/missing_pkgs:common",
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )

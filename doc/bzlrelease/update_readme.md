@@ -7,6 +7,8 @@
 ## update_readme
 
 <pre>
+load("@cgrindel_bazel_starlib//bzlrelease:defs.bzl", "update_readme")
+
 update_readme(<a href="#update_readme-name">name</a>, <a href="#update_readme-generate_workspace_snippet">generate_workspace_snippet</a>, <a href="#update_readme-generate_module_snippet">generate_module_snippet</a>, <a href="#update_readme-readme">readme</a>)
 </pre>
 

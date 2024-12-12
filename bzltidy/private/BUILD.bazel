@@ -21,10 +21,16 @@ bzl_library(
     name = "tidy",
     srcs = ["tidy.bzl"],
     visibility = ["//bzltidy:__subpackages__"],
+    deps = [
+        "@rules_shell//shell:rules_bzl",
+    ],
 )
 
 bzl_library(
     name = "tidy_all",
     srcs = ["tidy_all.bzl"],
     visibility = ["//bzltidy:__subpackages__"],
+    deps = [
+        "@rules_shell//shell:rules_bzl",
+    ],
 )

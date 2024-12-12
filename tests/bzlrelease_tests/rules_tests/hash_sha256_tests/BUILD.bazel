@@ -38,7 +38,7 @@ _HASH_DATA_ENTRIES = [
             hash_label,
         ],
         deps = [
-            "@bazel_tools//tools/bash/runfiles",
+            "@rules_shell//shell/runfiles",
         ],
     )
     for (hash_label, expected_hash) in _HASH_DATA_ENTRIES

@@ -55,8 +55,8 @@ EOF
 # MARK - Test With Defaults 
 
 expected="$(cat <<-'EOF'
-load(":zzz.bzl", "ZZZ_LIST")
 load(":aaa.bzl", "AAA_LIST")
+load(":zzz.bzl", "ZZZ_LIST")
 
 FOO_LIST = [
     "first",
@@ -73,8 +73,8 @@ assert_equal "${expected}" "${actual}" "With defaults"
 # MARK - Test Format Only (lint: off)
 
 expected="$(cat <<-'EOF'
-load(":zzz.bzl", "ZZZ_LIST")
 load(":aaa.bzl", "AAA_LIST")
+load(":zzz.bzl", "ZZZ_LIST")
 
 FOO_LIST = [
     "first",
@@ -109,8 +109,8 @@ assert_equal "${expected}" "${actual}" "Format and lint fix."
 # MARK - Test Lint Warn (lint: warn) With Bad File
 
 expected="$(cat <<-'EOF'
-load(":zzz.bzl", "ZZZ_LIST")
 load(":aaa.bzl", "AAA_LIST")
+load(":zzz.bzl", "ZZZ_LIST")
 
 FOO_LIST = [
     "first",
