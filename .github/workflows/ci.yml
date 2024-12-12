@@ -166,25 +166,13 @@ jobs:
             enable_bzlmod: true
           - test: '@@//tests/updatesrc_tests:updatesrc_test_bazel_.bazelversion'
             runner: ubuntu-22.04
-            enable_bzlmod: false
-          - test: '@@//tests/updatesrc_tests:updatesrc_test_bazel_.bazelversion'
-            runner: ubuntu-22.04
             enable_bzlmod: true
-          - test: '@@//tests/updatesrc_tests:updatesrc_test_bazel_.bazelversion'
-            runner: macos-13
-            enable_bzlmod: false
           - test: '@@//tests/updatesrc_tests:updatesrc_test_bazel_.bazelversion'
             runner: macos-13
             enable_bzlmod: true
           - test: '@@//tests/updatesrc_tests:updatesrc_test_bazel_7_4_1'
             runner: ubuntu-22.04
-            enable_bzlmod: false
-          - test: '@@//tests/updatesrc_tests:updatesrc_test_bazel_7_4_1'
-            runner: ubuntu-22.04
             enable_bzlmod: true
-          - test: '@@//tests/updatesrc_tests:updatesrc_test_bazel_7_4_1'
-            runner: macos-13
-            enable_bzlmod: false
           - test: '@@//tests/updatesrc_tests:updatesrc_test_bazel_7_4_1'
             runner: macos-13
             enable_bzlmod: true
