@@ -12,6 +12,7 @@ def updatesrc_diff_and_update(
         diff_test_suffix = "_difftest",
         update_visibility = None,
         diff_test_visibility = None,
+        failure_message = None,
         **kwargs):
     """Defines an `updatesrc_update` for the package and `diff_test` targets for each src-out pair.
 
@@ -33,6 +34,7 @@ def updatesrc_diff_and_update(
                            `updatesrc_update` target.
         diff_test_visibility: Optional. The visibility declarations for the
                               `diff_test` targets.
+        failure_message: Additional message to log if the files' contents do not match.
         **kwargs: Common attributes that are applied to the underlying rules.
     """
 
@@ -48,24 +50,32 @@ def updatesrc_diff_and_update(
     if len(srcs) != len(outs):
         fail("The number of srcs does not match the number of outs.")
 
-    # Define the diff tests.
-    for idx in range(len(srcs)):
-        src = srcs[idx]
-        out = outs[idx]
-        src_name = src.replace("/", "_")
-        diff_test(
-            name = diff_test_prefix + src_name + diff_test_suffix,
-            file1 = src,
-            file2 = out,
-            visibility = diff_test_visibility,
-            **kwargs
-        )
-
     if name == None:
         if update_name == None:
             fail("Please specify a value for the name attribute.")
         else:
             name = update_name
+
+    msg = failure_message
+
+    # Define the diff tests.
+    for idx in range(len(srcs)):
+        src = srcs[idx]
+        out = outs[idx]
+        src_name = src.replace("/", "_")
+
+        if failure_message == None:
+            # create a helpful message if none has been given
+            msg = "Run 'bazel run {}' to update {}".format(name, src)
+
+        diff_test(
+            name = diff_test_prefix + src_name + diff_test_suffix,
+            file1 = src,
+            file2 = out,
+            visibility = diff_test_visibility,
+            failure_message = msg,
+            **kwargs
+        )
 
     # Define the update target
     updatesrc_update(
