@@ -1,4 +1,6 @@
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load("//shlib/rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 
