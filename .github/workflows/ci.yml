@@ -34,73 +34,37 @@ jobs:
         include:
           - test: '@@//examples/bzlformat:simple_test_bazel_.bazelversion'
             runner: ubuntu-22.04
-            enable_bzlmod: false
-          - test: '@@//examples/bzlformat:simple_test_bazel_.bazelversion'
-            runner: ubuntu-22.04
             enable_bzlmod: true
-          - test: '@@//examples/bzlformat:simple_test_bazel_.bazelversion'
-            runner: macos-13
-            enable_bzlmod: false
           - test: '@@//examples/bzlformat:simple_test_bazel_.bazelversion'
             runner: macos-13
             enable_bzlmod: true
           - test: '@@//examples/bzlformat:simple_test_bazel_7_4_1'
             runner: ubuntu-22.04
-            enable_bzlmod: false
-          - test: '@@//examples/bzlformat:simple_test_bazel_7_4_1'
-            runner: ubuntu-22.04
             enable_bzlmod: true
-          - test: '@@//examples/bzlformat:simple_test_bazel_7_4_1'
-            runner: macos-13
-            enable_bzlmod: false
           - test: '@@//examples/bzlformat:simple_test_bazel_7_4_1'
             runner: macos-13
             enable_bzlmod: true
           - test: '@@//examples/markdown:simple_test_bazel_.bazelversion'
             runner: ubuntu-22.04
-            enable_bzlmod: false
-          - test: '@@//examples/markdown:simple_test_bazel_.bazelversion'
-            runner: ubuntu-22.04
             enable_bzlmod: true
-          - test: '@@//examples/markdown:simple_test_bazel_.bazelversion'
-            runner: macos-13
-            enable_bzlmod: false
           - test: '@@//examples/markdown:simple_test_bazel_.bazelversion'
             runner: macos-13
             enable_bzlmod: true
           - test: '@@//examples/markdown:simple_test_bazel_7_4_1'
             runner: ubuntu-22.04
-            enable_bzlmod: false
-          - test: '@@//examples/markdown:simple_test_bazel_7_4_1'
-            runner: ubuntu-22.04
             enable_bzlmod: true
-          - test: '@@//examples/markdown:simple_test_bazel_7_4_1'
-            runner: macos-13
-            enable_bzlmod: false
           - test: '@@//examples/markdown:simple_test_bazel_7_4_1'
             runner: macos-13
             enable_bzlmod: true
           - test: '@@//examples/updatesrc:simple_test_bazel_.bazelversion'
             runner: ubuntu-22.04
-            enable_bzlmod: false
-          - test: '@@//examples/updatesrc:simple_test_bazel_.bazelversion'
-            runner: ubuntu-22.04
             enable_bzlmod: true
-          - test: '@@//examples/updatesrc:simple_test_bazel_.bazelversion'
-            runner: macos-13
-            enable_bzlmod: false
           - test: '@@//examples/updatesrc:simple_test_bazel_.bazelversion'
             runner: macos-13
             enable_bzlmod: true
           - test: '@@//examples/updatesrc:simple_test_bazel_7_4_1'
             runner: ubuntu-22.04
-            enable_bzlmod: false
-          - test: '@@//examples/updatesrc:simple_test_bazel_7_4_1'
-            runner: ubuntu-22.04
             enable_bzlmod: true
-          - test: '@@//examples/updatesrc:simple_test_bazel_7_4_1'
-            runner: macos-13
-            enable_bzlmod: false
           - test: '@@//examples/updatesrc:simple_test_bazel_7_4_1'
             runner: macos-13
             enable_bzlmod: true
