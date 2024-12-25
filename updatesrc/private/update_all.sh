@@ -9,12 +9,22 @@ set -o errexit -o nounset -o pipefail
 # to bazel.
 bazel="${BIT_BAZEL_BINARY:-bazel}"
 
+# DEBUG BEGIN
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") -------------------" 
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") bazel: ${bazel}" 
+set -x
+# DEBUG END
+
 # MARK - Functions
 
 run_bazel_targets() {
   while (("$#")); do
     local target="${1}"
     if [[ -n "${target:-}" ]]; then
+      # # DEBUG BEGIN
+      # echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") ================" 
+      # echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") target: ${target}" 
+      # # DEBUG END
       "${bazel}" run "${target}"
     fi
     shift 1

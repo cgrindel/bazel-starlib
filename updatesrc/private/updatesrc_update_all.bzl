@@ -2,7 +2,7 @@
 Swift source files to the workspace directory.
 """
 
-load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
+load("@bazel_skylib//rules:native_binary.bzl", "native_binary")
 
 def updatesrc_update_all(name, targets_to_run = [], targets_to_run_before = []):
     """Defines a runnable target that will query for `updatesrc_update` targets and run them.
@@ -30,10 +30,19 @@ def updatesrc_update_all(name, targets_to_run = [], targets_to_run_before = []):
     for t in targets_to_run:
         args.extend(["--run_after", t])
 
-    sh_binary(
+    native_binary(
         name = name,
         args = args,
-        srcs = [
-            "@cgrindel_bazel_starlib//updatesrc/private:update_all.sh",
-        ],
+        src = "@cgrindel_bazel_starlib//updatesrc/private:update_all",
     )
+
+#     sh_binary(
+#         name = name,
+#         args = args,
+#         srcs = [
+#             "@cgrindel_bazel_starlib//updatesrc/private:update_all.sh",
+#         ],
+#         # deps = [
+#         #     "@bazel_tools//tools/bash/runfiles",
+#         # ],
+#     )
