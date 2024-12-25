@@ -65,11 +65,13 @@ while IFS=$'\n' read -r line; do pkgs_with_format+=("$line"); done < <(
 )
 
 pkgs_missing_format=()
-for pkg in "${all_pkgs[@]}" ; do
-  if ! contains_item "${pkg}" "${pkgs_with_format[@]:-}" && ! contains_item "${pkg}" "${exclude_pkgs[@]:-}"; then
-    pkgs_missing_format+=( "${pkg}" )
-  fi
-done
+if [[ "${#all_pkgs[@]}" -gt 0 ]]; then
+  for pkg in "${all_pkgs[@]}" ; do
+    if ! contains_item "${pkg}" "${pkgs_with_format[@]:-}" && ! contains_item "${pkg}" "${exclude_pkgs[@]:-}"; then
+      pkgs_missing_format+=( "${pkg}" )
+    fi
+  done
+fi
 
 if [[ ${#pkgs_missing_format[@]} -gt 0 ]]; then
   # Output the missing packages.
