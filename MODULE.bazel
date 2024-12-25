@@ -69,3 +69,10 @@ use_repo(
     "build_bazel_bazel_.bazelversion",
     "build_bazel_bazel_7_4_1",
 )
+
+# DEBUG BEGIN
+local_path_override(
+    module_name = "rules_bazel_integration_test",
+    path = "/Users/chuck/code/bazel-contrib/rules_bazel_integration_test/uprade_to_bazel_8",
+)
+# DEBUG END
