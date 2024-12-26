@@ -3,3 +3,5 @@ local_path_override(
     module_name = "cgrindel_bazel_starlib",
     path = "../../..",
 )
+
+bazel_dep(name = "rules_shell", version = "0.3.0")
