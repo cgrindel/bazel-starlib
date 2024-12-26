@@ -3,8 +3,6 @@ load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 package(default_visibility = ["//updatesrc:__subpackages__"])
 
-# exports_files(["update_all.sh"])
-
 bzlformat_pkg(name = "bzlformat")
 
 bzl_library(
@@ -41,6 +39,15 @@ bzl_library(
     ],
 )
 
+sh_binary(
+    name = "update_all",
+    srcs = ["update_all.sh"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
 bzl_library(
     name = "providers",
     srcs = ["providers.bzl"],
@@ -49,13 +56,4 @@ bzl_library(
 bzl_library(
     name = "update_srcs",
     srcs = ["update_srcs.bzl"],
-)
-
-sh_binary(
-    name = "update_all",
-    srcs = ["update_all.sh"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "@bazel_tools//tools/bash/runfiles",
-    ],
 )
