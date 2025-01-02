@@ -14,13 +14,14 @@ On this page:
 ## UpdateSrcsInfo
 
 <pre>
+load("@cgrindel_bazel_starlib//updatesrc:defs.bzl", "UpdateSrcsInfo")
+
 UpdateSrcsInfo(<a href="#UpdateSrcsInfo-update_srcs">update_srcs</a>)
 </pre>
 
 Information about files that should be copied from the output to the workspace.
 
 **FIELDS**
-
 
 | Name  | Description |
 | :------------- | :------------- |

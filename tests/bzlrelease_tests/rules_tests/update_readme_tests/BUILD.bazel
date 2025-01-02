@@ -1,3 +1,4 @@
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load(
     "//bzlrelease:defs.bzl",
@@ -37,7 +38,7 @@ sh_test(
     deps = [
         "//shlib/lib:assertions",
         "//tests:setup_git_repo",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 

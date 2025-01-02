@@ -7,6 +7,8 @@
 ## providers.create
 
 <pre>
+load("@cgrindel_bazel_starlib//bazeldoc:defs.bzl", "providers")
+
 providers.create(<a href="#providers.create-name">name</a>, <a href="#providers.create-stardoc_input">stardoc_input</a>, <a href="#providers.create-deps">deps</a>, <a href="#providers.create-doc_label">doc_label</a>, <a href="#providers.create-out_basename">out_basename</a>, <a href="#providers.create-doc_basename">doc_basename</a>, <a href="#providers.create-header_label">header_label</a>,
                  <a href="#providers.create-header_basename">header_basename</a>, <a href="#providers.create-symbols">symbols</a>, <a href="#providers.create-is_stardoc">is_stardoc</a>)
 </pre>

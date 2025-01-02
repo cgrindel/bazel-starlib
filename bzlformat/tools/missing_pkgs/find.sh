@@ -8,7 +8,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   source "$0.runfiles/$f" 2>/dev/null || \
   source "$(grep -sm1 "^$f " "$0.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \
   source "$(grep -sm1 "^$f " "$0.exe.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \
-  { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
+  { echo>&2 "ERROR: ${BASH_SOURCE[0]} cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v3 ---
 
 # Use the Bazel binary specified by the integration test. Otherise, fall back 
@@ -65,11 +65,13 @@ while IFS=$'\n' read -r line; do pkgs_with_format+=("$line"); done < <(
 )
 
 pkgs_missing_format=()
-for pkg in "${all_pkgs[@]}" ; do
-  if ! contains_item "${pkg}" "${pkgs_with_format[@]:-}" && ! contains_item "${pkg}" "${exclude_pkgs[@]:-}"; then
-    pkgs_missing_format+=( "${pkg}" )
-  fi
-done
+if [[ "${#all_pkgs[@]}" -gt 0 ]]; then
+  for pkg in "${all_pkgs[@]}" ; do
+    if ! contains_item "${pkg}" "${pkgs_with_format[@]:-}" && ! contains_item "${pkg}" "${exclude_pkgs[@]:-}"; then
+      pkgs_missing_format+=( "${pkg}" )
+    fi
+  done
+fi
 
 if [[ ${#pkgs_missing_format[@]} -gt 0 ]]; then
   # Output the missing packages.

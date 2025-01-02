@@ -1,3 +1,4 @@
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load("//ci:defs.bzl", "ci_integration_test_params")
 load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
@@ -10,7 +11,7 @@ sh_test(
     deps = [
         "//shlib/lib:fail",
         "//shlib/lib:github",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -20,7 +21,7 @@ sh_test(
     deps = [
         "//shlib/lib:fail",
         "//shlib/lib:github",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -30,7 +31,7 @@ sh_test(
     deps = [
         "//shlib/lib:fail",
         "//shlib/lib:github",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -40,7 +41,7 @@ sh_test(
     deps = [
         "//shlib/lib:fail",
         "//shlib/lib:github",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -50,7 +51,7 @@ sh_test(
     deps = [
         "//shlib/lib:fail",
         "//shlib/lib:github",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -60,7 +61,7 @@ sh_test(
     deps = [
         "//shlib/lib:fail",
         "//shlib/lib:github",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -75,7 +76,7 @@ sh_test(
         "//shlib/lib:env",
         "//shlib/lib:fail",
         "//shlib/lib:github",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -89,7 +90,7 @@ sh_test(
         "//shlib/lib:fail",
         "//shlib/lib:github",
         "//tests:setup_git_repo",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 

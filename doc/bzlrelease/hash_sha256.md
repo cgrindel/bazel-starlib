@@ -7,6 +7,8 @@
 ## hash_sha256
 
 <pre>
+load("@cgrindel_bazel_starlib//bzlrelease:defs.bzl", "hash_sha256")
+
 hash_sha256(<a href="#hash_sha256-name">name</a>, <a href="#hash_sha256-src">src</a>, <a href="#hash_sha256-out">out</a>)
 </pre>
 

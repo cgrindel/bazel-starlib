@@ -7,6 +7,8 @@
 ## release_archive
 
 <pre>
+load("@cgrindel_bazel_starlib//bzlrelease:defs.bzl", "release_archive")
+
 release_archive(<a href="#release_archive-name">name</a>, <a href="#release_archive-srcs">srcs</a>, <a href="#release_archive-out">out</a>, <a href="#release_archive-ext">ext</a>)
 </pre>
 

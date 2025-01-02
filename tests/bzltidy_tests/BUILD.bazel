@@ -4,6 +4,7 @@ load(
     "bazel_integration_test",
     "integration_test_utils",
 )
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load("//ci:defs.bzl", "ci_integration_test_params")
 
@@ -21,7 +22,7 @@ sh_binary(
     deps = [
         "//shlib/lib:arrays",
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 

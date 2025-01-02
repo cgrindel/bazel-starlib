@@ -10,7 +10,7 @@ if [[ $(type -t rlocation) != function ]]; then
     source "$0.runfiles/$f" 2>/dev/null || \
     source "$(grep -sm1 "^$f " "$0.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \
     source "$(grep -sm1 "^$f " "$0.exe.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \
-    { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
+    { echo>&2 "ERROR: ${BASH_SOURCE[0]} cannot find $f"; exit 1; }; f=; set -e
   # --- end runfiles.bash initialization v3 ---
 fi
 

@@ -7,6 +7,8 @@
 ## create_release
 
 <pre>
+load("@cgrindel_bazel_starlib//bzlrelease:defs.bzl", "create_release")
+
 create_release(<a href="#create_release-name">name</a>, <a href="#create_release-workflow_name">workflow_name</a>)
 </pre>
 

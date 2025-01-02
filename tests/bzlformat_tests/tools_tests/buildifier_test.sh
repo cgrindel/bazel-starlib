@@ -8,7 +8,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   source "$0.runfiles/$f" 2>/dev/null || \
   source "$(grep -sm1 "^$f " "$0.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \
   source "$(grep -sm1 "^$f " "$0.exe.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \
-  { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
+  { echo>&2 "ERROR: ${BASH_SOURCE[0]} cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v3 ---
 
 # MARK - Locate Deps
@@ -55,8 +55,8 @@ EOF
 # MARK - Test With Defaults 
 
 expected="$(cat <<-'EOF'
-load(":zzz.bzl", "ZZZ_LIST")
 load(":aaa.bzl", "AAA_LIST")
+load(":zzz.bzl", "ZZZ_LIST")
 
 FOO_LIST = [
     "first",
@@ -73,8 +73,8 @@ assert_equal "${expected}" "${actual}" "With defaults"
 # MARK - Test Format Only (lint: off)
 
 expected="$(cat <<-'EOF'
-load(":zzz.bzl", "ZZZ_LIST")
 load(":aaa.bzl", "AAA_LIST")
+load(":zzz.bzl", "ZZZ_LIST")
 
 FOO_LIST = [
     "first",
@@ -109,8 +109,8 @@ assert_equal "${expected}" "${actual}" "Format and lint fix."
 # MARK - Test Lint Warn (lint: warn) With Bad File
 
 expected="$(cat <<-'EOF'
-load(":zzz.bzl", "ZZZ_LIST")
 load(":aaa.bzl", "AAA_LIST")
+load(":zzz.bzl", "ZZZ_LIST")
 
 FOO_LIST = [
     "first",

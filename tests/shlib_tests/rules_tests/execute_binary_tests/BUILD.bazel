@@ -1,4 +1,6 @@
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load("//shlib/rules:execute_binary.bzl", "execute_binary", "file_placeholder")
 
@@ -22,7 +24,7 @@ sh_test(
     data = [":my_bin_no_args"],
     deps = [
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -70,7 +72,7 @@ sh_test(
     data = [":my_bin_with_args"],
     deps = [
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -83,7 +85,7 @@ sh_binary(
         ":data_file",
     ],
     deps = [
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -112,7 +114,7 @@ sh_binary(
     srcs = ["process_file_consumer.sh"],
     deps = [
         "//shlib/lib:fail",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -136,7 +138,7 @@ sh_test(
     ],
     deps = [
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -160,7 +162,7 @@ sh_test(
         ":find_workspace_eb",
     ],
     deps = [
-        "@bazel_tools//tools/bash/runfiles",
         "@cgrindel_bazel_starlib//shlib/lib:assertions",
+        "@rules_shell//shell/runfiles",
     ],
 )

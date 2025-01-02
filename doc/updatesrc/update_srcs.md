@@ -7,6 +7,8 @@
 ## update_srcs.create
 
 <pre>
+load("@cgrindel_bazel_starlib//updatesrc:defs.bzl", "update_srcs")
+
 update_srcs.create(<a href="#update_srcs.create-src">src</a>, <a href="#update_srcs.create-out">out</a>)
 </pre>
 
