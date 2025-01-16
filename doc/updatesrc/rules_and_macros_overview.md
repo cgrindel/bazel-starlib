@@ -49,7 +49,7 @@ Option #2: Rules that provide `UpdateSrcsInfo` can be specified in the `deps` at
 load("@cgrindel_bazel_starlib//updatesrc:defs.bzl", "updatesrc_diff_and_update")
 
 updatesrc_diff_and_update(<a href="#updatesrc_diff_and_update-srcs">srcs</a>, <a href="#updatesrc_diff_and_update-outs">outs</a>, <a href="#updatesrc_diff_and_update-name">name</a>, <a href="#updatesrc_diff_and_update-update_name">update_name</a>, <a href="#updatesrc_diff_and_update-diff_test_prefix">diff_test_prefix</a>, <a href="#updatesrc_diff_and_update-diff_test_suffix">diff_test_suffix</a>,
-                          <a href="#updatesrc_diff_and_update-update_visibility">update_visibility</a>, <a href="#updatesrc_diff_and_update-diff_test_visibility">diff_test_visibility</a>, <a href="#updatesrc_diff_and_update-failure_message">failure_message</a>, <a href="#updatesrc_diff_and_update-kwargs">kwargs</a>)
+                          <a href="#updatesrc_diff_and_update-update_visibility">update_visibility</a>, <a href="#updatesrc_diff_and_update-diff_test_visibility">diff_test_visibility</a>, <a href="#updatesrc_diff_and_update-failure_message">failure_message</a>, <a href="#updatesrc_diff_and_update-kwargs">**kwargs</a>)
 </pre>
 
 Defines an `updatesrc_update` for the package and `diff_test` targets for each src-out pair.
