@@ -44,6 +44,14 @@ use_repo(
 
 # MARK: - Dev Dependencies
 
+local_gh_ext = use_extension("//tools/gh:extensions.bzl", "local_gh_ext")
+use_repo(local_gh_ext, "bazel_starlib_gh_toolchains")
+
+register_toolchains(
+    "@bazel_starlib_gh_toolchains//:local_gh_toolchain",
+    dev_dependency = True,
+)
+
 bazel_dep(
     name = "bazel_skylib_gazelle_plugin",
     version = "1.7.1",

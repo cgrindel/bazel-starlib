@@ -83,8 +83,13 @@ sh_test(
 sh_test(
     name = "get_gh_changelog_test",
     srcs = ["get_gh_changelog_test.sh"],
+    env = {
+        "GH": "$(GH)",
+    },
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
+    toolchains = ["@cgrindel_bazel_starlib//tools/gh:toolchain_type"],
+    # toolchains = ["@bazel_starlib_gh_toolchains//:local_gh"],  # WORKED
     deps = [
         "//shlib/lib:env",
         "//shlib/lib:fail",
