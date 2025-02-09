@@ -33,8 +33,6 @@ setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
 setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" || \
   (echo >&2 "Failed to locate ${setup_git_repo_sh_location}" && exit 1)
 
-is_installed git || fail "Could not find git."
-
 # MARK - Setup
 
 # shellcheck source=SCRIPTDIR/../../setup_git_repo.sh

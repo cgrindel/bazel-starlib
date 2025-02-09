@@ -33,8 +33,6 @@ generate_release_notes_sh_location=cgrindel_bazel_starlib/bzlrelease/tools/gener
 generate_release_notes_sh="$(rlocation "${generate_release_notes_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_release_notes_sh_location}" && exit 1)
 
-is_installed git || fail "Could not find git."
-
 # MARK - Setup
 
 generate_module_snippet_sh="${PWD}/generate_module_snippet.sh"

@@ -37,8 +37,6 @@ generate_sha256_sh_location=cgrindel_bazel_starlib/bzlrelease/tools/generate_sha
 generate_sha256_sh="$(rlocation "${generate_sha256_sh_location}")" || \
   (echo >&2 "Failed to locate ${generate_sha256_sh_location}" && exit 1)
 
-is_installed git || fail "Could not find git."
-
 # MARK - Setup
 
 # shellcheck source=SCRIPTDIR/../../setup_git_repo.sh
