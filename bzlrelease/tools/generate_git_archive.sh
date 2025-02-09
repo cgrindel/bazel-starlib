@@ -44,7 +44,9 @@ github_sh="$(rlocation "${github_sh_location}")" || \
 # shellcheck source=SCRIPTDIR/../../shlib/lib/github.sh
 source "${github_sh}"
 
-is_installed git || fail "This utility requires git to be installed and in the path."
+git_exe_location=cgrindel_bazel_starlib/tools/git/git.exe
+git="$(rlocation "${git_exe_location}")" || \
+  (echo >&2 "Failed to locate ${git_exe_location}" && exit 1)
 
 # MARK - Process Args
 
@@ -125,7 +127,7 @@ fi
 
 # Wrap the archive call
 create_archive() {
-  git archive --format=tar "--prefix=${prefix}/" "${commit_or_tag}" 
+  "${git}" archive --format=tar "--prefix=${prefix}/" "${commit_or_tag}" 
 }
 
 # Compress

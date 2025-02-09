@@ -48,6 +48,9 @@ sh_library(
 sh_library(
     name = "git",
     srcs = ["git.sh"],
+    data = [
+        "//tools/git",
+    ],
 )
 
 sh_library(

@@ -37,13 +37,6 @@ github_sh="$(rlocation "${github_sh_location}")" || \
 # shellcheck source=SCRIPTDIR/../../shlib/lib/github.sh
 source "${github_sh}"
 
-
-# MARK - Check for Required Software
-
-required_software="Both git and Github CLI (gh) are required to run this utility."
-is_installed git || fail "Could not find git." "${required_software}"
-
-
 # MARK - Process Args
 
 get_usage() {

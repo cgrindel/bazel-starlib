@@ -37,12 +37,6 @@ github_sh="$(rlocation "${github_sh_location}")" || \
 # shellcheck source=SCRIPTDIR/../../shlib/lib/github.sh
 source "${github_sh}"
 
-
-# MARK - Check for Required Software
-
-is_installed git || fail "Could not find git."
-
-
 # MARK - Process Arguments
 
 main_branch=main

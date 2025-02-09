@@ -33,6 +33,9 @@ sh_binary(
 sh_binary(
     name = "generate_git_archive",
     srcs = ["generate_git_archive.sh"],
+    data = [
+        "//tools/git",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//shlib/lib:env",
@@ -72,6 +75,9 @@ sh_binary(
 sh_binary(
     name = "create_release_tag",
     srcs = ["create_release_tag.sh"],
+    data = [
+        "//tools/git",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//shlib/lib:env",

@@ -4,6 +4,13 @@ module(
     bazel_compatibility = [">=6.1.0"],
 )
 
+local_git_ext = use_extension("//tools/git:extensions.bzl", "local_git_ext")
+use_repo(local_git_ext, "bazel_starlib_git_toolchains")
+
+register_toolchains(
+    "@bazel_starlib_git_toolchains//:local_git_toolchain",
+)
+
 # MARK: - Runtime Dependencies
 
 bazel_dep(
