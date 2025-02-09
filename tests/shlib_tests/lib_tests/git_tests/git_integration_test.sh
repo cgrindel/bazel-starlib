@@ -41,7 +41,9 @@ arrays_sh="$(rlocation "${arrays_sh_location}")" || \
 # shellcheck source=SCRIPTDIR/../../../../shlib/lib/arrays.sh
 source "${arrays_sh}"
 
-is_installed git || fail "Could not find git."
+git_exe_location=cgrindel_bazel_starlib/tools/git/git.exe
+git="$(rlocation "${git_exe_location}")" || \
+  (echo >&2 "Failed to locate ${git_exe_location}" && exit 1)
 
 # MARK - Setup
 
@@ -49,8 +51,8 @@ is_installed git || fail "Could not find git."
 source "${setup_git_repo_sh}"
 cd "${repo_dir}"
 
-git config user.email "noone@example.org"
-git config user.name "No one"
+"${git}" config user.email "noone@example.org"
+"${git}" config user.name "No one"
 
 # MARK - Test
 
