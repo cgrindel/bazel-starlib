@@ -53,6 +53,9 @@ sh_library(
 sh_library(
     name = "github",
     srcs = ["github.sh"],
+    data = [
+        "@multitool//tools/gh",
+    ],
 )
 
 # MARK: - Collect Files for Integation Tests

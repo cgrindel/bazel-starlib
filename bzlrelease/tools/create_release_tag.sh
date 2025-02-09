@@ -41,7 +41,6 @@ source "${github_sh}"
 # MARK - Check for Required Software
 
 required_software="Both git and Github CLI (gh) are required to run this utility."
-is_installed gh || fail "Could not find Github CLI (gh)." "${required_software}"
 is_installed git || fail "Could not find git." "${required_software}"
 
 

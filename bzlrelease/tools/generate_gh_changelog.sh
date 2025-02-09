@@ -40,7 +40,6 @@ source "${github_sh}"
 
 # MARK - Check for Required Software
 
-is_installed gh || fail "Could not find Github CLI (gh)."
 is_installed git || fail "Could not find git."
 
 

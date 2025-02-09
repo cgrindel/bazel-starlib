@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/theoremlp/rules_multitool/main/lockfile.schema.json",
+  "gh": {
+    "binaries": [
+      {
+        "kind": "archive",
+        "url": "https://github.com/cli/cli/releases/download/v2.66.1/gh_2.66.1_linux_arm64.tar.gz",
+        "file": "gh_2.66.1_linux_arm64/bin/gh",
+        "sha256": "f11a2c3d1a2cfd97106fa6405fbb4c1254a7e91be38537148ab7d27209698a6b",
+        "os": "linux",
+        "cpu": "arm64"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/cli/cli/releases/download/v2.66.1/gh_2.66.1_linux_amd64.tar.gz",
+        "file": "gh_2.66.1_linux_amd64/bin/gh",
+        "sha256": "387b4e9a717ddf2efa8426a774f14463bf64e41fb7bec3463c737cf5413e5a79",
+        "os": "linux",
+        "cpu": "x86_64"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/cli/cli/releases/download/v2.66.1/gh_2.66.1_macOS_amd64.zip",
+        "file": "gh_2.66.1_macOS_amd64/bin/gh",
+        "sha256": "7ae1b19f5b4c46545be7c9a16a52b922b9dee4755f051c7fa6f105784632d035",
+        "os": "macos",
+        "cpu": "arm64"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/cli/cli/releases/download/v2.66.1/gh_2.66.1_macOS_amd64.zip",
+        "file": "gh_2.66.1_macOS_amd64/bin/gh",
+        "sha256": "7ae1b19f5b4c46545be7c9a16a52b922b9dee4755f051c7fa6f105784632d035",
+        "os": "macos",
+        "cpu": "x86_64"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/cli/cli/releases/download/v2.66.1/gh_2.66.1_windows_amd64.zip",
+        "file": "bin/gh.exe",
+        "sha256": "2f8cd5d8bcffc65dc4dc69bb48ca536b53f792744ba7da7e75b238bde9deb2bf",
+        "os": "windows",
+        "cpu": "x86_64"
+      }
+    ]
+  }
+}

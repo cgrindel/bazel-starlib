@@ -31,7 +31,6 @@ github_sh="$(rlocation "${github_sh_location}")" || \
 # shellcheck source=SCRIPTDIR/../../../../shlib/lib/github.sh
 source "${github_sh}"
 
-is_installed gh || fail "Could not find Github CLI (gh)."
 
 # MARK - Test
 

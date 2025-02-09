@@ -2,15 +2,16 @@
 
 # Github-related Functions
 
-# This is used to determine if the library has been loaded
-cgrindel_bazel_starlib_lib_private_github_loaded() { return; }
+gh_location=multitool/tools/gh/gh
+gh="$(rlocation "${gh_location}")" || \
+  (echo >&2 "Failed to locate ${gh_location}" && exit 1)
 
 # MARK - Github Auth Status Functions
 
 # Returns the raw gh auth status displyaing the auth token.
 # Doc: https://cli.github.com/manual/gh_auth_status
 get_gh_auth_status() {
-  gh auth status -t 2>&1
+  "${gh}" auth status -t 2>&1
 }
 
 # Example gh auth status:
@@ -93,7 +94,7 @@ get_gh_repo_name() {
 # Succeeds if the Github release exists. Otherwise, it fails.
 gh_release_exists() {
   local tag="${1}"
-  gh release view "${tag}" 2> /dev/null
+  "${gh}" release view "${tag}" 2> /dev/null
 }
 
 # MARK - Github API Functions
@@ -132,5 +133,5 @@ get_gh_changelog() {
   [[ ${#api_args[@]} == 0 ]] && fail "Expected one or more API args."
 
   # Execute the API call
-  gh api "repos/{owner}/{repo}/releases/generate-notes" "${api_args[@]}" --jq '.body'
+  "${gh}" api "repos/{owner}/{repo}/releases/generate-notes" "${api_args[@]}" --jq '.body'
 }
