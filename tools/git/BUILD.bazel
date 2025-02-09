@@ -1,0 +1,26 @@
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+load(":git_binary.bzl", "git_binary")
+load(":git_vars.bzl", "git_vars")
+
+bzlformat_pkg(name = "bzlformat")
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)
+
+toolchain_type(
+    name = "toolchain_type",
+    visibility = ["//visibility:public"],
+)
+
+git_vars(
+    name = "vars",
+    visibility = ["//visibility:public"],
+)
+
+git_binary(
+    name = "git",
+    visibility = ["//visibility:public"],
+)
