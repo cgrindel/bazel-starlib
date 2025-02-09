@@ -1,3 +1,4 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
 load(":git_binary.bzl", "git_binary")
 load(":git_vars.bzl", "git_vars")
@@ -23,4 +24,45 @@ git_vars(
 git_binary(
     name = "git",
     visibility = ["//visibility:public"],
+)
+
+bzl_library(
+    name = "extensions",
+    srcs = ["extensions.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [":local_git"],
+)
+
+bzl_library(
+    name = "git_binary",
+    srcs = ["git_binary.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [":git_toolchains"],
+)
+
+bzl_library(
+    name = "git_toolchain",
+    srcs = ["git_toolchain.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [":git_toolchains"],
+)
+
+bzl_library(
+    name = "git_toolchains",
+    srcs = ["git_toolchains.bzl"],
+    visibility = ["//visibility:public"],
+)
+
+bzl_library(
+    name = "git_vars",
+    srcs = ["git_vars.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [":git_toolchains"],
+)
+
+bzl_library(
+    name = "local_git",
+    srcs = ["local_git.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [":git_toolchains"],
 )
