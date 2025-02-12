@@ -1,6 +1,6 @@
 """Definition for `release_archive` rule."""
 
-_TAR_TOOLCHAIN_TYPE = "@aspect_bazel_lib//lib:tar_toolchain_type"
+load("//tools/tar:tar_toolchains.bzl", "tar_toolchains")
 
 def _release_archive_impl(ctx):
     out_basename = ctx.attr.out
@@ -20,23 +20,7 @@ def _release_archive_impl(ctx):
         content = file_list_args,
     )
 
-    # # Create the archive
-    # args = ctx.actions.args()
-    # args.add(out)
-    # args.add(file_list_out)
-    # ctx.actions.run_shell(
-    #     outputs = [out],
-    #     inputs = [file_list_out] + ctx.files.srcs,
-    #     arguments = [args],
-    #     command = """\
-    # archive="$1"
-    # file_list="$2"
-    # shift 1
-    # tar 2>/dev/null -hczvf "$archive" -T "${file_list}"
-    # """,
-    # )
-
-    bsdtar = ctx.toolchains[_TAR_TOOLCHAIN_TYPE]
+    bsdtar = ctx.toolchains[tar_toolchains.type]
 
     args = ctx.actions.args()
     args.add("-f", out)
@@ -51,7 +35,7 @@ def _release_archive_impl(ctx):
         ),
         arguments = [args],
         executable = bsdtar.tarinfo.binary,
-        toolchain = _TAR_TOOLCHAIN_TYPE,
+        toolchain = tar_toolchains.type,
     )
 
     return DefaultInfo(
@@ -74,7 +58,7 @@ release_archive = rule(
             mandatory = True,
         ),
     },
-    toolchains = [_TAR_TOOLCHAIN_TYPE],
+    toolchains = [tar_toolchains.type],
     doc = """\
 Create a source release archive.
 

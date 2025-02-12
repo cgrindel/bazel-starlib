@@ -54,11 +54,12 @@ filegroup(
 )
 
 bzl_library(
-    name = "hash_sha256",
-    srcs = ["hash_sha256.bzl"],
+    name = "release_archive",
+    srcs = ["release_archive.bzl"],
+    deps = ["//tools/tar:tar_toolchains"],
 )
 
 bzl_library(
-    name = "release_archive",
-    srcs = ["release_archive.bzl"],
+    name = "hash_sha256",
+    srcs = ["hash_sha256.bzl"],
 )
