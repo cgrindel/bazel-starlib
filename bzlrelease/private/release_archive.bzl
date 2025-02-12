@@ -28,7 +28,6 @@ def _release_archive_impl(ctx):
     args.add("-T", file_list_out)
     ctx.actions.run(
         outputs = [out],
-        # inputs = [file_list_out] + ctx.files.srcs,
         inputs = depset(
             direct = [file_list_out] + ctx.files.srcs,
             transitive = [bsdtar.default.files],
