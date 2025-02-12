@@ -23,9 +23,13 @@ archive_tar_gz_location=cgrindel_bazel_starlib/tests/bzlrelease_tests/rules_test
 archive_tar_gz="$(rlocation "${archive_tar_gz_location}")" || \
   (echo >&2 "Failed to locate ${archive_tar_gz_location}" && exit 1)
 
+tar_exe_location=cgrindel_bazel_starlib/tools/tar/tar.exe
+tar="$(rlocation "${tar_exe_location}")" || \
+  (echo >&2 "Failed to locate ${tar_exe_location}" && exit 1)
+
 # MARK - Test
 
-contents="$(tar -tf "${archive_tar_gz}")"
+contents="$( "${tar}" -tf "${archive_tar_gz}" )"
 assert_match "bzlrelease/" "${contents}" 
 assert_match "bzlrelease/private/" "${contents}" 
 assert_match "bzlrelease/tools/" "${contents}" 

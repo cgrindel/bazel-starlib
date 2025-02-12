@@ -1,0 +1,23 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+load(":tar_binary.bzl", "tar_binary")
+
+bzlformat_pkg(name = "bzlformat")
+
+tar_binary(
+    name = "tar",
+    visibility = ["//visibility:public"],
+)
+
+bzl_library(
+    name = "tar_binary",
+    srcs = ["tar_binary.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [":tar_toolchains"],
+)
+
+bzl_library(
+    name = "tar_toolchains",
+    srcs = ["tar_toolchains.bzl"],
+    visibility = ["//visibility:public"],
+)

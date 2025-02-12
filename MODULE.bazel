@@ -36,6 +36,7 @@ bazel_dep(
 bazel_dep(name = "platforms", version = "0.0.10")
 bazel_dep(name = "rules_shell", version = "0.3.0")
 bazel_dep(name = "rules_multitool", version = "1.0.0")
+bazel_dep(name = "aspect_bazel_lib", version = "2.13.0")
 
 multitool = use_extension("@rules_multitool//multitool:extension.bzl", "multitool")
 multitool.hub(lockfile = "//tools/gh:multitool.lock.json")
@@ -63,7 +64,7 @@ bazel_dep(
 )
 bazel_dep(
     name = "rules_bazel_integration_test",
-    version = "0.31.0",
+    version = "0.32.0",
     dev_dependency = True,
 )
 

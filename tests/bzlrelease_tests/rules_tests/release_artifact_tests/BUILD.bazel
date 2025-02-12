@@ -16,7 +16,10 @@ release_archive(
 sh_test(
     name = "archive_test",
     srcs = ["archive_test.sh"],
-    data = [":archive"],
+    data = [
+        ":archive",
+        "//tools/tar",
+    ],
     deps = [
         "@cgrindel_bazel_starlib//shlib/lib:assertions",
         "@rules_shell//shell/runfiles",
