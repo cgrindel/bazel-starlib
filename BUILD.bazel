@@ -171,6 +171,7 @@ _RUNTIME_PKGS = [
     "//shlib/tools",
     "//tools/gh",
     "//tools/git",
+    "//tools/tar",
     "//updatesrc",
     "//updatesrc/private",
 ]

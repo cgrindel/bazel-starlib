@@ -1,0 +1,13 @@
+module(
+    name = "toolchains_example",
+    version = "0.0.0",
+)
+
+bazel_dep(name = "rules_shell", version = "0.3.0")
+bazel_dep(name = "cgrindel_bazel_starlib")
+local_path_override(
+    module_name = "cgrindel_bazel_starlib",
+    path = "../../..",
+)
+
+bazel_dep(name = "bazel_skylib", version = "1.7.1")
