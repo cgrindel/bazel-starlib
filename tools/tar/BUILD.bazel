@@ -4,6 +4,12 @@ load(":tar_binary.bzl", "tar_binary")
 
 bzlformat_pkg(name = "bzlformat")
 
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+    visibility = ["//:__subpackages__"],
+)
+
 tar_binary(
     name = "tar",
     visibility = ["//visibility:public"],
