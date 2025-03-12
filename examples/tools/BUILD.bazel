@@ -18,7 +18,7 @@ bzlformat_pkg(name = "bzlformat")
 #     srcs = glob(["*.md"]) + [
 #         # The child workspaces do not appear as packages in the parent workspace.
 #         # Hence, we reference the relevant doc files as files, not a target.
-#         "toolchains/README.md",
+#         "tools/README.md",
 #     ],
 #     visibility = ["//:markdown_test_visibility"],
 # )
@@ -26,7 +26,7 @@ bzlformat_pkg(name = "bzlformat")
 # MARK: - Integration Tests
 
 default_test_runner(
-    name = "toolchains_test_runner",
+    name = "tools_test_runner",
     bazel_cmds = [
         "info",
         "test //...",
@@ -34,7 +34,7 @@ default_test_runner(
 )
 
 bazel_integration_tests(
-    name = "toolchains_test",
+    name = "tools_test",
     bazel_binaries = bazel_binaries,
     bazel_versions = bazel_binaries.versions.all,
     tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS + [
@@ -43,7 +43,7 @@ bazel_integration_tests(
         # https://github.com/bazelbuild/bazel/issues/19908
         "no-sandbox",
     ],
-    test_runner = ":toolchains_test_runner",
+    test_runner = ":tools_test_runner",
     workspace_files = integration_test_utils.glob_workspace_files("workspace") + [
         "//:workspace_integration_test_files",
     ],
@@ -57,7 +57,7 @@ test_suite(
     tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
     tests = [
         integration_test_utils.bazel_integration_test_name(
-            "toolchains_test",
+            "tools_test",
             bazel_binaries.versions.current,
         ),
     ],
@@ -68,21 +68,21 @@ test_suite(
     name = "all_integration_tests",
     tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
     tests = integration_test_utils.bazel_integration_test_names(
-        "toolchains_test",
+        "tools_test",
         bazel_binaries.versions.all,
     ),
     visibility = ["//:__subpackages__"],
 )
 
 ci_integration_test_params(
-    name = "toolchains_test_params",
+    name = "tools_test_params",
     bzlmod_modes = ["enabled"],
     oss = [
         "macos",
         "linux",
     ],
     test_names = integration_test_utils.bazel_integration_test_names(
-        "toolchains_test",
+        "tools_test",
         bazel_binaries.versions.all,
     ),
     visibility = ["//:__subpackages__"],
@@ -90,6 +90,6 @@ ci_integration_test_params(
 
 alias(
     name = "all_test_params",
-    actual = ":toolchains_test_params",
+    actual = ":tools_test_params",
     visibility = ["//:__subpackages__"],
 )

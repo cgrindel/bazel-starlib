@@ -210,6 +210,7 @@ _INTEGRATION_TEST_PKGS = [
     "//examples/bzlformat",
     "//examples/markdown",
     "//examples/updatesrc",
+    "//examples/tools",
     "//tests/bzlformat_tests/tools_tests/missing_pkgs_tests",
     "//tests/bzlrelease_tests/rules_tests/generate_release_notes_tests",
     "//tests/bzlrelease_tests/rules_tests/generate_workspace_snippet_tests",
