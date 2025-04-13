@@ -3,7 +3,7 @@
 # Github-related Functions
 
 gh_location=multitool/tools/gh/gh
-gh="$(rlocation "${gh_location}")" || \
+gh="$(rlocation "${gh_location}")" ||
   (echo >&2 "Failed to locate ${gh_location}" && exit 1)
 
 # MARK - Github Auth Status Functions
@@ -24,16 +24,16 @@ get_gh_auth_status() {
 # Returns the current user's username from the auth status.
 get_gh_username() {
   local auth_status="${1:-}"
-  [[ -z "${auth_status}" ]] && auth_status="$( get_gh_auth_status )"
-  echo "${auth_status}" | \
+  [[ -z "${auth_status}" ]] && auth_status="$(get_gh_auth_status)"
+  echo "${auth_status}" |
     sed -E -n 's/^.* Logged in to [^[:space:]]+ account ([^[:space:]]+).*/\1/gp'
 }
 
 # Returns the current user's auth token from the auth status.
 get_gh_auth_token() {
   local auth_status="${1:-}"
-  [[ -z "${auth_status}" ]] && auth_status="$( get_gh_auth_status )"
-  echo "${auth_status}" | \
+  [[ -z "${auth_status}" ]] && auth_status="$(get_gh_auth_status)"
+  echo "${auth_status}" |
     sed -E -n 's/^.* Token:[[:space:]]+([^[:space:]]+).*/\1/gp'
 }
 
@@ -63,7 +63,7 @@ _github_url_owner_sed_cmds+=('s|.*github.com/([^/]+)/.*|\1|gp')
 # owner and repo name.
 _get_github_repo_pattern_index() {
   local repo_url="${1}"
-  for (( i = 0; i < ${#_github_url_patterns[@]}; i++ )); do
+  for ((i = 0; i < ${#_github_url_patterns[@]}; i++)); do
     pattern="${_github_url_patterns[$i]}"
     [[ "${repo_url}" =~ ${pattern} ]] && echo $i && return
   done
@@ -73,14 +73,14 @@ _get_github_repo_pattern_index() {
 # Succeeds if the URL is a Github repo URL. Otherwise, it fails.
 is_github_repo_url() {
   local repo_url="${1}"
-  _get_github_repo_pattern_index "${repo_url}" > /dev/null
+  _get_github_repo_pattern_index "${repo_url}" >/dev/null
 }
 
 # Return the Github repository owner from the repository URL.
 get_gh_repo_owner() {
   local repo_url="${1}"
   local pattern_index
-  pattern_index=$( _get_github_repo_pattern_index "${repo_url}" )
+  pattern_index=$(_get_github_repo_pattern_index "${repo_url}")
   local sed_cmd="${_github_url_owner_sed_cmds[${pattern_index}]}"
   echo "${repo_url}" | sed -E -n "${sed_cmd}"
 }
@@ -94,7 +94,7 @@ get_gh_repo_name() {
 # Succeeds if the Github release exists. Otherwise, it fails.
 gh_release_exists() {
   local tag="${1}"
-  "${gh}" release view "${tag}" 2> /dev/null
+  "${gh}" release view "${tag}" 2>/dev/null
 }
 
 # MARK - Github API Functions
@@ -103,9 +103,9 @@ gh_release_exists() {
 get_gh_api_base_url() {
   local repo_url="${1}"
   local owner
-  owner="$( get_gh_repo_owner "${repo_url}" )"
+  owner="$(get_gh_repo_owner "${repo_url}")"
   local name
-  name="$( get_gh_repo_name "${repo_url}" )"
+  name="$(get_gh_repo_name "${repo_url}")"
   echo "https://api.github.com/repos/${owner}/${name}"
 }
 
@@ -117,15 +117,15 @@ get_gh_changelog() {
   local api_args=(--method POST)
   while (("$#")); do
     case "${1}" in
-      --*)
-        # Add the arg name and the value to the api args array
-        api_args+=(-F "${1:2}=${2}")
-        shift 2
-        ;;
-      *)
-        args+=("${1}")
-        shift 1
-        ;;
+    --*)
+      # Add the arg name and the value to the api args array
+      api_args+=(-F "${1:2}=${2}")
+      shift 2
+      ;;
+    *)
+      args+=("${1}")
+      shift 1
+      ;;
     esac
   done
 
@@ -134,4 +134,59 @@ get_gh_changelog() {
 
   # Execute the API call
   "${gh}" api "repos/{owner}/{repo}/releases/generate-notes" "${api_args[@]}" --jq '.body'
+}
+
+get_gh_changelog_organized() {
+  local all_changes=()
+  while IFS=$'\n' read -r line; do all_changes+=("$line"); done < <(
+    get_gh_changelog "${@}"
+  )
+
+  local top_lines=()
+  local dep_lines=()
+  local other_lines=()
+  local full_changelog
+  for line in "${all_changes[@]}"; do
+    if [[ "${line}" =~ ^[*][\ ]+[a-z]+: ]]; then
+      top_lines+=("${line}")
+    elif [[ "${line}" =~ ^[*][\ ]+[a-z]+\(deps\): ]]; then
+      dep_lines+=("${line}")
+    elif [[ "${line}" =~ ^[*][*]Full\ Changelog ]]; then
+      full_changelog="${line}"
+    elif [[ ! "${line}" =~ ^[\ ]*$ ]] && [[ ! "${line}" =~ ^# ]]; then
+      other_lines+=("${line}")
+    fi
+  done
+
+  local all_output=("## What's Changed" "")
+  if [[ "${#top_lines[@]}" -gt 0 ]]; then
+    all_output+=(
+      "### Highlights"
+      ""
+      "${top_lines[@]}"
+      ""
+    )
+  fi
+  if [[ "${#dep_lines[@]}" -gt 0 ]]; then
+    all_output+=(
+      "### Dependency Updates"
+      ""
+      "${dep_lines[@]}"
+      ""
+    )
+  fi
+  if [[ "${#other_lines[@]}" -gt 0 ]]; then
+    all_output+=(
+      "### Other Changes"
+      ""
+      "${other_lines[@]}"
+      ""
+    )
+  fi
+  if [[ -n "${full_changelog:-}" ]]; then
+    all_output+=("${full_changelog}")
+  fi
+  if [[ "${#all_output[@]}" -gt 0 ]]; then
+    printf "%s\n" "${all_output[@]}"
+  fi
 }

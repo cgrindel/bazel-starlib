@@ -137,6 +137,9 @@ jobs:
           - test: '@@//tests/shlib_tests/lib_tests/github_tests:get_gh_auth_status_test'
             runner: ubuntu-22.04
             enable_bzlmod: true
+          - test: '@@//tests/shlib_tests/lib_tests/github_tests:get_gh_changelog_organized_test'
+            runner: ubuntu-22.04
+            enable_bzlmod: true
           - test: '@@//tests/shlib_tests/lib_tests/github_tests:get_gh_changelog_test'
             runner: ubuntu-22.04
             enable_bzlmod: true
