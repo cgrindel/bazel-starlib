@@ -38,7 +38,10 @@ bazel_dep(name = "rules_shell", version = "0.3.0")
 bazel_dep(name = "rules_multitool", version = "1.0.0")
 bazel_dep(name = "aspect_bazel_lib", version = "2.13.0")
 
-multitool = use_extension("@rules_multitool//multitool:extension.bzl", "multitool")
+multitool = use_extension(
+    "@rules_multitool//multitool:extension.bzl",
+    "multitool",
+)
 multitool.hub(lockfile = "//tools/gh:multitool.lock.json")
 use_repo(multitool, "multitool")
 
@@ -74,11 +77,14 @@ bazel_binaries = use_extension(
     dev_dependency = True,
 )
 bazel_binaries.download(version_file = "//:.bazelversion")
-bazel_binaries.download(version = "last_green")
+
+# GH525: Enable once local_config_platform issue is resolved.
+# bazel_binaries.download(version = "last_green")
 use_repo(
     bazel_binaries,
     "bazel_binaries",
     "bazel_binaries_bazelisk",
     "build_bazel_bazel_.bazelversion",
-    "build_bazel_bazel_last_green",
+    # GH525: Enable once local_config_platform issue is resolved.
+    # "build_bazel_bazel_last_green",
 )
