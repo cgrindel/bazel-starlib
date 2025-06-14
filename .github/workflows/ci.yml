@@ -28,12 +28,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
   integration_test_matrix:
-    permissions: write-all
-    # permissions: read-all
-      # contents: read
-      # pull-requests: read
-      # issues: read
-      # statuses: read
     strategy:
       fail-fast: false
       matrix:
@@ -120,6 +114,7 @@ jobs:
             runner: macos-13
             enable_bzlmod: true
     runs-on: ${{ matrix.runner }}
+    permissions: read-all
     env:
       CC: clang
     steps:
