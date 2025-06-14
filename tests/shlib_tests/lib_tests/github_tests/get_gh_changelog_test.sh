@@ -44,6 +44,11 @@ cd "${repo_dir}"
 
 # MARK - Test
 
+# DEBUG BEGIN
+echo >&2 "*** CHUCK $(basename "${BASH_SOURCE[0]}") ========" 
+get_gh_auth_status >&2
+# DEBUG END
+
 tag_name="v0.1.1"
 prev_tag_name="v0.1.0"
 result="$( get_gh_changelog --tag_name  "${tag_name}" --previous_tag_name "${prev_tag_name}" )"
