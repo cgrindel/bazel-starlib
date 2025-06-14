@@ -55,3 +55,6 @@ result="$( get_gh_changelog --tag_name  "${tag_name}" --previous_tag_name "${pre
 [[ "${result}" =~ \*\*Full\ Changelog\*\*:\ https://github\.com/cgrindel/bazel-starlib/compare/v0\.1\.0\.\.\.v0\.1\.1 ]] || \
   fail "Expected to find changelog URL for v0.1.0...v0.1.1. result: ${result}"
 
+# DEBUG BEGIN
+fail "STOP"
+# DEBUG END
