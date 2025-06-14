@@ -28,11 +28,11 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
   integration_test_matrix:
-    permissions:
-      contents: read
-      pull-requests: read
-      issues: read
-      statuses: read
+    permissions: read-all
+      # contents: read
+      # pull-requests: read
+      # issues: read
+      # statuses: read
     strategy:
       fail-fast: false
       matrix:
