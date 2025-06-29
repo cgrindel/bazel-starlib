@@ -20,7 +20,7 @@ bazel_dep(
 )
 bazel_dep(
     name = "gazelle",
-    version = "0.40.0",
+    version = "0.44.0",
     repo_name = "bazel_gazelle",
 )
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
@@ -33,10 +33,10 @@ bazel_dep(
     name = "buildifier_prebuilt",
     version = "7.3.1",
 )
-bazel_dep(name = "platforms", version = "0.0.10")
-bazel_dep(name = "rules_shell", version = "0.3.0")
+bazel_dep(name = "platforms", version = "0.0.11")
+bazel_dep(name = "rules_shell", version = "0.4.1")
 bazel_dep(name = "rules_multitool", version = "1.0.0")
-bazel_dep(name = "aspect_bazel_lib", version = "2.13.0")
+bazel_dep(name = "aspect_bazel_lib", version = "2.19.4")
 
 multitool = use_extension(
     "@rules_multitool//multitool:extension.bzl",
@@ -46,7 +46,7 @@ multitool.hub(lockfile = "//tools/gh:multitool.lock.json")
 use_repo(multitool, "multitool")
 
 go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
-go_sdk.download(version = "1.23.3")
+go_sdk.download(version = "1.23.5")
 
 go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")
 go_deps.from_file(go_mod = "//:go.mod")
@@ -78,13 +78,13 @@ bazel_binaries = use_extension(
 )
 bazel_binaries.download(version_file = "//:.bazelversion")
 
-# GH525: Enable once local_config_platform issue is resolved.
+# GH525: Enable once archive extraction regression is fixed.
 # bazel_binaries.download(version = "last_green")
 use_repo(
     bazel_binaries,
     "bazel_binaries",
     "bazel_binaries_bazelisk",
     "build_bazel_bazel_.bazelversion",
-    # GH525: Enable once local_config_platform issue is resolved.
+    # GH525: Enable once archive extraction regression is fixed.
     # "build_bazel_bazel_last_green",
 )
