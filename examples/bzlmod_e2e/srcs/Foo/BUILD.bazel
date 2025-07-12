@@ -1,5 +1,5 @@
-load("//header:header.bzl", "header")
 load("@cgrindel_bazel_starlib//updatesrc:defs.bzl", "updatesrc_update")
+load("//header:header.bzl", "header")
 
 header(
     name = "add_headers",
