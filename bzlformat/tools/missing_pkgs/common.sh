@@ -16,14 +16,13 @@ normalize_pkg() {
   # Strip a trailing slash
   # Make sure to add prefix (//)
   case "${pkg}" in
-    "//"*)
-      ;;
-    "/"*)
-      local pkg="/${pkg}"
-      ;;
-    *)
-      local pkg="//${pkg}"
-      ;;
+  "//"*) ;;
+  "/"*)
+    local pkg="/${pkg}"
+    ;;
+  *)
+    local pkg="//${pkg}"
+    ;;
   esac
   echo "${pkg}"
 }

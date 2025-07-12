@@ -5,7 +5,7 @@ set -o errexit -o nounset -o pipefail
 # Purposefully not using Bazel's Bash runfiles support. Running it here,
 # appears to mess up the execution of targets that also use it.
 
-# Use the Bazel binary specified by the integration test. Otherise, fall back 
+# Use the Bazel binary specified by the integration test. Otherise, fall back
 # to bazel.
 bazel="${BIT_BAZEL_BINARY:-bazel}"
 
@@ -79,16 +79,16 @@ run_bazel_targets() {
 targets=()
 while (("$#")); do
   case "${1}" in
-    "--help")
-      show_usage
-      ;;
-    --*)
-      usage_error "Unrecognized option. ${1}"
-      ;;
-    *)
-      targets+=("${1}")
-      shift 1
-      ;;
+  "--help")
+    show_usage
+    ;;
+  --*)
+    usage_error "Unrecognized option. ${1}"
+    ;;
+  *)
+    targets+=("${1}")
+    shift 1
+    ;;
   esac
 done
 

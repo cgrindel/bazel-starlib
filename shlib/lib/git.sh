@@ -3,7 +3,7 @@
 # Git-related Functions
 
 git_exe_location=cgrindel_bazel_starlib/tools/git/git.exe
-git="$(rlocation "${git_exe_location}")" || \
+git="$(rlocation "${git_exe_location}")" ||
   (echo >&2 "Failed to locate ${git_exe_location}" && exit 1)
 
 # MARK - Default Values
@@ -12,22 +12,22 @@ remote=origin
 
 # Returns the URL for the git repository. It is typically in the form:
 #  git@github.com:cgrindel/bazel-starlib.git
-# OR 
+# OR
 #  https://github.com/cgrindel/bazel-starlib.git
 get_git_remote_url() {
   "${git}" config --get remote.origin.url
 }
 
 # Fetch the latest info from the remote.
-fetch_latest_from_git_remote() { 
+fetch_latest_from_git_remote() {
   local remote="${1:-}"
   local branch="${2:-}"
   fetch_cmd=("${git}" fetch)
   if [[ -n "${remote:-}" ]]; then
-    fetch_cmd+=( "${remote}" )
-    [[ -z "${branch:-}" ]] || fetch_cmd+=( "${branch}" )
+    fetch_cmd+=("${remote}")
+    [[ -z "${branch:-}" ]] || fetch_cmd+=("${branch}")
   fi
-  "${fetch_cmd[@]}" 2> /dev/null
+  "${fetch_cmd[@]}" 2>/dev/null
 }
 
 # MARK - Tag Functions
@@ -51,10 +51,10 @@ get_git_release_tags() {
   )
   [[ ${#tags[@]} == 0 ]] && return
   local release_tags=()
-  for tag in "${tags[@]}" ; do
-    is_valid_release_tag "${tag}" && release_tags+=( "${tag}" )
+  for tag in "${tags[@]}"; do
+    is_valid_release_tag "${tag}" && release_tags+=("${tag}")
   done
-  for release_tag in "${release_tags[@]}" ; do
+  for release_tag in "${release_tags[@]}"; do
     echo "${release_tag}"
   done
 }
@@ -66,7 +66,7 @@ git_tag_exists() {
     "${git}" tag
   )
   # Make sure that the for loop variable is not tag or something else common.
-  for cur_tag in "${tags[@]}" ; do
+  for cur_tag in "${tags[@]}"; do
     [[ "${cur_tag}" == "${target_tag}" ]] && return
   done
   return 1
@@ -77,7 +77,7 @@ create_git_tag() {
   local msg="${2}"
   local commit="${3:-}"
   git_tag_cmd=("${git}" tag -a -m "${msg}" "${tag}")
-  [[ -z "${commit:-}" ]] || git_tag_cmd+=( "${commit}" )
+  [[ -z "${commit:-}" ]] || git_tag_cmd+=("${commit}")
   "${git_tag_cmd[@]}"
 }
 
@@ -85,20 +85,20 @@ create_git_release_tag() {
   local tag="${1}"
   local commit="${2:-}"
   msg="Release ${tag}"
-  git_tag_cmd=( create_git_tag "${tag}" "${msg}" )
-  [[ -z "${commit:-}" ]] || git_tag_cmd+=( "${commit}" )
+  git_tag_cmd=(create_git_tag "${tag}" "${msg}")
+  [[ -z "${commit:-}" ]] || git_tag_cmd+=("${commit}")
   "${git_tag_cmd[@]}"
 }
 
 git_tag_exists_on_remote() {
   local tag="${1}"
   local remote="${2:-origin}"
-  "${git}" ls-remote --exit-code "${remote}" "refs/tags/${tag}" > /dev/null
+  "${git}" ls-remote --exit-code "${remote}" "refs/tags/${tag}" >/dev/null
 }
 
 delete_git_tag() {
   local tag="${1}"
-  "${git}" tag -d "${tag}" > /dev/null
+  "${git}" tag -d "${tag}" >/dev/null
 }
 
 push_git_tag_to_remote() {
@@ -110,9 +110,8 @@ push_git_tag_to_remote() {
 delete_git_tag_on_remote() {
   local tag="${1}"
   local remote="${2:-origin}"
-  "${git}" push --delete "${remote}" "${tag}" > /dev/null
+  "${git}" push --delete "${remote}" "${tag}" >/dev/null
 }
-
 
 # MARK - Branch Functions
 
