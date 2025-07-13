@@ -54,5 +54,5 @@ line2
 line3" "line1
 line2_modified
 line3"
-assert_fail 'Diff \(expected vs actual\):'
+assert_fail 'Expected to be equal.*Expected:.*line1.*line2.*line3.*Actual:.*line1.*line2_modified.*line3.*Diff \(expected vs actual\):'
 reset_fail_err_msgs

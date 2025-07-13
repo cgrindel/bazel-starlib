@@ -46,11 +46,19 @@ assert_equal() {
     local diff_output
     diff_output=$(diff <(echo "${expected}") <(echo "${actual}") 2>/dev/null || true)
     if [[ -n ${diff_output} ]]; then
-      err_msg="$(make_err_msg "Expected to be equal. expected: ${expected}, actual: ${actual}
+      err_msg="$(make_err_msg "Expected to be equal.
+Expected:
+${expected}
+Actual:
+${actual}
 Diff (expected vs actual):
 ${diff_output}" "${3:-}")"
     else
-      err_msg="$(make_err_msg "Expected to be equal. expected: ${expected}, actual: ${actual}" "${3:-}")"
+      err_msg="$(make_err_msg "Expected to be equal.
+Expected:
+${expected}
+Actual:
+${actual}" "${3:-}")"
     fi
     fail "${err_msg}"
   fi
