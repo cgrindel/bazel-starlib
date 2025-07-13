@@ -44,7 +44,8 @@ assert_equal() {
   local err_msg
   if [[ ${expected} != "${actual}" ]]; then
     local diff_output
-    diff_output=$(diff <(echo "${expected}") <(echo "${actual}") 2>/dev/null || true)
+    diff_output=$(diff <(echo "${expected}") <(echo "${actual}") 2>/dev/null \
+      || true)
     if [[ -n ${diff_output} ]]; then
       err_msg="$(make_err_msg "Expected to be equal.
 Expected:
