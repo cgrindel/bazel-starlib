@@ -1,40 +1,37 @@
 #!/usr/bin/env bash
 
-# Echos the provided message to stderr and exits with an error (1).
-fail() {
-  local msg="${1:-}"
-  shift 1
-  while (("$#")); do
-    msg="${msg:-}"$'\n'"${1}"
-    shift 1
-  done
-  echo >&2 "${msg}" 
-  exit 1
+do_exit() {
+  local exit_code=${1:-0}
+  exit "${exit_code}"
 }
 
 # Prints the message to stderr.
 warn() {
-  # local msg="${1}"
-  msg="WARNING: ${1}"
-  shift 1
-  while (("$#")); do
-    msg="${msg}"$'\n'"${1}"
-    shift 1
-  done
-  echo >&2 "${msg}" 
+  if [[ ${#} -gt 0 ]]; then
+    echo >&2 "${@}"
+  else
+    cat >&2
+  fi
+}
+
+# Echos the provided message to stderr and exits with an error (1).
+fail() {
+  local cmd=(warn)
+  if [[ ${#} -gt 0 ]]; then
+    cmd+=("${@}")
+  fi
+  "${cmd[@]}"
+  do_exit 1
 }
 
 # Print an error message and dump the usage/help for the utility.
 # This function expects a get_usage function to be defined.
 usage_error() {
-  local msg="${1:-}"
-  cmd=(fail)
-  [[ -z "${msg:-}" ]] || cmd+=("${msg}" "")
-  cmd+=("$(get_usage)")
-  "${cmd[@]}"
+  [[ ${#} -gt 0 ]] && warn "${@}"
+  fail "$(get_usage)"
 }
 
 show_usage() {
   get_usage
-  exit 0
+  do_exit 0
 }
