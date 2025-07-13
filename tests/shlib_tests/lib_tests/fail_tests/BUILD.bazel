@@ -32,3 +32,13 @@ sh_test(
         "@cgrindel_bazel_starlib//shlib/lib:assertions",
     ],
 )
+
+sh_test(
+    name = "show_usage_test",
+    srcs = ["show_usage_test.sh"],
+    deps = [
+        "//shlib/lib:fail",
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_starlib//shlib/lib:assertions",
+    ],
+)
