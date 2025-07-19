@@ -70,14 +70,7 @@ bazel_dep(
     version = "0.32.0",
     dev_dependency = True,
 )
-bazel_dep(name = "aspect_rules_lint", version = "1.5.0", dev_dependency = True)
-
-# DEBUG BEGIN
-local_path_override(
-    module_name = "aspect_rules_lint",
-    path = "/Users/chuck/code/cgrindel/rules_lint/add_rules_shell",
-)
-# DEBUG END
+bazel_dep(name = "aspect_rules_lint", version = "1.5.1", dev_dependency = True)
 
 bazel_binaries = use_extension(
     "@rules_bazel_integration_test//:extensions.bzl",
