@@ -8,7 +8,7 @@ cgrindel_bazel_shlib_lib_messages_loaded() { return; }
 # Flags:
 #   --exit_code: Used to specify the exit code to return/exit.
 #   --no_exit: If specified, the function will `return` the exit code instead of calling `exit`.
-# 
+#
 # Args:
 #   *: All of the collected args are combined to create an error message. If no values are
 #      specified, then a default error message is used.
@@ -23,19 +23,19 @@ exit_with_msg() {
   local args=()
   while (("$#")); do
     case "${1}" in
-      "--exit_code")
-        local exit_code
-        exit_code=$(($2))
-        shift 2
-        ;;
-      "--no_exit")
-        local no_exit=1
-        shift 1
-        ;;
-      *)
-        args+=("${1}")
-        shift 1
-        ;;
+    "--exit_code")
+      local exit_code
+      exit_code=$(($2))
+      shift 2
+      ;;
+    "--no_exit")
+      local no_exit=1
+      shift 1
+      ;;
+    *)
+      args+=("${1}")
+      shift 1
+      ;;
     esac
   done
 
@@ -48,4 +48,3 @@ exit_with_msg() {
   fi
   exit ${exit_code}
 }
-

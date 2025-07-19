@@ -5,7 +5,7 @@ set -o errexit -o nounset -o pipefail
 # Purposefully not using Bazel's Bash runfiles support. Running it here,
 # appears to mess up the execution of targets that also use it.
 
-# Use the Bazel binary specified by the integration test. Otherise, fall back 
+# Use the Bazel binary specified by the integration test. Otherise, fall back
 # to bazel.
 bazel="${BIT_BAZEL_BINARY:-bazel}"
 
@@ -65,18 +65,18 @@ EOF
 
 git_status() {
   local out="${1}"
-  git status --porcelain > "${out}"
+  git status --porcelain >"${out}"
 }
 
 git_diff() {
   local out="${1}"
-  git diff > "${out}"
+  git diff >"${out}"
 }
 
 diff_files() {
   local first="${1}"
   local second="${2}"
-  diff "${first}" "${second}" 
+  diff "${first}" "${second}"
 }
 
 # MARK - Process Args
@@ -84,20 +84,20 @@ diff_files() {
 tidy_target=
 while (("$#")); do
   case "${1}" in
-    "--help")
-      show_usage
-      ;;
-    --*)
-      usage_error "Unrecognized option. ${1}"
-      ;;
-    *)
-      if [[ -z "${tidy_target:-}" ]]; then
-        tidy_target="${1}"
-      else
-        usage_error "Unrecognized argument. ${1}"
-      fi
-      shift 1
-      ;;
+  "--help")
+    show_usage
+    ;;
+  --*)
+    usage_error "Unrecognized option. ${1}"
+    ;;
+  *)
+    if [[ -z "${tidy_target:-}" ]]; then
+      tidy_target="${1}"
+    else
+      usage_error "Unrecognized argument. ${1}"
+    fi
+    shift 1
+    ;;
   esac
 done
 
@@ -138,12 +138,12 @@ after_diff="${after_dir}/diff"
 git_diff "${after_diff}"
 
 # Compare the before and after
-status_diff="$( diff_files "${before_status}" "${after_status}" || true )"
+status_diff="$(diff_files "${before_status}" "${after_status}" || true)"
 if [[ -n "${status_diff:-}" ]]; then
   fail "The git status outputs changed." "${status_diff}"
 fi
 
-diff_diff="$( diff_files "${before_diff}" "${after_diff}" || true )" 
+diff_diff="$(diff_files "${before_diff}" "${after_diff}" || true)"
 if [[ -n "${diff_diff:-}" ]]; then
   fail "The git diff outputs changed." "${diff_diff}"
 fi

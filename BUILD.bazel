@@ -44,6 +44,12 @@ bzlformat_pkg(name = "bzlformat")
 
 bzlformat_missing_pkgs(name = "bzlformat_missing_pkgs")
 
+# MARK: - Format using rules_lint
+
+alias(
+    name = "format",
+    actual = "//tools/format",
+)
 # MARK: - Update Source Files
 
 updatesrc_update_all(name = "update_all")
@@ -61,6 +67,7 @@ tidy(
         ":go_mod_tidy",
         ":gazelle_update_repos",
         ":update_build_files",
+        ":format",
     ],
 )
 

@@ -21,11 +21,10 @@ normalize_path() {
     local basename
     basename="$(basename "${path}")"
   fi
-  dirname="$(cd "${dirname}" > /dev/null && pwd)"
+  dirname="$(cd "${dirname}" >/dev/null && pwd)"
   if [[ -z "${basename:-}" ]]; then
     echo "${dirname}"
   else
     echo "${dirname}/${basename}"
   fi
 }
-
