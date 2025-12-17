@@ -25,7 +25,7 @@ func (itp *IntTestParams) EnableBzlmod() bool {
 func (itp *IntTestParams) Runner() string {
 	switch itp.OS {
 	case MacOS:
-		return "macos-13"
+		return "macos-15"
 	case LinuxOS:
 		return "ubuntu-22.04"
 	default:
