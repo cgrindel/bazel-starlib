@@ -84,12 +84,12 @@ bazel_binaries = use_extension(
 bazel_binaries.download(version_file = "//:.bazelversion")
 
 # GH525: Enable once archive extraction regression is fixed.
-# bazel_binaries.download(version = "last_green")
+bazel_binaries.download(version = "last_green")
 use_repo(
     bazel_binaries,
     "bazel_binaries",
     "bazel_binaries_bazelisk",
     "build_bazel_bazel_.bazelversion",
     # GH525: Enable once archive extraction regression is fixed.
-    # "build_bazel_bazel_last_green",
+    "build_bazel_bazel_last_green",
 )
