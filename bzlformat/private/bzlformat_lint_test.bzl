@@ -1,6 +1,9 @@
 """Definition for bzlformat_lint_test rule."""
 
-load("@aspect_bazel_lib//lib:windows_utils.bzl", "create_windows_native_launcher_script")
+load(
+    "@aspect_bazel_lib//lib:windows_utils.bzl",
+    "create_windows_native_launcher_script",
+)
 load("@bazel_skylib//lib:shell.bzl", "shell")
 load("//shlib/rules:execute_binary.bzl", "execute_binary_utils")
 
@@ -11,7 +14,9 @@ def _bzlformat_lint_test_impl(ctx):
     # Generate the lint tests
     lint_tests = []
     for src in ctx.files.srcs:
-        exec_binary_out = ctx.actions.declare_file(ctx.label.name + "_" + src.basename + ".sh")
+        exec_binary_out = ctx.actions.declare_file(
+            ctx.label.name + "_" + src.basename + ".sh",
+        )
         lint_tests.append(exec_binary_out)
         arguments = common_arguments + [src.short_path]
         execute_binary_utils.write_execute_binary_script(
@@ -46,22 +51,30 @@ for lint_test in "${lint_tests[@]}"; do
     exit_code=0
     "${lint_test}" || exit_code=$?
     if [[ ${exit_code} != 0 ]]; then
-      failure_count=$(( ${failure_count} + 1 )) 
+      failure_count=$(( ${failure_count} + 1 ))
       echo >&2 "${lint_test} failed with ${exit_code}."
     fi
 done
 
-[[ ${failure_count} > 0 ]] && echo >&2 "${failure_count} lint tests failed." && exit 1
+[[ ${failure_count} > 0 ]] && echo >&2 "${failure_count} lint tests failed." \
+  && exit 1
 echo "All tests succeeded!"
 """,
     )
 
-    is_windows = ctx.target_platform_has_constraint(ctx.attr._windows_constraint[platform_common.ConstraintValueInfo])
-    launcher = create_windows_native_launcher_script(ctx, bash_launcher) if is_windows else bash_launcher
+    is_windows = ctx.target_platform_has_constraint(
+        ctx.attr._windows_constraint[platform_common.ConstraintValueInfo],
+    )
+    if is_windows:
+        launcher = create_windows_native_launcher_script(ctx, bash_launcher)
+    else:
+        launcher = bash_launcher
     extra_runfiles = [bash_launcher] if is_windows else []
 
     # Gather the runfiles
-    runfiles = ctx.runfiles(files = ctx.files.srcs + lint_tests + extra_runfiles)
+    runfiles = ctx.runfiles(
+        files = ctx.files.srcs + lint_tests + extra_runfiles,
+    )
     runfiles = execute_binary_utils.collect_runfiles(
         runfiles,
         [ctx.attr._buildifier],

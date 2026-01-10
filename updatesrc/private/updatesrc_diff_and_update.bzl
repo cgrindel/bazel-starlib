@@ -63,6 +63,7 @@ def updatesrc_diff_and_update(
         src = srcs[idx]
         out = outs[idx]
         src_name = src.replace("/", "_")
+
         if failure_message == None:
             # create a helpful message if none has been given
             msg = "Run 'bazel run {}' to update {}".format(name, src)
