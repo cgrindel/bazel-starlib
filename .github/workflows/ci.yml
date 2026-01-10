@@ -38,10 +38,22 @@ jobs:
           - test: '@@//examples/bzlformat:simple_test_bazel_.bazelversion'
             runner: macos-15
             enable_bzlmod: true
+          - test: '@@//examples/bzlformat:simple_test_bazel_last_green'
+            runner: ubuntu-22.04
+            enable_bzlmod: true
+          - test: '@@//examples/bzlformat:simple_test_bazel_last_green'
+            runner: macos-15
+            enable_bzlmod: true
           - test: '@@//examples/markdown:simple_test_bazel_.bazelversion'
             runner: ubuntu-22.04
             enable_bzlmod: true
           - test: '@@//examples/markdown:simple_test_bazel_.bazelversion'
+            runner: macos-15
+            enable_bzlmod: true
+          - test: '@@//examples/markdown:simple_test_bazel_last_green'
+            runner: ubuntu-22.04
+            enable_bzlmod: true
+          - test: '@@//examples/markdown:simple_test_bazel_last_green'
             runner: macos-15
             enable_bzlmod: true
           - test: '@@//examples/tools:tools_test_bazel_.bazelversion'
@@ -50,10 +62,22 @@ jobs:
           - test: '@@//examples/tools:tools_test_bazel_.bazelversion'
             runner: macos-15
             enable_bzlmod: true
+          - test: '@@//examples/tools:tools_test_bazel_last_green'
+            runner: ubuntu-22.04
+            enable_bzlmod: true
+          - test: '@@//examples/tools:tools_test_bazel_last_green'
+            runner: macos-15
+            enable_bzlmod: true
           - test: '@@//examples/updatesrc:simple_test_bazel_.bazelversion'
             runner: ubuntu-22.04
             enable_bzlmod: true
           - test: '@@//examples/updatesrc:simple_test_bazel_.bazelversion'
+            runner: macos-15
+            enable_bzlmod: true
+          - test: '@@//examples/updatesrc:simple_test_bazel_last_green'
+            runner: ubuntu-22.04
+            enable_bzlmod: true
+          - test: '@@//examples/updatesrc:simple_test_bazel_last_green'
             runner: macos-15
             enable_bzlmod: true
           - test: '@@//examples:bzlmod_e2e_test_bazel_.bazelversion'
@@ -62,10 +86,22 @@ jobs:
           - test: '@@//examples:bzlmod_e2e_test_bazel_.bazelversion'
             runner: macos-15
             enable_bzlmod: true
+          - test: '@@//examples:bzlmod_e2e_test_bazel_last_green'
+            runner: ubuntu-22.04
+            enable_bzlmod: true
+          - test: '@@//examples:bzlmod_e2e_test_bazel_last_green'
+            runner: macos-15
+            enable_bzlmod: true
           - test: '@@//tests/bzlformat_tests/tools_tests/missing_pkgs_tests:missing_pkgs_test_bazel_.bazelversion'
             runner: ubuntu-22.04
             enable_bzlmod: true
           - test: '@@//tests/bzlformat_tests/tools_tests/missing_pkgs_tests:missing_pkgs_test_bazel_.bazelversion'
+            runner: macos-15
+            enable_bzlmod: true
+          - test: '@@//tests/bzlformat_tests/tools_tests/missing_pkgs_tests:missing_pkgs_test_bazel_last_green'
+            runner: ubuntu-22.04
+            enable_bzlmod: true
+          - test: '@@//tests/bzlformat_tests/tools_tests/missing_pkgs_tests:missing_pkgs_test_bazel_last_green'
             runner: macos-15
             enable_bzlmod: true
           - test: '@@//tests/bzlrelease_tests/rules_tests/generate_release_notes_tests:generate_release_notes_test'
@@ -111,6 +147,12 @@ jobs:
             runner: ubuntu-22.04
             enable_bzlmod: true
           - test: '@@//tests/updatesrc_tests:updatesrc_test_bazel_.bazelversion'
+            runner: macos-15
+            enable_bzlmod: true
+          - test: '@@//tests/updatesrc_tests:updatesrc_test_bazel_last_green'
+            runner: ubuntu-22.04
+            enable_bzlmod: true
+          - test: '@@//tests/updatesrc_tests:updatesrc_test_bazel_last_green'
             runner: macos-15
             enable_bzlmod: true
     runs-on: ${{ matrix.runner }}
