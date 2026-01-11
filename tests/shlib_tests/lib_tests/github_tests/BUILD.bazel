@@ -83,6 +83,9 @@ sh_test(
 sh_test(
     name = "get_gh_changelog_test",
     srcs = ["get_gh_changelog_test.sh"],
+    data = [
+        "//tests/fixtures/github_api:changelog_v0.1.0_v0.1.1.txt",
+    ],
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
     deps = [
@@ -97,6 +100,9 @@ sh_test(
 sh_test(
     name = "get_gh_changelog_organized_test",
     srcs = ["get_gh_changelog_organized_test.sh"],
+    data = [
+        "//tests/fixtures/github_api:changelog_v0.24.0_v0.25.1.txt",
+    ],
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
     deps = [
