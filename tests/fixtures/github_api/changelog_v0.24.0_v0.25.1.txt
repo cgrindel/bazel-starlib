@@ -1,0 +1,11 @@
+## What's Changed
+
+* chore: update README.md for v0.24.0 by @cgrindel-app-token-generator[bot] in https://github.com/cgrindel/bazel-starlib/pull/503
+* feat: use BSD tar toolchain for release archive functionality by @cgrindel in https://github.com/cgrindel/bazel-starlib/pull/504
+* chore: update README.md for v0.25.0 by @cgrindel-app-token-generator[bot] in https://github.com/cgrindel/bazel-starlib/pull/505
+* fix: include `//tools/tar` in release by @cgrindel in https://github.com/cgrindel/bazel-starlib/pull/509
+* chore(deps): update dependency bazel to v8.1.0 by @cgrindel-self-hosted-renovate[bot] in https://github.com/cgrindel/bazel-starlib/pull/506
+* chore(deps): update dependency bazel to v8.1.1 by @cgrindel-self-hosted-renovate[bot] in https://github.com/cgrindel/bazel-starlib/pull/507
+* fix(deps): update dependency markdown-link-check to v3.13.7 by @cgrindel-self-hosted-renovate[bot] in https://github.com/cgrindel/bazel-starlib/pull/508
+
+**Full Changelog**: https://github.com/cgrindel/bazel-starlib/compare/v0.24.0...v0.25.1

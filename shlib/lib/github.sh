@@ -8,7 +8,7 @@ gh="$(rlocation "${gh_location}")" ||
 
 # MARK - Github Auth Status Functions
 
-# Returns the raw gh auth status displyaing the auth token.
+# Returns the raw gh auth status displaying the auth token.
 # Doc: https://cli.github.com/manual/gh_auth_status
 get_gh_auth_status() {
   "${gh}" auth status -t 2>&1
@@ -24,7 +24,7 @@ get_gh_auth_status() {
 # Returns the current user's username from the auth status.
 get_gh_username() {
   local auth_status="${1:-}"
-  [[ -z "${auth_status}" ]] && auth_status="$(get_gh_auth_status)"
+  [[ -z ${auth_status} ]] && auth_status="$(get_gh_auth_status)"
   echo "${auth_status}" |
     sed -E -n 's/^.* Logged in to [^[:space:]]+ account ([^[:space:]]+).*/\1/gp'
 }
@@ -32,7 +32,7 @@ get_gh_username() {
 # Returns the current user's auth token from the auth status.
 get_gh_auth_token() {
   local auth_status="${1:-}"
-  [[ -z "${auth_status}" ]] && auth_status="$(get_gh_auth_status)"
+  [[ -z ${auth_status} ]] && auth_status="$(get_gh_auth_status)"
   echo "${auth_status}" |
     sed -E -n 's/^.* Token:[[:space:]]+([^[:space:]]+).*/\1/gp'
 }
@@ -65,7 +65,7 @@ _get_github_repo_pattern_index() {
   local repo_url="${1}"
   for ((i = 0; i < ${#_github_url_patterns[@]}; i++)); do
     pattern="${_github_url_patterns[$i]}"
-    [[ "${repo_url}" =~ ${pattern} ]] && echo $i && return
+    [[ ${repo_url} =~ ${pattern} ]] && echo $i && return
   done
   return 1
 }
@@ -132,6 +132,16 @@ get_gh_changelog() {
   [[ ${#args[@]} -gt 0 ]] && fail "Received positional args when none were expected. args:" "${args[@]}"
   [[ ${#api_args[@]} == 0 ]] && fail "Expected one or more API args."
 
+  # Use mock data if provided (for testing without API access)
+  # Set GH_CHANGELOG_MOCK_FILE environment variable to path of fixture file
+  if [[ -n ${GH_CHANGELOG_MOCK_FILE:-} ]]; then
+    if [[ ! -f ${GH_CHANGELOG_MOCK_FILE} ]]; then
+      fail "Mock file specified but not found: ${GH_CHANGELOG_MOCK_FILE}"
+    fi
+    cat "${GH_CHANGELOG_MOCK_FILE}"
+    return 0
+  fi
+
   # Execute the API call
   "${gh}" api "repos/{owner}/{repo}/releases/generate-notes" "${api_args[@]}" --jq '.body'
 }
@@ -147,19 +157,19 @@ get_gh_changelog_organized() {
   local other_lines=()
   local full_changelog
   for line in "${all_changes[@]}"; do
-    if [[ "${line}" =~ ^[*][\ ]+[a-z]+: ]]; then
+    if [[ ${line} =~ ^[*][\ ]+[a-z]+: ]]; then
       top_lines+=("${line}")
-    elif [[ "${line}" =~ ^[*][\ ]+[a-z]+\(deps\): ]]; then
+    elif [[ ${line} =~ ^[*][\ ]+[a-z]+\(deps\): ]]; then
       dep_lines+=("${line}")
-    elif [[ "${line}" =~ ^[*][*]Full\ Changelog ]]; then
+    elif [[ ${line} =~ ^[*][*]Full\ Changelog ]]; then
       full_changelog="${line}"
-    elif [[ ! "${line}" =~ ^[\ ]*$ ]] && [[ ! "${line}" =~ ^# ]]; then
+    elif [[ ! ${line} =~ ^[\ ]*$ ]] && [[ ! ${line} =~ ^# ]]; then
       other_lines+=("${line}")
     fi
   done
 
   local all_output=("## What's Changed" "")
-  if [[ "${#top_lines[@]}" -gt 0 ]]; then
+  if [[ ${#top_lines[@]} -gt 0 ]]; then
     all_output+=(
       "### Highlights"
       ""
@@ -167,7 +177,7 @@ get_gh_changelog_organized() {
       ""
     )
   fi
-  if [[ "${#dep_lines[@]}" -gt 0 ]]; then
+  if [[ ${#dep_lines[@]} -gt 0 ]]; then
     all_output+=(
       "### Dependency Updates"
       ""
@@ -175,7 +185,7 @@ get_gh_changelog_organized() {
       ""
     )
   fi
-  if [[ "${#other_lines[@]}" -gt 0 ]]; then
+  if [[ ${#other_lines[@]} -gt 0 ]]; then
     all_output+=(
       "### Other Changes"
       ""
@@ -183,10 +193,10 @@ get_gh_changelog_organized() {
       ""
     )
   fi
-  if [[ -n "${full_changelog:-}" ]]; then
+  if [[ -n ${full_changelog:-} ]]; then
     all_output+=("${full_changelog}")
   fi
-  if [[ "${#all_output[@]}" -gt 0 ]]; then
+  if [[ ${#all_output[@]} -gt 0 ]]; then
     printf "%s\n" "${all_output[@]}"
   fi
 }
