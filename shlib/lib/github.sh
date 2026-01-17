@@ -3,12 +3,12 @@
 # Github-related Functions
 
 gh_location=multitool/tools/gh/gh
-gh="$(rlocation "${gh_location}")" ||
-  (echo >&2 "Failed to locate ${gh_location}" && exit 1)
+gh="$(rlocation "${gh_location}")" \
+  || (echo >&2 "Failed to locate ${gh_location}" && exit 1)
 
 # MARK - Github Auth Status Functions
 
-# Returns the raw gh auth status displyaing the auth token.
+# Returns the raw gh auth status displaying the auth token.
 # Doc: https://cli.github.com/manual/gh_auth_status
 get_gh_auth_status() {
   "${gh}" auth status -t 2>&1
@@ -25,16 +25,16 @@ get_gh_auth_status() {
 get_gh_username() {
   local auth_status="${1:-}"
   [[ -z ${auth_status} ]] && auth_status="$(get_gh_auth_status)"
-  echo "${auth_status}" |
-    sed -E -n 's/^.* Logged in to [^[:space:]]+ account ([^[:space:]]+).*/\1/gp'
+  echo "${auth_status}" \
+    | sed -E -n 's/^.* Logged in to [^[:space:]]+ account ([^[:space:]]+).*/\1/gp'
 }
 
 # Returns the current user's auth token from the auth status.
 get_gh_auth_token() {
   local auth_status="${1:-}"
   [[ -z ${auth_status} ]] && auth_status="$(get_gh_auth_status)"
-  echo "${auth_status}" |
-    sed -E -n 's/^.* Token:[[:space:]]+([^[:space:]]+).*/\1/gp'
+  echo "${auth_status}" \
+    | sed -E -n 's/^.* Token:[[:space:]]+([^[:space:]]+).*/\1/gp'
 }
 
 # MARK - Github Repo URL Functions
@@ -117,15 +117,15 @@ get_gh_changelog() {
   local api_args=(--method POST)
   while (("$#")); do
     case "${1}" in
-    --*)
-      # Add the arg name and the value to the api args array
-      api_args+=(-F "${1:2}=${2}")
-      shift 2
-      ;;
-    *)
-      args+=("${1}")
-      shift 1
-      ;;
+      --*)
+        # Add the arg name and the value to the api args array
+        api_args+=(-F "${1:2}=${2}")
+        shift 2
+        ;;
+      *)
+        args+=("${1}")
+        shift 1
+        ;;
     esac
   done
 
@@ -133,7 +133,11 @@ get_gh_changelog() {
   [[ ${#api_args[@]} == 0 ]] && fail "Expected one or more API args."
 
   # Use mock data if provided (for testing without API access)
-  if [[ -n ${GH_CHANGELOG_MOCK_FILE:-} ]] && [[ -f ${GH_CHANGELOG_MOCK_FILE} ]]; then
+  # Set GH_CHANGELOG_MOCK_FILE environment variable to path of fixture file
+  if [[ -n ${GH_CHANGELOG_MOCK_FILE:-} ]]; then
+    if [[ ! -f ${GH_CHANGELOG_MOCK_FILE} ]]; then
+      fail "Mock file specified but not found: ${GH_CHANGELOG_MOCK_FILE}"
+    fi
     cat "${GH_CHANGELOG_MOCK_FILE}"
     return 0
   fi
