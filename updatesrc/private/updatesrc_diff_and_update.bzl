@@ -68,6 +68,8 @@ def updatesrc_diff_and_update(
             # create a helpful message if none has been given
             msg = "Run 'bazel run {}' to update {}".format(name, src)
 
+        # this difftest fails as file2 has CRLf on windows
+        # fix: https://github.com/bazelbuild/bazel-skylib/pull/527
         diff_test(
             name = diff_test_prefix + src_name + diff_test_suffix,
             file1 = src,

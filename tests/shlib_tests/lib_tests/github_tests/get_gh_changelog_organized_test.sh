@@ -43,6 +43,10 @@ setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
 setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" ||
   (echo >&2 "Failed to locate ${setup_git_repo_sh_location}" && exit 1)
 
+fixture_v0_24_0_v0_25_1_location=cgrindel_bazel_starlib/tests/fixtures/github_api/changelog_v0.24.0_v0.25.1.txt
+fixture_v0_24_0_v0_25_1="$(rlocation "${fixture_v0_24_0_v0_25_1_location}")" ||
+  (echo >&2 "Failed to locate ${fixture_v0_24_0_v0_25_1_location}" && exit 1)
+
 # MARK - Setup
 
 # shellcheck source=SCRIPTDIR/../../../setup_git_repo.sh
@@ -53,23 +57,24 @@ cd "${repo_dir}"
 
 tag_name="v0.25.1"
 prev_tag_name="v0.24.0"
+export GH_CHANGELOG_MOCK_FILE="${fixture_v0_24_0_v0_25_1}"
 result="$(
   get_gh_changelog_organized \
     --tag_name "${tag_name}" \
     --previous_tag_name "${prev_tag_name}"
 )"
-[[ "${result}" =~ \*\*Full\ Changelog\*\*:\ https://github\.com/cgrindel/bazel-starlib/compare/v0\.24\.0\.\.\.v0\.25\.1 ]] ||
+[[ ${result} =~ \*\*Full\ Changelog\*\*:\ https://github\.com/cgrindel/bazel-starlib/compare/v0\.24\.0\.\.\.v0\.25\.1 ]] ||
   fail "Expected to find changelog URL for v0.24.0...v0.25.1. result: ${result}"
 
-[[ "${result}" =~ "## What's Changed" ]] || fail "No What's Changed"
+[[ ${result} =~ "## What's Changed" ]] || fail "No What's Changed"
 
-[[ "${result}" =~ "### Highlights" ]] || fail "No Highlights"
+[[ ${result} =~ "### Highlights" ]] || fail "No Highlights"
 
-[[ "${result}" =~ "### Dependency Updates" ]] || fail "No Dependency Updates"
+[[ ${result} =~ "### Dependency Updates" ]] || fail "No Dependency Updates"
 
-[[ ! "${result}" =~ "### Other Changes" ]] || fail "Found Other Changes"
+[[ ! ${result} =~ "### Other Changes" ]] || fail "Found Other Changes"
 
-[[ "${result}" =~ "### Dependency Updates" ]] || fail "No Dependency Updates"
+[[ ${result} =~ "### Dependency Updates" ]] || fail "No Dependency Updates"
 
 # The single quotes around the EOF tell bash to not perform any expansion inside
 # the string.
@@ -94,4 +99,4 @@ expected=$(
 EOF
 )
 
-[[ "${result}" == "${expected}" ]] || fail "Does not equal"
+[[ ${result} == "${expected}" ]] || fail "Does not equal"

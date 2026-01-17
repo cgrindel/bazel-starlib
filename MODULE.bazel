@@ -15,7 +15,7 @@ register_toolchains(
 
 bazel_dep(
     name = "rules_go",
-    version = "0.55.1",
+    version = "0.59.0",
     repo_name = "io_bazel_rules_go",
 )
 bazel_dep(
@@ -23,7 +23,7 @@ bazel_dep(
     version = "0.44.0",
     repo_name = "bazel_gazelle",
 )
-bazel_dep(name = "bazel_skylib", version = "1.7.1")
+bazel_dep(name = "bazel_skylib", version = "1.8.2")
 bazel_dep(
     name = "stardoc",
     version = "0.8.0",
@@ -33,10 +33,10 @@ bazel_dep(
     name = "buildifier_prebuilt",
     version = "7.3.1",
 )
-bazel_dep(name = "platforms", version = "0.0.11")
-bazel_dep(name = "rules_shell", version = "0.5.0")
+bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "rules_shell", version = "0.6.1")
 bazel_dep(name = "rules_multitool", version = "1.0.0")
-bazel_dep(name = "aspect_bazel_lib", version = "2.19.4")
+bazel_dep(name = "aspect_bazel_lib", version = "2.22.4")
 
 multitool = use_extension(
     "@rules_multitool//multitool:extension.bzl",
@@ -70,7 +70,11 @@ bazel_dep(
     version = "0.32.0",
     dev_dependency = True,
 )
-bazel_dep(name = "aspect_rules_lint", version = "1.5.1", dev_dependency = True)
+bazel_dep(
+    name = "aspect_rules_lint",
+    version = "2.0.0-beta.1",
+    dev_dependency = True,
+)
 
 bazel_binaries = use_extension(
     "@rules_bazel_integration_test//:extensions.bzl",
@@ -80,12 +84,12 @@ bazel_binaries = use_extension(
 bazel_binaries.download(version_file = "//:.bazelversion")
 
 # GH525: Enable once archive extraction regression is fixed.
-# bazel_binaries.download(version = "last_green")
+bazel_binaries.download(version = "last_green")
 use_repo(
     bazel_binaries,
     "bazel_binaries",
     "bazel_binaries_bazelisk",
     "build_bazel_bazel_.bazelversion",
     # GH525: Enable once archive extraction regression is fixed.
-    # "build_bazel_bazel_last_green",
+    "build_bazel_bazel_last_green",
 )
