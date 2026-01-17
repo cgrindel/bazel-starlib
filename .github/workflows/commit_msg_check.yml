@@ -1,0 +1,12 @@
+name: Commit Message Check
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, edited, synchronize, ready_for_review, reopened]
+jobs:
+  conventional_commit_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: agenthunt/conventional-commit-checker-action@v2.0.1
+        with:
+          pr-title-regex: "^(fix|feat|chore|docs)(\\([^)]+\\))?: (.+)"

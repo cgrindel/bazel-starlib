@@ -17,6 +17,8 @@ On this page:
 ## bzlformat_format
 
 <pre>
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_format")
+
 bzlformat_format(<a href="#bzlformat_format-name">name</a>, <a href="#bzlformat_format-srcs">srcs</a>, <a href="#bzlformat_format-fix_lint_warnings">fix_lint_warnings</a>, <a href="#bzlformat_format-output_suffix">output_suffix</a>, <a href="#bzlformat_format-warnings">warnings</a>)
 </pre>
 
@@ -39,6 +41,8 @@ Formats Starlark source files using Buildifier.
 ## bzlformat_lint_test
 
 <pre>
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_lint_test")
+
 bzlformat_lint_test(<a href="#bzlformat_lint_test-name">name</a>, <a href="#bzlformat_lint_test-srcs">srcs</a>, <a href="#bzlformat_lint_test-warnings">warnings</a>)
 </pre>
 
@@ -59,6 +63,8 @@ Lints the specified Starlark files using Buildifier.
 ## bzlformat_missing_pkgs
 
 <pre>
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_missing_pkgs")
+
 bzlformat_missing_pkgs(<a href="#bzlformat_missing_pkgs-name">name</a>, <a href="#bzlformat_missing_pkgs-exclude">exclude</a>)
 </pre>
 
@@ -97,6 +103,8 @@ None.
 ## bzlformat_pkg
 
 <pre>
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+
 bzlformat_pkg(<a href="#bzlformat_pkg-name">name</a>, <a href="#bzlformat_pkg-srcs">srcs</a>, <a href="#bzlformat_pkg-lint_test">lint_test</a>, <a href="#bzlformat_pkg-format_visibility">format_visibility</a>, <a href="#bzlformat_pkg-update_visibility">update_visibility</a>, <a href="#bzlformat_pkg-lint_test_visibility">lint_test_visibility</a>)
 </pre>
 

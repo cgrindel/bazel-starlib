@@ -1,3 +1,4 @@
+load("@rules_shell//shell:sh_library.bzl", "sh_library")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 package(default_visibility = ["//visibility:public"])
@@ -25,7 +26,7 @@ sh_library(
     srcs = ["files.sh"],
     deps = [
         ":paths",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -47,11 +48,17 @@ sh_library(
 sh_library(
     name = "git",
     srcs = ["git.sh"],
+    data = [
+        "//tools/git",
+    ],
 )
 
 sh_library(
     name = "github",
     srcs = ["github.sh"],
+    data = [
+        "@multitool//tools/gh",
+    ],
 )
 
 # MARK: - Collect Files for Integation Tests

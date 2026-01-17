@@ -1,6 +1,6 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
-load("@cgrindel_bazel_starlib//updatesrc/private:updatesrc_update_test.bzl", "updatesrc_update_test")
 load("@cgrindel_bazel_starlib//updatesrc:defs.bzl", "updatesrc_update")
+load("@cgrindel_bazel_starlib//updatesrc/private:updatesrc_update_test.bzl", "updatesrc_update_test")
 load(":letters.bzl", "letters")
 
 # MARK: - Update Tests

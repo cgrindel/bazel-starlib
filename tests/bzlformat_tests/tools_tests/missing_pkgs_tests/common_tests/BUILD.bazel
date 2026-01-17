@@ -1,3 +1,4 @@
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 bzlformat_pkg(name = "bzlformat")
@@ -8,6 +9,6 @@ sh_test(
     deps = [
         "//bzlformat/tools/missing_pkgs:common",
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )

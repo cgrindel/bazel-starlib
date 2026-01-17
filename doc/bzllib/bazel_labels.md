@@ -7,6 +7,8 @@
 ## bazel_labels.new
 
 <pre>
+load("@cgrindel_bazel_starlib//bzllib:defs.bzl", "bazel_labels")
+
 bazel_labels.new(<a href="#bazel_labels.new-name">name</a>, <a href="#bazel_labels.new-repository_name">repository_name</a>, <a href="#bazel_labels.new-package">package</a>)
 </pre>
 
@@ -27,6 +29,8 @@ bazel_labels.new(<a href="#bazel_labels.new-name">name</a>, <a href="#bazel_labe
 ## bazel_labels.normalize
 
 <pre>
+load("@cgrindel_bazel_starlib//bzllib:defs.bzl", "bazel_labels")
+
 bazel_labels.normalize(<a href="#bazel_labels.normalize-value">value</a>)
 </pre>
 
@@ -49,6 +53,8 @@ A fully-formed Bazel label string.
 ## bazel_labels.parse
 
 <pre>
+load("@cgrindel_bazel_starlib//bzllib:defs.bzl", "bazel_labels")
+
 bazel_labels.parse(<a href="#bazel_labels.parse-value">value</a>)
 </pre>
 

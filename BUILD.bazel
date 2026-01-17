@@ -44,6 +44,12 @@ bzlformat_pkg(name = "bzlformat")
 
 bzlformat_missing_pkgs(name = "bzlformat_missing_pkgs")
 
+# MARK: - Format using rules_lint
+
+alias(
+    name = "format",
+    actual = "//tools/format",
+)
 # MARK: - Update Source Files
 
 updatesrc_update_all(name = "update_all")
@@ -61,6 +67,7 @@ tidy(
         ":go_mod_tidy",
         ":gazelle_update_repos",
         ":update_build_files",
+        ":format",
     ],
 )
 
@@ -169,6 +176,9 @@ _RUNTIME_PKGS = [
     "//shlib/rules",
     "//shlib/rules/private",
     "//shlib/tools",
+    "//tools/gh",
+    "//tools/git",
+    "//tools/tar",
     "//updatesrc",
     "//updatesrc/private",
 ]
@@ -207,6 +217,7 @@ _INTEGRATION_TEST_PKGS = [
     "//examples/bzlformat",
     "//examples/markdown",
     "//examples/updatesrc",
+    "//examples/tools",
     "//tests/bzlformat_tests/tools_tests/missing_pkgs_tests",
     "//tests/bzlrelease_tests/rules_tests/generate_release_notes_tests",
     "//tests/bzlrelease_tests/rules_tests/generate_workspace_snippet_tests",

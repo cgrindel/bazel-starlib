@@ -2,46 +2,55 @@
 
 # --- begin runfiles.bash initialization v3 ---
 # Copy-pasted from the Bazel Bash runfiles library v3.
-set -uo pipefail; set +e; f=bazel_tools/tools/bash/runfiles/runfiles.bash
-source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
-  source "$(grep -sm1 "^$f " "${RUNFILES_MANIFEST_FILE:-/dev/null}" | cut -f2- -d' ')" 2>/dev/null || \
-  source "$0.runfiles/$f" 2>/dev/null || \
-  source "$(grep -sm1 "^$f " "$0.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \
-  source "$(grep -sm1 "^$f " "$0.exe.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \
-  { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
+set -uo pipefail
+set +e
+f=bazel_tools/tools/bash/runfiles/runfiles.bash
+source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null ||
+  source "$(grep -sm1 "^$f " "${RUNFILES_MANIFEST_FILE:-/dev/null}" | cut -f2- -d' ')" 2>/dev/null ||
+  source "$0.runfiles/$f" 2>/dev/null ||
+  source "$(grep -sm1 "^$f " "$0.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null ||
+  source "$(grep -sm1 "^$f " "$0.exe.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null ||
+  {
+    echo >&2 "ERROR: ${BASH_SOURCE[0]} cannot find $f"
+    exit 1
+  }
+f=
+set -e
 # --- end runfiles.bash initialization v3 ---
 
 # MARK - Locate Dependencies
 
 fail_sh_location=cgrindel_bazel_starlib/shlib/lib/fail.sh
-fail_sh="$(rlocation "${fail_sh_location}")" || \
+fail_sh="$(rlocation "${fail_sh_location}")" ||
   (echo >&2 "Failed to locate ${fail_sh_location}" && exit 1)
 # shellcheck source=SCRIPTDIR/../../../../shlib/lib/fail.sh
 source "${fail_sh}"
 
 env_sh_location=cgrindel_bazel_starlib/shlib/lib/env.sh
-env_sh="$(rlocation "${env_sh_location}")" || \
+env_sh="$(rlocation "${env_sh_location}")" ||
   (echo >&2 "Failed to locate ${env_sh_location}" && exit 1)
 # shellcheck source=SCRIPTDIR/../../../../shlib/lib/env.sh
 source "${env_sh}"
 
 setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
-setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" || \
+setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" ||
   (echo >&2 "Failed to locate ${setup_git_repo_sh_location}" && exit 1)
 
 git_sh_location=cgrindel_bazel_starlib/shlib/lib/git.sh
-git_sh="$(rlocation "${git_sh_location}")" || \
+git_sh="$(rlocation "${git_sh_location}")" ||
   (echo >&2 "Failed to locate ${git_sh_location}" && exit 1)
 # shellcheck source=SCRIPTDIR/../../../../shlib/lib/git.sh
 source "${git_sh}"
 
 arrays_sh_location=cgrindel_bazel_starlib/shlib/lib/arrays.sh
-arrays_sh="$(rlocation "${arrays_sh_location}")" || \
+arrays_sh="$(rlocation "${arrays_sh_location}")" ||
   (echo >&2 "Failed to locate ${arrays_sh_location}" && exit 1)
 # shellcheck source=SCRIPTDIR/../../../../shlib/lib/arrays.sh
 source "${arrays_sh}"
 
-is_installed git || fail "Could not find git."
+git_exe_location=cgrindel_bazel_starlib/tools/git/git.exe
+git="$(rlocation "${git_exe_location}")" ||
+  (echo >&2 "Failed to locate ${git_exe_location}" && exit 1)
 
 # MARK - Setup
 
@@ -49,8 +58,8 @@ is_installed git || fail "Could not find git."
 source "${setup_git_repo_sh}"
 cd "${repo_dir}"
 
-git config user.email "noone@example.org"
-git config user.name "No one"
+"${git}" config user.email "noone@example.org"
+"${git}" config user.name "No one"
 
 # MARK - Test
 
@@ -87,7 +96,7 @@ contains_item "3.2.1" "${release_tags[@]}" || fail "Expected tag '3.2.1' to be f
 git_tag_exists "v9999.0.0" && fail "Did not expect v9999.0.0 to exist."
 git_tag_exists "v0.1.1" || fail "Did expect v0.1.1 to exist."
 
-commit="$( get_git_commit_hash "v0.1.1" )"
+commit="$(get_git_commit_hash "v0.1.1")"
 expected_commit="fc5ed94542dc764ba17670803ca06eddafc5beb1"
-[[ "${commit}" == "${expected_commit}" ]] || \
+[[ "${commit}" == "${expected_commit}" ]] ||
   fail "Unexpected commit hash. actual: ${commit}, expected:${expected_commit}"

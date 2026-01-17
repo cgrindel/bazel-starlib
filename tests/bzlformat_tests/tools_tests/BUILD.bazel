@@ -1,4 +1,5 @@
 load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 
 bzlformat_pkg(name = "bzlformat")
 
@@ -9,7 +10,7 @@ sh_test(
         "//bzlformat/tools:buildifier",
     ],
     deps = [
-        "@bazel_tools//tools/bash/runfiles",
         "@cgrindel_bazel_starlib//shlib/lib:assertions",
+        "@rules_shell//shell/runfiles",
     ],
 )

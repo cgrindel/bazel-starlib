@@ -1,5 +1,7 @@
 """Definition for `release_archive` rule."""
 
+load("//tools/tar:tar_toolchains.bzl", "tar_toolchains")
+
 def _release_archive_impl(ctx):
     out_basename = ctx.attr.out
     if out_basename == "":
@@ -18,21 +20,23 @@ def _release_archive_impl(ctx):
         content = file_list_args,
     )
 
-    # Create the archive
+    bsdtar = ctx.toolchains[tar_toolchains.type]
+
     args = ctx.actions.args()
-    args.add(out)
-    args.add(file_list_out)
-    ctx.actions.run_shell(
+    args.add("-f", out)
+    args.add_all(["-h", "-c", "-z"])
+    args.add("-T", file_list_out)
+    ctx.actions.run(
         outputs = [out],
-        inputs = [file_list_out] + ctx.files.srcs,
+        inputs = depset(
+            direct = [file_list_out] + ctx.files.srcs,
+            transitive = [bsdtar.default.files],
+        ),
         arguments = [args],
-        command = """\
-archive="$1"
-file_list="$2"
-shift 1
-tar 2>/dev/null -hczvf "$archive" -T "${file_list}"
-""",
+        executable = bsdtar.tarinfo.binary,
+        toolchain = tar_toolchains.type,
     )
+
     return DefaultInfo(
         files = depset([out]),
         runfiles = ctx.runfiles(files = [out]),
@@ -53,6 +57,7 @@ release_archive = rule(
             mandatory = True,
         ),
     },
+    toolchains = [tar_toolchains.type],
     doc = """\
 Create a source release archive.
 

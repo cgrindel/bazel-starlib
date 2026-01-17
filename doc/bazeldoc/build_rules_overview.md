@@ -19,7 +19,9 @@ On this page:
 ## doc_for_provs
 
 <pre>
-doc_for_provs(<a href="#doc_for_provs-doc_provs">doc_provs</a>, <a href="#doc_for_provs-kwargs">kwargs</a>)
+load("@cgrindel_bazel_starlib//bazeldoc:defs.bzl", "doc_for_provs")
+
+doc_for_provs(<a href="#doc_for_provs-doc_provs">doc_provs</a>, <a href="#doc_for_provs-kwargs">**kwargs</a>)
 </pre>
 
 Defines targets for generating documentation, testing that the generated doc matches the workspace directory, and copying the generated doc to the workspace directory.
@@ -38,6 +40,8 @@ Defines targets for generating documentation, testing that the generated doc mat
 ## write_file_list
 
 <pre>
+load("@cgrindel_bazel_starlib//bazeldoc:defs.bzl", "write_file_list")
+
 write_file_list(<a href="#write_file_list-name">name</a>, <a href="#write_file_list-out">out</a>, <a href="#write_file_list-header_content">header_content</a>, <a href="#write_file_list-doc_provs">doc_provs</a>, <a href="#write_file_list-do_not_edit_warning">do_not_edit_warning</a>)
 </pre>
 
@@ -64,6 +68,8 @@ None.
 ## write_header
 
 <pre>
+load("@cgrindel_bazel_starlib//bazeldoc:defs.bzl", "write_header")
+
 write_header(<a href="#write_header-name">name</a>, <a href="#write_header-out">out</a>, <a href="#write_header-header_content">header_content</a>, <a href="#write_header-symbols">symbols</a>, <a href="#write_header-do_not_edit_warning">do_not_edit_warning</a>)
 </pre>
 

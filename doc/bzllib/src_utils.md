@@ -7,6 +7,8 @@
 ## src_utils.is_label
 
 <pre>
+load("@cgrindel_bazel_starlib//bzllib:defs.bzl", "src_utils")
+
 src_utils.is_label(<a href="#src_utils.is_label-src">src</a>)
 </pre>
 
@@ -29,6 +31,8 @@ A `bool` specifying whether the `string` value looks like a label.
 ## src_utils.is_path
 
 <pre>
+load("@cgrindel_bazel_starlib//bzllib:defs.bzl", "src_utils")
+
 src_utils.is_path(<a href="#src_utils.is_path-src">src</a>)
 </pre>
 
@@ -51,6 +55,8 @@ A `bool` specifying whether the `string` value looks like a path.
 ## src_utils.path_to_name
 
 <pre>
+load("@cgrindel_bazel_starlib//bzllib:defs.bzl", "src_utils")
+
 src_utils.path_to_name(<a href="#src_utils.path_to_name-path">path</a>, <a href="#src_utils.path_to_name-prefix">prefix</a>, <a href="#src_utils.path_to_name-suffix">suffix</a>)
 </pre>
 

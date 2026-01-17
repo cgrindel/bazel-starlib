@@ -1,0 +1,44 @@
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_test(
+    name = "warn_test",
+    srcs = ["warn_test.sh"],
+    deps = [
+        "//shlib/lib:fail",
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_starlib//shlib/lib:assertions",
+    ],
+)
+
+sh_test(
+    name = "fail_test",
+    srcs = ["fail_test.sh"],
+    deps = [
+        "//shlib/lib:fail",
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_starlib//shlib/lib:assertions",
+    ],
+)
+
+sh_test(
+    name = "usage_error_test",
+    srcs = ["usage_error_test.sh"],
+    deps = [
+        "//shlib/lib:fail",
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_starlib//shlib/lib:assertions",
+    ],
+)
+
+sh_test(
+    name = "show_usage_test",
+    srcs = ["show_usage_test.sh"],
+    deps = [
+        "//shlib/lib:fail",
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_starlib//shlib/lib:assertions",
+    ],
+)

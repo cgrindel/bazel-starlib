@@ -1,0 +1,14 @@
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
+
+sh_test(
+    name = "tools_test",
+    srcs = ["tools_test.sh"],
+    data = [
+        "@cgrindel_bazel_starlib//tools/git",
+        "@cgrindel_bazel_starlib//tools/tar",
+    ],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_starlib//shlib/lib:assertions",
+    ],
+)

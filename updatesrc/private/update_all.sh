@@ -5,7 +5,7 @@
 
 set -o errexit -o nounset -o pipefail
 
-# Use the Bazel binary specified by the integration test. Otherise, fall back 
+# Use the Bazel binary specified by the integration test. Otherise, fall back
 # to bazel.
 bazel="${BIT_BAZEL_BINARY:-bazel}"
 
@@ -28,18 +28,18 @@ targets_to_run_before=()
 targets_to_run_after=()
 while (("$#")); do
   case "${1}" in
-    "--run_before")
-      targets_to_run_before+=( "$2" )
-      shift 2
-      ;;
-    "--run_after")
-      targets_to_run_after+=( "$2" )
-      shift 2
-      ;;
-    *)
-      args+=("${1}")
-      shift 1
-      ;;
+  "--run_before")
+    targets_to_run_before+=("$2")
+    shift 2
+    ;;
+  "--run_after")
+    targets_to_run_after+=("$2")
+    shift 2
+    ;;
+  *)
+    args+=("${1}")
+    shift 1
+    ;;
   esac
 done
 
@@ -68,8 +68,8 @@ update_targets=()
 while IFS=$'\n' read -r line; do update_targets+=("$line"); done < <(
   "${bazel}" cquery "${bazel_query}" \
     --output=starlark \
-    --starlark:file="${starlark_file}" \
-    | sort
+    --starlark:file="${starlark_file}" |
+    sort
 )
 if [[ ${#update_targets[@]} -gt 0 ]]; then
   run_bazel_targets "${update_targets[@]}"

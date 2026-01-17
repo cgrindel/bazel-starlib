@@ -1,3 +1,4 @@
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 bzlformat_pkg(name = "bzlformat")
@@ -8,7 +9,7 @@ sh_test(
     deps = [
         "//shlib/lib:arrays",
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -18,7 +19,7 @@ sh_test(
     deps = [
         "//shlib/lib:arrays",
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -28,7 +29,7 @@ sh_test(
     deps = [
         "//shlib/lib:arrays",
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -38,7 +39,7 @@ sh_test(
     deps = [
         "//shlib/lib:arrays",
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -48,7 +49,7 @@ sh_test(
     deps = [
         "//shlib/lib:arrays",
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -58,6 +59,6 @@ sh_test(
     deps = [
         "//shlib/lib:arrays",
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )

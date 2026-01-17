@@ -1,3 +1,4 @@
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 bzlformat_pkg(name = "bzlformat")
@@ -7,7 +8,7 @@ sh_binary(
     srcs = ["contains_item_perf_comparison.sh"],
     deps = [
         "//shlib/lib:arrays",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 

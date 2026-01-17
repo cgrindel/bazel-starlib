@@ -1,0 +1,11 @@
+load("@aspect_rules_lint//format:defs.bzl", "format_multirun")
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+format_multirun(
+    name = "format",
+    shell = "@aspect_rules_lint//format:shfmt",
+    starlark = "@buildifier_prebuilt//:buildifier",
+    visibility = ["//:__subpackages__"],
+)

@@ -1,3 +1,4 @@
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 bzlformat_pkg(name = "bzlformat")
@@ -14,7 +15,7 @@ sh_binary(
         "//shlib/lib:fail",
         "//shlib/lib:git",
         "//shlib/lib:github",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -25,20 +26,23 @@ sh_binary(
     deps = [
         "//shlib/lib:env",
         "//shlib/lib:fail",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
 sh_binary(
     name = "generate_git_archive",
     srcs = ["generate_git_archive.sh"],
+    data = [
+        "//tools/git",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//shlib/lib:env",
         "//shlib/lib:fail",
         "//shlib/lib:git",
         "//shlib/lib:github",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -51,7 +55,7 @@ sh_binary(
         "//shlib/lib:fail",
         "//shlib/lib:git",
         "//shlib/lib:github",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -64,20 +68,23 @@ sh_binary(
     visibility = ["//visibility:public"],
     deps = [
         "//shlib/lib:fail",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
 sh_binary(
     name = "create_release_tag",
     srcs = ["create_release_tag.sh"],
+    data = [
+        "//tools/git",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//shlib/lib:env",
         "//shlib/lib:fail",
         "//shlib/lib:git",
         "//shlib/lib:github",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -90,7 +97,7 @@ sh_binary(
     visibility = ["//visibility:public"],
     deps = [
         "//shlib/lib:fail",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -103,7 +110,7 @@ sh_binary(
         "//shlib/lib:fail",
         "//shlib/lib:git",
         "//shlib/lib:github",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -113,7 +120,7 @@ sh_binary(
     visibility = ["//visibility:public"],
     deps = [
         "//shlib/lib:fail",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 

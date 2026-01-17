@@ -1,3 +1,4 @@
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load("//ci:defs.bzl", "ci_integration_test_params")
 load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
@@ -9,6 +10,9 @@ bzlformat_pkg(name = "bzlformat")
 sh_test(
     name = "git_integration_test",
     srcs = ["git_integration_test.sh"],
+    data = [
+        "//tools/git",
+    ],
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
     deps = [
@@ -17,7 +21,7 @@ sh_test(
         "//shlib/lib:fail",
         "//shlib/lib:git",
         "//tests:setup_git_repo",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 

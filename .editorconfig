@@ -1,0 +1,6 @@
+# Configure shfmt (https://github.com/patrickvane/shfmt)
+
+[*.sh]
+indent_style = space
+indent_size = 2
+case_indent = true

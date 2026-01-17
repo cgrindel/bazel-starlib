@@ -7,6 +7,8 @@
 ## lists.compact
 
 <pre>
+load("@cgrindel_bazel_starlib//bzllib:defs.bzl", "lists")
+
 lists.compact(<a href="#lists.compact-items">items</a>)
 </pre>
 
@@ -29,6 +31,8 @@ A new `list` of items with the `None` values removed.
 ## lists.contains
 
 <pre>
+load("@cgrindel_bazel_starlib//bzllib:defs.bzl", "lists")
+
 lists.contains(<a href="#lists.contains-items">items</a>, <a href="#lists.contains-target_or_fn">target_or_fn</a>)
 </pre>
 
@@ -65,6 +69,8 @@ A `bool` indicating whether an item was found in the list.
 ## lists.filter
 
 <pre>
+load("@cgrindel_bazel_starlib//bzllib:defs.bzl", "lists")
+
 lists.filter(<a href="#lists.filter-items">items</a>, <a href="#lists.filter-bool_fn">bool_fn</a>)
 </pre>
 
@@ -89,6 +95,8 @@ A new `list` containing the items that satisfy the provided boolean
 ## lists.find
 
 <pre>
+load("@cgrindel_bazel_starlib//bzllib:defs.bzl", "lists")
+
 lists.find(<a href="#lists.find-items">items</a>, <a href="#lists.find-bool_fn">bool_fn</a>)
 </pre>
 
@@ -118,6 +126,8 @@ A list item or `None`.
 ## lists.flatten
 
 <pre>
+load("@cgrindel_bazel_starlib//bzllib:defs.bzl", "lists")
+
 lists.flatten(<a href="#lists.flatten-items">items</a>, <a href="#lists.flatten-max_iterations">max_iterations</a>)
 </pre>
 
@@ -165,6 +175,8 @@ A `list` with all of the items flattened (i.e., no items in the result
 ## lists.map
 
 <pre>
+load("@cgrindel_bazel_starlib//bzllib:defs.bzl", "lists")
+
 lists.map(<a href="#lists.map-items">items</a>, <a href="#lists.map-map_fn">map_fn</a>)
 </pre>
 

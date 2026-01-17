@@ -5,7 +5,7 @@ load(":execute_binary_utils.bzl", "execute_binary_utils")
 file_placeholder = execute_binary_utils.file_placeholder
 
 def _create_file_args_placeholder_dict(ctx):
-    return {p: fa.files.to_list()[0] for fa, p in ctx.attr.file_arguments.items()}
+    return {p: fa[DefaultInfo].files.to_list()[0] for fa, p in ctx.attr.file_arguments.items()}
 
 def _execute_binary_impl(ctx):
     if len(ctx.attr.args) > 0:

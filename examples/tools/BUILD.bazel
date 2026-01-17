@@ -1,0 +1,85 @@
+load("@bazel_binaries//:defs.bzl", "bazel_binaries")
+load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
+load(
+    "@rules_bazel_integration_test//bazel_integration_test:defs.bzl",
+    "bazel_integration_tests",
+    "default_test_runner",
+    "integration_test_utils",
+)
+load("//ci:defs.bzl", "ci_integration_test_params")
+
+bzlformat_pkg(name = "bzlformat")
+
+# Do not have Gazelle process the child workspace
+# gazelle:exclude workspace/**
+
+# MARK: - Integration Tests
+
+default_test_runner(
+    name = "tools_test_runner",
+    bazel_cmds = [
+        "info",
+        "test //...",
+    ],
+)
+
+bazel_integration_tests(
+    name = "tools_test",
+    bazel_binaries = bazel_binaries,
+    bazel_versions = bazel_binaries.versions.all,
+    tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS + [
+        # Avoid file permssion error when using disk and repository cache after
+        # 7.0.0rc2 upgrade.
+        # https://github.com/bazelbuild/bazel/issues/19908
+        "no-sandbox",
+    ],
+    test_runner = ":tools_test_runner",
+    workspace_files = integration_test_utils.glob_workspace_files("workspace") + [
+        "//:workspace_integration_test_files",
+    ],
+    workspace_path = "workspace",
+)
+
+# MARK: - Test Suites
+
+test_suite(
+    name = "smoke_integration_tests",
+    tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
+    tests = [
+        integration_test_utils.bazel_integration_test_name(
+            "tools_test",
+            bazel_binaries.versions.current,
+        ),
+    ],
+    visibility = ["//:__subpackages__"],
+)
+
+test_suite(
+    name = "all_integration_tests",
+    tags = integration_test_utils.DEFAULT_INTEGRATION_TEST_TAGS,
+    tests = integration_test_utils.bazel_integration_test_names(
+        "tools_test",
+        bazel_binaries.versions.all,
+    ),
+    visibility = ["//:__subpackages__"],
+)
+
+ci_integration_test_params(
+    name = "tools_test_params",
+    bzlmod_modes = ["enabled"],
+    oss = [
+        "macos",
+        "linux",
+    ],
+    test_names = integration_test_utils.bazel_integration_test_names(
+        "tools_test",
+        bazel_binaries.versions.all,
+    ),
+    visibility = ["//:__subpackages__"],
+)
+
+alias(
+    name = "all_test_params",
+    actual = ":tools_test_params",
+    visibility = ["//:__subpackages__"],
+)

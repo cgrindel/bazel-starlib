@@ -1,3 +1,4 @@
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 load("//ci:defs.bzl", "ci_integration_test_params")
 load("//tests:integration_test_common.bzl", "GH_ENV_INHERIT", "INTEGRATION_TEST_TAGS")
@@ -14,7 +15,7 @@ sh_test(
     ],
     deps = [
         "//shlib/lib:fail",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -26,7 +27,7 @@ sh_test(
     ],
     deps = [
         "//shlib/lib:assertions",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -44,7 +45,7 @@ sh_test(
     deps = [
         "//shlib/lib:fail",
         "//tests:setup_git_repo",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -53,13 +54,15 @@ sh_test(
     srcs = ["generate_gh_changelog_test.sh"],
     data = [
         "//bzlrelease/tools:generate_gh_changelog",
+        "//tests/fixtures/github_api:changelog_v0.1.0_v0.1.1.txt",
+        "//tests/fixtures/github_api:changelog_v99999.0.0.txt",
     ],
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,
     deps = [
         "//shlib/lib:env",
         "//tests:setup_git_repo",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -75,7 +78,7 @@ sh_test(
     deps = [
         "//shlib/lib:env",
         "//tests:setup_git_repo",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -91,7 +94,7 @@ sh_test(
         "//shlib/lib:assertions",
         "//shlib/lib:env",
         "//tests:setup_git_repo",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 
@@ -102,8 +105,8 @@ sh_test(
         "//bzlrelease/tools:generate_module_snippet",
     ],
     deps = [
-        "@bazel_tools//tools/bash/runfiles",
         "@cgrindel_bazel_starlib//shlib/lib:assertions",
+        "@rules_shell//shell/runfiles",
     ],
 )
 

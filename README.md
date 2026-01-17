@@ -35,7 +35,7 @@ how-to links above and review the [the generated documentation](/doc/).
 
 <!-- BEGIN MODULE SNIPPET -->
 ```python
-bazel_dep(name = "cgrindel_bazel_starlib", version = "0.21.0")
+bazel_dep(name = "cgrindel_bazel_starlib", version = "0.28.0")
 ```
 <!-- END MODULE SNIPPET -->
 
@@ -47,9 +47,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "cgrindel_bazel_starlib",
-    sha256 = "c088657482e86888c9f46f535bdbaf71eaeb35ff9db04912a4ecdccf94cd16d5",
+    sha256 = "08e3aecc75537803e335176870efd8d12cd0fe68efcf21238e29673247503c9d",
     urls = [
-        "https://github.com/cgrindel/bazel-starlib/releases/download/v0.21.0/bazel-starlib.v0.21.0.tar.gz",
+        "https://github.com/cgrindel/bazel-starlib/releases/download/v0.28.0/bazel-starlib.v0.28.0.tar.gz",
     ],
 )
 
@@ -60,6 +60,10 @@ bazel_starlib_dependencies()
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 
 bazel_skylib_workspace()
+
+load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies")
+
+aspect_bazel_lib_dependencies()
 ```
 <!-- END WORKSPACE SNIPPET -->
 

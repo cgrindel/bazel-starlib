@@ -1,3 +1,4 @@
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 # MARK: - Binaries
@@ -10,7 +11,7 @@ sh_binary(
     deps = [
         "//shlib/lib:arrays",
         "//shlib/lib:fail",
-        "@bazel_tools//tools/bash/runfiles",
+        "@rules_shell//shell/runfiles",
     ],
 )
 

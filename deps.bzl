@@ -7,10 +7,10 @@ def _bazeldoc_dependencies():
     maybe(
         http_archive,
         name = "io_bazel_stardoc",
-        sha256 = "fabb280f6c92a3b55eed89a918ca91e39fb733373c81e87a18ae9e33e75023ec",
+        sha256 = "ca933f39f2a6e0ad392fa91fd662545afcbd36c05c62365538385d35a0323096",
         urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/stardoc/releases/download/0.7.1/stardoc-0.7.1.tar.gz",
-            "https://github.com/bazelbuild/stardoc/releases/download/0.7.1/stardoc-0.7.1.tar.gz",
+            "https://mirror.bazel.build/github.com/bazelbuild/stardoc/releases/download/0.8.0/stardoc-0.8.0.tar.gz",
+            "https://github.com/bazelbuild/stardoc/releases/download/0.8.0/stardoc-0.8.0.tar.gz",
         ],
     )
 
@@ -18,10 +18,10 @@ def _prebuilt_buildtools_dependencies():
     maybe(
         http_archive,
         name = "buildifier_prebuilt",
-        sha256 = "8ada9d88e51ebf5a1fdff37d75ed41d51f5e677cdbeafb0a22dda54747d6e07e",
-        strip_prefix = "buildifier-prebuilt-6.4.0",
+        sha256 = "bf9101bd5d657046674167986a18d44c5612e417194dc55aff8ca174344de031",
+        strip_prefix = "buildifier-prebuilt-8.0.3",
         urls = [
-            "http://github.com/keith/buildifier-prebuilt/archive/6.4.0.tar.gz",
+            "http://github.com/keith/buildifier-prebuilt/archive/8.0.3.tar.gz",
         ],
     )
 
@@ -32,10 +32,10 @@ def bazel_starlib_dependencies():
     maybe(
         http_archive,
         name = "bazel_skylib",
-        sha256 = "bc283cdfcd526a52c3201279cda4bc298652efa898b10b4db0837dc51652756f",
+        sha256 = "6e78f0e57de26801f6f564fa7c4a48dc8b36873e416257a92bbb0937eeac8446",
         urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.7.1/bazel-skylib-1.7.1.tar.gz",
-            "https://github.com/bazelbuild/bazel-skylib/releases/download/1.7.1/bazel-skylib-1.7.1.tar.gz",
+            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.8.2/bazel-skylib-1.8.2.tar.gz",
+            "https://github.com/bazelbuild/bazel-skylib/releases/download/1.8.2/bazel-skylib-1.8.2.tar.gz",
         ],
     )
 
@@ -52,11 +52,19 @@ def bazel_starlib_dependencies():
     maybe(
         http_archive,
         name = "bazel_gazelle",
-        sha256 = "75df288c4b31c81eb50f51e2e14f4763cb7548daae126817247064637fd9ea62",
+        sha256 = "675114d8b433d0a9f54d81171833be96ebc4113115664b791e6f204d58e93446",
         urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.36.0/bazel-gazelle-v0.36.0.tar.gz",
-            "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.36.0/bazel-gazelle-v0.36.0.tar.gz",
+            "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.47.0/bazel-gazelle-v0.47.0.tar.gz",
+            "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.47.0/bazel-gazelle-v0.47.0.tar.gz",
         ],
+    )
+
+    maybe(
+        http_archive,
+        name = "aspect_bazel_lib",
+        sha256 = "4b32cf6feab38b887941db022020eea5a49b848e11e3d6d4d18433594951717a",
+        strip_prefix = "bazel-lib-2.0.1",
+        url = "https://github.com/aspect-build/bazel-lib/releases/download/v2.0.1/bazel-lib-v2.0.1.tar.gz",
     )
 
     _bazeldoc_dependencies()
