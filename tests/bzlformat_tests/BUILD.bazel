@@ -53,6 +53,7 @@ _FORMAT_INFOS = [
         name = fi[0] + "_bzl",
         out = fi[0] + ".bzl",
         content = fi[1],
+        newline = "unix",
     )
     for fi in _FORMAT_INFOS
 ]
@@ -64,11 +65,13 @@ bzlformat_format(
 )
 
 # Write the expected content
+# buildifier writes unix newlines; match that
 [
     write_file(
         name = fi[0] + "_bzl_expected",
         out = fi[0] + ".bzl.expected",
         content = fi[2],
+        newline = "unix",
     )
     for fi in _FORMAT_INFOS
 ]

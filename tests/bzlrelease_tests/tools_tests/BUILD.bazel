@@ -54,6 +54,8 @@ sh_test(
     srcs = ["generate_gh_changelog_test.sh"],
     data = [
         "//bzlrelease/tools:generate_gh_changelog",
+        "//tests/fixtures/github_api:changelog_v0.1.0_v0.1.1.txt",
+        "//tests/fixtures/github_api:changelog_v99999.0.0.txt",
     ],
     env_inherit = GH_ENV_INHERIT,
     tags = INTEGRATION_TEST_TAGS,

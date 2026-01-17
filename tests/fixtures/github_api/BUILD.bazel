@@ -1,0 +1,9 @@
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+exports_files([
+    "changelog_v0.1.0_v0.1.1.txt",
+    "changelog_v0.24.0_v0.25.1.txt",
+    "changelog_v99999.0.0.txt",
+])

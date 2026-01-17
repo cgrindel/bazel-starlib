@@ -1,0 +1,5 @@
+## What's Changed
+
+* Upcoming changes for future release by @cgrindel in https://github.com/cgrindel/bazel-starlib/pull/99999
+
+**Full Changelog**: https://github.com/cgrindel/bazel-starlib/compare/main...v99999.0.0
