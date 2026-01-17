@@ -40,6 +40,14 @@ setup_git_repo_sh_location=cgrindel_bazel_starlib/tests/setup_git_repo.sh
 setup_git_repo_sh="$(rlocation "${setup_git_repo_sh_location}")" ||
   (echo >&2 "Failed to locate ${setup_git_repo_sh_location}" && exit 1)
 
+fixture_v0_1_0_v0_1_1_location=cgrindel_bazel_starlib/tests/fixtures/github_api/changelog_v0.1.0_v0.1.1.txt
+fixture_v0_1_0_v0_1_1="$(rlocation "${fixture_v0_1_0_v0_1_1_location}")" ||
+  (echo >&2 "Failed to locate ${fixture_v0_1_0_v0_1_1_location}" && exit 1)
+
+fixture_v99999_location=cgrindel_bazel_starlib/tests/fixtures/github_api/changelog_v99999.0.0.txt
+fixture_v99999="$(rlocation "${fixture_v99999_location}")" ||
+  (echo >&2 "Failed to locate ${fixture_v99999_location}" && exit 1)
+
 # MARK - Setup
 
 # shellcheck source=SCRIPTDIR/../../setup_git_repo.sh
@@ -50,14 +58,16 @@ cd "${repo_dir}"
 
 tag_name="v0.1.1"
 prev_tag_name="v0.1.0"
+export GH_CHANGELOG_MOCK_FILE="${fixture_v0_1_0_v0_1_1}"
 result="$("${generate_gh_changelog_sh}" --previous_tag_name "${prev_tag_name}" "${tag_name}")"
 # [[ "${result}" =~ "**Full Changelog**: https://github.com/cgrindel/bazel-starlib/compare/v0.1.0...v0.1.1" ]] || \
-[[ "${result}" =~ \*\*Full\ Changelog\*\*:\ https://github.com/cgrindel/bazel-starlib/compare/v0\.1\.0\.\.\.v0\.1\.1 ]] ||
+[[ ${result} =~ \*\*Full\ Changelog\*\*:\ https://github.com/cgrindel/bazel-starlib/compare/v0\.1\.0\.\.\.v0\.1\.1 ]] ||
   fail "Expected to find changelog URL for v0.1.0...v0.1.1. result: ${result}"
 
 # MARK - Test changelog to a new tag
 
 tag_name="v99999.0.0"
+export GH_CHANGELOG_MOCK_FILE="${fixture_v99999}"
 result="$("${generate_gh_changelog_sh}" "${tag_name}")"
 match='[*][*]Full Changelog[*][*].*v9999'
-[[ "${result}" =~ $match ]] || fail "Expected to find changelog URL for ${tag_name}. result: ${result}"
+[[ ${result} =~ $match ]] || fail "Expected to find changelog URL for ${tag_name}. result: ${result}"
