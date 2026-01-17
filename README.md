@@ -2,6 +2,8 @@
 
 [![Build](https://github.com/cgrindel/bazel-starlib/actions/workflows/ci.yml/badge.svg?event=schedule)](https://github.com/cgrindel/bazel-starlib/actions/workflows/ci.yml)
 
+REMOVE THIS!!!
+
 Bazel Starlib is a collection of projects that contain rulesets and libraries that are useful for
 the implementation of Bazel projects.
 
@@ -34,14 +36,17 @@ how-to links above and review the [the generated documentation](/doc/).
 ### `MODULE.bazel` Snippet
 
 <!-- BEGIN MODULE SNIPPET -->
+
 ```python
 bazel_dep(name = "cgrindel_bazel_starlib", version = "0.28.0")
 ```
+
 <!-- END MODULE SNIPPET -->
 
 ### Workspace Configuration
 
 <!-- BEGIN WORKSPACE SNIPPET -->
+
 ```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
@@ -65,6 +70,7 @@ load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies")
 
 aspect_bazel_lib_dependencies()
 ```
+
 <!-- END WORKSPACE SNIPPET -->
 
 ## Developer Documentation
