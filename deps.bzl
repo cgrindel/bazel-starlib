@@ -45,7 +45,7 @@ def bazel_starlib_dependencies():
         sha256 = "6b65cb7917b4d1709f9410ffe00ecf3e160edf674b78c54a894471320862184f",
         urls = [
             "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.39.0/rules_go-v0.39.0.zip",
-            "https://github.com/bazelbuild/rules_go/releases/download/v0.50.0/rules_go-v0.39.0.zip",
+            "https://github.com/bazelbuild/rules_go/releases/download/v0.59.0/rules_go-v0.39.0.zip",
         ],
     )
 
@@ -62,9 +62,9 @@ def bazel_starlib_dependencies():
     maybe(
         http_archive,
         name = "aspect_bazel_lib",
-        sha256 = "4b32cf6feab38b887941db022020eea5a49b848e11e3d6d4d18433594951717a",
-        strip_prefix = "bazel-lib-2.0.1",
-        url = "https://github.com/aspect-build/bazel-lib/releases/download/v2.0.1/bazel-lib-v2.0.1.tar.gz",
+        sha256 = "06cbcd5b98af3f530d20b505a89fb6761f09950b780cdd7726df42ee84b49d04",
+        strip_prefix = "bazel-lib-3.1.1",
+        url = "https://github.com/aspect-build/bazel-lib/releases/download/v3.1.1/bazel-lib-v3.1.1.tar.gz",
     )
 
     _bazeldoc_dependencies()

@@ -1,0 +1,19 @@
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
+load("//bzlformat:defs.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+# MARK: - Unit Tests
+
+sh_test(
+    name = "patches_test",
+    srcs = ["patches_test.sh"],
+    data = [
+        "//:MODULE_bazel",
+        "//.bcr/patches:remove_last_green",
+    ],
+    deps = [
+        "//shlib/lib:assertions",
+        "@rules_shell//shell/runfiles",
+    ],
+)
