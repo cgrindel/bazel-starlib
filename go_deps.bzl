@@ -24,8 +24,8 @@ def bazel_starlib_go_dependencies():
         name = "com_github_gomarkdown_markdown",
         build_external = "external",
         importpath = "github.com/gomarkdown/markdown",
-        sum = "h1:TRYrIWJziqvMVn1owO8bmkDJTlMQFYnf74yhD8LXfgU=",
-        version = "v0.0.0-20240723152757-afa4a469d4f9",
+        sum = "h1:l7A0loSszR5zHd/qK53ZIHMO8b3bBSmENnQ6eKnUT0A=",
+        version = "v0.0.0-20250810172220-2e2c11897d1a",
     )
     go_repository(
         name = "com_github_pmezard_go_difflib",
