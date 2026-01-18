@@ -18,4 +18,4 @@ jobs:
       registry_fork: cgrindel/bazel-central-registry
       attest: false
     secrets:
-      BCR_PUBLISH_TOKEN: ${{ secrets.BCR_PUBLISH_TOKEN }}
+      publish_token: ${{ secrets.BCR_PUBLISH_TOKEN }}
