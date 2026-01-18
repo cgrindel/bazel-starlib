@@ -3,6 +3,8 @@ load("//bzlformat/private:bzlformat_pkg.bzl", "bzlformat_pkg")
 
 package(default_visibility = ["//visibility:public"])
 
+exports_files(["defs.bzl"])
+
 bzlformat_pkg(name = "bzlformat")
 
 filegroup(
