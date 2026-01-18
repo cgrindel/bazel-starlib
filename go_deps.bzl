@@ -10,8 +10,8 @@ def bazel_starlib_go_dependencies():
         name = "com_github_creasty_defaults",
         build_external = "external",
         importpath = "github.com/creasty/defaults",
-        sum = "h1:eNdqZvc5B509z18lD8yc212CAqJNvfT1Jq6L8WowdBA=",
-        version = "v1.7.0",
+        sum = "h1:z27FJxCAa0JKt3utc0sCImAEb+spPucmKoOdLHvHYKk=",
+        version = "v1.8.0",
     )
     go_repository(
         name = "com_github_davecgh_go_spew",
