@@ -3,6 +3,15 @@
 # This is used to determine if the library has been loaded
 cgrindel_bazel_shlib_lib_assertions_loaded() { return; }
 
+# Prints the message to stderr.
+warn() {
+  if [[ ${#} -gt 0 ]]; then
+    echo >&2 "${@}"
+  else
+    cat >&2
+  fi
+}
+
 # Fail a test with the specified message.
 #
 # Args:
@@ -13,9 +22,9 @@ cgrindel_bazel_shlib_lib_assertions_loaded() { return; }
 #   stderr: The error message.
 fail() {
   if [[ $# -eq 0 ]]; then
-    echo >&2 "Unspecified error occurred."
+    warn "Unspecified error occurred."
   else
-    echo >&2 "${@}"
+    warn "${@}"
   fi
   exit 1
 }
@@ -23,8 +32,8 @@ fail() {
 make_err_msg() {
   local err_msg="${1}"
   local prefix="${2:-}"
-  [[ -z ${prefix} ]] ||
-    local err_msg="${prefix} ${err_msg}"
+  [[ -z ${prefix} ]] \
+    || local err_msg="${prefix} ${err_msg}"
   echo "${err_msg}"
 }
 
@@ -44,8 +53,8 @@ assert_equal() {
   local err_msg
   if [[ ${expected} != "${actual}" ]]; then
     local diff_output
-    diff_output=$(diff <(echo "${expected}") <(echo "${actual}") 2>/dev/null ||
-      true)
+    diff_output=$(diff <(echo "${expected}") <(echo "${actual}") 2>/dev/null \
+      || true)
     if [[ -n ${diff_output} ]]; then
       err_msg="$(make_err_msg "Expected to be equal.
 Expected:
