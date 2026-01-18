@@ -5,12 +5,12 @@
 set -uo pipefail
 set +e
 f=bazel_tools/tools/bash/runfiles/runfiles.bash
-source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null \
-  || source "$(grep -sm1 "^$f " "${RUNFILES_MANIFEST_FILE:-/dev/null}" | cut -f2- -d' ')" 2>/dev/null \
-  || source "$0.runfiles/$f" 2>/dev/null \
-  || source "$(grep -sm1 "^$f " "$0.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null \
-  || source "$(grep -sm1 "^$f " "$0.exe.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null \
-  || {
+source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null ||
+  source "$(grep -sm1 "^$f " "${RUNFILES_MANIFEST_FILE:-/dev/null}" | cut -f2- -d' ')" 2>/dev/null ||
+  source "$0.runfiles/$f" 2>/dev/null ||
+  source "$(grep -sm1 "^$f " "$0.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null ||
+  source "$(grep -sm1 "^$f " "$0.exe.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null ||
+  {
     echo >&2 "ERROR: ${BASH_SOURCE[0]} cannot find $f"
     exit 1
   }
@@ -21,18 +21,18 @@ set -e
 # MARK - Locate Deps
 
 assertions_sh_location=cgrindel_bazel_starlib/shlib/lib/assertions.sh
-assertions_sh="$(rlocation "${assertions_sh_location}")" \
-  || (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
+assertions_sh="$(rlocation "${assertions_sh_location}")" ||
+  (echo >&2 "Failed to locate ${assertions_sh_location}" && exit 1)
 # shellcheck source=SCRIPTDIR/../../shlib/lib/assertions.sh
 source "${assertions_sh}"
 
 patch_file_location=cgrindel_bazel_starlib/.bcr/patches/remove_last_green.patch
-patch_file="$(rlocation "${patch_file_location}")" \
-  || (echo >&2 "Failed to locate ${patch_file_location}" && exit 1)
+patch_file="$(rlocation "${patch_file_location}")" ||
+  (echo >&2 "Failed to locate ${patch_file_location}" && exit 1)
 
 module_bazel_location=cgrindel_bazel_starlib/MODULE.bazel
-module_bazel="$(rlocation "${module_bazel_location}")" \
-  || (echo >&2 "Failed to locate ${module_bazel_location}" && exit 1)
+module_bazel="$(rlocation "${module_bazel_location}")" ||
+  (echo >&2 "Failed to locate ${module_bazel_location}" && exit 1)
 
 # MARK - Set up
 
