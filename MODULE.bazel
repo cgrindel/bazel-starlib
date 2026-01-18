@@ -31,12 +31,16 @@ bazel_dep(
 )
 bazel_dep(
     name = "buildifier_prebuilt",
-    version = "7.3.1",
+    version = "8.2.1.1",
 )
 bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "rules_shell", version = "0.6.1")
 bazel_dep(name = "rules_multitool", version = "1.0.0")
 bazel_dep(name = "aspect_bazel_lib", version = "2.22.4")
+
+# Override transitive dependency on rules_python 1.0.0 to get
+# incompatible_no_implicit_file_export compatibility (PR #3471).
+bazel_dep(name = "rules_python", version = "1.8.0")
 
 multitool = use_extension(
     "@rules_multitool//multitool:extension.bzl",
@@ -82,14 +86,11 @@ bazel_binaries = use_extension(
     dev_dependency = True,
 )
 bazel_binaries.download(version_file = "//:.bazelversion")
-
-# GH525: Enable once archive extraction regression is fixed.
 bazel_binaries.download(version = "last_green")
 use_repo(
     bazel_binaries,
     "bazel_binaries",
     "bazel_binaries_bazelisk",
     "build_bazel_bazel_.bazelversion",
-    # GH525: Enable once archive extraction regression is fixed.
     "build_bazel_bazel_last_green",
 )
