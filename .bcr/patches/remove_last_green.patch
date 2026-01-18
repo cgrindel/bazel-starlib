@@ -1,6 +1,6 @@
 --- a/MODULE.bazel
 +++ b/MODULE.bazel
-@@ -82,11 +82,9 @@
+@@ -86,11 +86,9 @@
      dev_dependency = True,
  )
  bazel_binaries.download(version_file = "//:.bazelversion")
