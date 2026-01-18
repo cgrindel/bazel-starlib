@@ -11,7 +11,11 @@ load("//shlib/rules:execute_binary.bzl", "execute_binary")
 load("//tests:integration_test_common.bzl", "INTEGRATION_TEST_TAGS")
 load("//updatesrc:defs.bzl", "updatesrc_update_all")
 
-exports_files(["MODULE.bazel"])
+filegroup(
+    name = "MODULE_bazel",
+    srcs = ["MODULE.bazel"],
+    visibility = ["//tests:__subpackages__"],
+)
 
 # MARK: - Gazelle
 

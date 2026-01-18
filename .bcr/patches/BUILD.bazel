@@ -2,6 +2,8 @@ load("//bzlformat:defs.bzl", "bzlformat_pkg")
 
 bzlformat_pkg(name = "bzlformat")
 
-exports_files([
-    "remove_last_green.patch",
-])
+filegroup(
+    name = "remove_last_green",
+    srcs = ["remove_last_green.patch"],
+    visibility = ["//tests/bcr_tests:__subpackages__"],
+)

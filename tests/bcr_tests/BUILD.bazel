@@ -9,8 +9,8 @@ sh_test(
     name = "patches_test",
     srcs = ["patches_test.sh"],
     data = [
-        "//:MODULE.bazel",
-        "//.bcr/patches:remove_last_green.patch",
+        "//:MODULE_bazel",
+        "//.bcr/patches:remove_last_green",
     ],
     deps = [
         "//shlib/lib:assertions",
