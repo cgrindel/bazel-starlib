@@ -3,6 +3,8 @@ load("@cgrindel_bazel_starlib//bzlformat:defs.bzl", "bzlformat_pkg")
 
 package(default_visibility = ["//visibility:public"])
 
+exports_files(["defs.bzl"])
+
 bzl_library(
     name = "defs",
     srcs = ["defs.bzl"],
