@@ -1,6 +1,6 @@
 --- a/MODULE.bazel
 +++ b/MODULE.bazel
-@@ -82,13 +82,11 @@ bazel_binaries = use_extension(
+@@ -82,11 +82,9 @@
      dev_dependency = True,
  )
  bazel_binaries.download(version_file = "//:.bazelversion")

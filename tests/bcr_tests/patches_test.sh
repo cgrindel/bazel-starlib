@@ -54,8 +54,9 @@ if ! grep -q 'bazel_binaries.download(version = "last_green")' MODULE.bazel; the
   fail "ERROR: MODULE.bazel does not contain last_green download line (test setup is broken)"
 fi
 
-# Apply the patch
-patch -p1 <"${patch_file}"
+# Apply the patch using the exact same flags as BCR
+# See: https://github.com/bazelbuild/bazel-central-registry/blob/main/tools/bcr_validation.py
+patch --strip 1 --force --fuzz 0 --ignore-whitespace --input "${patch_file}"
 
 # Verify last_green download line is removed
 if grep -q 'bazel_binaries.download(version = "last_green")' MODULE.bazel; then
