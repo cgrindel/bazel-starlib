@@ -18,10 +18,10 @@ def _prebuilt_buildtools_dependencies():
     maybe(
         http_archive,
         name = "buildifier_prebuilt",
-        sha256 = "bf9101bd5d657046674167986a18d44c5612e417194dc55aff8ca174344de031",
-        strip_prefix = "buildifier-prebuilt-8.0.3",
+        sha256 = "b0434d14d8ca6eb87ae1d0e71911aeb83ffa3096c6b81db7e26c1698fd980d42",
+        strip_prefix = "buildifier-prebuilt-8.2.1",
         urls = [
-            "http://github.com/keith/buildifier-prebuilt/archive/8.0.3.tar.gz",
+            "http://github.com/keith/buildifier-prebuilt/archive/8.2.1.tar.gz",
         ],
     )
 
@@ -62,9 +62,9 @@ def bazel_starlib_dependencies():
     maybe(
         http_archive,
         name = "aspect_bazel_lib",
-        sha256 = "94e192033ca8027f26de71c9000a67ef9c73695c2b88e2c559045170917ead0c",
-        strip_prefix = "bazel-lib-2.22.5",
-        url = "https://github.com/aspect-build/bazel-lib/releases/download/v2.22.5/bazel-lib-v2.22.5.tar.gz",
+        sha256 = "06cbcd5b98af3f530d20b505a89fb6761f09950b780cdd7726df42ee84b49d04",
+        strip_prefix = "bazel-lib-3.1.1",
+        url = "https://github.com/aspect-build/bazel-lib/releases/download/v3.1.1/bazel-lib-v3.1.1.tar.gz",
     )
 
     _bazeldoc_dependencies()
