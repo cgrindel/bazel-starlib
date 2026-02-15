@@ -1,6 +1,2 @@
 # Purposefully not importing the shared bazelrc files as they are
 # not needed and saw failures when run in CI.
-
-# Explicitly enable bzlmod
-common --enable_bzlmod
-

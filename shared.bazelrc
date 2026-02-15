@@ -4,18 +4,8 @@ build --verbose_failures
 # Show detailed errors for test failures
 test --test_output=errors --test_summary=detailed
 
-# Strict PATH. Helps prevent build cache invalidation due to PATH differences.
-build --incompatible_strict_action_env=true
-
-# Don't allow empty glob patterns by default
-build --incompatible_disallow_empty_glob
-
 # Require explicit exports_files() declarations instead of implicit file exports
 build --incompatible_no_implicit_file_export
-
-# Enable bzlmod
-common --enable_bzlmod
-build --@cgrindel_bazel_starlib//bzlmod:enabled
 
 # Remote Cache
 build:cache --bes_results_url=https://app.buildbuddy.io/invocation/
@@ -23,15 +13,13 @@ build:cache --bes_backend=grpcs://remote.buildbuddy.io
 build:cache --remote_cache=grpcs://remote.buildbuddy.io
 build:cache --remote_download_toplevel # Helps remove network bottleneck if caching is enabled
 build:cache --remote_timeout=3600
-build:cache --experimental_remote_cache_async
-build:cache --experimental_remote_cache_compression
+build:cache --remote_cache_compression
 
 # Recommended by BuildBuddy
 build --remote_build_event_upload=minimal
 build --noslim_profile
 build --experimental_profile_include_target_label
 build --experimental_profile_include_primary_output
-build --nolegacy_important_outputs
 
 # Finish BES upload in the background. Disable BES upload when running.
 # Do not put these under the cache config as they do not pick up when running.
@@ -41,6 +29,3 @@ run --bes_results_url=
 
 # Easily run without caches
 common:no_cache --remote_cache= --disk_cache= --repository_cache=
-
-# Do not autoload any legacy symbols that are now provided in separate repos.
-common --incompatible_autoload_externally=

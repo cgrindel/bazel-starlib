@@ -13,6 +13,4 @@ try-import %workspace%/../../../local.bazelrc
 # should not be loaded by the parent workspace.
 try-import %workspace%/../../../child_workspace.bazelrc
 
-# Explicitly enable bzlmod
-common --enable_bzlmod
 
