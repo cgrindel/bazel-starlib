@@ -1,10 +1,8 @@
 name: Configure bzlmod
-
 inputs:
   enabled:
     description: Boolean value that specifies whether bzlmod should be enabled.
     required: true
-
 runs:
   using: composite
   steps:
@@ -13,16 +11,12 @@ runs:
       shell: bash
       run: |
         cat >> "child_workspace.bazelrc" <<EOF
-        # Override earlier settings
-        common --enable_bzlmod
-        build --@cgrindel_bazel_starlib//bzlmod:enabled
+        # bzlmod is always enabled in Bazel 9
         EOF
     - name: Disable bzmod
       if: inputs.enabled != 'true'
       shell: bash
       run: |
         cat >> "child_workspace.bazelrc" <<EOF
-        # Override earlier settings
-        common --noenable_bzlmod
-        build --no@cgrindel_bazel_starlib//bzlmod:enabled
+        # bzlmod is always enabled in Bazel 9
         EOF

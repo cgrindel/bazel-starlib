@@ -41,10 +41,6 @@ bazel_integration_test(
         # https://github.com/bazelbuild/bazel/issues/19908
         "no-sandbox",
     ],
-    target_compatible_with = select({
-        "@cgrindel_bazel_starlib//bzlmod:is_enabled": [],
-        "//conditions:default": ["@platforms//:incompatible"],
-    }),
     test_runner = ":tidy_all_test_runner",
     workspace_files = integration_test_utils.glob_workspace_files("workspace") + [
         "//:workspace_integration_test_files",

@@ -1,16 +1,11 @@
 name: Execute Test
-
 inputs:
   test_target:
     description: The test target to execute.
     required: true
-  bzlmod_enabled:
-    description: Boolean value that specifies whether bzlmod should be enabled.
-    required: true
   github_token:
     description: The Github token to authenticate gh CLI.
     required: true
-
 runs:
   using: composite
   steps:
@@ -18,12 +13,7 @@ runs:
       shell: bash
       env:
         TEST_TARGET: ${{ inputs.test_target }}
-        BZLMOD_ENABLED: ${{ inputs.bzlmod_enabled }}
         # The tests make use of Github-specific functionality (e.g. gh).
         GITHUB_TOKEN: ${{ inputs.github_token }}
       run: |
-        if [[ "${BZLMOD_ENABLED}" == "false" ]] && [[ "${TEST_TARGET}" =~ ^@@ ]]; then
-          # Strip the first @ from test target
-          TEST_TARGET="${TEST_TARGET#@}"
-        fi
         bazelisk test "${TEST_TARGET}"

@@ -173,7 +173,6 @@ jobs:
           buildbuddy_api_key: ${{  secrets.BUILDBUDDY_API_KEY }}
       - uses: ./.github/actions/execute_test
         with:
-          bzlmod_enabled: ${{ matrix.enable_bzlmod }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           test_target: ${{ matrix.test }}
   tidy_and_test_matrix:

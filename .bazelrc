@@ -17,8 +17,6 @@ import %workspace%/ci.bazelrc
 # import ci.bazelrc and they do not have a //build:execution_env flag.
 build:ci --//build:execution_env=ci
 
-build --@cgrindel_bazel_starlib//bzlmod:enabled
-
 # windows requires symlinks to work well
 startup --windows_enable_symlinks
 
