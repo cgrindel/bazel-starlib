@@ -9,7 +9,7 @@ import (
 type Workflow struct {
 	Name        string           `yaml:"name"`
 	On          WorkflowTriggers `yaml:"on"`
-	Concurrecny Concurrency      `yaml:"concurrency"`
+	Concurrency Concurrency      `yaml:"concurrency"`
 	Jobs        map[string]Job   `yaml:"jobs" default:"{}"`
 }
 

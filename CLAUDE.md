@@ -101,8 +101,7 @@ Each project follows a consistent structure:
 
 ### Key Build Patterns
 
-**Bzlmod Support**: The repository uses Bzlmod with `MODULE.bazel` as the primary dependency
-management system, with legacy `WORKSPACE` support maintained.
+**Bzlmod**: The repository uses Bzlmod with `MODULE.bazel` for dependency management.
 
 **Integration Testing**: Extensive integration test infrastructure using
 `rules_bazel_integration_test` with child workspaces in `/examples/` and `/tests/`.

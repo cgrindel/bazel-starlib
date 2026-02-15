@@ -8,6 +8,7 @@ def _new(dirname, oss = ["macos", "linux"]):
         oss: A `list` of operating systems (e.g., `linux`, `macos`).
 
     Returns:
+        A `struct` with `dirname` and `oss` fields.
     """
     return struct(
         dirname = dirname,

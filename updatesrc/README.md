@@ -11,24 +11,19 @@ trick in every Bazel project, try using the
 
 ## Table of Contents
 
-* [Quickstart](#quickstart)
-  * [1\. Configure your workspace](#1-configure-your-workspace)
-  * [2\. Update the BUILD\.bazel at the root of your workspace](#2-update-the-buildbazel-at-the-root-of-your-workspace)
-  * [3\. Add updatesrc\_update to every Bazel package that has files to copy](#3-add-updatesrc_update-to-every-bazel-package-that-has-files-to-copy)
-  * [4\. Execute the Update All Target](#4-execute-the-update-all-target)
-* [How to Ensure Workspace Files Are Up\-to\-Date](#how-to-ensure-workspace-files-are-up-to-date)
-* [Learn More](#learn-more)
+- [Quickstart](#quickstart)
+  - [1\. Update the BUILD\.bazel at the root of your workspace](#1-update-the-buildbazel-at-the-root-of-your-workspace)
+  - [2\. Add updatesrc_update to every Bazel package that has files to copy](#2-add-updatesrc_update-to-every-bazel-package-that-has-files-to-copy)
+  - [3\. Execute the Update All Target](#3-execute-the-update-all-target)
+- [How to Ensure Workspace Files Are Up\-to\-Date](#how-to-ensure-workspace-files-are-up-to-date)
+- [Learn More](#learn-more)
 
 ## Quickstart
 
 The following provides a quick introduction on how to use the rules in this project. Also, check out
 [the documentation](/doc/updatesrc/) and [the examples](/examples/updatesrc/) for more information.
 
-### 1. Configure your workspace
-
-[Add the workspace snippet for the repository to your `WORKSPACE` file.](/README.md#workspace-configuration)
-
-### 2. Update the `BUILD.bazel` at the root of your workspace
+### 1. Update the `BUILD.bazel` at the root of your workspace
 
 At the root of your workspace, create a `BUILD.bazel` file, if you don't have one. Add the
 following:
@@ -46,7 +41,7 @@ updatesrc_update_all(
 )
 ```
 
-### 3. Add `updatesrc_update` to every Bazel package that has files to copy
+### 2. Add `updatesrc_update` to every Bazel package that has files to copy
 
 In every Bazel package that contains source files that should be updated from build output, add a
 [updatesrc_update](/doc/updatesrc/rules_and_macros_overview.md#updatesrc_update) declaration. For more
@@ -65,7 +60,7 @@ updatesrc_update(
 )
 ```
 
-### 4. Execute the Update All Target
+### 3. Execute the Update All Target
 
 To execute all of the
 [updatesrc_update](/doc/updatesrc/rules_and_macros_overview.md#updatesrc_update) targets, run the
@@ -119,7 +114,6 @@ macro only works with source-output pairs. It does not support update mappings s
 that output [UpdateSrcsInfo](/doc/updatesrc/providers_overview.md#UpdateSrcsInfo).
 
 Thanks to @lukedirtwalker for suggesting this feature.
-
 
 ## Learn More
 

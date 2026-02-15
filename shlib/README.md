@@ -1,18 +1,12 @@
-# Shlib 
+# Shlib
 
 Shlib is a library of Bash shell functions that are useful when implementing shell binaries,
 libraries, and tests.
-
 
 ## Quickstart
 
 The following provides a quick introduction on how to get started using the libraries in this
 project.
-
-###  Workspace Configuration
-
-[Add the workspace snippet for the repository to your `WORKSPACE` file.](/README.md#workspace-configuration)
-
 
 ### Reference Libraries As Dependencies
 
@@ -34,7 +28,7 @@ sh_binary(
 
 ### Source The Library And Use It
 
-In your shell script, add the following to source the library. 
+In your shell script, add the following to source the library.
 
 ```sh
 # --- begin runfiles.bash initialization v2 ---
