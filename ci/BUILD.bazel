@@ -10,7 +10,6 @@ bzl_library(
     srcs = ["defs.bzl"],
     visibility = ["//visibility:public"],
     deps = [
-        "//ci/internal:bzlmod_modes",
         "//ci/internal:ci_integration_test_params",
         "//ci/internal:ci_workflow",
         "//ci/internal:providers",

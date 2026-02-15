@@ -20,7 +20,6 @@ bzlformat_pkg(name = "bzlformat")
 
 _EXAMPLES = [
     examples.new(
-        bzlmod_modes = ["enabled"],
         dirname = "bzlmod_e2e",
         oss = [
             "macos",
@@ -55,7 +54,6 @@ default_test_runner(name = "default_test_runner")
 [
     ci_integration_test_params(
         name = "{}_test_params".format(example.dirname),
-        bzlmod_modes = example.bzlmod_modes,
         oss = example.oss,
         test_names = integration_test_utils.bazel_integration_test_names(
             "{}_test".format(example.dirname),

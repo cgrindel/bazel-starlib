@@ -44,12 +44,6 @@ filegroup(
 )
 
 bzl_library(
-    name = "bzlmod_modes",
-    srcs = ["bzlmod_modes.bzl"],
-    visibility = ["//ci:__subpackages__"],
-)
-
-bzl_library(
     name = "providers",
     srcs = ["providers.bzl"],
     visibility = ["//ci:__subpackages__"],

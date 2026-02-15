@@ -70,7 +70,6 @@ test_suite(
 
 ci_integration_test_params(
     name = "missing_pkgs_test_params",
-    bzlmod_modes = ["enabled"],
     oss = [
         "macos",
         "linux",
