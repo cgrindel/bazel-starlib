@@ -36,7 +36,7 @@ fail() {
 usage_error() {
   local msg="${1:-}"
   cmd=(fail)
-  [[ -z "${msg:-}" ]] || cmd+=("${msg}" "")
+  [[ -z ${msg:-} ]] || cmd+=("${msg}" "")
   cmd+=("$(get_usage)")
   "${cmd[@]}"
 }
@@ -79,19 +79,19 @@ upsearch() {
   local args=()
   while (("$#")); do
     case "${1}" in
-    "--start_dir")
-      local start_dir
-      start_dir="$(normalize_path "${2}")"
-      shift 2
-      ;;
-    "--error_if_not_found")
-      local error_if_not_found=1
-      shift 1
-      ;;
-    *)
-      args+=("${1}")
-      shift 1
-      ;;
+      "--start_dir")
+        local start_dir
+        start_dir="$(normalize_path "${2}")"
+        shift 2
+        ;;
+      "--error_if_not_found")
+        local error_if_not_found=1
+        shift 1
+        ;;
+      *)
+        args+=("${1}")
+        shift 1
+        ;;
     esac
   done
 
@@ -101,8 +101,8 @@ upsearch() {
   directory="${start_dir}"
   for ((n = ${#slashes}; n > 0; --n)); do
     local test_path="${directory}/${target_file}"
-    test -e "${test_path}" &&
-      normalize_path "${test_path}" && return
+    test -e "${test_path}" \
+      && normalize_path "${test_path}" && return
     directory="${directory}/.."
   done
 
@@ -122,7 +122,7 @@ upsearch() {
 #   stderr: None.
 normalize_path() {
   local path="${1}"
-  if [[ -d "${path}" ]]; then
+  if [[ -d ${path} ]]; then
     local dirname="${path}"
   else
     local dirname
@@ -131,7 +131,7 @@ normalize_path() {
     basename="$(basename "${path}")"
   fi
   dirname="$(cd "${dirname}" >/dev/null && pwd)"
-  if [[ -z "${basename:-}" ]]; then
+  if [[ -z ${basename:-} ]]; then
     echo "${dirname}"
   else
     echo "${dirname}/${basename}"
@@ -161,7 +161,7 @@ EOF
 
 find_all_workspaces() {
   local start_dir="$1"
-  find "${start_dir}" -name "WORKSPACE"
+  find "${start_dir}" -name "MODULE.bazel"
 }
 
 find_workspaces_with_modifications() {
@@ -184,7 +184,7 @@ find_workspaces_with_modifications() {
   for file in "${modified_files[@]}"; do
     local dir
     dir="$(dirname "${file}")"
-    workspaces+=("$(upsearch --error_if_not_found --start_dir "${dir}" "WORKSPACE")")
+    workspaces+=("$(upsearch --error_if_not_found --start_dir "${dir}" "MODULE.bazel")")
   done
 
   # Return a unique list
@@ -203,23 +203,23 @@ tidy_target="//:tidy"
 
 while (("$#")); do
   case "${1}" in
-  "--help")
-    show_usage
-    ;;
-  "--mode")
-    find_workspace_mode="$2"
-    shift 2
-    ;;
-  "--tidy_target")
-    tidy_target="$2"
-    shift 2
-    ;;
-  --*)
-    usage_error "Unrecognized option. ${1}"
-    ;;
-  *)
-    usage_error "Unrecognized argument. ${1}"
-    ;;
+    "--help")
+      show_usage
+      ;;
+    "--mode")
+      find_workspace_mode="$2"
+      shift 2
+      ;;
+    "--tidy_target")
+      tidy_target="$2"
+      shift 2
+      ;;
+    --*)
+      usage_error "Unrecognized option. ${1}"
+      ;;
+    *)
+      usage_error "Unrecognized argument. ${1}"
+      ;;
   esac
 done
 
@@ -231,15 +231,15 @@ cd "${BUILD_WORKSPACE_DIRECTORY}"
 # Find all of the workspaces
 find_workspace_cmd=()
 case "${find_workspace_mode}" in
-"all")
-  find_workspace_cmd=(find_all_workspaces "${BUILD_WORKSPACE_DIRECTORY}")
-  ;;
-"modified")
-  find_workspace_cmd=(find_workspaces_with_modifications "${BUILD_WORKSPACE_DIRECTORY}")
-  ;;
-*)
-  fail "Unrecognized find_workspace_mode: ${find_workspace_mode}."
-  ;;
+  "all")
+    find_workspace_cmd=(find_all_workspaces "${BUILD_WORKSPACE_DIRECTORY}")
+    ;;
+  "modified")
+    find_workspace_cmd=(find_workspaces_with_modifications "${BUILD_WORKSPACE_DIRECTORY}")
+    ;;
+  *)
+    fail "Unrecognized find_workspace_mode: ${find_workspace_mode}."
+    ;;
 esac
 workspaces=()
 while IFS=$'\n' read -r line; do workspaces+=("$line"); done < <(
