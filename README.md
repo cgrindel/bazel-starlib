@@ -50,7 +50,6 @@ Bazel build files.
 ```sh
 $ bazel run @io_bazel_rules_go//go -- github.com/sweet/go_pkg
 $ bazel run //:go_mod_tidy
-$ bazel run //:gazelle_update_repos
 $ bazel run //:update_build_files
 ```
 

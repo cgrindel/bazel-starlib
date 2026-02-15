@@ -32,7 +32,6 @@ tidy(
         ":bzlformat_missing_pkgs_fix",
         ":update_all",
         ":go_mod_tidy",
-        ":gazelle_update_repos",
         ":gazelle",
     ],
 )

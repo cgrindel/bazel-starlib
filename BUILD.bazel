@@ -33,17 +33,6 @@ gazelle(
     gazelle = ":gazelle_bin",
 )
 
-gazelle(
-    name = "gazelle_update_repos",
-    args = [
-        "-from_file=go.mod",
-        "-to_macro=go_deps.bzl%bazel_starlib_go_dependencies",
-        "-build_external=external",
-        "-prune",
-    ],
-    command = "update-repos",
-)
-
 # MARK: - Bazel Starlark Lint and Formatting
 
 bzlformat_pkg(name = "bzlformat")
@@ -69,9 +58,7 @@ tidy(
         "@rules_bazel_integration_test//tools:update_deleted_packages",
         ":bzlformat_missing_pkgs_fix",
         ":update_all",
-        # Run go mod tidy before we gazelle_update_repos
         ":go_mod_tidy",
-        ":gazelle_update_repos",
         ":update_build_files",
         ":format",
     ],
@@ -272,11 +259,4 @@ bzl_library(
         "@bazel_tools//tools/build_defs/repo:http.bzl",
         "@bazel_tools//tools/build_defs/repo:utils.bzl",
     ],
-)
-
-bzl_library(
-    name = "go_deps",
-    srcs = ["go_deps.bzl"],
-    visibility = ["//visibility:public"],
-    deps = ["@bazel_gazelle//:deps"],
 )
