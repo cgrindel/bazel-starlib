@@ -11,12 +11,7 @@ The followig provides a quick introduction on how to use the `tidy` macro. Also,
 out [the documentation](/doc/bzltidy/) and the use of the macro in the root `BUILD.bazel`
 file in this repository.
 
-### 1. Configure your workspace.
-
-There is no special configuration for the `WORKSPACE` file beyond the [workspace snippet for the
-repository](/README.md#workspace-configuration).
-
-### 2. Update the `BUILD.bazel` at the root of your workspace
+### 1. Update the `BUILD.bazel` at the root of your workspace
 
 At the root of your workspace, create a `BUILD.bazel` file, if you don't have one. Add the
 following, replacing the `targets` list with your own targets:
@@ -32,7 +27,6 @@ tidy(
         ":bzlformat_missing_pkgs_fix",
         ":update_all",
         ":go_mod_tidy",
-        ":gazelle_update_repos",
         ":gazelle",
     ],
 )
@@ -42,7 +36,7 @@ The `tidy` macro defines two targets: `tidy` and `tidy_check`. The target named 
 specified targets. The target named `tidy_check` executes `tidy` and checks for any changes in the
 source tree.
 
-### 3. Tidy up your code
+### 2. Tidy up your code
 
 Now, you can run the following to ensure that your source tree is up-to-date:
 
@@ -51,7 +45,7 @@ Now, you can run the following to ensure that your source tree is up-to-date:
 $ bazel run //:tidy
 ```
 
-### 4. (Optional) Udpate your CI to ensure that your CI is up-to-date
+### 3. (Optional) Update your CI to ensure that your CI is up-to-date
 
 To ensure that your source tree is up-to-date with every code change, add a call to `//:tidy_check`.
 

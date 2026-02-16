@@ -21,13 +21,11 @@ def _ci_integration_test_params_impl(ctx):
     itps = []
     for test_label in test_labels:
         for os in ctx.attr.oss:
-            for bzlmod_mode in ctx.attr.bzlmod_modes:
-                itp = ci_test_params.new_integration_test_params(
-                    test = test_label,
-                    os = os,
-                    bzlmod_mode = bzlmod_mode,
-                )
-                itps.append(itp)
+            itp = ci_test_params.new_integration_test_params(
+                test = test_label,
+                os = os,
+            )
+            itps.append(itp)
     return [
         CITestParamsInfo(
             integration_test_params = depset(itps),
@@ -37,10 +35,6 @@ def _ci_integration_test_params_impl(ctx):
 ci_integration_test_params = rule(
     implementation = _ci_integration_test_params_impl,
     attrs = {
-        "bzlmod_modes": attr.string_list(
-            default = ["enabled"],
-            doc = "Accepted values: `enabled`, `disabled`.",
-        ),
         "oss": attr.string_list(
             default = ["macos", "linux"],
             doc = "Accepted values: `macos`, `linux`.",

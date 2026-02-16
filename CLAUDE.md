@@ -49,7 +49,6 @@ bazel run @io_bazel_rules_go//go -- github.com/sweet/go_pkg
 
 # Update go.mod and Bazel files
 bazel run //:go_mod_tidy
-bazel run //:gazelle_update_repos
 bazel run //:update_build_files
 ```
 
@@ -102,8 +101,7 @@ Each project follows a consistent structure:
 
 ### Key Build Patterns
 
-**Bzlmod Support**: The repository uses Bzlmod with `MODULE.bazel` as the primary dependency
-management system, with legacy `WORKSPACE` support maintained.
+**Bzlmod**: The repository uses Bzlmod with `MODULE.bazel` for dependency management.
 
 **Integration Testing**: Extensive integration test infrastructure using
 `rules_bazel_integration_test` with child workspaces in `/examples/` and `/tests/`.

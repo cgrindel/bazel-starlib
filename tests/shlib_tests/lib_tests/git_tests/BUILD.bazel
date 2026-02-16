@@ -51,7 +51,6 @@ test_suite(
 
 ci_integration_test_params(
     name = "all_test_params",
-    bzlmod_modes = ["enabled"],
     # We only run this on linux.
     oss = ["linux"],
     test_names = ["git_integration_test"],

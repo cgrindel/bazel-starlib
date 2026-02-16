@@ -7,7 +7,10 @@ bzl_library(
     name = "ci_integration_test_params",
     srcs = ["ci_integration_test_params.bzl"],
     visibility = ["//visibility:public"],
-    deps = [":providers"],
+    deps = [
+        ":ci_test_params",
+        ":providers",
+    ],
 )
 
 bzl_library(
@@ -41,12 +44,6 @@ filegroup(
     name = "all_files",
     srcs = glob(["*"]),
     visibility = ["//:__subpackages__"],
-)
-
-bzl_library(
-    name = "bzlmod_modes",
-    srcs = ["bzlmod_modes.bzl"],
-    visibility = ["//ci:__subpackages__"],
 )
 
 bzl_library(

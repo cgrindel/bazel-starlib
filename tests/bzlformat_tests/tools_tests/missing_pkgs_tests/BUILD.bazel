@@ -39,10 +39,6 @@ bazel_integration_tests(
         # https://github.com/bazelbuild/bazel/issues/19908
         "no-sandbox",
     ],
-    target_compatible_with = select({
-        "@cgrindel_bazel_starlib//bzlmod:is_enabled": [],
-        "//conditions:default": ["@platforms//:incompatible"],
-    }),
     test_runner = ":missing_pkgs_test_runner",
     workspace_files = integration_test_utils.glob_workspace_files("workspace") + [
         "//:workspace_integration_test_files",
@@ -74,7 +70,6 @@ test_suite(
 
 ci_integration_test_params(
     name = "missing_pkgs_test_params",
-    bzlmod_modes = ["enabled"],
     oss = [
         "macos",
         "linux",

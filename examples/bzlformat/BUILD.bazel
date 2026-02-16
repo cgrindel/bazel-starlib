@@ -85,7 +85,6 @@ test_suite(
 
 ci_integration_test_params(
     name = "simple_test_params",
-    bzlmod_modes = ["enabled"],
     oss = [
         "macos",
         "linux",

@@ -9,7 +9,7 @@ import (
 type Workflow struct {
 	Name        string           `yaml:"name"`
 	On          WorkflowTriggers `yaml:"on"`
-	Concurrecny Concurrency      `yaml:"concurrency"`
+	Concurrency Concurrency      `yaml:"concurrency"`
 	Jobs        map[string]Job   `yaml:"jobs" default:"{}"`
 }
 
@@ -119,7 +119,6 @@ type SBMatrixStrategy struct {
 	Example      []string          `yaml:"example,omitempty"`
 	BazelVersion []string          `yaml:"bazel_version,omitempty"`
 	Runner       []string          `yaml:"runner,omitempty"`
-	EnableBzlmod []bool            `yaml:"enable_bzlmod,omitempty"`
 	Include      []SBMatrixInclude `yaml:"include,omitempty"`
 }
 
@@ -129,5 +128,4 @@ type SBMatrixInclude struct {
 	BazelVersion string `yaml:"bazel_version,omitempty"`
 	Test         string `yaml:"test"`
 	Runner       string `yaml:"runner"`
-	EnableBzlmod bool   `yaml:"enable_bzlmod"`
 }

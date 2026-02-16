@@ -11,34 +11,28 @@ def _sort_integration_test_params_test(ctx):
         ci_test_params.new_integration_test_params(
             test = "//:zebra",
             os = "macos",
-            bzlmod_mode = "enabled",
         ),
         ci_test_params.new_integration_test_params(
             test = "//:zebra",
-            os = "macos",
-            bzlmod_mode = "disabled",
+            os = "linux",
         ),
         ci_test_params.new_integration_test_params(
             test = "//:apple",
             os = "macos",
-            bzlmod_mode = "enabled",
         ),
     ]
     expected = [
         ci_test_params.new_integration_test_params(
             test = "//:apple",
             os = "macos",
-            bzlmod_mode = "enabled",
+        ),
+        ci_test_params.new_integration_test_params(
+            test = "//:zebra",
+            os = "linux",
         ),
         ci_test_params.new_integration_test_params(
             test = "//:zebra",
             os = "macos",
-            bzlmod_mode = "disabled",
-        ),
-        ci_test_params.new_integration_test_params(
-            test = "//:zebra",
-            os = "macos",
-            bzlmod_mode = "enabled",
         ),
     ]
     actual = ci_test_params.sort_integration_test_params(itps)
@@ -57,7 +51,6 @@ def _collect_from_deps_test(ctx):
                 ci_test_params.new_integration_test_params(
                     test = "//:zebra",
                     os = "macos",
-                    bzlmod_mode = "enabled",
                 ),
             ]),
         )},
@@ -66,7 +59,6 @@ def _collect_from_deps_test(ctx):
                 ci_test_params.new_integration_test_params(
                     test = "//:apple",
                     os = "linux",
-                    bzlmod_mode = "disabled",
                 ),
             ]),
         )},
@@ -79,12 +71,10 @@ def _collect_from_deps_test(ctx):
         ci_test_params.new_integration_test_params(
             test = "//:apple",
             os = "linux",
-            bzlmod_mode = "disabled",
         ),
         ci_test_params.new_integration_test_params(
             test = "//:zebra",
             os = "macos",
-            bzlmod_mode = "enabled",
         ),
     ]
     asserts.equals(env, expected_itps, actual_itps)

@@ -36,7 +36,7 @@ find_workspace_eb="$(rlocation "${find_workspace_eb_location}")" ||
 # Create a workspace directory
 workspace_dir="${PWD}/workspace"
 mkdir -p "${workspace_dir}"
-touch "${workspace_dir}/WORKSPACE"
+touch "${workspace_dir}/MODULE.bazel"
 export BUILD_WORKSPACE_DIRECTORY="${workspace_dir}"
 
 # If the execute succeeds, then the test succeeds

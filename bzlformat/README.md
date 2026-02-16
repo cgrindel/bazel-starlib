@@ -8,12 +8,11 @@ directory.
 
 ## Table of Contents
 
-* [Quickstart](#quickstart)
-  * [1\. Configure your workspace to use bzlformat](#1-configure-your-workspace-to-use-bzlformat)
-  * [2\. Update the BUILD\.bazel at the root of your workspace](#2-update-the-buildbazel-at-the-root-of-your-workspace)
-  * [3\. Add bzlformat\_pkg to every Bazel package](#3-add-bzlformat_pkg-to-every-bazel-package)
-  * [4\. Format, Update, and Test](#4-format-update-and-test)
-  * [5\. (Optional) Update Your CI Test Runs](#5-optional-update-your-ci-test-runs)
+- [Quickstart](#quickstart)
+  - [1\. Update the BUILD\.bazel at the root of your workspace](#1-update-the-buildbazel-at-the-root-of-your-workspace)
+  - [2\. Add bzlformat_pkg to every Bazel package](#2-add-bzlformat_pkg-to-every-bazel-package)
+  - [3\. Format, Update, and Test](#3-format-update-and-test)
+  - [4\. (Optional) Update Your CI Test Runs](#4-optional-update-your-ci-test-runs)
 
 ## Quickstart
 
@@ -21,23 +20,7 @@ The following provides a quick introduction on how to use the rules in this repo
 out [the documentation](/doc/bzlformat/) and [the examples](/examples/bzlformat/) for more
 information.
 
-### 1. Configure your workspace to use `bzlformat`
-
-In addition to the [workspace snippet for the repository](/README.md#workspace-configuration), add
-the following to your `WORKSPACE` file. This is the initialization logic for the [prebuilt
-buildtools](https://github.com/keith/buildifier-prebuilt).
-
-```python
-load("@buildifier_prebuilt//:deps.bzl", "buildifier_prebuilt_deps")
-
-buildifier_prebuilt_deps()
-
-load("@buildifier_prebuilt//:defs.bzl", "buildifier_prebuilt_register_toolchains", "buildtools_assets")
-
-buildifier_prebuilt_register_toolchains()
-```
-
-### 2. Update the `BUILD.bazel` at the root of your workspace
+### 1. Update the `BUILD.bazel` at the root of your workspace
 
 At the root of your workspace, create a `BUILD.bazel` file, if you don't have one. Add the
 following:
@@ -96,7 +79,7 @@ macro defines a runnable target that copies all of the formatted Starlark source
 workspace directory. We add a reference to the `:bzlformat_missing_pkgs_fix` target to fix the
 appropriate Bazel packages when `bazel run //:update_all` is executed.
 
-### 3. Add `bzlformat_pkg` to every Bazel package
+### 2. Add `bzlformat_pkg` to every Bazel package
 
 Next, we need to add `bzlformat_pkg` declarations to every Bazel package. The quickest way to do so
 is to execute `bazel run //:bzlformat_missing_pkgs_fix` or `bazel run //:update_all`.
@@ -106,7 +89,7 @@ is to execute `bazel run //:bzlformat_missing_pkgs_fix` or `bazel run //:update_
 $ bazel run //:update_all
 ```
 
-### 4. Format, Update, and Test
+### 3. Format, Update, and Test
 
 From the command-line, you can format the Starlark source files, copy them back to the workspace
 directory and execute the tests that ensure the formatted soures are in the workspace directory.
@@ -119,7 +102,7 @@ $ bazel run //:update_all
 $ bazel test //...
 ```
 
-### 5. (Optional) Update Your CI Test Runs
+### 4. (Optional) Update Your CI Test Runs
 
 To ensure that all of your Bazel packages are monitored by `bzlformat`, add a call to `bazel
 run //:bzlformat_missing_pkgs_test` to your CI test runs. If any Bazel packages are missing

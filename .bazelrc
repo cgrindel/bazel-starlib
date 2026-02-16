@@ -13,13 +13,9 @@ import %workspace%/shared.bazelrc
 import %workspace%/ci.bazelrc
 
 # Set the execution_env flag to ci
-# This needs to be set here instead of in ci.yml, because the child workspaces 
+# This needs to be set here instead of in ci.yml, because the child workspaces
 # import ci.bazelrc and they do not have a //build:execution_env flag.
 build:ci --//build:execution_env=ci
-
-# The parent workspace always runs with bzlmod enabled.
-common --enable_bzlmod
-build --@cgrindel_bazel_starlib//bzlmod:enabled
 
 # windows requires symlinks to work well
 startup --windows_enable_symlinks
@@ -30,4 +26,3 @@ common --enable_runfiles
 
 # Try to import a local.rc file; typically, written by CI
 try-import %workspace%/local.bazelrc
-

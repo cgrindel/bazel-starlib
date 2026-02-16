@@ -36,7 +36,7 @@ def bzlformat_pkg(
     """
     if srcs == None:
         srcs = native.glob(
-            ["*.bzl", "BUILD", "BUILD.bazel", "WORKSPACE"],
+            ["*.bzl", "BUILD", "BUILD.bazel"],
             allow_empty = True,
         )
 

@@ -20,16 +20,11 @@ bzlformat_pkg(name = "bzlformat")
 
 _EXAMPLES = [
     examples.new(
-        bzlmod_modes = ["enabled"],
         dirname = "bzlmod_e2e",
         oss = [
             "macos",
             "linux",
         ],
-        target_compatible_with = select({
-            "@cgrindel_bazel_starlib//bzlmod:is_enabled": [],
-            "//conditions:default": ["@platforms//:incompatible"],
-        }),
     ),
 ]
 
@@ -47,7 +42,6 @@ default_test_runner(name = "default_test_runner")
             # https://github.com/bazelbuild/bazel/issues/19908
             "no-sandbox",
         ],
-        target_compatible_with = example.target_compatible_with,
         test_runner = ":default_test_runner",
         workspace_files = integration_test_utils.glob_workspace_files(example.dirname) + [
             "//:workspace_integration_test_files",
@@ -60,7 +54,6 @@ default_test_runner(name = "default_test_runner")
 [
     ci_integration_test_params(
         name = "{}_test_params".format(example.dirname),
-        bzlmod_modes = example.bzlmod_modes,
         oss = example.oss,
         test_names = integration_test_utils.bazel_integration_test_names(
             "{}_test".format(example.dirname),

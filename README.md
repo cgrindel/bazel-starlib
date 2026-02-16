@@ -21,7 +21,6 @@ the implementation of Bazel projects.
 <!-- MARKDOWN TOC: BEGIN -->
 
 - [Quickstart](#quickstart)
-  - [Workspace Configuration](#workspace-configuration)
 - [Other Documentation](#other-documentation)
 <!-- MARKDOWN TOC: END -->
 
@@ -34,38 +33,12 @@ how-to links above and review the [the generated documentation](/doc/).
 ### `MODULE.bazel` Snippet
 
 <!-- BEGIN MODULE SNIPPET -->
+
 ```python
 bazel_dep(name = "cgrindel_bazel_starlib", version = "0.29.3")
 ```
+
 <!-- END MODULE SNIPPET -->
-
-### Workspace Configuration
-
-<!-- BEGIN WORKSPACE SNIPPET -->
-```python
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
-http_archive(
-    name = "cgrindel_bazel_starlib",
-    sha256 = "830ee65a2db5744e0e148f4cb92f9774fedb97e401b07d56af983d72dbdf175c",
-    urls = [
-        "https://github.com/cgrindel/bazel-starlib/releases/download/v0.29.3/bazel-starlib.v0.29.3.tar.gz",
-    ],
-)
-
-load("@cgrindel_bazel_starlib//:deps.bzl", "bazel_starlib_dependencies")
-
-bazel_starlib_dependencies()
-
-load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
-
-bazel_skylib_workspace()
-
-load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies")
-
-aspect_bazel_lib_dependencies()
-```
-<!-- END WORKSPACE SNIPPET -->
 
 ## Developer Documentation
 
@@ -77,7 +50,6 @@ Bazel build files.
 ```sh
 $ bazel run @io_bazel_rules_go//go -- github.com/sweet/go_pkg
 $ bazel run //:go_mod_tidy
-$ bazel run //:gazelle_update_repos
 $ bazel run //:update_build_files
 ```
 

@@ -12,15 +12,15 @@ func TestNewIntTestParamsFromJSON(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Len(t, actual, 2)
 	expected := []testparams.IntTestParams{
-		{Test: "@@//path:int_test", OS: "macos", BzlmodMode: "enabled"},
-		{Test: "@@//path:int_test", OS: "linux", BzlmodMode: "disabled"},
+		{Test: "@@//path:int_test", OS: "macos"},
+		{Test: "@@//path:int_test", OS: "linux"},
 	}
 	assert.Equal(t, expected, actual)
 }
 
 const intTestParamsJSON = `
 [
-  {"test": "@@//path:int_test", "os": "macos", "bzlmod_mode": "enabled"},
-  {"test": "@@//path:int_test", "os": "linux", "bzlmod_mode": "disabled"}
+  {"test": "@@//path:int_test", "os": "macos"},
+  {"test": "@@//path:int_test", "os": "linux"}
 ]
 `

@@ -36,7 +36,7 @@ fail() {
 usage_error() {
   local msg="${1:-}"
   cmd=(fail)
-  [[ -z "${msg:-}" ]] || cmd+=("${msg}" "")
+  [[ -z ${msg:-} ]] || cmd+=("${msg}" "")
   cmd+=("$(get_usage)")
   "${cmd[@]}"
 }
@@ -122,7 +122,7 @@ upsearch() {
 #   stderr: None.
 normalize_path() {
   local path="${1}"
-  if [[ -d "${path}" ]]; then
+  if [[ -d ${path} ]]; then
     local dirname="${path}"
   else
     local dirname
@@ -131,7 +131,7 @@ normalize_path() {
     basename="$(basename "${path}")"
   fi
   dirname="$(cd "${dirname}" >/dev/null && pwd)"
-  if [[ -z "${basename:-}" ]]; then
+  if [[ -z ${basename:-} ]]; then
     echo "${dirname}"
   else
     echo "${dirname}/${basename}"
@@ -161,7 +161,7 @@ EOF
 
 find_all_workspaces() {
   local start_dir="$1"
-  find "${start_dir}" -name "WORKSPACE"
+  find "${start_dir}" -name "MODULE.bazel"
 }
 
 find_workspaces_with_modifications() {
@@ -184,7 +184,7 @@ find_workspaces_with_modifications() {
   for file in "${modified_files[@]}"; do
     local dir
     dir="$(dirname "${file}")"
-    workspaces+=("$(upsearch --error_if_not_found --start_dir "${dir}" "WORKSPACE")")
+    workspaces+=("$(upsearch --error_if_not_found --start_dir "${dir}" "MODULE.bazel")")
   done
 
   # Return a unique list

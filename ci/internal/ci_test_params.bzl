@@ -3,9 +3,6 @@
 load(":providers.bzl", "CITestParamsInfo")
 
 def _label_str(label):
-    # Because we support running with bzlmod enabled and disabled, we need to
-    # normalize the target value that is stored. We have chosen to use the
-    # bzlmod version.
     result = str(label)
     if result.startswith("@@"):
         pass
@@ -15,11 +12,10 @@ def _label_str(label):
         result = "@@{}".format(result)
     return result
 
-def _new_integration_test_params(test, os, bzlmod_mode):
+def _new_integration_test_params(test, os):
     return struct(
         test = _label_str(test),
         os = os,
-        bzlmod_mode = bzlmod_mode,
     )
 
 def _collect_from_deps(deps):
@@ -34,10 +30,9 @@ def _collect_from_deps(deps):
 def _sort_integration_test_params(itps):
     return sorted(
         itps,
-        key = lambda itp: "{test}_{os}_{bzlmod_mode}".format(
+        key = lambda itp: "{test}_{os}".format(
             test = itp.test,
             os = itp.os,
-            bzlmod_mode = itp.bzlmod_mode,
         ),
     )
 
