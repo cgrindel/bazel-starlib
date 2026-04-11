@@ -119,7 +119,7 @@ jobs:
       CC: clang
     steps:
       - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
-      - uses: cgrindel/gha_set_up_bazel@v1
+      - uses: cgrindel/gha_set_up_bazel@v2
         with:
           bazel_disk_cache_dir: ""
           bazel_repo_cache_dir: ""
@@ -141,7 +141,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
-      - uses: cgrindel/gha_set_up_bazel@v1
+      - uses: cgrindel/gha_set_up_bazel@v2
         with:
           bazel_disk_cache_dir: ""
           bazel_repo_cache_dir: ""
