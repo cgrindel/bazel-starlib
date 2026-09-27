@@ -62,9 +62,9 @@ def bazel_starlib_dependencies():
     maybe(
         http_archive,
         name = "aspect_bazel_lib",
-        sha256 = "5c42b1547cd4fab56fb90f75295aaf6d9e4aed5b51bfcb2457e44b886204a6e2",
-        strip_prefix = "bazel-lib-3.2.1",
-        url = "https://github.com/aspect-build/bazel-lib/releases/download/v3.2.1/bazel-lib-v3.2.1.tar.gz",
+        sha256 = "c75f8c375f9f2c73a565dba188f91a4e8d7ca16dd2b6152d3886c26bbf1c6532",
+        strip_prefix = "bazel-lib-3.7.2",
+        url = "https://github.com/aspect-build/bazel-lib/releases/download/v3.7.2/bazel-lib-v3.7.2.tar.gz",
     )
 
     _bazeldoc_dependencies()
