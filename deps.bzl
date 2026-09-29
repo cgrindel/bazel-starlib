@@ -18,10 +18,10 @@ def _prebuilt_buildtools_dependencies():
     maybe(
         http_archive,
         name = "buildifier_prebuilt",
-        sha256 = "478f8a4b40af0ffd09e4823062a0ea28fda4247236f1059324b783202e0dd4d4",
-        strip_prefix = "buildifier-prebuilt-8.5.1",
+        sha256 = "4e5627d22359c87f1026354d2bd47832eec1f4d3f4dc42e0ebdb4cce7d5d73c4",
+        strip_prefix = "buildifier-prebuilt-10.1.0",
         urls = [
-            "http://github.com/keith/buildifier-prebuilt/archive/8.5.1.tar.gz",
+            "http://github.com/keith/buildifier-prebuilt/archive/10.1.0.tar.gz",
         ],
     )
 
