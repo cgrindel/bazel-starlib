@@ -15,6 +15,12 @@ build:cache --remote_download_toplevel # Helps remove network bottleneck if cach
 build:cache --remote_timeout=3600
 build:cache --remote_cache_compression
 
+# Fetch external repository archives through BuildBuddy's Remote Asset API so
+# transient download failures (e.g., GitHub 5xx) do not fail the build. Fall
+# back to downloading directly if the remote downloader is unavailable.
+build:cache --experimental_remote_downloader=grpcs://remote.buildbuddy.io
+build:cache --experimental_remote_downloader_local_fallback
+
 # Recommended by BuildBuddy
 build --remote_build_event_upload=minimal
 build --noslim_profile
