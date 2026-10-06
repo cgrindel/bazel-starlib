@@ -1,11 +1,9 @@
 github.com/creasty/defaults v1.11.0 h1:lZ8c5bHZGtyIeumdTPXKOKkHtNL+qQWVrGhNPGqeFww=
 github.com/creasty/defaults v1.11.0/go.mod h1:TGHvg4OCP/fVv+yotLzg97i5PKrF+iZSvg6Kmm7Y12Y=
-github.com/gomarkdown/markdown v0.0.0-20261006012502-18c3b5f0f56a h1:w8XUxDSrgDB2hRR9hLtdRDyKFURiU/Q4yt+HIvD4sLI=
-github.com/gomarkdown/markdown v0.0.0-20261006012502-18c3b5f0f56a/go.mod h1:S7lhU1N5dCyueJxRk6QP0oL2RoL3EPK7e66gabeXRa8=
+github.com/gomarkdown/markdown v0.0.0-20261006014541-eb0281f1d676 h1:0IDVvG265FV11V09iv/pWx7BpJM3r+VyFeGscBzVuvQ=
+github.com/gomarkdown/markdown v0.0.0-20261006014541-eb0281f1d676/go.mod h1:zLCvXLlUnS5tvOi4hpJgzzpJsq0+dliwn85VbPh1JbQ=
 github.com/stretchr/testify v1.12.1 h1:EuwCh5fleGS7H32xRwO3wRGT7DxrDhLAT6FF8MpWDWE=
 github.com/stretchr/testify v1.12.1/go.mod h1:MDEgiDPPsNp5cuIrHPPCyornHKgEVbtFUmoNlxoYthg=
-github.com/yuin/goldmark v1.8.6 h1:d0VcaP1sx9GkFVkoW+KtggpGi2KZ965i14b0+bDQST4=
-github.com/yuin/goldmark v1.8.6/go.mod h1:ip/1k0VRfGynBgxOz0yCqHrbZXhcjxyuS66Brc7iBKg=
 go.yaml.in/yaml/v3 v3.0.5 h1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=
 go.yaml.in/yaml/v3 v3.0.5/go.mod h1:HVTZu1O7/Vkt2N+BFy8Zza+lnLsABggaTM2ZpNIGuKg=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
