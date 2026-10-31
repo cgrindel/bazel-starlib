@@ -4,7 +4,7 @@ go 1.22
 
 require (
 	github.com/creasty/defaults v1.11.0
-	github.com/gomarkdown/markdown v0.0.0-20261031125110-03bdc0f3cfdd
+	github.com/gomarkdown/markdown v0.0.0-20261031165833-acfab5edc1ce
 	github.com/stretchr/testify v1.12.1
 	gopkg.in/yaml.v3 v3.0.1
 )
